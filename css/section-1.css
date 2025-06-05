@@ -91,7 +91,6 @@
 
 .section-1 .section-1-p2 .section-images{
     display: flex;
-    justify-content: space-between;
     gap: 10px;
 }
 
@@ -102,7 +101,7 @@
 }
 
 .section-1 .section-1-p2 .section-images .img-container img:hover{
-    transform: scale(1.1);
+    transform: scale(1.01);
     transition-property: transform;
     transition-duration: 1s;
 }

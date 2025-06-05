@@ -14,3 +14,7 @@ body, html{
 .footer-divider svg{
     margin-bottom: -6px;
 }
+
+p{
+    line-height: 1.7;
+}
