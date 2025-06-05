@@ -1,0 +1,119 @@
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3rem 10%;
+    border-left: 3px solid #3d7cfe;
+    background: #f5fefe;
+}
+
+.navbar .navbar-links ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 5rem;
+}
+
+.navbar .navbar-links ul li a{
+    font-weight: 900;
+    text-decoration: none;
+    color: #353148;
+}
+
+.navbar .navbar-button button{
+    padding: 1rem 3rem;
+    background: #ed4d86;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 100px;
+    color: white;
+    cursor: pointer;
+}
+
+
+.navbar .navbar-button button:hover{
+    background: #b83b66;
+    transition-property: background;
+    transition-duration: .5s;
+}
+
+
+
+
+
+
+
+
+/* Hamburguesa básica */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 18px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  .hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #353148;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  
+  /* Animación hamburguesa a X */
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+  
+
+
+
+
+
+
+@media (max-width: 1023px) {
+    .navbar {
+      flex-wrap: wrap;
+      padding: 2rem 5%;
+    }
+  
+    .hamburger {
+      display: flex;
+    }
+  
+    .navbar-links,
+    .navbar-button {
+      width: 100%;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s ease;
+    }
+  
+    .navbar .navbar-links ul {
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 2rem 0 1rem 0;
+    }
+  
+    .navbar.active .navbar-links,
+    .navbar.active .navbar-button {
+      max-height: 500px; /* suficientemente grande para mostrar contenido */
+    }
+  
+    .navbar-button {
+      margin-top: 1rem;
+    }
+  }
+  

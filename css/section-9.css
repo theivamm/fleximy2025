@@ -1,0 +1,77 @@
+.section-9{
+    margin: 3rem 10%;
+    background: #343047;
+    padding: 5%;
+    border-radius: 50px;
+}
+
+.section-9 .section-9-heading h2,
+.section-9 .section-9-heading p{
+    color: white;
+    text-align: center;
+}
+
+.section-9 .section-9-heading h2{
+    font-size: 3.5rem;
+    font-weight: 500;
+    padding-bottom: 2rem;
+}
+
+.section-9 .section-9-heading p{
+    color: #818181;
+    padding-bottom: 3rem;
+}
+
+.section-9 .section-9-heading h2 span{
+    font-style: italic;
+    font-family: "Volkhov", serif;
+    color: white;
+    font-weight: bold;
+}
+
+.section-9 .section-9-table{
+    margin: auto;
+    border-collapse: collapse;
+    width: fit-content;
+}
+
+.section-9 .section-9-table table thead tr th,
+.section-9 .section-9-table table tbody tr td{
+    color: white;
+    border: none;
+    padding: 1rem;
+}
+
+.section-9 .section-9-table table thead tr th:nth-child(2){
+    background: white;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    outline: 1px solid white;
+}
+
+.section-9 .section-9-table table tbody tr:last-child td:nth-child(2){
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.section-9 .section-9-table table th:nth-child(3),
+.section-9 .section-9-table table th:nth-child(4){
+    color: #818181;
+}
+
+.section-9 .section-9-table table td:nth-child(2){
+    background: white;
+    color: #343047;
+    text-align: center;
+    outline: 1px solid white;
+}
+
+.section-9 .section-9-table table td:nth-child(3),
+.section-9 .section-9-table table td:nth-child(4){
+    border-bottom: 1px solid white;
+}
+
+.section-9 .section-9-table table td:nth-child(3),
+.section-9 .section-9-table table td:nth-child(4){
+    text-align: center;
+}

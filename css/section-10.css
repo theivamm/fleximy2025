@@ -1,0 +1,112 @@
+.section-10{
+    display: flex;
+    padding: 3rem 10%;
+    justify-content: space-around;
+}
+
+.section-10 .section-10-p1 h2{
+    font-weight: 500;
+    font-size: 3rem;
+    color: #000;
+    padding-bottom: 2rem;
+}
+
+.section-10 .section-10-p1 h2 span{
+    font-weight: bold;
+    color: #000;
+}
+
+.accordion {
+    width: 80%;
+    max-width: 1000px;
+    margin: 0rem auto;
+  }
+  
+  .accordion-item {
+    background-color: #faf7eb;
+    color: black;
+    margin: 1rem 0;
+    border-radius: 15px;
+  }
+  
+  .accordion-item-header {
+    padding: 2rem;
+    min-height: 3.5rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .accordion-item-header h3{
+    color: #000;
+    font-weight: 500;
+    font-size: 1.5rem;
+  }
+
+  .accordion-item-header h3 span{
+    font-weight: bold;
+    color: #000;
+    font-style: italic;
+  }
+  
+  .accordion-item-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+  }
+  
+  .accordion-item-body-content {
+    padding: 0 2rem 2rem 2rem;
+    line-height: 1.5rem;
+  }
+
+  @media screen and (max-width: 1300px) {
+    .accordion{
+        width: 100%;
+        margin: auto;
+    }
+  }
+  
+@media screen and (max-width: 1023px) {
+
+    .section-10{
+        flex-direction: column;
+    }
+
+    .section-10 .section-10-p1 h2{
+        text-align: center;
+    }
+
+    .section-10 .section-10-p1 img{
+        margin: auto;
+        display: flex;
+        max-width: 100%;
+    }
+
+}
+
+
+
+@media screen and (max-width: 480px) {
+
+    .section-10{
+        padding: 3rem 5%;
+    }
+
+    .section-10 .section-10-p1 h2{
+        font-size: 2rem;
+    }
+
+    .accordion-item-header h3{
+        font-size: 1.25rem;
+    }
+
+    .accordion-item-header {
+        padding: 1rem;
+    }
+
+    .accordion-item-body-content {
+        padding: 0 1rem 1rem 1rem;
+    }
+}
