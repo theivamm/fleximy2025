@@ -9,7 +9,7 @@ gsap.registerPlugin(Draggable, ScrollTrigger);
 const cardData = [
     { id: 1, bgColor: 'var(--yellow-cartoon)', asset: '/grafico-img.png', text: 'Diseño Gráfico' },
     { id: 2, bgColor: 'var(--green-turtle)', asset: '/ilustraciones-img.png', text: 'Ilustraciones' },
-    { id: 3, bgColor: 'var(--violet-light)', asset: '/marcas-img.png', text: 'Creación de marcas' },
+    { id: 3, bgColor: 'var(--yellow-cartoon)', asset: '/marcas-img.png', text: 'Creación de<br />marcas' },
     { id: 4, bgColor: 'var(--violet-light)', asset: '/motion-img.png', text: 'Motion Graphics' },
     { id: 5, bgColor: 'var(--green-turtle)', asset: '/packagings-img.png', text: 'Packagings' },
     { id: 6, bgColor: 'var(--red-not-scarlet)', asset: '/presentaciones-img.png', text: 'Presentaciones' },
@@ -147,7 +147,7 @@ const ServicesCarousel = () => {
                     {cardData.map((card) => (
                         <div key={card.id} className="service-card" style={{ backgroundColor: card.bgColor }}>
                             <div className="service-card-content">
-                                <h1>{card.text}</h1>
+                                <h1 dangerouslySetInnerHTML={{ __html: card.text }}></h1>
                             </div>
                             <div className="service-card-asset">
                                 <img src={card.asset} alt={card.text} />
