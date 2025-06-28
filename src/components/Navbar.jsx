@@ -278,6 +278,7 @@ const Navbar = () => {
                     </ul>
                 </nav>
                 <button className="cta-button" onClick={() => setIsCalendlyOpen(true)}> <span className="cta-text">Hablemos</span> <span className="circle-fill"></span> </button>
+                <button className="mobile-cta-button" onClick={() => setIsCalendlyOpen(true)}>Hablemos</button>
                 <button className="burger-menu-button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                     <span className="burger-line"></span> <span className="burger-line"></span> <span className="burger-line"></span>
                 </button>

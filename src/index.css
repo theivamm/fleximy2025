@@ -421,6 +421,27 @@ h1, h2, h3, h4, h5, h6 {
     transform-origin: 1px;
 }
 
+.mobile-cta-button {
+    display: none;
+    font-family: var(--font-sans);
+    background-color: var(--chocolate-primary);
+    color: var(--creamy-light);
+    border: 2px solid var(--chocolate-primary);
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+.mobile-cta-button:hover {
+    background-color: var(--creamy-light);
+    color: var(--chocolate-primary);
+    transform: scale(1.05);
+}
+
 .mobile-menu-overlay {
     position: fixed;
     top: 0;
@@ -454,6 +475,9 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 900px) {
     .desktop-nav, .cta-button {
         display: none;
+    }
+    .mobile-cta-button {
+        display: block;
     }
     .burger-menu-button {
         display: flex;
@@ -1061,13 +1085,18 @@ h1, h2, h3, h4, h5, h6 {
 /* === CONTRASTE NAVBAR SOBRE SERVICES === */
 .navbar-contrast .desktop-nav-link,
 .navbar-contrast .cta-button,
-.navbar-contrast .cta-button .cta-text {
+.navbar-contrast .cta-button .cta-text,
+.navbar-contrast .mobile-cta-button {
   color: var(--creamy-light) !important;
   background: none !important;
   border-color: var(--creamy-light) !important;
 }
 
 .navbar-contrast .cta-button {
+  background-color: transparent !important;
+}
+
+.navbar-contrast .mobile-cta-button {
   background-color: transparent !important;
 }
 
