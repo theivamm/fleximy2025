@@ -9,7 +9,7 @@ const faqData = [
     },
     {
         question: "Qué tan rápido es el tiempo de respuesta de Flexi?",
-        answer: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        answer: "Todos los planes generalmente te darán una respuesta el mismo día. Sin embargo, las tareas complejas como ilustraciones personalizadas, diseño web/app, landings, infografías, folletos de varias páginas y presentaciones pueden llevar más tiempo, pero de todas formas respondemos mas rápido que cualquier freelancer o diseñador del emrcado, hemos terminado websites completos en menos de una semana!. La mayoría de las revisiones sencillas se pueden completar en un día."
     },
     {
         question: "Excepteur sint occaecat cupidatat non proident?",
