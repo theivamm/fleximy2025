@@ -4,11 +4,11 @@ import './FAQ.css'; // CORRECCIÓN: La ruta ahora es correcta
 
 const faqData = [
     {
-        question: "Lorem ipsum dolor sit amet, consectetur?",
-        answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        question: "De donde salen los creativos que trabajan en Flexi?",
+        answer: "Reclutamos talentos creativos de todo Latinoamerica para satisfacer las diversas necesidades de diseño de nuestros clientes. Todos nuestros miembros son empleados a tiempo completo con salarios y beneficios competitivos."
     },
     {
-        question: "Duis aute irure dolor in reprehenderit?",
+        question: "Qué tan rápido es el tiempo de respuesta de Flexi?",
         answer: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
     {
