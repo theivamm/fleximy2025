@@ -1,6 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import CalendlyPopup from './CalendlyPopup';
 import './PricingTable.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -30,6 +31,7 @@ const pricingData = [
 
 const PricingTable = () => {
     const componentRef = useRef(null);
+    const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -128,13 +130,14 @@ const PricingTable = () => {
                         <h2>{plan.title}</h2>
                         <h3 className="price-tag">{plan.price}</h3>
                         <p>{plan.description}</p>
-                        <button className="cta-button">
+                        <button className="cta-button" onClick={() => setIsCalendlyOpen(true)}>
                             <span className="cta-text">¡Lo quiero!</span>
                             <span className="circle-fill"></span>
                         </button>
                     </div>
                 ))}
             </div>
+            <CalendlyPopup isOpen={isCalendlyOpen} onClose={() => setIsCalendlyOpen(false)} />
         </section>
     );
 };

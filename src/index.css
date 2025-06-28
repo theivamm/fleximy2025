@@ -36,6 +36,8 @@
 /* 3. Estilos Globales con el nuevo fondo animado */
 html {
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 body {
@@ -43,6 +45,8 @@ body {
   color: var(--chocolate-primary);
   margin: 0;
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
   
   /* --- NUEVO FONDO DE GRADIENTE ANIMADO --- */
   background: linear-gradient(-45deg, #d4ffef, #fffde2, #ffe2e2, #d5fff4, #dbd8ff, #fee4ff);
@@ -162,8 +166,9 @@ h1, h2, h3, h4, h5, h6 {
   white-space: normal;
 }
 
-.h1-word, .subtitle-word {
+.h1-word {
   display: inline-block;
+  overflow: visible;
 }
 
 .hero-subtitle {
@@ -1151,6 +1156,7 @@ h1, h2, h3, h4, h5, h6 {
   height: auto; /* Cambiado de 100vh a auto */
   min-height: 100vh;
   padding-bottom: 2rem; /* Espacio extra al final */
+  overflow: hidden; /* Prevenir que la barra aparezca antes de tiempo */
 }
 
 .footer-wrapper-for-reveal .footer-section {
@@ -1159,6 +1165,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative; /* Cambiar de absolute a relative */
 }
 
 .footer-wrapper-for-reveal .footer-wrapper {
@@ -1170,6 +1177,13 @@ h1, h2, h3, h4, h5, h6 {
   bottom: 0;
   left: 0;
   width: 100%;
+  opacity: 0; /* Inicialmente oculta */
+  transition: opacity 0.3s ease; /* Transición suave */
+}
+
+/* Mostrar la barra solo cuando esté completamente visible */
+.footer-wrapper-for-reveal .gradient-bar.visible {
+  opacity: 1;
 }
 
 /* ... (otros estilos se mantienen) ... */
@@ -1207,4 +1221,78 @@ h1, h2, h3, h4, h5, h6 {
 .h1-word {
   display: inline-block;
   overflow: visible;
+}
+
+/* Prevenir overflow horizontal en contenedores principales */
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Asegurar que todas las secciones no causen overflow */
+section, 
+.footer-section,
+.creative-hero-section,
+.stacking-section,
+.platform-section,
+.pricing-section,
+.faq-section {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Asegurar que los contenedores de reveal no causen overflow */
+.reveal-container,
+.faq-wrapper-for-reveal,
+.footer-wrapper-for-reveal {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Prevenir overflow en el navbar */
+.main-header,
+.navbar-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Asegurar que los elementos con posición fija no causen overflow */
+.back-to-top,
+.calendly-popup-overlay {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Prevenir overflow en elementos con transformaciones */
+.calendly-popup-content {
+  max-width: 95vw;
+  overflow-x: hidden;
+}
+
+/* Asegurar que los elementos con animaciones no se salgan del viewport */
+@media (max-width: 768px) {
+  .calendly-popup-content {
+    max-width: 90vw;
+    margin: 0 auto;
+  }
+}
+
+/* Regla global para prevenir overflow horizontal */
+* {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Excepciones para elementos que necesitan overflow visible */
+.calendly-inline-widget,
+.typing-text,
+.fixed-word {
+  max-width: none;
 }

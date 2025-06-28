@@ -152,11 +152,26 @@ const Footer = () => {
   useEffect(() => {
     const bar = document.getElementById('footer-gradient-bar');
     if (!bar) return;
+    
     function handleScroll() {
       const scrollY = window.scrollY || window.pageYOffset;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      // Calcular si estamos al final del documento
+      const isAtBottom = scrollY + windowHeight >= documentHeight - 50; // 50px de tolerancia
+      
       // Mueve el gradiente en X en función del scroll
       bar.style.backgroundPosition = `${-scrollY / 2}px center`;
+      
+      // Mostrar/ocultar la barra basado en si estamos al final
+      if (isAtBottom) {
+        bar.classList.add('visible');
+      } else {
+        bar.classList.remove('visible');
+      }
     }
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
