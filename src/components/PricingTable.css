@@ -129,3 +129,67 @@
         gap: 2rem;
     }
 }
+
+@media (max-width: 768px) {
+    .pricing-section {
+        padding: 4rem 1rem;
+    }
+    
+    .pricing-main-title {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+        margin-bottom: 3rem;
+    }
+    
+    .price-card {
+        padding: 2rem;
+        margin: 0 0.5rem;
+    }
+    
+    .price-card h1 {
+        font-size: 2.5rem;
+    }
+    
+    .price-card h2 {
+        font-size: 1.3rem;
+    }
+    
+    .price-tag {
+        font-size: clamp(2rem, 6vw, 2.5rem);
+    }
+    
+    .price-card p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Asegurar que el botón CTA sea visible en mobile */
+    .price-card .cta-button {
+        display: block;
+        width: 100%;
+        max-width: 200px;
+        margin: 1.5rem auto 0 auto;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-align: center;
+        background-color: var(--chocolate-primary);
+        color: var(--creamy-light);
+        border: 2px solid var(--chocolate-primary);
+        border-radius: 50px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .price-card .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(39, 15, 3, 0.3);
+    }
+    
+    .price-card .cta-text {
+        position: relative;
+        z-index: 2;
+        color: var(--creamy-light);
+    }
+}

@@ -20,6 +20,17 @@
   --font-serif: "DM Serif Display", serif;
 }
 
+/* Estilos de selección de texto personalizados */
+::selection {
+  background-color: #270F03;
+  color: #FFE9CF;
+}
+
+::-moz-selection {
+  background-color: #270F03;
+  color: #FFE9CF;
+}
+
 /* 2. Keyframes para la animación del gradiente */
 @keyframes gradient-flow {
 	0% {
