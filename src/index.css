@@ -1,0 +1,1181 @@
+/* src/index.css */
+
+/* 1. Declaración de Design Tokens (Colores y Fuentes) */
+/* src/index.css */
+
+/* 1. Declaración de Design Tokens (Colores y Fuentes) */
+:root {
+  /* Paleta de Colores */
+  --creamy-light: #FFE9CF;
+  --chocolate-primary: #270F03;
+  --cyan-light: #00C5C5;
+  --red-not-scarlet: #ff422d;
+  --yellow-cartoon: #F5C939;
+  --violet-light: #CA9DFE;
+  --green-turtle: #7AE66A;
+  --punk-fresa: #F897B4;
+
+  /* Tipografías */
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-serif: "DM Serif Display", serif;
+}
+
+/* 2. Keyframes para la animación del gradiente */
+@keyframes gradient-flow {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+/* 3. Estilos Globales con el nuevo fondo animado */
+html {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--chocolate-primary);
+  margin: 0;
+  overflow-x: hidden;
+  
+  /* --- NUEVO FONDO DE GRADIENTE ANIMADO --- */
+  background: linear-gradient(-45deg, #d4ffef, #fffde2, #ffe2e2, #d5fff4, #dbd8ff, #fee4ff);
+  background-size: 400% 400%;
+  animation: gradient-flow 5s ease infinite;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+/* 3. Re-estilizando los componentes de muestra con las nuevas variables */
+
+/* ... (El resto de tus estilos como .hero-container, etc. irán aquí abajo, 
+   pero ahora usando las variables en lugar de colores fijos) ... */
+
+/* Por ejemplo, vamos a actualizar el HeroSection */
+.hero-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: var(--creamy-light); /* Fondo actualizado */
+  color: var(--chocolate-primary); /* Texto actualizado */
+}
+
+.hero-title {
+  font-size: 6rem;
+  margin: 0;
+}
+
+.hero-subtitle {
+  font-family: var(--font-sans); /* Aseguramos que el subtítulo use la fuente correcta */
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* src/index.css */
+
+/* ... (tus variables de :root y estilos de body/h1 se mantienen) ... */
+
+/* src/index.css */
+
+/* ... (tus variables de :root y estilos de body se mantienen) ... */
+
+/* --- ESTILOS PARA LA NUEVA SECCIÓN HERO --- */
+/* Creative Hero */
+.creative-hero-section {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 2rem 2rem 2rem; 
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  border-radius: 40px 40px 0 0;
+  margin-top: -40px; 
+  padding-top: 60px;
+}
+
+.creative-hero-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem; /* Espacio entre el SVG y el texto */
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* src/index.css */
+
+.hero-svg-column {
+  flex: 0 0 45%;
+  /* Hacemos que la columna sea un contenedor de posición para los SVGs */
+  position: relative;
+  /* Damos una altura fija para evitar saltos de layout */
+  min-height: 400px; 
+}
+
+.hero-cat-svg {
+  /* Posicionamos ambos SVGs absolutamente uno encima del otro */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* El objeto SVG en sí se alinea a la derecha como pediste */
+  object-position: right;
+}
+
+.hero-text-column {
+  flex: 1; /* La columna de texto ocupará el espacio restante */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* <<< CLAVE: Alinea todo a la izquierda */
+}
+
+.hero-title-creative {
+  font-family: var(--font-sans); /* <<< NUEVA FUENTE: Plus Jakarta Sans */
+  font-weight: 800; /* <<< NUEVO GROSOR: Extra Bold */
+  font-size: clamp(5rem, 5.5vw, 4rem);
+  color: var(--chocolate-primary);
+  line-height: 1;
+  margin-bottom: 1.5rem;
+  text-align: left; /* <<< CLAVE: Alinea el texto a la izquierda */
+}
+
+.h1-word-wrapper, .subtitle-word-wrapper {
+  display: inline-block;
+  margin-right: 0.25em;
+  white-space: normal;
+}
+
+.h1-word, .subtitle-word {
+  display: inline-block;
+}
+
+.hero-subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
+  line-height: 1.6;
+  max-width: 500px;
+  margin-bottom: 2rem;
+  text-align: left; /* <<< CLAVE: Alinea el texto a la izquierda */
+}
+
+.hero-button {
+  /* Los estilos del botón se mantienen igual */
+  font-family: var(--font-sans);
+  background: transparent;
+  color: var(--chocolate-primary);
+  border: 2px solid var(--chocolate-primary);
+  border-radius: 50px;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s ease-in-out;
+}
+
+/* ... (el resto de estilos del botón como :hover y .circle-fill se mantienen) ... */
+
+/* src/index.css */
+
+/* src/index.css */
+
+/* Reemplaza .hero-line con esto */
+.h1-word-wrapper {
+  display: inline-block; /* Permite que las palabras fluyan en línea */
+  overflow: hidden; /* Oculta la animación mientras ocurre */
+  margin-right: 0.25em; /* Espacio entre palabras */
+}
+
+.word-wrapper {
+    display: inline-block;
+    margin-right: 0.25em;
+    vertical-align: top; /* Asegura una alineación consistente */
+}
+
+.h1-word {
+  display: inline-block; /* Necesario para transformar cada palabra */
+}
+
+.hero-line span {
+  display: block;
+}
+
+.hero-subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  line-height: 1.6;
+  max-width: 550px;
+  margin-bottom: 2rem;
+}
+
+.hero-button {
+  font-family: var(--font-sans);
+  background: transparent;
+  color: var(--chocolate-primary);
+  border: 2px solid var(--chocolate-primary);
+  border-radius: 50px;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s ease-in-out;
+}
+
+.hero-button:hover {
+  color: var(--creamy-light);
+}
+
+.hero-button:hover .circle-fill {
+  z-index: -1;
+}
+
+.subtitle-word-wrapper {
+  display: inline-block;
+  overflow: hidden;
+  margin-right: 0.25em; /* Espacio entre palabras */
+  line-height: 1.6; /* Mantenemos la altura de línea del párrafo */
+}
+
+.subtitle-word {
+  display: inline-block;
+}
+
+.desktop-nav-link .char {
+    display: inline-block; /* Necesario para animar cada letra */
+}
+
+.cta-button .circle-fill { /* Usamos la misma clase que en el Hero */
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--cyan-light);
+    transform: scale(0);
+    transform-origin: center center;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.mobile-menu-overlay.open {
+    pointer-events: all;
+}
+
+/* src/index.css */
+
+/* --- Estilos de la Navbar (Versión Completa y Final) --- */
+/* --- ESTILOS DE COMPONENTES SIN SU FONDO ORIGINAL --- */
+
+/* Navbar */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1rem 5%;
+    box-sizing: border-box;
+}
+
+.navbar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar-logo {
+    height: 40px;
+    width: auto;
+    display: block;
+    pointer-events: none;
+}
+
+.desktop-nav ul {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.desktop-nav-link {
+    font-family: var(--font-sans);
+    color: var(--chocolate-primary);
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.desktop-nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--chocolate-primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+
+.desktop-nav-link:hover {
+    color: var(--chocolate-primary);
+}
+
+.cta-button {
+    font-family: var(--font-sans);
+    background-color: var(--chocolate-primary);
+    color: var(--creamy-light);
+    border: 2px solid var(--chocolate-primary);
+    border-radius: 50px;
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+/* src/index.css */
+
+/* ... (tus otros estilos de .cta-button) ... */
+
+/* REEMPLAZA tu .cta-button:hover con esto */
+.cta-button:hover .cta-text {
+  color: var(--creamy-light);
+}
+
+/* AÑADE esta nueva clase al final de tus estilos de la navbar */
+.cta-text {
+  position: relative;
+  z-index: 2; /* Un z-index positivo lo pone por encima de casi todo */
+  transition: color 0.3s ease-in-out; /* Para que el cambio de color del texto sea suave */
+}
+
+/* Asegúrate de que tu .circle-fill tenga un z-index negativo o menor */
+.circle-fill {
+  /* ... */
+  z-index: 1; /* Lo ponemos en 1, para que esté por encima del fondo del botón */
+}
+
+/* El círculo de relleno se aplica a ambos, logo y botón */
+.circle-fill {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transform: scale(0);
+    transform-origin: center center;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.burger-menu-button {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 32px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1010;
+}
+
+.burger-line {
+    width: 32px;
+    height: 3px;
+    background: var(--chocolate-primary);
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+}
+
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    /* background-color: var(--punk-fresa); <-- BORRA ESTA LÍNEA */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    clip-path: circle(0% at 90% 5%);
+    pointer-events: none;
+    z-index: 1005;
+}
+
+.mobile-nav ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.mobile-nav-link {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    color: var(--chocolate-primary);
+    text-decoration: none;
+    display: block;
+    margin: 1rem 0;
+}
+
+@media (max-width: 900px) {
+    .desktop-nav, .cta-button {
+        display: none;
+    }
+    .burger-menu-button {
+        display: flex;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* src/index.css */
+
+/* ... (todos tus estilos anteriores se mantienen intactos) ... */
+
+
+/* === ESTILOS PARA LA VERSIÓN MÓVIL === */
+
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden !important;
+  }
+  .footer-section {
+    min-height: 0 !important;
+    height: auto !important;
+    padding-bottom: 0 !important;
+    box-sizing: border-box !important;
+  }
+  .footer-wrapper-for-reveal {
+    min-height: 0 !important;
+    height: auto !important;
+    padding-bottom: 0 !important;
+    box-sizing: border-box !important;
+  }
+  .reveal-container {
+    position: static;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible;
+    width: 100% !important;
+  }
+  .faq-wrapper-for-reveal,
+  .footer-wrapper-for-reveal {
+    position: static;
+    height: auto !important;
+    min-height: 0 !important;
+    padding-bottom: 0 !important;
+    overflow: visible;
+    width: 100% !important;
+  }
+  .faq-image-container {
+    aspect-ratio: unset !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+  }
+  .faq-image {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    max-height: 350px !important;
+    min-height: 0 !important;
+  }
+  .creative-hero-section {
+    padding-top: 80px; /* Asegura espacio para la navbar en mobile */
+  }
+  .main-header {
+    height: 60px !important;
+    min-height: 60px !important;
+    max-height: 60px !important;
+  }
+
+  /* Ajustamos el padding general de la sección para que haya más aire */
+  .creative-hero-section {
+    padding: 4rem 1rem 3rem 1rem; /* Más espacio arriba para la navbar */
+  }
+
+  /* Cambiamos la dirección del contenedor principal a columna */
+  .creative-hero-wrapper {
+    flex-direction: column;
+    gap: 2rem; /* Reducimos el espacio entre elementos */
+  }
+
+  /* Le decimos al navegador que la columna de texto ahora va primero */
+  .hero-text-column {
+    order: 1; /* El texto va arriba */
+    align-items: center; /* Centramos el contenido (el botón) */
+    text-align: center; /* Centramos todos los textos */
+  }
+
+  /* Y la columna del gato va después */
+  .hero-svg-column {
+    order: 2; /* El gato va abajo */
+    width: 80%; /* Hacemos el gato un poco más pequeño */
+    max-width: 300px;
+  }
+
+  /* Reducimos el tamaño del título principal en móviles */
+  .hero-title-creative {
+    font-size: clamp(4rem, 10vw, 3rem); /* Valores más pequeños para el clamp */
+  }
+
+  /* También ajustamos el subtítulo */
+  .hero-subtitle {
+    font-size: 1rem;
+    max-width: 100%; /* Permitimos que ocupe todo el ancho */
+  }
+}
+
+
+/* --- Estilos para la sección de Stacking Cards --- */
+/* --- Estilos para la sección de Stacking Cards --- */
+/* --- Estilos para la sección de Stacking Cards --- */
+/* --- Estilos para la sección de Stacking Cards --- */
+/* --- Estilos para la sección de Stacking Cards --- */
+/* --- Estilos para la sección de Stacking Cards --- */
+/* --- Estilos para la sección de Stacking Cards --- */
+/* --- Estilos para la sección de Stacking Cards --- */
+/* --- Estilos para la sección de Stacking Cards --- */
+/* --- Estilos para la sección de Stacking Cards --- */
+/* --- Estilos para la sección de Stacking Cards (Versión Corregida) --- */
+/* --- Estilos para la sección de Stacking Cards (Versión Corregida) --- */
+.stacking-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 15vh;
+    display: flex;
+    justify-content: center;
+}
+
+/* Centrado absoluto para el título de StackingTitle */
+.stacking-title-viewport-center {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  background: none;
+}
+
+.stacking-title-container {
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+  padding: 0 0.2rem; /* Padding mínimo */
+}
+
+.stacking-title {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: clamp(3rem, 14vw, 12rem); /* Más grande en desktop/4K */
+  color: var(--chocolate-primary);
+  line-height: 1;
+  word-break: break-word;
+  letter-spacing: -0.15em; /* Letter spacing mucho más negativo para letras más juntas */
+  padding: 0 0.1em; /* Padding mínimo solo para evitar cortes */
+  overflow: visible; /* Asegura que las letras no se corten */
+}
+
+/* Estilos para el nuevo SVG del título con animaciones */
+.stacking-title-svg {
+  font-family: var(--font-serif);
+  font-weight: 800;
+  text-anchor: start;
+}
+
+.title-letter {
+  font-family: var(--font-serif);
+  font-weight: 800;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+/* Responsive para el SVG */
+@media (max-width: 768px) {
+  .stacking-title-svg {
+    max-width: 90vw !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .stacking-title {
+    font-size: clamp(2rem, 12vw, 4rem);
+    padding: 0 0.5rem;
+    letter-spacing: -0.1em; /* Letter spacing negativo en mobile también */
+  }
+  
+  .stacking-title-svg {
+    max-width: 95vw !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .stacking-title {
+    letter-spacing: -0.12em; /* Letter spacing negativo en tablet */
+  }
+}
+
+/* Centrado absoluto para las cards de StackingCards */
+.stacking-cards-viewport-center {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  background: none;
+}
+
+/* Ajuste para que las cards sigan centradas dentro del contenedor flex */
+.cards-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.stacking-card {
+    position: absolute;
+    width: 65vw;
+    max-width: 900px;
+    height: 70vh;
+    max-height: 550px;
+    border-radius: 25px;
+    padding: 2rem 3rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.card-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    height: 100%;
+}
+
+.card-content.align-right {
+    flex-direction: row-reverse;
+}
+
+.card-text-content {
+    flex: 1;
+}
+.card-text-content h2 {
+    font-family: var(--font-sans); /* <<< Tipografía correcta */
+    font-weight: 800; /* <<< Grosor Extra Bold */
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: var(--chocolate-primary);
+    margin-bottom: 1rem;
+}
+.card-text-content p {
+    font-family: var(--font-sans);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    color: var(--chocolate-primary);
+    line-height: 1.6;
+}
+
+.card-asset-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-asset-content img {
+    max-width: 100%;
+    max-height: 250px;
+}
+
+/* --- Estilos de StackingCards para Móvil --- */
+@media (max-width: 768px) {
+    .stacking-card {
+        width: 90vw;
+        height: auto;
+        padding: 1.5rem;
+    }
+    .card-content {
+        flex-direction: column !important;
+        text-align: center;
+    }
+    .card-text-content h2 {
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+  .stacking-title {
+    font-size: clamp(2rem, 12vw, 4rem);
+    padding: 0 0.5rem;
+  }
+}
+
+/* O animada */
+.stacking-title-o {
+  display: inline-block;
+  color: var(--violet-light);
+  transition: color 0.3s, transform 0.3s, border-radius 0.3s, background 0.3s;
+  will-change: transform, color, border-radius, background;
+  position: relative;
+  z-index: 2;
+}
+
+.stacking-title-o-morph {
+  background: var(--yellow-cartoon);
+  color: var(--chocolate-primary);
+  border-radius: 50% 40% 60% 50%/50% 60% 40% 50%;
+  transform: scale(1.25) rotateY(180deg);
+  box-shadow: 0 0 0.5em 0.1em var(--yellow-cartoon);
+}
+
+
+
+
+
+
+
+
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilo Global para Evitar Scroll Horizontal --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* Nuevo Contenedor para el Scroll Horizontal */
+
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+/* --- Estilos para la sección de Plataforma --- */
+.platform-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden; /* Muy importante para que los slides no se salgan */
+}
+
+/* Escena de Introducción */
+.intro-scene {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--punk-fresa);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2; /* Comienza encima de todo */
+}
+
+.intro-content {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    width: 80%;
+    max-width: 1200px;
+    color: var(--chocolate-primary);
+}
+
+.intro-asset {
+    flex: 1;
+}
+.intro-asset img {
+    width: 100%;
+    max-width: 400px;
+}
+
+.intro-text {
+    flex: 1;
+}
+.intro-text h1 {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.2;
+}
+.intro-text h2 {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.6;
+    margin-top: 1.5rem;
+}
+
+/* Contenedor y Track Horizontales */
+.horizontal-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Comienza detrás de la escena de introducción */
+}
+
+.horizontal-track {
+    position: relative;
+    height: 100%;
+    display: flex;
+    width: 500%;
+}
+
+.horizontal-slide {
+    width: 100vw;
+    height: 100vh;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2%;
+    box-sizing: border-box;
+}
+
+.slide-content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    width: 80%;
+    max-width: 1200px;
+    color: var(--chocolate-primary);
+}
+.slide-content-wrapper.align-right {
+    flex-direction: row-reverse;
+}
+
+.slide-text {
+    flex: 1;
+}
+.slide-text h1 {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+}
+.slide-text h2 {
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.6;
+    margin-top: 1.5rem;
+}
+
+.slide-asset {
+    flex: 1;
+    text-align: center;
+    min-height: 200px; /* Mantener altura mínima para visibilidad */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.slide-asset img {
+    max-width: 100%;
+    max-height: 450px;
+    min-height: 100px; /* Mantener altura mínima para debug */
+}
+
+/* Estilos para los tamaños de cada imagen - SOLO DESKTOP */
+.slide-asset-1 img { max-height: 400px; }
+.slide-asset-2 img { max-height: 350px; }
+.slide-asset-3 img { max-height: 420px; }
+.slide-asset-4 img { max-height: 380px; }
+.slide-asset-5 img { max-height: 450px; }
+
+/* Media Query para Móvil */
+@media (max-width: 768px) {
+    .intro-scene {
+        padding-top: 5rem; /* Agregar padding al contenedor de la escena */
+        padding-bottom: 5rem;
+        box-sizing: border-box;
+    }
+    
+    .intro-content, .slide-content-wrapper {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center !important; /* Centrar verticalmente */
+        align-items: center;
+        min-height: calc(100vh - 10rem); /* Ajustar altura considerando el padding */
+        padding-top: 2rem; /* Reducir padding interno */
+        padding-bottom: 2rem;
+        gap: 2rem; /* Reducir espacio entre elementos */
+    }
+    
+    .intro-asset {
+        padding-top: 3rem; /* Más espacio específicamente para el asset */
+        padding-bottom: 2rem;
+    }
+    
+    .intro-asset img {
+        max-width: 350px; /* Ajustar tamaño del asset */
+    }
+    
+    .slide-content-wrapper.align-right {
+        flex-direction: column;
+    }
+    .slide-text {
+        flex: none !important; /* Evitar que el texto se expanda */
+        margin-bottom: 1rem; /* Reducir espacio entre texto y asset */
+        order: 1; /* Texto siempre arriba */
+    }
+    .slide-text h1 {
+        padding-top: 0 !important; /* Quitar padding-top extra */
+    }
+    .slide-asset {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px; /* Altura mínima para asegurar visibilidad */
+        margin-top: 0; /* Quitar margin-top */
+        flex: none !important; /* Evitar que se expanda */
+        order: 2; /* Asset siempre abajo */
+    }
+    .slide-asset img { 
+        max-height: 400px;
+        max-width: 100%;
+        display: block;
+        visibility: visible;
+    }
+    .slide-asset-1 img { max-height: 400px !important; }
+    .slide-asset-2 img { max-height: 400px !important; }
+    .slide-asset-3 img { max-height: 1000px !important; }  /* Point&Click.svg - mucho más grande en móvil */
+    .slide-asset-4 img { max-height: 1000px !important; }  /* Gestion.svg - mucho más grande en móvil */
+    .slide-asset-5 img { max-height: 400px !important; }
+    
+    /* Contenedores específicos para slides 3 y 4 */
+    .slide-asset-3 {
+        min-height: 400px !important;
+        flex: 1.5 !important;
+    }
+    .slide-asset-4 {
+        min-height: 400px !important;
+        flex: 1.5 !important;
+    }
+    
+    /* Forzar width específico para slides 3 y 4 */
+    .slide-content-wrapper .slide-asset-3 {
+        width: 100% !important;
+        max-width: none !important;
+    }
+    .slide-content-wrapper .slide-asset-4 {
+        width: 100% !important;
+        max-width: none !important;
+    }
+    
+    /* Estilos específicos para slide 3 independientemente del align */
+    .slide-asset-3 {
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 100% !important;
+    }
+    
+    /* Estilos específicos para slide 2 (Updates.svg) */
+    .slide-asset-2 {
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 100% !important;
+    }
+    
+    /* Reducir distancia para slide 4 (Gestion.svg) */
+    .slide-asset-4 {
+        margin-top: -8rem !important; /* Reducir espacio entre párrafo y asset */
+    }
+    
+    /* Reducir distancia para slide 3 (Point&Click.svg) */
+    .slide-asset-3 {
+        margin-top: -3rem !important; /* Reducir espacio entre párrafo y asset */
+    }
+}
+
+/* === CONTRASTE NAVBAR SOBRE SERVICES === */
+.navbar-contrast .desktop-nav-link,
+.navbar-contrast .cta-button,
+.navbar-contrast .cta-button .cta-text {
+  color: var(--creamy-light) !important;
+  background: none !important;
+  border-color: var(--creamy-light) !important;
+}
+
+.navbar-contrast .cta-button {
+  background-color: transparent !important;
+}
+
+.navbar-contrast .navbar-logo {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* Mobile: solo logo y burger cambian */
+@media (max-width: 900px) {
+  .navbar-contrast .navbar-logo {
+    filter: brightness(0) invert(1) !important;
+  }
+  .navbar-contrast .burger-line {
+    background: var(--creamy-light) !important;
+  }
+}
+
+/* Desktop: burger no cambia, solo nav, logo y CTA */
+@media (min-width: 901px) {
+
+}
+
+.reveal-container {
+  position: relative;
+  height: auto; /* Cambiado de 100vh a auto */
+  min-height: 100vh; /* Mantenemos altura mínima */
+  overflow: visible; /* Cambiado de hidden a visible */
+}
+
+.faq-wrapper-for-reveal,
+.footer-wrapper-for-reveal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto; /* Cambiado de 100vh a auto para permitir expansión */
+  min-height: 100vh; /* Mantenemos altura mínima */
+}
+
+.faq-wrapper-for-reveal {
+  z-index: 2;
+  background: linear-gradient(-45deg, #FFE9CF, #CA9DFE, #F897B4, #7AE66A);
+  background-size: 400% 400%;
+  animation: gradient-flow 25s ease infinite;
+  padding-bottom: 2rem; /* Espacio extra al final */
+}
+
+.footer-wrapper-for-reveal {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: auto; /* Cambiado de 100vh a auto */
+  min-height: 100vh;
+  padding-bottom: 2rem; /* Espacio extra al final */
+}
+
+.footer-wrapper-for-reveal .footer-section {
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.footer-wrapper-for-reveal .footer-wrapper {
+  flex: 1;
+}
+
+.footer-wrapper-for-reveal .gradient-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* ... (otros estilos se mantienen) ... */
+
+/* Ajustes para móvil - Reveal */
+@media (max-width: 768px) {
+  .reveal-container {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .faq-wrapper-for-reveal {
+    height: auto;
+    min-height: 100vh;
+    padding-bottom: 2rem; /* Espacio extra para el FAQ */
+    overflow: visible;
+  }
+
+  .footer-wrapper-for-reveal {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+    padding-bottom: 4rem; /* Espacio extra para el footer */
+  }
+}
+
+.h1-word-wrapper {
+  display: inline-block;
+  padding: 0; /* Sin padding entre palabras */
+  overflow: visible;
+}
+
+.h1-word {
+  display: inline-block;
+  overflow: visible;
+}

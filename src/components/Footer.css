@@ -1,0 +1,372 @@
+/* Footer principal */
+.footer-section {
+  position: relative;
+  padding: 4rem 5% 8rem;
+  background-color: var(--chocolate-primary);
+  color: var(--creamy-light);
+  font-family: var(--font-sans);
+  overflow: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* clip-path: inset(100% 0 0 0); */
+}
+
+/* Filas */
+.footer-row {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+/* Fila 1 - Logo */
+.logo-row {
+  text-align: center;
+  padding: 5rem 0 1.5rem 0;
+}
+
+.footer-main-logo {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 0.5rem;
+  filter: brightness(0) invert(1);
+}
+
+.social-pills {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.social-pill {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  color: var(--chocolate-primary);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  font-size: 0.9rem;
+  position: relative;
+}
+
+.social-pill:hover {
+  transform: translateY(-3px);
+  opacity: 0.9;
+}
+
+/* Tooltips para botones de redes sociales */
+.social-pill:hover .tooltip-absolute {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-3px);
+}
+
+.social-pill.proximamente-link:hover {
+  opacity: 0.6;
+}
+
+/* Fila 2 - Columnas */
+.columns-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3rem;
+  padding: 3rem 0;
+}
+
+.description-col p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.links-col h3, .newsletter-col h3 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--creamy-light);
+}
+
+.links-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.links-col li {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.footer-link {
+  color: var(--creamy-light);
+  text-decoration: none;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  position: relative;
+  padding-bottom: 2px;
+  font-size: 1rem;
+}
+
+.footer-link:hover {
+  opacity: 1;
+  color: var(--yellow-cartoon);
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--punk-fresa);
+  transition: width 0.3s ease;
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+/* TOOLTIP COMO ELEMENTO HTML REAL */
+.tooltip-absolute {
+  position: absolute;
+  bottom: 120%;
+  left: 0;
+  transform: translateX(0);
+  background: var(--green-turtle);
+  color: var(--chocolate-primary);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 9999;
+  border: 2px solid var(--chocolate-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.tooltip-absolute.clicked {
+  background: var(--red-not-scarlet);
+  color: white;
+  border-color: white;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+.links-col li {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.links-col li:hover .tooltip-absolute {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-3px);
+}
+
+/* ESTILOS PARA LINKS PROXIMAMENTE */
+.proximamente-link {
+  position: relative;
+  cursor: pointer;
+}
+
+.proximamente-link:hover {
+  color: var(--creamy-light) !important;
+  opacity: 0.6 !important;
+}
+
+.proximamente-link:hover::after {
+  width: 0 !important;
+}
+
+.newsletter-form {
+  margin-top: 1.5rem;
+}
+
+.newsletter-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(255, 233, 207, 0.3);
+  background-color: rgba(255, 233, 207, 0.1);
+  color: var(--creamy-light);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-family: var(--font-sans);
+}
+
+.newsletter-input::placeholder {
+  color: rgba(255, 233, 207, 0.5);
+}
+
+.newsletter-button {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--chocolate-primary);
+  font-family: var(--font-sans);
+}
+
+.newsletter-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Fila 3 - Texto animado */
+.animated-text-row {
+  text-align: center;
+  padding: 2rem 0;
+  font-size: 2rem;
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fixed-word {
+  font-family: var(--font-serif);
+  color: var(--yellow-cartoon);
+  margin-right: 0.5rem;
+  font-weight: 400;
+  font-size: calc(2rem + 5pt);
+}
+
+.typing-text {
+  font-family: var(--font-sans);
+  color: var(--creamy-light);
+  font-weight: 500;
+}
+
+.typing-cursor {
+  animation: blink 1s infinite;
+  color: var(--punk-fresa);
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Barra de gradiente */
+.gradient-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(
+    90deg, 
+    var(--punk-fresa), 
+    var(--yellow-cartoon), 
+    var(--green-turtle), 
+    var(--cyan-light), 
+    var(--violet-light), 
+    var(--punk-fresa)
+  );
+  background-size: 400% 400%;
+  animation: gradient-move 8s linear infinite;
+  overflow: hidden;
+}
+
+@keyframes gradient-move {
+  0% { background-position: 0% center; }
+  100% { background-position: -200% center; }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .columns-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  
+  .footer-main-logo {
+    max-width: 250px;
+  }
+  
+  .animated-text-row {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-section {
+    min-height: 0; /* Altura automática */
+    padding: 2rem 1rem 2rem; /* Reducido el padding bottom */
+    overflow: visible;
+  }
+
+  .footer-row {
+    padding: 1rem 0;
+  }
+
+  .logo-row {
+    padding: 1rem 0 2rem;
+  }
+
+  .footer-main-logo {
+    max-width: 200px;
+  }
+
+  .columns-row {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .animated-text-row {
+    font-size: 1.2rem;
+    padding: 1rem 0 3rem; /* Aumentado el padding bottom */
+    flex-direction: column;
+    margin-top: 2rem; /* Espacio extra arriba */
+  }
+
+  .fixed-word {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .social-pills {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  /* Ajuste para el reveal en móvil */
+  .reveal-container {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .faq-wrapper-for-reveal,
+  .footer-wrapper-for-reveal {
+    /* height: auto; */
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .newsletter-form {
+    padding-bottom: 2.5rem;
+  }
+}
+
+.footer-logo-fill {
+  fill: var(--creamy-light);
+}
