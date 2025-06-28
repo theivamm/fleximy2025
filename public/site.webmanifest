@@ -1,0 +1,22 @@
+{
+  "name": "Fleximy - Plataforma de gestión de contenido creativo",
+  "short_name": "Fleximy",
+  "description": "Tu plataforma integral para gestión de contenido creativo",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#2C1810",
+  "theme_color": "#F5C939",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+} 

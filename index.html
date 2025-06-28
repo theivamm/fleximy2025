@@ -1,22 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/flexfav.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    
+    <!-- SEO Meta Tags -->
+    <title>Fleximy - Tu plataforma de gestión de contenido creativo</title>
+    <meta name="description" content="Fleximy es tu plataforma integral para gestión de contenido creativo. Diseño gráfico, branding, motion graphics, UX/UI y más. Sin contratos, precios asequibles y entregas rápidas." />
+    <meta name="keywords" content="diseño gráfico, branding, motion graphics, UX/UI, contenido creativo, diseño web, ilustraciones, packaging, presentaciones, gestión de contenido" />
+    <meta name="author" content="Fleximy" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Spanish" />
+    <meta name="revisit-after" content="7 days" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://fleximy.com/" />
+    <meta property="og:title" content="Fleximy - Tu plataforma de gestión de contenido creativo" />
+    <meta property="og:description" content="Fleximy es tu plataforma integral para gestión de contenido creativo. Diseño gráfico, branding, motion graphics, UX/UI y más. Sin contratos, precios asequibles y entregas rápidas." />
+    <meta property="og:image" content="https://fleximy.com/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Fleximy" />
+    <meta property="og:locale" content="es_ES" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://fleximy.com/" />
+    <meta property="twitter:title" content="Fleximy - Tu plataforma de gestión de contenido creativo" />
+    <meta property="twitter:description" content="Fleximy es tu plataforma integral para gestión de contenido creativo. Diseño gráfico, branding, motion graphics, UX/UI y más." />
+    <meta property="twitter:image" content="https://fleximy.com/twitter-image.jpg" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://fleximy.com/" />
+    
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/svg+xml" href="/flexfav.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
     
-    <title>Fleximy - Tu plataforma de gestión de contenido creativo</title>
+    <!-- Structured Data / JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Fleximy",
+      "url": "https://fleximy.com",
+      "logo": "https://fleximy.com/fleximy-logo.svg",
+      "description": "Plataforma integral para gestión de contenido creativo",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "ES"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "availableLanguage": "Spanish"
+      },
+      "sameAs": [
+        "https://www.instagram.com/fleximy",
+        "https://www.linkedin.com/company/fleximy"
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
-
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

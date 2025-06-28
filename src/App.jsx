@@ -51,19 +51,49 @@ function App() {
 
   return (
     <>
-      <Navbar />
-      <main>
-        <CreativeHero />
-        <StackingTitle />
-        <StackingCards />
-        <PlatformSection />
-        <WinWin />
-        <ServicesCarousel />
-        <ComparisonSection />
-        <PricingTable />
-        <FAQ />
-        <Footer />
+      <header>
+        <Navbar />
+      </header>
+      
+      <main role="main">
+        <section id="hero" aria-label="Sección principal">
+          <CreativeHero />
+        </section>
+        
+        <section id="about" aria-label="Acerca de Fleximy">
+          <StackingTitle />
+          <StackingCards />
+        </section>
+        
+        <section id="platform" aria-label="Nuestra plataforma">
+          <PlatformSection />
+        </section>
+        
+        <section id="benefits" aria-label="Beneficios">
+          <WinWin />
+        </section>
+        
+        <section id="services" aria-label="Nuestros servicios">
+          <ServicesCarousel />
+        </section>
+        
+        <section id="comparison" aria-label="Comparación">
+          <ComparisonSection />
+        </section>
+        
+        <section id="pricing" aria-label="Planes y precios">
+          <PricingTable />
+        </section>
+        
+        <section id="faq" aria-label="Preguntas frecuentes">
+          <FAQ />
+        </section>
       </main>
+      
+      <footer>
+        <Footer />
+      </footer>
+      
       <BackToTop />
     </>
   );
