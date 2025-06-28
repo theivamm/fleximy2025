@@ -15,6 +15,7 @@ const Footer = () => {
   const [displayText, setDisplayText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
   const [clickedLinks, setClickedLinks] = useState(new Set());
+  const [svgLoaded, setSvgLoaded] = useState(false);
   const logoRef = useRef();
   const footerRef = useRef();
 
@@ -177,34 +178,97 @@ const Footer = () => {
   }, []);
 
   useEffect(() => {
+    if (!svgLoaded) return; // No ejecutar si el SVG no está cargado
+    
     gsap.registerPlugin(ScrollTrigger);
-    // Animación de letras sin scrubbing - se ejecuta una vez cuando entra en viewport
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: logoRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
+    
+    // Función para verificar que todos los elementos del SVG estén disponibles
+    const checkSVGElements = () => {
+      const elements = ['#F', '#l', '#e', '#x', '#e2', '#a', '#y', '#a2', '#excl'];
+      return elements.every(id => document.querySelector(id));
+    };
+
+    // Función para ejecutar la animación
+    const runAnimation = () => {
+      const ctx = gsap.context(() => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: logoRef.current,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+
+        // Verificar que cada elemento existe antes de animarlo
+        const elements = [
+          { id: '#F', anim: { y: -80, opacity: 0, duration: 0.7, ease: 'bounce.out' } },
+          { id: '#l', anim: { scale: 0, opacity: 0, duration: 0.5, ease: 'back.out(2)' } },
+          { id: '#e', anim: { x: -60, opacity: 0, duration: 0.5, ease: 'power2.out' } },
+          { id: '#x', anim: { rotationY: 180, opacity: 0, duration: 0.7, ease: 'power4.out' } },
+          { id: '#e2', anim: { scaleY: 0, opacity: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' } },
+          { id: '#a', anim: { y: 80, opacity: 0, duration: 0.6, ease: 'bounce.out' } },
+          { id: '#y', anim: { scale: 0, opacity: 0, duration: 0.5, ease: 'back.out(2)' } },
+          { id: '#a2', anim: { x: 60, opacity: 0, duration: 0.5, ease: 'power2.out' } },
+          { id: '#excl', anim: { rotation: 360, opacity: 0, duration: 0.7, ease: 'expo.out' } }
+        ];
+
+        elements.forEach((element, index) => {
+          const el = document.querySelector(element.id);
+          if (el) {
+            if (index === 0) {
+              tl.from(element.id, element.anim);
+            } else {
+              tl.from(element.id, element.anim, '-=0.3');
+            }
+          }
+        });
+      }, logoRef);
+      
+      return ctx;
+    };
+
+    // Intentar ejecutar la animación inmediatamente
+    let ctx = null;
+    if (checkSVGElements()) {
+      ctx = runAnimation();
+    } else {
+      // Si los elementos no están disponibles, esperar un poco y reintentar
+      const timer = setTimeout(() => {
+        if (checkSVGElements()) {
+          ctx = runAnimation();
         }
-      });
-      tl.from('#F', { y: -80, opacity: 0, duration: 0.7, ease: 'bounce.out' })
-        .from('#l', { scale: 0, opacity: 0, duration: 0.5, ease: 'back.out(2)' }, '-=0.3')
-        .from('#e', { x: -60, opacity: 0, duration: 0.5, ease: 'power2.out' }, '-=0.3')
-        .from('#x', { rotationY: 180, opacity: 0, duration: 0.7, ease: 'power4.out' }, '-=0.3')
-        .from('#e2', { scaleY: 0, opacity: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' }, '-=0.3')
-        .from('#a', { y: 80, opacity: 0, duration: 0.6, ease: 'bounce.out' }, '-=0.3')
-        .from('#y', { scale: 0, opacity: 0, duration: 0.5, ease: 'back.out(2)' }, '-=0.3')
-        .from('#a2', { x: 60, opacity: 0, duration: 0.5, ease: 'power2.out' }, '-=0.3')
-        .from('#excl', { rotation: 360, opacity: 0, duration: 0.7, ease: 'expo.out' }, '-=0.3');
-    }, logoRef);
-    return () => ctx.revert();
-  }, []);
+      }, 100);
+
+      // Si aún no están disponibles después de 500ms, intentar una vez más
+      const fallbackTimer = setTimeout(() => {
+        if (checkSVGElements()) {
+          ctx = runAnimation();
+        }
+      }, 500);
+
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(fallbackTimer);
+        if (ctx) ctx.revert();
+      };
+    }
+
+    return () => {
+      if (ctx) ctx.revert();
+    };
+  }, [svgLoaded]); // Dependencia en svgLoaded
 
   return (
     <footer className="footer-section" ref={footerRef}>
       {/* Fila 1: Logo grande centrado */}
       <div className="footer-row logo-row" ref={logoRef}>
-        <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2030 689" className="footer-main-logo">
+        <svg 
+          id="Layer_1" 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 2030 689" 
+          className="footer-main-logo"
+          onLoad={() => setSvgLoaded(true)}
+        >
           <g>
             <path id="excl" className="footer-logo-fill" d="M1907.21,427.14l.5-68.09c-.33-31.91-.17-57.56.49-76.97.99-19.74,2.47-34.7,4.44-44.9,2.63-14.14,8.06-24.18,16.28-30.1,8.22-6.25,17.93-9.37,29.11-9.37,12.17,0,21.21,3.12,27.13,9.37,6.25,6.25,9.38,14.31,9.38,24.18,0,8.88-2.64,20.89-7.9,36.02-5.26,14.8-13.65,34.87-25.16,60.19-11.51,25.33-26.64,58.55-45.39,99.67h-8.88ZM1860.34,505.1c0-11.51,4.12-21.38,12.34-29.6,8.55-8.22,18.42-12.33,29.6-12.33,10.53,0,18.91,3.45,25.16,10.36s9.37,15.13,9.37,24.67c0,11.51-4.27,21.22-12.82,29.11-8.22,7.89-17.93,11.84-29.11,11.84-10.19,0-18.58-3.29-25.16-9.87-6.25-6.91-9.38-14.97-9.38-24.18Z" />
             <path id="a" className="st0" d="M1660.71,539.64c-9.21,0-17.93-2.14-26.15-6.41-8.22-4.28-14.97-11.35-20.23-21.22-4.93-9.87-7.4-22.86-7.4-38.98,0-17.43,3.46-34.87,10.36-52.3,6.91-17.76,16.12-34.54,27.63-50.33,11.52-16.12,24.34-30.26,38.48-42.43,14.14-12.5,28.79-22.37,43.91-29.6,15.13-7.24,29.44-10.85,42.92-10.85,6.59,0,12.66,1.32,18.26,3.95,5.92,2.3,11.51,5.59,16.77,9.87l39.96-15.3,3.95,2.47-42.92,188.97c-2.3,9.21-3.45,16.78-3.45,22.7,0,6.91,3.12,10.36,9.37,10.36,4.61,0,9.87-2.14,15.79-6.41,6.25-4.28,13.32-10.03,21.21-17.27l3.95,3.95c-4.94,7.89-11.18,15.62-18.75,23.19-7.23,7.24-15.46,13.32-24.67,18.26-8.88,4.93-18.42,7.4-28.61,7.4-11.18,0-20.23-3.29-27.14-9.87-6.9-6.91-10.36-17.43-10.36-31.58,0-4.61.17-9.05.5-13.32-13.16,14.8-27.14,27.63-41.94,38.49-14.47,10.85-28.29,16.28-41.44,16.28ZM1665.15,450.83c0,17.43,2.79,30.1,8.39,37.99,5.92,7.57,13.65,11.35,23.18,11.35,7.9,0,15.79-2.47,23.69-7.4,7.89-4.93,16.44-12.01,25.65-21.22.66-3.95,1.48-8.06,2.47-12.33l31.08-142.1c-4.27-5.26-9.38-8.88-15.3-10.85-5.92-1.97-11.18-2.96-15.78-2.96-14.14,0-28.95,8.39-44.41,25.16-12.17,13.49-21.7,31.25-28.61,53.29-6.91,22.04-10.36,45.06-10.36,69.08Z" />
