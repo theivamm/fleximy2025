@@ -4,37 +4,42 @@ import './FAQ.css'; // CORRECCIÓN: La ruta ahora es correcta
 
 const faqData = [
     {
-        question: "De donde salen los creativos que trabajan en Flexi?",
+        question: "¿De donde salen los creativos que trabajan en Fleximy?",
         answer: "Reclutamos talentos creativos de todo Latinoamerica para satisfacer las diversas necesidades de diseño de nuestros clientes. Todos nuestros miembros son empleados a tiempo completo con salarios y beneficios competitivos."
     },
     {
-        question: "Qué tan rápido es el tiempo de respuesta de Flexi?",
-        answer: "Todos los planes generalmente te darán una respuesta el mismo día. Sin embargo, las tareas complejas como ilustraciones personalizadas, diseño web/app, landings, infografías, folletos de varias páginas y presentaciones pueden llevar más tiempo, pero de todas formas respondemos mas rápido que cualquier freelancer o diseñador del emrcado, hemos terminado websites completos en menos de una semana!. La mayoría de las revisiones sencillas se pueden completar en un día."
+        question: "¿Qué tan rápido es el tiempo de respuesta de Fleximy?",
+        answer: "Todos los planes generalmente te darán una respuesta el mismo día. Sin embargo, las tareas complejas como ilustraciones personalizadas, diseño web/app, landings, infografías, folletos de varias páginas y presentaciones pueden llevar más tiempo, pero de todas formas respondemos mas rápido que cualquier freelancer o diseñador del mercado, hemos terminado websites completos en menos de una semana!. La mayoría de las revisiones sencillas se pueden completar en un día."
     },
     {
-        question: "Excepteur sint occaecat cupidatat non proident?",
-        answer: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+        question: "¿Cuántas horas al mes trabajará mi diseñador?",
+        answer: "Fleximy no factura por hora. Nuestro modelo de facturación de tarifa fija te ofrece proyectos de diseño ilimitados sin limitaciones. Crea un proyecto y te asignaremos un diseñador al instante. Tan pronto como un proyecto se marque como finalizado, comenzaremos el proyecto siguiente el mismo día."
     },
     {
-        question: "Excepteur sint occaecat cupidatat non proident?",
-        answer: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+        question: "¿Cuántos diseños puedo obtener en un mes?",
+        answer: "Fleximy ofrece una velocidad líder en la industria sin comprometer la calidad. La cantidad de diseños que podemos completar para ti cada mes depende de la complejidad del proyecto y de tu capacidad de bajar una tarea de manera clara y de tus respuestas a las preguntas y comentarios."
     },
     {
-        question: "Excepteur sint occaecat cupidatat non proident?",
-        answer: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+        question: "¿Cómo funcionan las revisiones?",
+        answer: "Hacer revisiones es simple con Penji. Nuestra herramienta Point & Click te permite marcar las correcciones directamente en el diseño. Se acabaron las capturas de pantalla desordenadas o los problemas para describir tus ediciones."
     },
     {
-        question: "Excepteur sint occaecat cupidatat non proident?",
-        answer: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+        question: "¿Qué sucede si no me gusta mi diseño?",
+        answer: "Si un diseño no te gusta, marca tus correcciones directamente en el diseño utilizando nuestra herramienta Point & Click. Tu diseñador será notificado y hará los ajustes de inmediato. Cada proyecto viene con revisiones ilimitadas, así que no descansaremos hasta que estés encantado."
     },
     {
-        question: "Excepteur sint occaecat cupidatat non proident?",
-        answer: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+        question: "¿Qué software de diseño usan en Fleximy?",
+        answer: "Principalmente usamos productos de Adobe. Para presentaciones, podemos usar Google Slides. Aunque nos adaptamos a muchos softwares, Figma, utilizamos herramientas como Github, Netlify entre muchas otras."
     },
     {
-        question: "Nemo enim ipsam voluptatem quia voluptas?",
-        answer: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet."
+        question: "¿Cómo funciona la garantía de devolución de dinero de 7 días de Fleximy?",
+        answer: "Te devolvemos tu dinero en caso que el servicio no te guste, dentro de la primera semana de trabajo. Hacemos que cancelar tu suscripción sea simple. Puedes solicitar la cancelación contactandote con nosotros. Hacemos que las cancelaciones sean sencillas porque confiamos en la calidad de nuestro servicio para mantenerte, no en la letra pequeña."
+    },
+    {
+        question: "¿Qué significa diseño gráfico ilimitado?",
+        answer: "Diseño gráfico ilimitado significa que no tenes que pagar por hora o por proyecto. Crea tantos proyectos de diseño como necesites, y los completaremos en el orden que establezcas. Una vez que se completa un proyecto, comenzaremos el siguiente en tu fila el mismo día."
     }
+    
     
 ];
 
