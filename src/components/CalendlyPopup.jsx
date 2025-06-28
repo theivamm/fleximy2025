@@ -80,7 +80,10 @@ const CalendlyPopup = ({ isOpen, onClose }) => {
         <div 
           className="calendly-inline-widget" 
           data-url="https://calendly.com/fleximy-design/30min?background_color=ffe9cf&text_color=270f03&primary_color=f897b4" 
-          style={{ minWidth: '600px', height: '700px' }}
+          style={{ 
+            minWidth: window.innerWidth <= 768 ? '320px' : '600px', 
+            height: window.innerWidth <= 768 ? '500px' : '700px' 
+          }}
         />
       </div>
     </div>

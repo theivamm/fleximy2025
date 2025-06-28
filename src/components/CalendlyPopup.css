@@ -60,8 +60,8 @@
   .calendly-popup-content {
     padding: 15px;
     margin: 10px;
-    max-width: 95vw;
-    max-height: 95vh;
+    max-width: 90vw;
+    max-height: 80vh;
   }
   
   .calendly-popup-close {
@@ -74,6 +74,6 @@
 
   .calendly-inline-widget {
     min-width: 320px;
-    height: 600px;
+    height: 500px;
   }
 } 
