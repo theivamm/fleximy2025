@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
+import CalendlyPopup from './CalendlyPopup';
+import './CalendlyPopup.css';
 
 gsap.registerPlugin(ScrambleTextPlugin);
 
@@ -21,6 +23,7 @@ const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [menuBgColor, setMenuBgColor] = useState('var(--punk-fresa)');
     const [isContrast, setIsContrast] = useState(false);
+    const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
     
     const navRef = useRef(null);
     const logoRef = useRef(null);
@@ -274,7 +277,7 @@ const Navbar = () => {
                         ))} 
                     </ul>
                 </nav>
-                <button className="cta-button"> <span className="cta-text">Hablemos</span> <span className="circle-fill"></span> </button>
+                <button className="cta-button" onClick={() => setIsCalendlyOpen(true)}> <span className="cta-text">Hablemos</span> <span className="circle-fill"></span> </button>
                 <button className="burger-menu-button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                     <span className="burger-line"></span> <span className="burger-line"></span> <span className="burger-line"></span>
                 </button>
@@ -299,6 +302,7 @@ const Navbar = () => {
                     </ul>
                 </nav>
             </div>
+            <CalendlyPopup isOpen={isCalendlyOpen} onClose={() => setIsCalendlyOpen(false)} />
         </header>
     );
 };
