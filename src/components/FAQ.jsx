@@ -21,7 +21,7 @@ const faqData = [
     },
     {
         question: "¿Cómo funcionan las revisiones?",
-        answer: "Hacer revisiones es simple con Penji. Nuestra herramienta Point & Click te permite marcar las correcciones directamente en el diseño. Se acabaron las capturas de pantalla desordenadas o los problemas para describir tus ediciones."
+        answer: "Hacer revisiones es simple con Fleximy. Nuestra herramienta Point & Click te permite marcar las correcciones directamente en el diseño. Se acabaron las capturas de pantalla desordenadas o los problemas para describir tus ediciones."
     },
     {
         question: "¿Qué sucede si no me gusta mi diseño?",
