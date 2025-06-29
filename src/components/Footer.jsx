@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Footer.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { addNewsletterSubscription } from '../firebase';
 
 const Footer = () => {
   const phrases = [
@@ -16,6 +17,12 @@ const Footer = () => {
   const [isTyping, setIsTyping] = useState(true);
   const [clickedLinks, setClickedLinks] = useState(new Set());
   const [svgLoaded, setSvgLoaded] = useState(false);
+  
+  // Estados para el formulario de newsletter
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
+  
   const logoRef = useRef();
   const footerRef = useRef();
 
@@ -120,6 +127,40 @@ const Footer = () => {
         return newSet;
       });
     }, 3000);
+  };
+
+  // Función para manejar el envío del formulario de newsletter
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Validación básica
+    if (!email || !email.includes('@')) {
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus(null), 3000);
+      return;
+    }
+    
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+    
+    try {
+      const result = await addNewsletterSubscription(email);
+      
+      if (result.success) {
+        setSubmitStatus('success');
+        setEmail(''); // Limpiar el campo
+        setTimeout(() => setSubmitStatus(null), 5000); // Ocultar mensaje después de 5 segundos
+      } else {
+        setSubmitStatus('error');
+        setTimeout(() => setSubmitStatus(null), 3000);
+      }
+    } catch (error) {
+      console.error('Error submitting newsletter:', error);
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus(null), 3000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   useEffect(() => {
@@ -325,20 +366,39 @@ const Footer = () => {
         <div className="footer-col newsletter-col">
           <h3>Suscribite</h3>
           <p>Recibí las últimas novedades y ofertas.</p>
-          <form className="newsletter-form">
+          <form className="newsletter-form" onSubmit={handleNewsletterSubmit}>
             <input 
               type="email" 
               placeholder="tu@email.com" 
               className="newsletter-input" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isSubmitting}
             />
             <button 
               type="submit" 
               className="newsletter-button"
               style={{ backgroundColor: 'var(--yellow-cartoon)' }}
+              disabled={isSubmitting}
             >
-              Enviar
+              {isSubmitting ? 'Enviando...' : 'Enviar'}
             </button>
           </form>
+          
+          {/* Mensajes de estado */}
+          {submitStatus === 'success' && (
+            <div className="newsletter-message success">
+              <span className="message-icon">✅</span>
+              ¡Gracias por suscribirte! Te mantendremos informado.
+            </div>
+          )}
+          
+          {submitStatus === 'error' && (
+            <div className="newsletter-message error">
+              <span className="message-icon">❌</span>
+              Hubo un error. Por favor, intenta nuevamente.
+            </div>
+          )}
         </div>
       </div>
 

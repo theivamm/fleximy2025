@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import './index.css';
+import './firebase'; // Inicializar Firebase
 
 import Navbar from './components/Navbar';
 import CreativeHero from './components/CreativeHero';
