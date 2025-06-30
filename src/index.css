@@ -22,13 +22,13 @@
 
 /* Estilos de selección de texto personalizados */
 ::selection {
-  background-color: #270F03;
-  color: #FFE9CF;
+  background-color: #FFE9CF;
+  color: #270F03;
 }
 
 ::-moz-selection {
-  background-color: #270F03;
-  color: #FFE9CF;
+  background-color: #FFE9CF;
+  color: #270F03;
 }
 
 /* 2. Keyframes para la animación del gradiente */

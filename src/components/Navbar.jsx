@@ -153,54 +153,75 @@ const Navbar = () => {
                 // Se anima la aparición de los links dentro del menú
                 .from(mobileLinks, { y: 30, opacity: 0, stagger: 0.1, duration: 0.5, ease: 'power2.out' }, "-=0.3");
 
-
             // --- LÓGICA DE ESCRITORIO ---
             const logoObject = logoRef.current;
-            logoObject.addEventListener('load', () => {
+            let retryCount = 0;
+            const maxRetries = 10;
+            const retryDelay = 100; // ms
+
+            function animateLogoIfReady() {
+                if (!logoObject) return;
                 const svgDoc = logoObject.contentDocument;
-                if (!svgDoc) return;
-                
+                if (!svgDoc) {
+                    if (retryCount < maxRetries) {
+                        retryCount++;
+                        setTimeout(animateLogoIfReady, retryDelay);
+                    }
+                    return;
+                }
                 const letters = svgDoc.querySelectorAll('#logo-letra-f, #logo-letra-l, #logo-letra-e, #logo-letra-x, #logo-letra-i, #logo-letra-ipoint, #logo-letra-m, #logo-letra-y');
                 const underline = svgDoc.querySelector('#logo-letra-subrayado');
-
                 if (letters.length < 8 || !underline) return;
-
                 // Animación de entrada del logo
                 gsap.set(letters, { autoAlpha: 0, y: -100, rotation: "random(-80, 80)" });
                 gsap.set(underline, { scaleX: 0, transformOrigin: 'left center' });
                 const logoTl = gsap.timeline({ delay: 1 });
                 logoTl.to(letters, { autoAlpha: 1, y: 0, rotation: 0, ease: "back.out(1.4)", duration: 1, stagger: { each: 0.08, from: "random" } })
                       .to(underline, { scaleX: 1, duration: 0.8, ease: 'power2.out' }, "-=1");
+            }
 
-                // Efecto Hover para los Links del Menú
-                const desktopLinks = gsap.utils.toArray('.desktop-nav-link');
-                desktopLinks.forEach(link => {
-                    const originalText = link.textContent;
-                    link.addEventListener('mouseenter', () => {
-                        gsap.to(link, { duration: 0.5, scrambleText: { text: originalText, chars: "XO*#?/", speed: 0.4, ease: 'power2.inOut' } });
-                    });
+            if (logoObject) {
+                logoObject.addEventListener('load', animateLogoIfReady);
+                // Si el logo ya está cargado, intenta animar inmediatamente
+                animateLogoIfReady();
+            }
+
+            // --- Animación de entrada para el logo <img> ---
+            if (logoRef.current && logoRef.current.tagName === 'IMG') {
+                gsap.fromTo(logoRef.current,
+                  { y: -100, opacity: 0, rotation: gsap.utils.random(-80, 80) },
+                  { y: 0, opacity: 1, rotation: 0, duration: 1, ease: 'back.out(1.4)', delay: 0.5 }
+                );
+            }
+
+            // Efecto Hover para los Links del Menú
+            const desktopLinks = gsap.utils.toArray('.desktop-nav-link');
+            desktopLinks.forEach(link => {
+                const originalText = link.textContent;
+                link.addEventListener('mouseenter', () => {
+                    gsap.to(link, { duration: 0.5, scrambleText: { text: originalText, chars: "XO*#?/", speed: 0.4, ease: 'power2.inOut' } });
                 });
-                
-                // Efecto Hover para el Botón CTA
-                const ctaButton = navRef.current.querySelector('.cta-button');
-                if (ctaButton) {
-                    const circleFill = ctaButton.querySelector('.circle-fill');
-                    let lastColorIndex = -1;
-                    const onButtonEnter = (e) => {
-                        const rect = ctaButton.getBoundingClientRect();
-                        const x = e.clientX - rect.left;
-                        const y = e.clientY - rect.top;
-                        let colorIndex;
-                        do { colorIndex = Math.floor(Math.random() * colorPalette.length); } while (colorIndex === lastColorIndex);
-                        lastColorIndex = colorIndex;
-                        gsap.set(circleFill, { top: y, left: x, backgroundColor: colorPalette[colorIndex] });
-                        gsap.to(circleFill, { scale: 15, duration: 0.5, ease: 'power2.out' });
-                    };
-                    const onButtonLeave = () => { gsap.to(circleFill, { scale: 0, duration: 0.5, ease: 'power2.in' }); };
-                    ctaButton.addEventListener('mouseenter', onButtonEnter);
-                    ctaButton.addEventListener('mouseleave', onButtonLeave);
-                }
             });
+            
+            // Efecto Hover para el Botón CTA
+            const ctaButton = navRef.current.querySelector('.cta-button');
+            if (ctaButton) {
+                const circleFill = ctaButton.querySelector('.circle-fill');
+                let lastColorIndex = -1;
+                const onButtonEnter = (e) => {
+                    const rect = ctaButton.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    let colorIndex;
+                    do { colorIndex = Math.floor(Math.random() * colorPalette.length); } while (colorIndex === lastColorIndex);
+                    lastColorIndex = colorIndex;
+                    gsap.set(circleFill, { top: y, left: x, backgroundColor: colorPalette[colorIndex] });
+                    gsap.to(circleFill, { scale: 15, duration: 0.5, ease: 'power2.out' });
+                };
+                const onButtonLeave = () => { gsap.to(circleFill, { scale: 0, duration: 0.5, ease: 'power2.in' }); };
+                ctaButton.addEventListener('mouseenter', onButtonEnter);
+                ctaButton.addEventListener('mouseleave', onButtonLeave);
+            }
         }, navRef);
 
         return () => ctx.revert();
@@ -261,7 +282,9 @@ const Navbar = () => {
     return (
         <header ref={navRef} className={`main-header${isContrast ? ' navbar-contrast' : ''}`}>
             <div className="navbar-wrapper">
-                <a href="#" className="logo-link" onClick={handleLogoClick}> <object ref={logoRef} type="image/svg+xml" data="/fleximy-logo.svg" className="navbar-logo"></object> </a>
+                <a href="#" className="logo-link" onClick={handleLogoClick}>
+                    <img ref={logoRef} src="/fleximy-logo.svg" className="navbar-logo" alt="Fleximy logo" />
+                </a>
                 <nav className="desktop-nav">
                     <ul> 
                         {navLinks.map((link) => (

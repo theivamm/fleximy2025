@@ -16,7 +16,7 @@ const catSequenceDurations = [3, 1, 1, 1, 3, 1, 2, 5];
 
 const CreativeHero = () => {
   const container = useRef(null);
-  // Refs para nuestros DOS SVGs
+  // Refs para nuestros DOS IMGs
   const catA_Ref = useRef(null);
   const catB_Ref = useRef(null);
 
@@ -137,7 +137,7 @@ const CreativeHero = () => {
         setupGradientOnLoad(catB_Ref.current);
       }
 
-      // --- TIMELINE PARA LA SECUENCIA DE GATOS (SIN PARPADEO) ---
+      // --- TIMELINE PARA LA SECUENCIA DE GATOS (USANDO <img>) ---
       let activeCat = catA_Ref.current;
       let hiddenCat = catB_Ref.current;
 
@@ -149,30 +149,23 @@ const CreativeHero = () => {
         repeat: -1,
       });
 
-      // Iteramos sobre nuestra secuencia de assets y duraciones
       catSequenceAssets.forEach((assetPath, index) => {
         catSequence.call(() => {
           // Pre-cargamos la siguiente imagen en el gato oculto
-          hiddenCat.data = assetPath;
-          
-          // Esperamos a que el gato oculto cargue la nueva imagen
-          hiddenCat.addEventListener('load', function onCatLoad() {
-            // Una vez cargada, hacemos el cambio de visibilidad
+          hiddenCat.src = assetPath;
+
+          // Cuando la imagen esté cargada, hacemos el swap
+          hiddenCat.onload = function onCatLoad() {
             gsap.set(activeCat, { opacity: 0 });
             gsap.set(hiddenCat, { opacity: 1 });
-
-            // Aplicar gradientes al nuevo gato activo
-            // setTimeout(() => applyGradientToPaws(hiddenCat), 100);
-
             // Intercambiamos los roles de activo y oculto
             const temp = activeCat;
             activeCat = hiddenCat;
             hiddenCat = temp;
-            
             // Nos aseguramos de que el listener de carga se use solo una vez
-            this.removeEventListener('load', onCatLoad);
-          });
-        }).to({}, { duration: catSequenceDurations[index] }); // Esperamos la duración correspondiente
+            hiddenCat.onload = null;
+          };
+        }).to({}, { duration: catSequenceDurations[index] });
       });
 
     }, container);
@@ -210,9 +203,9 @@ const CreativeHero = () => {
     <section ref={container} className="creative-hero-section">
       <div className="creative-hero-wrapper">
         <div className="hero-svg-column">
-          {/* AHORA TENEMOS DOS SVGs SUPERPUESTOS */}
-          <object ref={catA_Ref} type="image/svg+xml" data="/cat-laptop.svg" className="hero-cat-svg" aria-label="Gato animado con un laptop"></object>
-          <object ref={catB_Ref} type="image/svg+xml" data="/cat-laptop.svg" className="hero-cat-svg" aria-label="Gato animado con un laptop"></object>
+          {/* TEMPORAL: Usar <img> en vez de <object> para depuración visual */}
+          <img ref={catA_Ref} src="/cat-laptop.svg" className="hero-cat-svg" alt="Gato animado con un laptop" />
+          <img ref={catB_Ref} src="/cat-laptop.svg" className="hero-cat-svg" alt="Gato animado con un laptop" />
         </div>
         
         {/* COLUMNA DERECHA COMPLETA Y RESTAURADA */}
