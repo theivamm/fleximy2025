@@ -1534,13 +1534,7 @@ section,
   transform: scale(1.05);
 }
 
-/* Aplica contraste de navbar sobre PlatformSection también */
-.platform-section ~ .main-header.navbar-contrast,
-.platform-section ~ .navbar-wrapper.navbar-contrast,
-.platform-section .navbar-contrast,
-#platform-section .navbar-contrast {
-  /* Hereda los mismos estilos de .navbar-contrast */
-}
+
 
 .cta-button:hover {
   background-color: var(--violeta);
