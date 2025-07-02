@@ -44,7 +44,6 @@ const CreativeHero = () => {
       const entryTimeline = gsap.timeline({ delay: 0.3 });
       entryTimeline.from('.h1-word', { y: -100, opacity: 0, rotation: "random(-60, 60)", duration: 0.8, ease: "back.out(1.2)", stagger: 0.08 });
       entryTimeline.from('.subtitle-word', { y: -80, opacity: 0, rotation: "random(-40, 40)", duration: 0.6, ease: "back.out(1)", stagger: 0.04 }, "-=0.5");
-      entryTimeline.from('.hero-button', { scale: 0, opacity: 0, duration: 1, ease: 'power3.out' }, "-=0.5");
 
       // --- EFECTO DE GRADIENTE EN MOVIMIENTO PARA LAS PATITAS ---
       // Comentado temporalmente - requiere análisis detallado de SVGs
@@ -169,32 +168,6 @@ const CreativeHero = () => {
       });
 
     }, container);
-    
-    // El resto de la lógica de listeners no cambia, solo la restauramos aquí
-    ctx.add(() => {
-      const button = container.current.querySelector('.hero-button');
-      if (button) {
-        const circleFill = button.querySelector('.circle-fill');
-        let lastColorIndex = -1;
-        const onButtonEnter = (e) => {
-          const rect = button.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          let colorIndex;
-          do { colorIndex = Math.floor(Math.random() * colorPalette.length); } while (colorIndex === lastColorIndex);
-          lastColorIndex = colorIndex;
-          gsap.set(circleFill, { top: y, left: x, backgroundColor: colorPalette[colorIndex] });
-          gsap.to(circleFill, { scale: 30, duration: 0.5, ease: 'power2.out' });
-        };
-        const onButtonLeave = () => { gsap.to(circleFill, { scale: 0, duration: 0.5, ease: 'power2.in' }); };
-        button.addEventListener('mouseenter', onButtonEnter);
-        button.addEventListener('mouseleave', onButtonLeave);
-        return () => {
-          button.removeEventListener('mouseenter', onButtonEnter);
-          button.removeEventListener('mouseleave', onButtonLeave);
-        };
-      }
-    });
 
     return () => ctx.revert();
   }, []);
@@ -210,27 +183,31 @@ const CreativeHero = () => {
         
         {/* COLUMNA DERECHA COMPLETA Y RESTAURADA */}
         <div className="hero-text-column">
-          <h1 className="hero-title-creative">
+          <h1 className="hero-title-creative" style={{ color: "var(--violeta2)" }}>
             {titleLines.map((line, lineIndex) => (
               <div key={lineIndex} className="h1-line-container">
                 {line.split(" ").map((word, wordIndex) => (
                   <span key={wordIndex} className="h1-word-wrapper">
-                    <span className="h1-word">{word}</span>
+                    <span
+                      className="h1-word"
+                      style={word.toLowerCase().includes("creativo") ? { color: "#5720C6" } : {}}
+                    >
+                      {word}
+                    </span>
                   </span>
                 ))}
               </div>
             ))}
           </h1>
-          <p className="hero-subtitle">
+          <p className="hero-subtitle" style={{ color: "var(--violeta2)" }}>
             {subtitleText.split(" ").map((word, index) => (
               <span key={index} className="subtitle-word-wrapper">
                 <span className="subtitle-word">{word}</span>
               </span>
             ))}
           </p>
-          <button className="hero-button" onClick={handleNavigation}>
-            Empezá a Flexear
-            <span className="circle-fill"></span>
+          <button className="cta-button" onClick={handleNavigation}>
+            <span className="cta-text">Empezá a Flexear</span>
           </button>
         </div>
       </div>

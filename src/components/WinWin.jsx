@@ -59,12 +59,10 @@ const WinWin = () => {
     ];
 
     const colorPalette = [
-        'var(--cyan-light)',
-        'var(--red-not-scarlet)', 
-        'var(--yellow-cartoon)',
-        'var(--violet-light)',
-        'var(--green-turtle)',
-        'var(--punk-fresa)'
+        'var(--azul)',
+        'var(--pink)',
+        'var(--agua)',
+        'var(--blanco)'
     ];
 
     useEffect(() => {

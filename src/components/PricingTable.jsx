@@ -6,26 +6,26 @@ import './PricingTable.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const colorPalette = [ 'var(--cyan-light)', 'var(--red-not-scarlet)', 'var(--yellow-cartoon)', 'var(--violet-light)', 'var(--green-turtle)', 'var(--punk-fresa)'];
+const colorPalette = [ 'var(--azul)' ];
 
 const pricingData = [
     {
-        plan: "PRO",
+        plan: "Pro",
         title: "Full Diseñador Sr.",
         description: "Contrata un diseñador grafico sr. para todos tus proyectos, ideal para redes sociales, creacion de marcas y campañas de ads.",
-        price: "$300.000"
+        price: "USD300"
     },
     {
-        plan: "IDEAL",
+        plan: "Ideal",
         title: "Full Diseñador Multimedia Sr.",
         description: "Con el diseñador Multimedia tendras no solo piezas estaticas maravillosas, sino tambien alguien que cree videos increibles, y sepa lo básico sobre diseño web.",
-        price: "$450.000"
+        price: "USD450"
     },
     {
-        plan: "MASTER",
+        plan: "Master",
         title: "Graphics + UX/UI + Programador",
         description: "Suma un diseñador multimedia, Diseñador UX/UI, y un programador, un equipo dedicado y complejo solo para vos.",
-        price: "$600.000"
+        price: "USD600"
     }
 ];
 
@@ -117,11 +117,14 @@ const PricingTable = () => {
     return (
         <section ref={componentRef} id="planes" className="pricing-section">
             <h1 className="pricing-main-title">
-                {"Nuestros Planes".split(" ").map((word, index) => (
-                    <span key={index} className="title-word-wrapper">
-                        <span className="title-word">{word}</span>
-                    </span>
-                ))}
+                {(() => {
+                    const words = "Nuestros Planes".split(" ");
+                    return [
+                        <span key="nuestros" style={{ color: 'var(--violeta2)' }}>Nuestros</span>,
+                        ' ',
+                        <span key="planes" style={{ color: 'var(--violeta)' }}>Planes</span>
+                    ];
+                })()}
             </h1>
             <div className="pricing-grid">
                 {pricingData.map((plan, index) => (
@@ -129,10 +132,14 @@ const PricingTable = () => {
                         <h1>{plan.plan}</h1>
                         <h2>{plan.title}</h2>
                         <h3 className="price-tag">{plan.price}</h3>
-                        <p>{plan.description}</p>
+                        <p dangerouslySetInnerHTML={{ __html: plan.description
+                            .replace(/diseñador grafico sr/gi, '<b style="color: var(--violeta);">diseñador grafico sr</b>')
+                            .replace(/diseñador multimedia/gi, '<b style="color: var(--violeta);">diseñador multimedia</b>')
+                            .replace(/diseñador ux\/ui/gi, '<b style="color: var(--violeta);">Diseñador UX/UI</b>')
+                            .replace(/programador/gi, '<b style="color: var(--violeta);">programador</b>')
+                        }} />
                         <button className="cta-button" onClick={() => setIsCalendlyOpen(true)}>
                             <span className="cta-text">¡Lo quiero!</span>
-                            <span className="circle-fill"></span>
                         </button>
                     </div>
                 ))}

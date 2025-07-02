@@ -1,7 +1,7 @@
 .services-section {
     padding: 6rem 0;
-    background-color: var(--chocolate-primary);
-    color: var(--creamy-light);
+    background-color: var(--violeta2);
+    color: var(--blanco);
     overflow: hidden;
 }
 
@@ -52,6 +52,7 @@
     padding: 3rem;
     box-sizing: border-box;
     position: relative;
+    background-color: var(--azul) !important;
 }
 
 .service-card-content {
@@ -62,7 +63,7 @@
     font-family: var(--font-sans);
     font-weight: 800;
     font-size: clamp(2.2rem, 4vw, 3.5rem);
-    color: var(--chocolate-primary);
+    color: var(--blanco);
     line-height: 1.1;
     margin: 0;
 }

@@ -5,11 +5,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const slidesData = [
-    { id: 1, bgColor: 'var(--cyan-light)', title: 'Gestioná múltiples proyectos', text: 'Crea y administra tus proyectos en un formato super intuitivo, obtené actualizaciones y visualiza en tiempo real en que proyectos se está avanzando.', asset: '/Gestiona_Boxie.svg', align: 'left' },
-    { id: 2, bgColor: 'var(--yellow-cartoon)', title: 'Actualizaciones en Tiempo Real', text: 'Podes hablar y comentar todos los proyectos en tiempo real con los diseñadores asignados.', asset: '/Updates.svg', align: 'right' },
-    { id: 3, bgColor: 'var(--violet-light)', title: 'Hacé revisiones Point & Click', text: 'En cualquier diseño, deja tus comentarios en zonas especificas para que los diseñadores entiendan perfectamente como y donde queres tus modificaciones.', asset: '/Point&Click.svg', align: 'left' },
-    { id: 4, bgColor: 'var(--green-turtle)', title: 'Gestioná todas tus marcas', text: 'Mientras mas organizados estemos, más facil sera encontrar todos tus proyectos, dentro de sus marcas.', asset: '/Gestion.svg', align: 'right' },
-    { id: 5, bgColor: 'var(--punk-fresa)', title: 'Colaborá con tu equipo', text: 'Invita a miembros de tu equipo para ver, ajustar, comentar y descargar proyectos.', asset: '/Colabora.svg', align: 'left' }
+    { id: 1, bgColor: 'var(--azul)', title: 'Gestioná múltiples proyectos', text: 'Crea y administra tus proyectos en un formato super intuitivo, obtené actualizaciones y visualiza en tiempo real en que proyectos se está avanzando.', asset: '/Gestiona_Boxie.svg', align: 'left', textColor: 'var(--blanco)' },
+    { id: 2, bgColor: 'var(--violeta)', title: 'Actualizaciones en Tiempo Real', text: 'Podes hablar y comentar todos los proyectos en tiempo real con los diseñadores asignados.', asset: '/Updates.svg', align: 'right', textColor: 'var(--blanco)' },
+    { id: 3, bgColor: 'var(--azul)', title: 'Hacé revisiones Point & Click', text: 'En cualquier diseño, deja tus comentarios en zonas especificas para que los diseñadores entiendan perfectamente como y donde queres tus modificaciones.', asset: '/Point&Click.svg', align: 'left', textColor: 'var(--blanco)' },
+    { id: 4, bgColor: 'var(--violeta)', title: 'Gestioná todas tus marcas', text: 'Mientras mas organizados estemos, más facil sera encontrar todos tus proyectos, dentro de sus marcas.', asset: '/Gestion.svg', align: 'right', textColor: 'var(--blanco)' },
+    { id: 5, bgColor: 'var(--azul)', title: 'Colaborá con tu equipo', text: 'Invita a miembros de tu equipo para ver, ajustar, comentar y descargar proyectos.', asset: '/Colabora.svg', align: 'left', textColor: 'var(--blanco)' }
 ];
 
 const PlatformSection = () => {
@@ -69,8 +69,8 @@ const PlatformSection = () => {
 
     return (
         <section ref={componentRef} id="platform-section" className="platform-section">
-            <div ref={introSceneRef} className="intro-scene">
-                <div className="intro-content">
+            <div ref={introSceneRef} className="intro-scene" style={{ backgroundColor: 'var(--violeta)' }}>
+                <div className="intro-content" style={{ color: 'var(--blanco)' }}>
                     <div className="intro-asset">
                         <img src="/fatcat.svg" alt="Gato gordo" />
                     </div>
@@ -85,7 +85,7 @@ const PlatformSection = () => {
                 <div className="horizontal-track">
                     {slidesData.map((slide, index) => (
                         <div key={slide.id} className="horizontal-slide" style={{ backgroundColor: slide.bgColor }}>
-                            <div className={`slide-content-wrapper ${slide.align === 'right' ? 'align-right' : ''}`}>
+                            <div className={`slide-content-wrapper ${slide.align === 'right' ? 'align-right' : ''}`} style={{ color: slide.textColor }}>
                                 <div className="slide-text">
                                     <h1>{slide.title}</h1>
                                     <h2>{slide.text}</h2>

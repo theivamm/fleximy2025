@@ -15,9 +15,11 @@
     justify-content: center;
     align-items: center;
     font-family: var(--font-sans);
-    color: var(--chocolate-primary);
-    background-size: 400% 400%;
-    animation: soft-gradient-flow 25s ease infinite;
+    color: var(--blanco);
+    background: none;
+    background-color: transparent;
+    background-size: unset;
+    animation: none;
     overflow: hidden;
 }
 
@@ -28,7 +30,7 @@
     text-align: center;
     margin-bottom: 4rem;
     line-height: 1;
-    color: var(--chocolate-primary);
+    color: var(--violeta);
 }
 
 .title-word-wrapper {
@@ -102,14 +104,14 @@
     transform: translate(-50%, -50%) scale(0);
     width: 0;
     height: 0;
-    background-color: #270F03;
+    background-color: var(--violeta2);
     border-radius: 50%;
     transition: width 1s ease-out, height 1s ease-out, transform 1s ease-out;
     z-index: -1;
 }
 
 .comparison-card-flipper:hover .card-face-front {
-    color: #FFE9CF;
+    color: var(--blanco);
 }
 
 .comparison-card-flipper:hover .card-face-front::before {
@@ -129,7 +131,7 @@
 }
 
 .card-face-back {
-    background-color: white;
+    background-color: var(--blanco);
     transform: rotateY(180deg);
     z-index: 1;
 }
@@ -151,8 +153,8 @@
     padding: 0.6rem 1.2rem;
     border-radius: 50px;
     font-weight: 500;
-    background-color: var(--creamy-light);
-    color: var(--chocolate-primary);
+    background-color: var(--azul);
+    color: var(--blanco);
 }
 
 .click-me-legend {
@@ -163,7 +165,7 @@
     font-family: var(--font-sans);
     font-weight: 600;
     font-size: 1rem;
-    color: rgba(39, 15, 3, 0.5);
+    color: var(--blanco);
     letter-spacing: 0.1em;
 }
 

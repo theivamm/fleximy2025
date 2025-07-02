@@ -7,27 +7,30 @@ gsap.registerPlugin(ScrollTrigger);
 const cardData = [
     {
         id: 1,
-        backgroundColor: 'var(--violet-light)',
+        backgroundColor: 'var(--violeta)',
         title: 'Suscribite',
         text: 'Suscribirse es facilísimo... bueno, en teoría. Solo busca la parte de suscribrise que esta más abajo.',
         asset: '/suscribite.svg',
-        align: 'left'
+        align: 'left',
+        textColor: 'var(--blanco)'
     },
     {
         id: 2,
-        backgroundColor: 'var(--yellow-cartoon)',
+        backgroundColor: 'var(--azul)',
         title: 'Agregá tareas',
         text: 'Comenzá a añadir tareas y proyectos de diseño a tu lista de pendientes. ¡Agregá tantas como quieras y nos pondremos manos a la obra!',
         asset: '/agrega-tareas.svg',
-        align: 'right'
+        align: 'right',
+        textColor: 'var(--blanco)'
     },
     {
         id: 3,
-        backgroundColor: 'var(--green-turtle)',
+        backgroundColor: 'var(--agua)',
         title: 'Descargá los diseños',
         text: 'Empezá a recibir tus diseños en un par de días hábiles. Los ajustes que podes hacer son ilimitados, no descansaremos hasta que estés satisfecho.',
         asset: '/descarga.svg',
-        align: 'left'
+        align: 'left',
+        textColor: 'var(--violeta2)'
     }
 ];
 
@@ -114,8 +117,8 @@ const StackingCards = () => {
                     <div key={card.id} className="stacking-card" style={{ backgroundColor: card.backgroundColor, zIndex: index + 2 }}>
                         <div className={`card-content ${card.align === 'right' ? 'align-right' : ''}`}>
                             <div className="card-text-content">
-                                <h2>{card.title}</h2>
-                                <p>{card.text}</p>
+                                <h2 style={card.textColor ? { color: card.textColor } : {}}>{card.title}</h2>
+                                <p style={card.textColor ? { color: card.textColor } : {}}>{card.text}</p>
                             </div>
                             <div className="card-asset-content">
                                 <img src={card.asset} alt={card.title} />

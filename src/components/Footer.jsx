@@ -325,10 +325,22 @@ const Footer = () => {
         
         {/* Pills de redes sociales */}
         <div className="social-pills">
-          <a href="#" className="social-pill proximamente-link" style={{ backgroundColor: 'var(--punk-fresa)' }} onClick={(e) => handleProximamenteClick(e, 'Instagram')}>IG<div className={`tooltip-absolute ${clickedLinks.has('Instagram') ? 'clicked' : ''}`}>{clickedLinks.has('Instagram') ? 'TE DIJE PROXIMAMENTE 😠' : 'PROXIMAMENTE'}</div></a>
-          <a href="#" className="social-pill proximamente-link" style={{ backgroundColor: 'var(--violet-light)' }} onClick={(e) => handleProximamenteClick(e, 'Facebook')}>FB<div className={`tooltip-absolute ${clickedLinks.has('Facebook') ? 'clicked' : ''}`}>{clickedLinks.has('Facebook') ? 'TE DIJE PROXIMAMENTE 😠' : 'PROXIMAMENTE'}</div></a>
-          <a href="#" className="social-pill proximamente-link" style={{ backgroundColor: 'var(--cyan-light)' }} onClick={(e) => handleProximamenteClick(e, 'TikTok')}>TK<div className={`tooltip-absolute ${clickedLinks.has('TikTok') ? 'clicked' : ''}`}>{clickedLinks.has('TikTok') ? 'TE DIJE PROXIMAMENTE 😠' : 'PROXIMAMENTE'}</div></a>
-          <a href="#" className="social-pill proximamente-link" style={{ backgroundColor: 'var(--green-turtle)' }} onClick={(e) => handleProximamenteClick(e, 'LinkedIn')}>LI<div className={`tooltip-absolute ${clickedLinks.has('LinkedIn') ? 'clicked' : ''}`}>{clickedLinks.has('LinkedIn') ? 'TE DIJE PROXIMAMENTE 😠' : 'PROXIMAMENTE'}</div></a>
+          <a href="#" className="social-pill" style={{ backgroundColor: 'var(--azul)' }} onClick={(e) => handleProximamenteClick(e, 'Instagram')} aria-label="Instagram">
+            <span style={{ fontWeight: 700, fontSize: '1.1rem', letterSpacing: '1px' }}>IG</span>
+            <div className={`tooltip-absolute ${clickedLinks.has('Instagram') ? 'clicked' : ''}`}>{clickedLinks.has('Instagram') ? 'TE DIJE PROXIMAMENTE 😠' : 'PROXIMAMENTE'}</div>
+          </a>
+          <a href="#" className="social-pill" style={{ backgroundColor: 'var(--azul)' }} onClick={(e) => handleProximamenteClick(e, 'Facebook')} aria-label="Facebook">
+            <span style={{ fontWeight: 700, fontSize: '1.1rem', letterSpacing: '1px' }}>FB</span>
+            <div className={`tooltip-absolute ${clickedLinks.has('Facebook') ? 'clicked' : ''}`}>{clickedLinks.has('Facebook') ? 'TE DIJE PROXIMAMENTE 😠' : 'PROXIMAMENTE'}</div>
+          </a>
+          <a href="#" className="social-pill" style={{ backgroundColor: 'var(--azul)' }} onClick={(e) => handleProximamenteClick(e, 'TikTok')} aria-label="TikTok">
+            <span style={{ fontWeight: 700, fontSize: '1.1rem', letterSpacing: '1px' }}>TT</span>
+            <div className={`tooltip-absolute ${clickedLinks.has('TikTok') ? 'clicked' : ''}`}>{clickedLinks.has('TikTok') ? 'TE DIJE PROXIMAMENTE 😠' : 'PROXIMAMENTE'}</div>
+          </a>
+          <a href="#" className="social-pill" style={{ backgroundColor: 'var(--azul)' }} onClick={(e) => handleProximamenteClick(e, 'LinkedIn')} aria-label="LinkedIn">
+            <span style={{ fontWeight: 700, fontSize: '1.1rem', letterSpacing: '1px' }}>IN</span>
+            <div className={`tooltip-absolute ${clickedLinks.has('LinkedIn') ? 'clicked' : ''}`}>{clickedLinks.has('LinkedIn') ? 'TE DIJE PROXIMAMENTE 😠' : 'PROXIMAMENTE'}</div>
+          </a>
         </div>
       </div>
 
@@ -378,7 +390,6 @@ const Footer = () => {
             <button 
               type="submit" 
               className="newsletter-button"
-              style={{ backgroundColor: 'var(--yellow-cartoon)' }}
               disabled={isSubmitting}
             >
               {isSubmitting ? 'Enviando...' : 'Enviar'}

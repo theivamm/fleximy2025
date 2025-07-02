@@ -6,14 +6,21 @@
 /* 1. Declaración de Design Tokens (Colores y Fuentes) */
 :root {
   /* Paleta de Colores */
-  --creamy-light: #FFE9CF;
-  --chocolate-primary: #270F03;
+  --creamy-light: #FCFEFE;
+  --chocolate-primary: #311B6E;
   --cyan-light: #00C5C5;
-  --red-not-scarlet: #ff422d;
+  --red-not-scarlet: #ffa75f;
   --yellow-cartoon: #F5C939;
   --violet-light: #CA9DFE;
   --green-turtle: #7AE66A;
   --punk-fresa: #F897B4;
+  --violeta: #5720C6;
+  --agua: #A0EDE7;
+  --blanco: #FCFEFE;
+  --violeta1: #311B6E;
+  --violeta2: #0F0820;
+  --azul: #005EF6;
+  --pink: #FF2072;
 
   /* Tipografías */
   --font-sans: "Plus Jakarta Sans", sans-serif;
@@ -22,13 +29,13 @@
 
 /* Estilos de selección de texto personalizados */
 ::selection {
-  background-color: #FFE9CF;
-  color: #270F03;
+  background-color: #5720C6;
+  color: #FCFEFE;
 }
 
 ::-moz-selection {
-  background-color: #FFE9CF;
-  color: #270F03;
+  background-color: #5720C6;
+  color: #FCFEFE;
 }
 
 /* 2. Keyframes para la animación del gradiente */
@@ -60,7 +67,7 @@ body {
   max-width: 100%;
   
   /* --- GRADIENTE SUAVE EN CONSTANTE MOVIMIENTO --- */
-  background: linear-gradient(135deg, #d4ffef 0%, #fffde2 25%, #ffe2e2 50%, #d5fff4 75%, #dbd8ff 100%);
+  background: linear-gradient(-45deg, #FCFEFE, #FEF6FF, #fbeaff, #FFFDF0);
   background-size: 400% 400%;
   animation: gradient-flow 25s ease infinite;
   position: relative;
@@ -211,7 +218,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   padding: 2rem 2rem 2rem 2rem; 
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   z-index: 1;
   border-radius: 40px 40px 0 0;
@@ -287,7 +294,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-button {
-  /* Los estilos del botón se mantienen igual */
   font-family: var(--font-sans);
   background: transparent;
   color: var(--chocolate-primary);
@@ -300,6 +306,14 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   overflow: hidden;
   transition: color 0.3s ease-in-out;
+}
+
+.hero-button:hover {
+  color: var(--creamy-light);
+}
+
+.hero-button:hover .circle-fill {
+  z-index: -1;
 }
 
 /* ... (el resto de estilos del botón como :hover y .circle-fill se mantienen) ... */
@@ -339,8 +353,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-button {
   font-family: var(--font-sans);
-  background: transparent;
-  color: var(--chocolate-primary);
+  background-color: var(--chocolate-primary);
+  color: var(--creamy-light);
   border: 2px solid var(--chocolate-primary);
   border-radius: 50px;
   padding: 1rem 2.5rem;
@@ -349,15 +363,11 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: color 0.3s ease-in-out;
+  transition: all 0.5s ease;
 }
 
-.hero-button:hover {
+.hero-button:hover .cta-text {
   color: var(--creamy-light);
-}
-
-.hero-button:hover .circle-fill {
-  z-index: -1;
 }
 
 .subtitle-word-wrapper {
@@ -399,10 +409,10 @@ h1, h2, h3, h4, h5, h6 {
 /* Navbar */
 .main-header {
     position: fixed;
+    z-index: 3000 !important;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000;
     padding: 1rem 5%;
     box-sizing: border-box;
 }
@@ -462,9 +472,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .cta-button {
     font-family: var(--font-sans);
-    background-color: var(--chocolate-primary);
-    color: var(--creamy-light);
-    border: 2px solid var(--chocolate-primary);
+    background-color: var(--azul);
+    color: var(--blanco);
+    border: 2px solid var(--azul);
     border-radius: 50px;
     padding: 0.8rem 1.8rem;
     font-size: 1rem;
@@ -473,6 +483,18 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     overflow: hidden;
     transition: all 0.5s ease;
+}
+
+.cta-button .circle-fill {
+  background: var(--pink);
+  z-index: 1;
+  transition: background 0.3s, transform 0.3s, opacity 0.3s;
+}
+
+.cta-button:hover .circle-fill {
+  background: var(--pink);
+  transform: scale(2.5);
+  opacity: 1;
 }
 
 /* src/index.css */
@@ -574,14 +596,31 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
 
-.mobile-nav-link {
-    font-family: var(--font-sans);
-    font-weight: bold;
-    font-size: 2.5rem;
-    color: var(--chocolate-primary);
-    text-decoration: none;
-    display: block;
-    margin: 1rem 0;
+.mobile-nav-link, button.mobile-nav-link {
+  background: none;
+  border: none;
+  color: var(--creamy-light);
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-align: center;
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.1rem 0;
+  cursor: pointer;
+  border-radius: 0;
+  box-shadow: none;
+  text-decoration: none;
+}
+
+.mobile-nav {
+  background: var(--chocolate-primary);
+}
+
+.mobile-nav-link:active, .mobile-nav-link:focus, .mobile-nav-link:hover {
+  text-decoration: none;
+  color: var(--creamy-light);
 }
 
 @media (max-width: 900px) {
@@ -1207,9 +1246,9 @@ h1, h2, h3, h4, h5, h6 {
 .navbar-contrast .cta-button,
 .navbar-contrast .cta-button .cta-text,
 .navbar-contrast .mobile-cta-button {
-  color: var(--creamy-light) !important;
+  color: var(--blanco) !important;
   background: none !important;
-  border-color: var(--creamy-light) !important;
+  border-color: var(--blanco) !important;
 }
 
 .navbar-contrast .cta-button {
@@ -1217,7 +1256,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar-contrast .mobile-cta-button {
-  background-color: transparent !important;
+  background-color: var(--blanco) !important;
+  color: var(--azul) !important;
+  border-color: var(--blanco) !important;
 }
 
 .navbar-contrast .navbar-logo {
@@ -1230,7 +1271,7 @@ h1, h2, h3, h4, h5, h6 {
     filter: brightness(0) invert(1) !important;
   }
   .navbar-contrast .burger-line {
-    background: var(--creamy-light) !important;
+    background: var(--blanco) !important;
   }
 }
 
@@ -1433,4 +1474,76 @@ section,
 .tooltip-absolute {
   overflow: visible;
   white-space: nowrap;
+}
+
+/* --- Submenú Desktop Navbar --- */
+.has-submenu {
+  position: relative;
+}
+
+.has-submenu .submenu-toggle {
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+
+.has-submenu .submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 180px;
+  background: var(--azul);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(39, 15, 3, 0.08);
+  padding: 0.5rem 0;
+  margin: 0;
+  z-index: 3000 !important;
+  transition: opacity 0.2s;
+}
+
+.has-submenu:hover .submenu,
+.has-submenu:focus-within .submenu {
+  display: block;
+  opacity: 1;
+}
+
+.submenu li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.submenu .desktop-nav-link {
+  display: block;
+  padding: 0.5rem 1.5rem;
+  border-radius: 999px;
+  color: var(--blanco);
+  background: transparent;
+  transition: background 0.2s, color 0.2s;
+  font-weight: 500;
+  text-align: left;
+  margin: 0.2rem 0;
+}
+
+.submenu .desktop-nav-link:hover,
+.submenu .desktop-nav-link:focus {
+  background: var(--blanco);
+  color: var(--azul);
+  box-shadow: 0 2px 8px rgba(39, 15, 3, 0.08);
+  transform: scale(1.05);
+}
+
+/* Aplica contraste de navbar sobre PlatformSection también */
+.platform-section ~ .main-header.navbar-contrast,
+.platform-section ~ .navbar-wrapper.navbar-contrast,
+.platform-section .navbar-contrast,
+#platform-section .navbar-contrast {
+  /* Hereda los mismos estilos de .navbar-contrast */
+}
+
+.cta-button:hover {
+  background-color: var(--violeta);
+  color: var(--blanco);
+  border-color: var(--violeta);
 }

@@ -123,7 +123,16 @@ const StackingTitle = React.forwardRef((props, ref) => {
                                         className="h1-word-wrapper"
                                         style={{ display: 'inline-block' }}
                                     >
-                                        <span className="h1-word">{letter}</span>
+                                        <span 
+                                            className="h1-word"
+                                            style={{
+                                                color: lineIndex === 2 && letterIndex >= 2 && letterIndex <= 8 
+                                                    ? "var(--violeta)" 
+                                                    : "var(--violeta2)"
+                                            }}
+                                        >
+                                            {letter}
+                                        </span>
                                     </span>
                                 );
                             })}

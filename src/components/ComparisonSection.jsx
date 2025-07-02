@@ -11,21 +11,21 @@ const panelsData = [
         h1: 'Fleximy vs Old School',
         h2: 'Fleximy te da:',
         points: ['Bajo costos', 'Tiempos de respuesta de hasta 48 hs', 'Compromiso en cada pedido', 'Tareas y revisiones ilimitadas', 'Diseñadores Sr.', 'Comenzá ya mismo', 'Gasto predecible y fijo', 'Casi no hace falta reuniones'],
-        frontColor: 'var(--green-turtle)',
+        frontColor: 'var(--violeta)',
     },
     {
         id: 'freelancers',
         h1: 'Freelancers vs Fleximy',
         h2: 'Freelancers te aseguran:',
         points: ['Altos costos', 'Tiempos de respuesta semanales', 'Poco compromiso', 'Tareas y revisiones LIMITADAS', 'Comenzás despues de varias reuniones', 'Estructura de precios variables'],
-        frontColor: 'var(--punk-fresa)',
+        frontColor: 'var(--violeta)',
     },
     {
         id: 'agencies',
         h1: 'Agencias vs Fleximy',
         h2: 'Agencias te aseguran:',
         points: ['Altisimos costos', 'Tiempos de respuesta mensuales', 'Poco compromiso', 'Tareas y revisiones LIMITADAS', 'Comenzás despues de varias reuniones', 'Estructura de precios altos y con sorpresas'],
-        frontColor: 'var(--yellow-cartoon)',
+        frontColor: 'var(--violeta)',
     }
 ];
 
@@ -125,11 +125,14 @@ const ComparisonSection = () => {
     return (
         <section ref={componentRef} id="porque-flexear" className="comparison-section-v2">
             <h1 className="comparison-main-title">
-                {"Porqué Flexear?".split(" ").map((word, index) => (
-                    <span key={index} className="title-word-wrapper">
-                        <span className="title-word">{word}</span>
-                    </span>
-                ))}
+                {(() => {
+                    const words = "Porqué Flexear?".split(" ");
+                    return [
+                        <span key="porque" style={{ color: 'var(--violeta2)' }}>Porqué</span>,
+                        ' ',
+                        <span key="flexear">Flexear?</span>
+                    ];
+                })()}
             </h1>
             <div className="card-grid-container">
                 {panelsData.map((panel, index) => (
