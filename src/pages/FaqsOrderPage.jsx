@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Navbar2 from '../components/Navbar2';
+import { addFaqQuestion } from '../firebase';
 
 export default function FaqsOrderPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [isBtnHover, setIsBtnHover] = useState(false);
+  const [formState, setFormState] = useState({ name: '', email: '', question: '' });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const checkMobile = () => {
@@ -14,6 +19,30 @@ export default function FaqsOrderPage() {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  const handleChange = (e) => {
+    setFormState({ ...formState, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setSuccess(false);
+    try {
+      const res = await addFaqQuestion(formState);
+      if (res.success) {
+        setSuccess(true);
+        setFormState({ name: '', email: '', question: '' });
+      } else {
+        setError(res.error || 'Ocurrió un error.');
+      }
+    } catch (err) {
+      setError('Ocurrió un error al enviar tu pregunta.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div style={{
@@ -143,18 +172,18 @@ export default function FaqsOrderPage() {
                 zIndex: 2,
               }}
             />
-            <form style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 18 }} onSubmit={e => { e.preventDefault(); alert('Pregunta enviada!'); }}>
+            <form style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 18 }} onSubmit={handleSubmit}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <label htmlFor="name" style={{ fontWeight: 600, color: '#222', fontSize: 15 }}>Nombre <span style={{ color: '#e74c3c' }}>*</span></label>
-                <input id="name" type="text" required style={{ padding: '14px 12px', borderRadius: 8, border: '1.5px solid #e5e7eb', fontSize: 16, background: '#fafbfc', outline: 'none', transition: 'border 0.2s', fontFamily: 'Plus Jakarta Sans, Inter, Arial, sans-serif' }} />
+                <input id="name" type="text" required value={formState.name} onChange={handleChange} style={{ padding: '14px 12px', borderRadius: 8, border: '1.5px solid #e5e7eb', fontSize: 16, background: '#fafbfc', outline: 'none', transition: 'border 0.2s', fontFamily: 'Plus Jakarta Sans, Inter, Arial, sans-serif' }} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <label htmlFor="email" style={{ fontWeight: 600, color: '#222', fontSize: 15 }}>Email <span style={{ color: '#e74c3c' }}>*</span></label>
-                <input id="email" type="email" required style={{ padding: '14px 12px', borderRadius: 8, border: '1.5px solid #e5e7eb', fontSize: 16, background: '#fafbfc', outline: 'none', transition: 'border 0.2s', fontFamily: 'Plus Jakarta Sans, Inter, Arial, sans-serif' }} />
+                <input id="email" type="email" required value={formState.email} onChange={handleChange} style={{ padding: '14px 12px', borderRadius: 8, border: '1.5px solid #e5e7eb', fontSize: 16, background: '#fafbfc', outline: 'none', transition: 'border 0.2s', fontFamily: 'Plus Jakarta Sans, Inter, Arial, sans-serif' }} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <label htmlFor="question" style={{ fontWeight: 600, color: '#222', fontSize: 15 }}>Tu pregunta <span style={{ color: '#e74c3c' }}>*</span></label>
-                <input id="question" required type="text" style={{ padding: '14px 12px', borderRadius: 8, border: '1.5px solid #e5e7eb', fontSize: 16, background: '#fafbfc', outline: 'none', transition: 'border 0.2s', fontFamily: 'Plus Jakarta Sans, Inter, Arial, sans-serif' }} />
+                <input id="question" required type="text" value={formState.question} onChange={handleChange} style={{ padding: '14px 12px', borderRadius: 8, border: '1.5px solid #e5e7eb', fontSize: 16, background: '#fafbfc', outline: 'none', transition: 'border 0.2s', fontFamily: 'Plus Jakarta Sans, Inter, Arial, sans-serif' }} />
               </div>
               <button
                 type="submit"
@@ -174,9 +203,12 @@ export default function FaqsOrderPage() {
                 }}
                 onMouseEnter={() => setIsBtnHover(true)}
                 onMouseLeave={() => setIsBtnHover(false)}
+                disabled={loading}
               >
-                Enviar
+                {loading ? 'Enviando...' : 'Enviar'}
               </button>
+              {success && <p style={{ fontSize: 13, color: '#27ae60', textAlign: 'center', marginTop: 10 }}>¡Tu pregunta fue enviada con éxito!</p>}
+              {error && <p style={{ fontSize: 13, color: '#e74c3c', textAlign: 'center', marginTop: 10 }}>{error}</p>}
               <p style={{ fontSize: 13, color: '#888', textAlign: 'center', marginTop: 10, lineHeight: 1.5, fontFamily: 'Plus Jakarta Sans, Inter, Arial, sans-serif' }}>
                 Al enviar tu pregunta, aceptas que podamos contactarte para responderte.
               </p>

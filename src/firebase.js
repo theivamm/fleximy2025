@@ -34,4 +34,21 @@ export const addNewsletterSubscription = async (email) => {
   }
 };
 
+// Función para agregar una pregunta del formulario de FAQs
+export const addFaqQuestion = async ({ name, email, question }) => {
+  try {
+    const docRef = await addDoc(collection(db, "faqs_questions"), {
+      name,
+      email,
+      question,
+      timestamp: serverTimestamp(),
+      status: "pending"
+    });
+    return { success: true, id: docRef.id };
+  } catch (error) {
+    console.error("Error adding FAQ question: ", error);
+    return { success: false, error: error.message };
+  }
+};
+
 export { app, analytics, db }; 
