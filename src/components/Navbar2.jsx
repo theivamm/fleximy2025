@@ -327,7 +327,7 @@ const Navbar2 = () => {
   return (
         <header ref={navRef} className={`main-header${isContrast ? ' navbar-contrast' : ''}`}>
             <div className="navbar-wrapper">
-                <a href="#" className="logo-link" onClick={handleLogoClick}>
+                <a href="/" className="logo-link">
                     <img ref={logoRef} src="/fleximy-logo.svg" className="navbar-logo" alt="Fleximy logo" style={{ filter: 'brightness(0) invert(1)' }} />
         </a>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
