@@ -615,7 +615,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .mobile-nav {
-  background: var(--chocolate-primary);
+  background: var(--violeta2);
 }
 
 .mobile-nav-link:active, .mobile-nav-link:focus, .mobile-nav-link:hover {
@@ -738,6 +738,7 @@ h1, h2, h3, h4, h5, h6 {
   /* Reducimos el tamaño del título principal en móviles */
   .hero-title-creative {
     font-size: clamp(4rem, 10vw, 3rem); /* Valores más pequeños para el clamp */
+    margin-top: 5rem; /* Más espacio arriba del título en mobile */
   }
 
   /* También ajustamos el subtítulo */
