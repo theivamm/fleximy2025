@@ -59,7 +59,7 @@ const BackToTop = () => {
         width: '50px',
         height: '50px',
         borderRadius: '50%',
-        backgroundColor: 'var(--punk-fresa)',
+        backgroundColor: 'var(--pink)',
         border: 'none',
         color: 'white',
         fontSize: '20px',

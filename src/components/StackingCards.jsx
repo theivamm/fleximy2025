@@ -9,7 +9,7 @@ const cardData = [
         id: 1,
         backgroundColor: 'var(--violeta)',
         title: 'Suscribite',
-        text: 'Suscribirse es facilísimo... bueno, en teoría. Solo busca la parte de suscribrise que esta más abajo.',
+        text: 'Suscribirse es facilísimo... bueno, en teoría. Solo segui scrolleando, mira los planes, elegi el que mas te guste, y coordina una meet.',
         asset: '/suscribite.svg',
         align: 'left',
         textColor: 'var(--blanco)'
@@ -18,7 +18,7 @@ const cardData = [
         id: 2,
         backgroundColor: 'var(--azul)',
         title: 'Agregá tareas',
-        text: 'Comenzá a añadir tareas y proyectos de diseño a tu lista de pendientes. ¡Agregá tantas como quieras y nos pondremos manos a la obra!',
+        text: 'Una vez contrates el servicio, te daremos acceso a una plataforma de gestion creativa, comenzá a añadir tareas y proyectos de diseño a tu lista de pendientes. ¡Agregá tantas como quieras y nos pondremos manos a la obra!',
         asset: '/agrega-tareas.svg',
         align: 'right',
         textColor: 'var(--blanco)'
@@ -27,7 +27,7 @@ const cardData = [
         id: 3,
         backgroundColor: 'var(--agua)',
         title: 'Descargá los diseños',
-        text: 'Empezá a recibir tus diseños en un par de días hábiles. Los ajustes que podes hacer son ilimitados, no descansaremos hasta que estés satisfecho.',
+        text: 'Empezá a recibir tus diseños en el mismo día! (aunque depende de la complejidad del proyecto). Los ajustes que podes hacer son ilimitados, no descansaremos hasta que estés satisfecho.',
         asset: '/descarga.svg',
         align: 'left',
         textColor: 'var(--violeta2)'
