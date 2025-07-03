@@ -16,6 +16,7 @@ import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
 import FaqsOrderPage from './pages/FaqsOrderPage';
+import NuestrosTrabajos from './pages/NuestrosTrabajos';
 
 function App() {
   useEffect(() => {
@@ -103,6 +104,7 @@ function App() {
         </>
       } />
       <Route path="/faqsorder" element={<FaqsOrderPage />} />
+      <Route path="/nuestros-trabajos" element={<NuestrosTrabajos />} />
     </Routes>
   );
 }
