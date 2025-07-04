@@ -926,8 +926,18 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
 }
 .card-asset-content img {
+    min-width: 120px;
+    min-height: 200px;
+    width: 100%;
+    height: auto;
     max-width: 100%;
-    max-height: 250px;
+    max-height: 300px;
+    margin-bottom: 1rem;
+    display: block;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 10;
+    position: relative;
 }
 
 /* --- Estilos de StackingCards para Móvil --- */
@@ -943,6 +953,27 @@ h1, h2, h3, h4, h5, h6 {
     }
     .card-text-content h2 {
         margin-top: 1rem;
+    }
+    .card-asset-content {
+        min-height: 200px;
+        min-width: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .card-asset-content img {
+        min-width: 300px;
+        min-height: 300px;
+        width: auto;
+        height: auto;
+        max-width: 80vw;
+        max-height: 180px;
+        margin-bottom: 1rem;
+        display: block;
+        opacity: 1 !important;
+        visibility: visible !important;
+        z-index: 10;
+        position: relative;
     }
 }
 
