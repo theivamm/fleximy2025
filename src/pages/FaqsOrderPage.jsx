@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar2 from '../components/Navbar2';
 import { addFaqQuestion } from '../firebase';
-import { Helmet } from 'react-helmet-async';
 
 export default function FaqsOrderPage() {
   const [isMobile, setIsMobile] = useState(false);
@@ -54,11 +53,8 @@ export default function FaqsOrderPage() {
       display: 'flex',
       flexDirection: 'column',
     }}>
-      <Helmet>
-        <title>Consultas y Preguntas Frecuentes | Fleximy</title>
-        <meta name="description" content="Dejá tu consulta y un experto de Fleximy te responderá para ayudarte a descubrir cómo potenciar tu marca. Sin compromiso, rápido y personalizado." />
-        <link rel="canonical" href="https://fleximy.com/faqsorder" />
-      </Helmet>
+      <title>Preguntas Frecuentes | Fleximy</title>
+      <meta name="description" content="Resuelve tus dudas sobre Fleximy. Aquí respondemos las preguntas más frecuentes sobre nuestros servicios, planes y funcionamiento." />
       <style>
         {`
           @keyframes gradientMove {
