@@ -36,22 +36,30 @@ export default function NuestrosTrabajos() {
   const trackRef = useRef(null);
   const animRef = useRef(null);
   const isPausedRef = useRef(false);
+  const isDraggingRef = useRef(false);
+  const velocityRef = useRef(0);
+  const lastTimeRef = useRef(0);
+  const lastXRef = useRef(0);
 
   useEffect(() => {
     const carrusel = carruselRef.current;
     const track = trackRef.current;
     if (!carrusel || !track) return;
+
     // Reset transform
     gsap.set(track, { x: 0 });
+    
     const cardWidth = track.children[0].offsetWidth + 40; // 40 = gap
     const totalCards = track.children.length;
     const totalWidth = cardWidth * totalCards;
-    // Animación GSAP
+    const maxScroll = -(totalWidth - carrusel.offsetWidth);
+
+    // Animación GSAP mejorada
     function startScroll() {
       if (animRef.current) animRef.current.kill();
       animRef.current = gsap.to(track, {
         x: `-=${totalWidth/3}`,
-        duration: 20,
+        duration: 25,
         ease: "none",
         repeat: -1,
         modifiers: {
@@ -63,51 +71,183 @@ export default function NuestrosTrabajos() {
         }
       });
     }
+
+    // Función para crear una nueva animación desde la posición actual
+    function createNewAnimation() {
+      if (animRef.current) animRef.current.kill();
+      
+      const currentX = gsap.getProperty(track, 'x');
+      const currentXNum = typeof currentX === 'number' ? currentX : parseFloat(currentX);
+      
+      // Crear nueva animación desde la posición actual
+      animRef.current = gsap.to(track, {
+        x: currentXNum - totalWidth/3,
+        duration: 25,
+        ease: "none",
+        repeat: -1,
+        modifiers: {
+          x: (x) => {
+            const xNum = parseFloat(x);
+            if (xNum <= -totalWidth/3*2) return 0;
+            return x;
+          }
+        }
+      });
+    }
+
     startScroll();
-    // Drag nativo
+
+    // Variables para el drag mejorado
     let isDown = false;
     let startX = 0;
     let startTx = 0;
-    let lastTx = 0;
+    let currentX = 0;
+    let lastMoveTime = 0;
+    let moveHistory = [];
+
     const onPointerDown = (e) => {
       isDown = true;
-      if (animRef.current) animRef.current.pause();
+      isDraggingRef.current = true;
+      
+      if (animRef.current) {
+        animRef.current.pause();
+        isPausedRef.current = true;
+      }
+      
       startX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
-      const m = gsap.getProperty(track, 'x');
-      startTx = typeof m === 'number' ? m : parseFloat(m);
-      lastTx = startTx;
+      const currentTransform = gsap.getProperty(track, 'x');
+      startTx = typeof currentTransform === 'number' ? currentTransform : parseFloat(currentTransform);
+      currentX = startTx;
+      
+      lastMoveTime = Date.now();
+      lastXRef.current = startX;
+      moveHistory = [];
+      
       document.body.style.cursor = 'grabbing';
+      document.body.style.userSelect = 'none';
     };
+
     const onPointerMove = (e) => {
       if (!isDown) return;
+      
       const x = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
       const dx = x - startX;
-      let newTx = startTx + dx;
-      // Opcional: límites suaves
-      if (newTx > 100) newTx = 100;
-      if (newTx < -totalWidth + carrusel.offsetWidth - 100) newTx = -totalWidth + carrusel.offsetWidth - 100;
-      gsap.set(track, { x: newTx });
-      lastTx = newTx;
+      const newX = startTx + dx;
+      
+      // Límites más suaves con resistencia
+      let boundedX = newX;
+      if (newX > 0) {
+        boundedX = newX * 0.3; // Resistencia al arrastrar hacia la derecha
+      } else if (newX < maxScroll) {
+        const overscroll = newX - maxScroll;
+        boundedX = maxScroll + overscroll * 0.3; // Resistencia al arrastrar hacia la izquierda
+      }
+      
+      gsap.set(track, { x: boundedX });
+      currentX = boundedX;
+      
+      // Calcular velocidad para inercia
+      const now = Date.now();
+      const timeDelta = now - lastMoveTime;
+      if (timeDelta > 0) {
+        const distance = x - lastXRef.current;
+        velocityRef.current = distance / timeDelta;
+        
+        moveHistory.push({
+          x: boundedX,
+          time: now,
+          velocity: velocityRef.current
+        });
+        
+        // Mantener solo los últimos 5 movimientos para calcular velocidad promedio
+        if (moveHistory.length > 5) {
+          moveHistory.shift();
+        }
+      }
+      
+      lastMoveTime = now;
+      lastXRef.current = x;
     };
+
     const onPointerUp = () => {
       if (!isDown) return;
+      
       isDown = false;
+      isDraggingRef.current = false;
       document.body.style.cursor = '';
-      if (animRef.current) animRef.current.resume();
+      document.body.style.userSelect = '';
+      
+      // Calcular velocidad promedio para inercia
+      let avgVelocity = 0;
+      if (moveHistory.length > 1) {
+        const recentMoves = moveHistory.slice(-3);
+        avgVelocity = recentMoves.reduce((sum, move) => sum + move.velocity, 0) / recentMoves.length;
+      }
+      
+      // Aplicar inercia si la velocidad es significativa
+      if (Math.abs(avgVelocity) > 0.5) {
+        const inertiaDistance = avgVelocity * 100; // Ajustar según necesidad
+        const targetX = currentX + inertiaDistance;
+        
+        // Aplicar límites a la inercia
+        let finalX = targetX;
+        if (finalX > 0) finalX = 0;
+        if (finalX < maxScroll) finalX = maxScroll;
+        
+        // Animación suave hacia la posición final
+        gsap.to(track, {
+          x: finalX,
+          duration: 0.8,
+          ease: "power2.out",
+          onComplete: () => {
+            // Crear nueva animación desde la posición final después de un breve delay
+            setTimeout(() => {
+              if (!isDraggingRef.current && isPausedRef.current) {
+                isPausedRef.current = false;
+                createNewAnimation();
+              }
+            }, 1000);
+          }
+        });
+      } else {
+        // Si no hay inercia significativa, crear nueva animación inmediatamente
+        setTimeout(() => {
+          if (!isDraggingRef.current && isPausedRef.current) {
+            isPausedRef.current = false;
+            createNewAnimation();
+          }
+        }, 500);
+      }
     };
+
+    // Event listeners
     track.addEventListener('mousedown', onPointerDown);
     track.addEventListener('touchstart', onPointerDown, { passive: false });
     window.addEventListener('mousemove', onPointerMove);
     window.addEventListener('touchmove', onPointerMove, { passive: false });
     window.addEventListener('mouseup', onPointerUp);
     window.addEventListener('touchend', onPointerUp);
-    // Pausa/reanuda en hover/touch
-    const pause = () => { if (animRef.current) animRef.current.pause(); isPausedRef.current = true; };
-    const resume = () => { if (animRef.current && isPausedRef.current) animRef.current.resume(); isPausedRef.current = false; };
+
+    // Pausa/reanuda en hover/touch mejorada
+    const pause = () => { 
+      if (animRef.current && !isDraggingRef.current) {
+        animRef.current.pause(); 
+        isPausedRef.current = true; 
+      }
+    };
+    
+    const resume = () => { 
+      if (isPausedRef.current && !isDraggingRef.current) {
+        isPausedRef.current = false;
+        createNewAnimation();
+      }
+    };
+    
     carrusel.addEventListener('mouseenter', pause);
     carrusel.addEventListener('mouseleave', resume);
     carrusel.addEventListener('touchstart', pause);
     carrusel.addEventListener('touchend', resume);
+
     return () => {
       if (animRef.current) animRef.current.kill();
       track.removeEventListener('mousedown', onPointerDown);
@@ -287,7 +427,7 @@ export default function NuestrosTrabajos() {
                   minWidth: 340,
                   maxWidth: 340,
                   height: 480,
-                  background: 'var(--violeta)',
+                  background: '#080706',
                   borderRadius: 24,
                   boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
                   position: 'relative',
@@ -311,10 +451,10 @@ export default function NuestrosTrabajos() {
                   <div style={{
                     width: '100%',
                     height: 0,
-                    paddingBottom: '133%', // 3:4 proporción vertical
+                    paddingBottom: '133%',
                     position: 'relative',
                     overflow: 'hidden',
-                    background: 'var(--violeta)'
+                    background: '#080706'
                   }}>
                     <img
                       src="/proyectos/agestudio1.png"
@@ -356,7 +496,7 @@ export default function NuestrosTrabajos() {
                       }}>AG Estudio</h3>
                       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                         <span style={{ background: 'var(--agua)', color: 'var(--violeta2)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Figma</span>
-                        <span style={{ background: 'var(--violeta2)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Prototipado</span>
+                        <span style={{ background: 'var(--violeta)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Prototipado</span>
                         <span style={{ background: 'var(--azul)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>UI Design</span>
                         <span style={{ background: 'var(--pink)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>UX Research</span>
                       </div>
@@ -371,7 +511,7 @@ export default function NuestrosTrabajos() {
                       left: 0,
                       bottom: 0,
                       width: '100%',
-                      background: 'var(--violeta)',
+                      background: '#080706',
                       color: 'var(--blanco)',
                 border: 'none',
                       borderRadius: '0 0 24px 24px',
@@ -393,7 +533,7 @@ export default function NuestrosTrabajos() {
                   minWidth: 340,
                   maxWidth: 340,
                   height: 480,
-                  background: 'var(--agua)',
+                  background: '#FCF8A1',
                 borderRadius: 24,
                   boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
                   position: 'relative',
@@ -417,10 +557,10 @@ export default function NuestrosTrabajos() {
                   <div style={{
                     width: '100%',
                     height: 0,
-                    paddingBottom: '133%', // 3:4 proporción vertical
+                    paddingBottom: '133%',
                     position: 'relative',
                     overflow: 'hidden',
-                    background: 'var(--agua)'
+                    background: '#FCF8A1'
                   }}>
                     <img
                       src="/proyectos/multipoint.png"
@@ -476,8 +616,8 @@ export default function NuestrosTrabajos() {
                       left: 0,
                       bottom: 0,
                       width: '100%',
-                      background: 'var(--azul)',
-                      color: 'var(--blanco)',
+                      background: '#FCF8A1',
+                      color: 'var(--violeta2)',
                       border: 'none',
                       borderRadius: '0 0 24px 24px',
                       fontWeight: 700,
@@ -498,7 +638,7 @@ export default function NuestrosTrabajos() {
                   minWidth: 340,
                   maxWidth: 340,
                   height: 480,
-                  background: 'var(--azul)',
+                  background: '#0D0E10',
                   borderRadius: 24,
                   boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
                   position: 'relative',
@@ -522,10 +662,10 @@ export default function NuestrosTrabajos() {
         <div style={{
                     width: '100%',
                     height: 0,
-                    paddingBottom: '133%', // 3:4 proporción vertical
+                    paddingBottom: '133%',
                     position: 'relative',
                     overflow: 'hidden',
-                    background: 'var(--azul)'
+                    background: '#0D0E10'
                   }}>
                     <img
                       src="/proyectos/brandedstrong.png"
@@ -567,7 +707,7 @@ export default function NuestrosTrabajos() {
                       }}>Branded Strong</h3>
                       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                         <span style={{ background: 'var(--agua)', color: 'var(--violeta2)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>UX/UI</span>
-                        <span style={{ background: 'var(--violeta2)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Figma</span>
+                        <span style={{ background: 'var(--azul)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Figma</span>
                       </div>
                     </div>
                   </div>
@@ -580,7 +720,220 @@ export default function NuestrosTrabajos() {
                       left: 0,
                       bottom: 0,
                       width: '100%',
-                      background: 'var(--azul)',
+                      background: '#0D0E10',
+                      color: 'var(--blanco)',
+                      border: 'none',
+                      borderRadius: '0 0 24px 24px',
+                      fontWeight: 700,
+                      fontSize: 16,
+                      padding: '18px 0',
+                      cursor: 'pointer',
+                      transition: 'opacity 0.3s',
+                      fontFamily: 'Plus Jakarta Sans',
+                      letterSpacing: 1
+                    }}
+                  >
+                    Ver proyecto
+                  </button>
+                </div>
+                {/* Card4: LT Burguers */}
+                <div className="card4" style={{
+                  width: 340,
+                  minWidth: 340,
+                  maxWidth: 340,
+                  height: 480,
+                  background: '#FFF8E8',
+                  borderRadius: 24,
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  cursor: 'pointer',
+                  transition: 'transform 0.3s, box-shadow 0.3s',
+                  scrollSnapAlign: 'start',
+                  marginTop: 64,
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 1;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 0;
+                }}
+                >
+                  {/* Imagen vertical sin overlay */}
+                  <div style={{
+                    width: '100%',
+                    height: 0,
+                    paddingBottom: '133%', // 3:4 proporción vertical
+                    position: 'relative',
+                    overflow: 'hidden',
+                    background: '#FFF8E8'
+                  }}>
+                    <img
+                      src="/proyectos/ltburguers.png"
+                      alt="LT Burguers"
+                      draggable={false}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        zIndex: 1,
+                        userSelect: 'none',
+                        pointerEvents: 'none',
+                      }}
+                    />
+                    {/* Info arriba (sin overlay) */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      zIndex: 3,
+                      padding: '20px 20px 0 20px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      gap: 10
+                    }}>
+                      <h3 style={{
+                        color: 'var(--violeta2)',
+                        fontWeight: 800,
+                        fontSize: 22,
+                        margin: 0,
+                        fontFamily: 'Plus Jakarta Sans',
+                        textShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                      }}>LT Burguers</h3>
+                      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                        <span style={{ background: 'var(--violeta2)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Logo</span>
+                        <span style={{ background: 'var(--pink)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Ilustración</span>
+                        <span style={{ background: 'var(--agua)', color: 'var(--violeta2)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Branding</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* CTA al hacer hover */}
+                  <button
+                    className="cta-carrusel"
+                    style={{
+                      opacity: 0,
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      width: '100%',
+                      background: '#FFF8E8',
+                      color: 'var(--azul)',
+                      border: 'none',
+                      borderRadius: '0 0 24px 24px',
+                      fontWeight: 700,
+                      fontSize: 16,
+                      padding: '18px 0',
+                      cursor: 'pointer',
+                      transition: 'opacity 0.3s',
+                      fontFamily: 'Plus Jakarta Sans',
+                      letterSpacing: 1
+                    }}
+                  >
+                    Ver proyecto
+                  </button>
+                </div>
+                {/* Card5: Not Kawaii */}
+                <div className="card5" style={{
+                  width: 340,
+                  minWidth: 340,
+                  maxWidth: 340,
+                  height: 480,
+                  background: '#110C27',
+                  borderRadius: 24,
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  cursor: 'pointer',
+                  transition: 'transform 0.3s, box-shadow 0.3s',
+                  scrollSnapAlign: 'start',
+                  marginTop: 64,
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 1;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 0;
+                }}
+                >
+                  {/* Imagen vertical sin overlay */}
+                  <div style={{
+                    width: '100%',
+                    height: 0,
+                    paddingBottom: '133%',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    background: '#110C27'
+                  }}>
+                    <img
+                      src="/proyectos/violet.png"
+                      alt="Not Kawaii"
+                      draggable={false}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        zIndex: 1,
+                        userSelect: 'none',
+                        pointerEvents: 'none',
+                      }}
+                    />
+                    {/* Info arriba (sin overlay) */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      zIndex: 3,
+                      padding: '20px 20px 0 20px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      gap: 10
+                    }}>
+                      <h3 style={{
+                        color: 'var(--blanco)',
+                        fontWeight: 800,
+                        fontSize: 22,
+                        margin: 0,
+                        fontFamily: 'Plus Jakarta Sans',
+                        textShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                      }}>Not Kawaii</h3>
+                      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                        <span style={{ background: 'var(--pink)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Ilustración</span>
+                        <span style={{ background: 'var(--agua)', color: 'var(--violeta2)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Diseño</span>
+                        <span style={{ background: 'var(--azul)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Personajes</span>
+                        <span style={{ background: 'var(--violeta)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Anime</span>
+                        <span style={{ background: 'var(--yellow-cartoon)', color: 'var(--azul)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Estampado</span>
+                        <span style={{ background: 'var(--green-turtle)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Indumentaria</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* CTA al hacer hover */}
+                  <button
+                    className="cta-carrusel"
+                    style={{
+                      opacity: 0,
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      width: '100%',
+                      background: '#110C27',
                       color: 'var(--blanco)',
                       border: 'none',
                       borderRadius: '0 0 24px 24px',
@@ -596,6 +949,660 @@ export default function NuestrosTrabajos() {
                     Ver proyecto
                   </button>
               </div>
+                {/* Card6: Thonet and Vander */}
+                <div className="card6" style={{
+                  width: 340,
+                  minWidth: 340,
+                  maxWidth: 340,
+                  height: 480,
+                  background: '#FDC21E',
+                  borderRadius: 24,
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  cursor: 'pointer',
+                  transition: 'transform 0.3s, box-shadow 0.3s',
+                  scrollSnapAlign: 'start',
+                  marginTop: 64,
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 1;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 0;
+                }}
+                >
+                  {/* Badge de proyecto destacado */}
+                  <div style={{
+                    position: 'absolute',
+                    top: 16,
+                    right: 16,
+                    background: 'var(--violeta)',
+                    color: 'var(--blanco)',
+                    fontWeight: 700,
+                    fontSize: 11,
+                    padding: '6px 12px',
+                    borderRadius: 20,
+                    zIndex: 4,
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                    textTransform: 'uppercase',
+                    letterSpacing: 0.5,
+                    fontFamily: 'Plus Jakarta Sans'
+                  }}>
+                    ⭐ Proyecto Destacado
+                  </div>
+                  
+                  {/* Imagen vertical sin overlay */}
+                  <div style={{
+                    width: '100%',
+                    height: 0,
+                    paddingBottom: '133%',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    background: '#FDC21E'
+                  }}>
+                    <img
+                      src="/proyectos/thonet.png"
+                      alt="Thonet and Vander"
+                      draggable={false}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        zIndex: 1,
+                        userSelect: 'none',
+                        pointerEvents: 'none',
+                      }}
+                    />
+                    {/* Info arriba (sin overlay) */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      zIndex: 3,
+                      padding: '20px 20px 0 20px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      gap: 10
+                    }}>
+                      <h3 style={{
+                        color: 'var(--violeta2)',
+                        fontWeight: 800,
+                        fontSize: 22,
+                        margin: 0,
+                        fontFamily: 'Plus Jakarta Sans',
+                        textShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                      }}>Thonet and Vander</h3>
+                      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                        <span style={{ background: 'var(--violeta2)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Redes Sociales</span>
+                        <span style={{ background: 'var(--pink)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Creatividad</span>
+                        <span style={{ background: 'var(--azul)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Campañas</span>
+                        <span style={{ background: 'var(--violeta)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Social Media</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* CTA al hacer hover */}
+                  <button
+                    className="cta-carrusel"
+                    style={{
+                      opacity: 0,
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      width: '100%',
+                      background: '#FDC21E',
+                      color: 'var(--azul)',
+                      border: 'none',
+                      borderRadius: '0 0 24px 24px',
+                      fontWeight: 700,
+                      fontSize: 16,
+                      padding: '18px 0',
+                      cursor: 'pointer',
+                      transition: 'opacity 0.3s',
+                      fontFamily: 'Plus Jakarta Sans',
+                      letterSpacing: 1
+                    }}
+                  >
+                    Ver proyecto
+                  </button>
+              </div>
+                {/* Card7: Julio Enciso */}
+                <div className="card7" style={{
+                  width: 340,
+                  minWidth: 340,
+                  maxWidth: 340,
+                  height: 480,
+                  background: '#3961EA',
+                  borderRadius: 24,
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  cursor: 'pointer',
+                  transition: 'transform 0.3s, box-shadow 0.3s',
+                  scrollSnapAlign: 'start',
+                  marginTop: 64,
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 1;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 0;
+                }}
+                >
+                  {/* Imagen vertical sin overlay */}
+                  <div style={{
+                    width: '100%',
+                    height: 0,
+                    paddingBottom: '133%',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    background: '#3961EA'
+                  }}>
+                    <img
+                      src="/proyectos/enciso.png"
+                      alt="Julio Enciso"
+                      draggable={false}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        zIndex: 1,
+                        userSelect: 'none',
+                        pointerEvents: 'none',
+                      }}
+                    />
+                    {/* Info arriba (sin overlay) */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      zIndex: 3,
+                      padding: '20px 20px 0 20px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      gap: 10
+                    }}>
+                      <h3 style={{
+                        color: 'var(--blanco)',
+                        fontWeight: 800,
+                        fontSize: 22,
+                        margin: 0,
+                        fontFamily: 'Plus Jakarta Sans',
+                        textShadow: '0 2px 8px rgba(0,0,0,0.25)'
+                      }}>Julio Enciso</h3>
+                      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                        <span style={{ background: 'var(--violeta2)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Social Media</span>
+                        <span style={{ background: 'var(--pink)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Sports Design</span>
+                        <span style={{ background: 'var(--agua)', color: 'var(--violeta2)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Posters</span>
+                        <span style={{ background: 'var(--yellow-cartoon)', color: 'var(--azul)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Flyers</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* CTA al hacer hover */}
+                  <button
+                    className="cta-carrusel"
+                    style={{
+                      opacity: 0,
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      width: '100%',
+                      background: '#3961EA',
+                      color: 'var(--blanco)',
+                      border: 'none',
+                      borderRadius: '0 0 24px 24px',
+                      fontWeight: 700,
+                      fontSize: 16,
+                      padding: '18px 0',
+                      cursor: 'pointer',
+                      transition: 'opacity 0.3s',
+                      fontFamily: 'Plus Jakarta Sans',
+                      letterSpacing: 1
+                    }}
+                  >
+                    Ver proyecto
+                  </button>
+                </div>
+                {/* Card8: Latin Branding */}
+                <div className="card8" style={{
+                  width: 340,
+                  minWidth: 340,
+                  maxWidth: 340,
+                  height: 480,
+                  background: '#F67A0D',
+                  borderRadius: 24,
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  cursor: 'pointer',
+                  transition: 'transform 0.3s, box-shadow 0.3s',
+                  scrollSnapAlign: 'start',
+                  marginTop: 64,
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 1;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 0;
+                }}
+                >
+                  {/* Imagen vertical sin overlay */}
+                  <div style={{
+                    width: '100%',
+                    height: 0,
+                    paddingBottom: '133%',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    background: '#F67A0D'
+                  }}>
+                    <img
+                      src="/proyectos/latin.png"
+                      alt="Latin Branding"
+                      draggable={false}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        zIndex: 1,
+                        userSelect: 'none',
+                        pointerEvents: 'none',
+                      }}
+                    />
+                    {/* Info arriba (sin overlay) */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      zIndex: 3,
+                      padding: '20px 20px 0 20px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      gap: 10
+                    }}>
+                      <h3 style={{
+                        color: 'var(--blanco)',
+                        fontWeight: 800,
+                        fontSize: 22,
+                        margin: 0,
+                        fontFamily: 'Plus Jakarta Sans',
+                        textShadow: '0 2px 8px rgba(0,0,0,0.25)'
+                      }}>Latin Branding</h3>
+                      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                        <span style={{ background: 'var(--agua)', color: 'var(--violeta2)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>UX/UI</span>
+                        <span style={{ background: 'var(--violeta2)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Assets Design</span>
+                        <span style={{ background: 'var(--pink)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>KV Web</span>
+                        <span style={{ background: 'var(--azul)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Interfaz de Usuario</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* CTA al hacer hover */}
+                  <button
+                    className="cta-carrusel"
+                    style={{
+                      opacity: 0,
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      width: '100%',
+                      background: '#F67A0D',
+                      color: 'var(--blanco)',
+                      border: 'none',
+                      borderRadius: '0 0 24px 24px',
+                      fontWeight: 700,
+                      fontSize: 16,
+                      padding: '18px 0',
+                      cursor: 'pointer',
+                      transition: 'opacity 0.3s',
+                      fontFamily: 'Plus Jakarta Sans',
+                      letterSpacing: 1
+                    }}
+                  >
+                    Ver proyecto
+                  </button>
+                </div>
+                {/* Card9: LT Burguers */}
+                <div className="card9" style={{
+                  width: 340,
+                  minWidth: 340,
+                  maxWidth: 340,
+                  height: 480,
+                  background: '#FFF8E8',
+                  borderRadius: 24,
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  cursor: 'pointer',
+                  transition: 'transform 0.3s, box-shadow 0.3s',
+                  scrollSnapAlign: 'start',
+                  marginTop: 64,
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 1;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 0;
+                }}
+                >
+                  {/* Imagen vertical sin overlay */}
+                  <div style={{
+                    width: '100%',
+                    height: 0,
+                    paddingBottom: '133%',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    background: '#FFF8E8'
+                  }}>
+                    <img
+                      src="/proyectos/ltburguers.png"
+                      alt="LT Burguers"
+                      draggable={false}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        zIndex: 1,
+                        userSelect: 'none',
+                        pointerEvents: 'none',
+                      }}
+                    />
+                    {/* Info arriba (sin overlay) */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      zIndex: 3,
+                      padding: '20px 20px 0 20px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      gap: 10
+                    }}>
+                      <h3 style={{
+                        color: 'var(--violeta2)',
+                        fontWeight: 800,
+                        fontSize: 22,
+                        margin: 0,
+                        fontFamily: 'Plus Jakarta Sans',
+                        textShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                      }}>LT Burguers</h3>
+                      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                        <span style={{ background: 'var(--violeta2)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Logo</span>
+                        <span style={{ background: 'var(--pink)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Ilustración</span>
+                        <span style={{ background: 'var(--agua)', color: 'var(--violeta2)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Branding</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* CTA al hacer hover */}
+                  <button
+                    className="cta-carrusel"
+                    style={{
+                      opacity: 0,
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      width: '100%',
+                      background: '#FFF8E8',
+                      color: 'var(--azul)',
+                      border: 'none',
+                      borderRadius: '0 0 24px 24px',
+                      fontWeight: 700,
+                      fontSize: 16,
+                      padding: '18px 0',
+                      cursor: 'pointer',
+                      transition: 'opacity 0.3s',
+                      fontFamily: 'Plus Jakarta Sans',
+                      letterSpacing: 1
+                    }}
+                  >
+                    Ver proyecto
+                  </button>
+                </div>
+                {/* Card10: Alquimia */}
+                <div className="card10" style={{
+                  width: 340,
+                  minWidth: 340,
+                  maxWidth: 340,
+                  height: 480,
+                  background: '#F8F4E9',
+                  borderRadius: 24,
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  cursor: 'pointer',
+                  transition: 'transform 0.3s, box-shadow 0.3s',
+                  scrollSnapAlign: 'start',
+                  marginTop: 64,
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 1;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 0;
+                }}
+                >
+                  {/* Imagen vertical sin overlay */}
+                  <div style={{
+                    width: '100%',
+                    height: 0,
+                    paddingBottom: '133%',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    background: '#F8F4E9'
+                  }}>
+                    <img
+                      src="/proyectos/alquimia.png"
+                      alt="Alquimia"
+                      draggable={false}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        zIndex: 1,
+                        userSelect: 'none',
+                        pointerEvents: 'none',
+                      }}
+                    />
+                    {/* Info arriba (sin overlay) */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      zIndex: 3,
+                      padding: '20px 20px 0 20px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      gap: 10
+                    }}>
+                      <h3 style={{
+                        color: 'var(--violeta2)',
+                        fontWeight: 800,
+                        fontSize: 22,
+                        margin: 0,
+                        fontFamily: 'Plus Jakarta Sans',
+                        textShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                      }}>Alquimia</h3>
+                      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                        <span style={{ background: 'var(--agua)', color: 'var(--violeta2)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Branding</span>
+                        <span style={{ background: 'var(--violeta2)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Logo</span>
+                        <span style={{ background: 'var(--pink)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Creación de Marca</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* CTA al hacer hover */}
+                  <button
+                    className="cta-carrusel"
+                    style={{
+                      opacity: 0,
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      width: '100%',
+                      background: '#F8F4E9',
+                      color: 'var(--azul)',
+                      border: 'none',
+                      borderRadius: '0 0 24px 24px',
+                      fontWeight: 700,
+                      fontSize: 16,
+                      padding: '18px 0',
+                      cursor: 'pointer',
+                      transition: 'opacity 0.3s',
+                      fontFamily: 'Plus Jakarta Sans',
+                      letterSpacing: 1
+                    }}
+                  >
+                    Ver proyecto
+                  </button>
+                </div>
+                {/* Card11: Not Kawaii */}
+                <div className="card11" style={{
+                  width: 340,
+                  minWidth: 340,
+                  maxWidth: 340,
+                  height: 480,
+                  background: '#FFBDDA',
+                  borderRadius: 24,
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  cursor: 'pointer',
+                  transition: 'transform 0.3s, box-shadow 0.3s',
+                  scrollSnapAlign: 'start',
+                  marginTop: 64,
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 1;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.querySelector('.cta-carrusel').style.opacity = 0;
+                }}
+                >
+                  {/* Imagen vertical sin overlay */}
+                  <div style={{
+                    width: '100%',
+                    height: 0,
+                    paddingBottom: '133%',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    background: '#FFBDDA'
+                  }}>
+                    <img
+                      src="/proyectos/ilustracionrosa.png"
+                      alt="Not Kawaii"
+                      draggable={false}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        zIndex: 1,
+                        userSelect: 'none',
+                        pointerEvents: 'none',
+                      }}
+                    />
+                    {/* Info arriba (sin overlay) */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      zIndex: 3,
+                      padding: '20px 20px 0 20px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      gap: 10
+                    }}>
+                      <h3 style={{
+                        color: 'var(--violeta2)',
+                        fontWeight: 800,
+                        fontSize: 22,
+                        margin: 0,
+                        fontFamily: 'Plus Jakarta Sans',
+                        textShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                      }}>Not Kawaii</h3>
+                      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                        <span style={{ background: 'var(--pink)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Ilustración Digital</span>
+                        <span style={{ background: 'var(--azul)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Creación de Personaje</span>
+                        <span style={{ background: 'var(--violeta2)', color: 'var(--blanco)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Poster</span>
+                        <span style={{ background: 'var(--agua)', color: 'var(--violeta2)', fontWeight: 700, fontSize: 12, borderRadius: 12, padding: '4px 10px' }}>Estampado</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* CTA al hacer hover */}
+                  <button
+                    className="cta-carrusel"
+                    style={{
+                      opacity: 0,
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      width: '100%',
+                      background: '#FFBDDA',
+                      color: 'var(--azul)',
+                      border: 'none',
+                      borderRadius: '0 0 24px 24px',
+                      fontWeight: 700,
+                      fontSize: 16,
+                      padding: '18px 0',
+                      cursor: 'pointer',
+                      transition: 'opacity 0.3s',
+                      fontFamily: 'Plus Jakarta Sans',
+                      letterSpacing: 1
+                    }}
+                  >
+                    Ver proyecto
+                  </button>
+                </div>
               </React.Fragment>
             ))}
         </div>
