@@ -16,6 +16,7 @@ import Contact from "./pages/Contact"
 import Login from "./pages/Login"
 import DashboardHome from "./pages/DashboardHome"
 import AiImages from "./pages/AiImages"
+import CrearImagen from "./pages/CrearImagen"
 
 function PageTransition({ children }) {
   return (
@@ -39,6 +40,7 @@ function AppContent() {
     const dashboardRoutes = [
       { path: "/dashboard", element: <DashboardHome /> },
       { path: "/dashboard/ai-images", element: <AiImages /> },
+      { path: "/dashboard/crear-imagen", element: <CrearImagen /> },
     ]
     return (
       <DashboardLayout>

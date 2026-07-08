@@ -1,11 +1,12 @@
 import { useEffect } from "react"
 import { useNavigate, useLocation, Link } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
-import { ImageIcon, LogOut, LayoutDashboard } from "lucide-react"
+import { ImageIcon, LogOut, LayoutDashboard, PenSquare } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
 
 const navItems = [
-  { path: "/dashboard/ai-images", label: "AI Images", icon: ImageIcon },
+  { path: "/dashboard/crear-imagen", label: "Crear Imagen", icon: PenSquare },
+  { path: "/dashboard/mis-disenos", label: "Mis Diseños", icon: ImageIcon },
 ]
 
 export default function DashboardLayout({ children }) {
