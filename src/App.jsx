@@ -2,15 +2,20 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import { ThemeProvider } from "./context/ThemeContext"
 import { LangProvider } from "./context/LangContext"
+import { AuthProvider } from "./context/AuthContext"
 import Navbar from "./components/Navbar"
 import GlobalCTA from "./components/GlobalCTA"
 import Footer from "./components/Footer"
 import BackgroundOrbs from "./components/BackgroundOrbs"
+import DashboardLayout from "./components/DashboardLayout"
 import Home from "./pages/Home"
 import Services from "./pages/Services"
 import WhyUs from "./pages/WhyUs"
 import Blog from "./pages/Blog"
 import Contact from "./pages/Contact"
+import Login from "./pages/Login"
+import DashboardHome from "./pages/DashboardHome"
+import AiImages from "./pages/AiImages"
 
 function PageTransition({ children }) {
   return (
@@ -27,6 +32,24 @@ function PageTransition({ children }) {
 
 function AppContent() {
   const location = useLocation()
+  const isDashboard = location.pathname.startsWith("/dashboard") || location.pathname === "/login"
+
+  if (isDashboard) {
+    if (location.pathname === "/login") return <Login />
+    const dashboardRoutes = [
+      { path: "/dashboard", element: <DashboardHome /> },
+      { path: "/dashboard/ai-images", element: <AiImages /> },
+    ]
+    return (
+      <DashboardLayout>
+        <Routes location={location}>
+          {dashboardRoutes.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
+          ))}
+        </Routes>
+      </DashboardLayout>
+    )
+  }
 
   return (
     <div className="min-h-screen text-slate-900 dark:text-white transition-colors duration-300">
@@ -54,7 +77,9 @@ export default function App() {
     <BrowserRouter>
       <ThemeProvider>
         <LangProvider>
-          <AppContent />
+          <AuthProvider>
+            <AppContent />
+          </AuthProvider>
         </LangProvider>
       </ThemeProvider>
     </BrowserRouter>

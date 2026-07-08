@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
-import { Moon, Sun, Menu, X } from "lucide-react"
+import { Moon, Sun, Menu, X, LogIn } from "lucide-react"
 import { useTheme } from "../context/ThemeContext"
 import { useLang } from "../context/LangContext"
 import { translations } from "../content/translations"
@@ -116,6 +116,14 @@ export default function Navbar() {
               {dark ? <Sun size={16} /> : <Moon size={16} />}
             </button>
 
+            <Link
+              to="/login"
+              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold tracking-widest uppercase bg-white/40 dark:bg-slate-800/40 border border-white/40 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700/40 transition-all"
+            >
+              <LogIn size={12} />
+              Login
+            </Link>
+
             <div className="hidden md:block">
               <Button>{t.bookDemo[lang]}</Button>
             </div>
@@ -155,6 +163,13 @@ export default function Navbar() {
                   {t[link][lang]}
                 </Link>
               ))}
+              <Link
+                to="/login"
+                className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-white/40 dark:hover:bg-slate-800/40"
+              >
+                <LogIn size={14} />
+                Login
+              </Link>
               <div className="pt-2">
                 <Button className="w-full">{t.bookDemo[lang]}</Button>
               </div>
