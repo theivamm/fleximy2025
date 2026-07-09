@@ -14,6 +14,9 @@ import TestimonialsCarousel from "../components/TestimonialsCarousel"
 import PricingCards from "../components/PricingCards"
 import FAQ from "../components/FAQ"
 import FinalCTA from "../components/FinalCTA"
+import heroMain from "../assets/images/img-01-hero.png"
+import heroFloatLeft from "../assets/images/img-01-hero-float-left.png"
+import heroFloatRight from "../assets/images/img-01-hero-float-right.png"
 
 export default function Home() {
   const { lang } = useLang()
@@ -39,9 +42,46 @@ export default function Home() {
       >
         <InteractiveBackground />
 
+        {/* Right image panel */}
+        <div className="hidden lg:block absolute right-0 bottom-0 w-3/5 h-full pointer-events-none">
+          <div className="relative w-full h-full">
+            <div className="absolute bottom-0 right-0 w-full max-w-4xl">
+              {/* Float — behind main image, top-left area */}
+              <motion.img
+                src={heroFloatLeft}
+                alt=""
+                initial={{ opacity: 0, y: -30, x: -30 }}
+                animate={{ opacity: 1, y: 0, x: 0 }}
+                transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+                className="absolute top-4 left-6 w-auto h-auto max-w-[40%] animate-float"
+              />
+
+              {/* Main hero image — base aligned to hero container base */}
+              <motion.img
+                src={heroMain}
+                alt="Hero"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
+                className="relative z-10 w-full h-auto"
+              />
+
+              {/* Float — above main image, shifted up & left */}
+              <motion.img
+                src={heroFloatRight}
+                alt=""
+                initial={{ opacity: 0, y: 30, x: 30 }}
+                animate={{ opacity: 1, y: 0, x: 0 }}
+                transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
+                className="absolute bottom-[100px] right-[100px] z-20 w-auto h-auto max-w-[30%] animate-float"
+              />
+            </div>
+          </div>
+        </div>
+
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
-          className="mx-auto max-w-6xl w-full"
+          className="mx-auto max-w-6xl w-full relative z-10"
         >
           <div className="max-w-3xl">
             <motion.div
@@ -70,8 +110,14 @@ export default function Home() {
                 <br />
                 <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 dark:from-indigo-400 dark:via-purple-400 dark:to-cyan-400 bg-clip-text text-transparent">
                   {lang === "es"
-                    ? "Es el contenedor de tu negocio."
-                    : "It's your business container."}
+                    ? "Es el contenedor"
+                    : "It's your business"}
+                </span>
+                <br />
+                <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 dark:from-indigo-400 dark:via-purple-400 dark:to-cyan-400 bg-clip-text text-transparent">
+                  {lang === "es"
+                    ? "de tu negocio."
+                    : "container."}
                 </span>
               </h1>
 
@@ -89,18 +135,11 @@ export default function Home() {
                 </Button>
               </div>
 
-              {/* Scroll indicator */}
-              <motion.div
-                className="mt-16 flex flex-col items-center gap-2 text-xs text-slate-400 dark:text-slate-500 tracking-widest uppercase"
-                animate={{ opacity: [0.4, 1, 0.4], y: [0, 6, 0] }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-              >
-                <span>{t.heroScroll[lang]}</span>
-                <ChevronDown size={14} />
-              </motion.div>
+
             </motion.div>
           </div>
         </motion.div>
+
       </section>
 
       {/* ═══════════════════════════════════════════

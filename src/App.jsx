@@ -17,6 +17,7 @@ import Login from "./pages/Login"
 import DashboardHome from "./pages/DashboardHome"
 import AiImages from "./pages/AiImages"
 import CrearImagen from "./pages/CrearImagen"
+import MisDisenos from "./pages/MisDisenos"
 
 function PageTransition({ children }) {
   return (
@@ -41,6 +42,7 @@ function AppContent() {
       { path: "/dashboard", element: <DashboardHome /> },
       { path: "/dashboard/ai-images", element: <AiImages /> },
       { path: "/dashboard/crear-imagen", element: <CrearImagen /> },
+      { path: "/dashboard/mis-disenos", element: <MisDisenos /> },
     ]
     return (
       <DashboardLayout>
