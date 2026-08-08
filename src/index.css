@@ -15,6 +15,8 @@
   --animate-morph: morph 8s ease-in-out infinite;
   --animate-scan: scan 3s linear infinite;
   --animate-typing-cursor: blink 1s step-end infinite;
+  --animate-mouse-path: mouse-path 8s ease-in-out infinite;
+  --animate-scroll-indicator: scroll-indicator 3s ease-in-out infinite;
 }
 
 @keyframes shimmer {
@@ -68,6 +70,47 @@
   50% { opacity: 0; }
 }
 
+@keyframes grow-bar {
+  from { transform: scaleY(0); }
+}
+
+@keyframes grow-width {
+  from { width: 0; }
+}
+
+@keyframes fade-slide-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes draw-line {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes mouse-path {
+  0%, 100% { transform: translate(20px, 20px); }
+  20% { transform: translate(160px, 30px); }
+  40% { transform: translate(80px, 180px); }
+  55% { transform: translate(220px, 100px); }
+  70% { transform: translate(140px, 260px); }
+  85% { transform: translate(260px, 200px); }
+}
+
+@keyframes scroll-indicator {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(80px); }
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -78,6 +121,14 @@
   }
   body {
     @apply font-sans antialiased;
+  }
+  ::selection {
+    background-color: #6366f1;
+    color: #ffffff;
+  }
+  ::-moz-selection {
+    background-color: #6366f1;
+    color: #ffffff;
   }
 }
 

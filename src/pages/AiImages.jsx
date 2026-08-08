@@ -238,7 +238,7 @@ export default function AiImages() {
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
                     <button
-                      onClick={() => downloadImage(img.image_data, `vessel-${img.format}-${img.id.slice(0, 8)}.png`)}
+                      onClick={() => downloadImage(img.image_data, `fleximy-${img.format}-${img.id.slice(0, 8)}.png`)}
                       className="p-2 rounded-full bg-white/90 text-slate-700 hover:bg-white cursor-pointer"
                     >
                       <Download size={16} />

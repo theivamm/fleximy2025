@@ -1,25 +1,27 @@
 export const translations = {
   nav: {
-    home: { en: "Home", es: "Inicio" },
-    services: { en: "Services", es: "Servicios" },
-    whyUs: { en: "Why Us", es: "Por Qué Nosotros" },
-    blog: { en: "Blog", es: "Blog" },
-    contact: { en: "Contact", es: "Contacto" },
-    bookDemo: { en: "Book a Demo", es: "Agendar Demo" },
+    soluciones: { en: "Solutions", es: "Soluciones" },
+    gastronomia: { en: "Gastronomy", es: "Gastronomía" },
+    turnos: { en: "Appointments", es: "Turnos" },
+    pymes: { en: "SMBs", es: "Pymes" },
+    demos: { en: "Demos", es: "Demos" },
+    precio: { en: "Pricing", es: "Precio" },
+    nosotros: { en: "About Us", es: "Nosotros" },
+    whatsapp: { en: "Talk on WhatsApp", es: "Hablar por WhatsApp" },
   },
   home: {
     // ── Hero ──
-    heroBadge: { en: "Premium Web + Dashboard", es: "Web Premium + Dashboard" },
+    heroBadge: { en: "Much more than a website: custom software for your SMB", es: "Mucho más que un sitio web: software a la medida de tu PyME" },
     heroTitle: {
-      en: "Your website is not a brochure. It's your business container.",
-      es: "Tu web no es un folleto. Es el contenedor de tu negocio.",
+      en: "Turn your website into the control center of your business.",
+      es: "Transformamos tu sitio web en el centro de control de tu negocio.",
     },
     heroSub: {
-      en: "We fuse a high-conversion public website with a custom operational dashboard , inventory, sales, clients and analytics , into one seamless system.",
-      es: " fusionamos un sitio web público de alta conversión con un dashboard operativo a medida , inventario, ventas, clientes y analíticas , en un solo sistema fluido.",
+      en: "We design professional websites integrated with custom management panels. From bookings and digital menus to task and project managers. Take your website to the next level.",
+      es: "Diseñamos sitios web profesionales integrados con paneles de gestión a medida. Desde reservas y menúes digitales hasta gestores de tareas y proyectos. Lleva tu website a otro level.",
     },
-    heroCTA: { en: "Build Your Vessel", es: "Construye Tu Vessel" },
-    heroCTA2: { en: "See How It Works", es: "Ver Cómo Funciona" },
+    heroCTA: { en: "Try Interactive Demo", es: "Probar Demo Interactiva" },
+    heroCTA2: { en: "Get a Project Quote", es: "Cotizar mi proyecto" },
     heroScroll: { en: "Scroll to explore", es: "Desliza para explorar" },
 
     // ── Stats ──
@@ -33,25 +35,34 @@ export const translations = {
     stat4Desc: { en: "Faster operations", es: "Operaciones más rápidas" },
 
     // ── Process ──
-    processTitle: { en: "How It Works", es: "Cómo Funciona" },
+    processBadge: { en: "AGILE AND TRANSPARENT PROCESS", es: "PROCESO ÁGIL Y TRANSPARENTE" },
+    processTitle: {
+      en: "Get your digital business up and running in record time",
+      es: "Ponemos a funcionar tu negocio digital en tiempo récord",
+    },
     processSub: {
-      en: "From discovery to launch , a streamlined pipeline that delivers your complete digital operating system.",
-      es: "Del descubrimiento al lanzamiento , un pipeline optimizado que entrega tu sistema operativo digital completo.",
+      en: "No complicated jargon or endless processes. A workflow designed for busy business owners.",
+      es: "Sin tecnicismos raros ni procesos eternos. Un flujo de trabajo pensado para dueños de negocios ocupados.",
     },
-    step1Title: { en: "1. Discover & Design", es: "1. Descubrimiento y Diseño" },
+    step1Title: { en: "Express Diagnosis", es: "Diagnóstico Express" },
     step1Desc: {
-      en: "We audit your business workflows, map every process, and design a tailored UI that feels like native software.",
-      es: "Auditamos tus flujos de trabajo, mapeamos cada proceso y diseñamos una UI a medida que se siente como software nativo.",
+      en: "We analyze your business dynamics and choose the base solution (Gastronomy, Appointments, SME, etc.) that best solves your daily operations.",
+      es: "Analizamos la dinámica de tu empresa y elegimos la solución base (Gastronomía, Turnos, Pyme, etc.) que mejor resuelve tu día a día.",
     },
-    step2Title: { en: "2. Build & Connect", es: "2. Construcción y Conexión" },
+    step2Title: { en: "Brand Adaptation", es: "Adaptación a tu Identidad" },
     step2Desc: {
-      en: "We develop the public website and internal dashboard in parallel, integrating your data sources and payment systems.",
-      es: "Desarrollamos el sitio web público y el dashboard interno en paralelo, integrando tus fuentes de datos y sistemas de pago.",
+      en: "We configure your website and admin dashboard with your logos, colors, product catalog, services, and current prices.",
+      es: "Configuramos tu sitio web y tu dashboard administrativo con tus logos, colores, catálogo de productos, servicios y precios vigentes.",
     },
-    step3Title: { en: "3. Launch & Evolve", es: "3. Lanzamiento y Evolución" },
+    step3Title: { en: "Launch", es: "Puesta en Marcha" },
     step3Desc: {
-      en: "We deploy to the cloud, train your team, and provide continuous updates. Your Vessel grows as you grow.",
-      es: "Desplegamos en la nube, capacitamos a tu equipo y proporcionamos actualizaciones continuas. Tu Vessel crece contigo.",
+      en: "We show you and your team how to use the panel in a brief session. It's so intuitive it requires no technical knowledge.",
+      es: "Te mostramos a vos y a tu equipo cómo usar el panel en una breve sesión. Es tan intuitivo que no requiere conocimientos técnicos.",
+    },
+    step4Title: { en: "Support & Maintenance", es: "Soporte y Mantenimiento" },
+    step4Desc: {
+      en: "We handle hosting, security, and ongoing technical support so your platform never stops.",
+      es: "Nos encargamos del hosting, la seguridad y el soporte técnico constante para que tu plataforma nunca se detenga.",
     },
 
     // ── Capabilities ──
@@ -77,8 +88,8 @@ export const translations = {
     },
     capPayments: { en: "Payment Integration", es: "Integración de Pagos" },
     capPaymentsDesc: {
-      en: "Accept payments, manage subscriptions, and process transactions directly from your Vessel.",
-      es: "Acepta pagos, gestiona suscripciones y procesa transacciones directamente desde tu Vessel.",
+      en: "Accept payments, manage subscriptions, and process transactions directly from your Fleximy.",
+      es: "Acepta pagos, gestiona suscripciones y procesa transacciones directamente desde tu Fleximy.",
     },
     capAnalytics: { en: "Advanced Analytics", es: "Analíticas Avanzadas" },
     capAnalyticsDesc: {
@@ -102,14 +113,14 @@ export const translations = {
     // ── Testimonials ──
     testTitle: { en: "Trusted by Business Owners", es: "Confiado por Dueños de Negocios" },
     testSub: {
-      en: "Real stories from real founders who transformed their operations with Vessel.",
-      es: "Historias reales de fundadores reales que transformaron sus operaciones con Vessel.",
+      en: "Real stories from real founders who transformed their operations with Fleximy.",
+      es: "Historias reales de fundadores reales que transformaron sus operaciones con Fleximy.",
     },
     test1Name: { en: "María González", es: "María González" },
     test1Role: { en: "Owner, Café Bonita", es: "Dueña, Café Bonita" },
     test1Quote: {
-      en: "Vessel replaced our website, POS, inventory system, and accounting tool. We went from 6 subscriptions to 1. It's liberating.",
-      es: "Vessel reemplazó nuestra web, POS, sistema de inventario y herramienta de contabilidad. Pasamos de 6 suscripciones a 1. Es liberador.",
+      en: "Fleximy replaced our website, POS, inventory system, and accounting tool. We went from 6 subscriptions to 1. It's liberating.",
+      es: "Fleximy reemplazó nuestra web, POS, sistema de inventario y herramienta de contabilidad. Pasamos de 6 suscripciones a 1. Es liberador.",
     },
     test2Name: { en: "Carlos Mendoza", es: "Carlos Mendoza" },
     test2Role: { en: "Founder, Mesa Alta Restaurant", es: "Fundador, Restaurante Mesa Alta" },
@@ -120,8 +131,8 @@ export const translations = {
     test3Name: { en: "Ana Lucía Ruiz", es: "Ana Lucía Ruiz" },
     test3Role: { en: "CEO, Moda Retail", es: "CEO, Moda Retail" },
     test3Quote: {
-      en: "We launched our online store and back-office dashboard simultaneously. The team at Vessel understood our workflow better than we did.",
-      es: "Lanzamos nuestra tienda online y el dashboard administrativo simultáneamente. El equipo de Vessel entendió nuestro flujo mejor que nosotros.",
+      en: "We launched our online store and back-office dashboard simultaneously. The team at Fleximy understood our workflow better than we did.",
+      es: "Lanzamos nuestra tienda online y el dashboard administrativo simultáneamente. El equipo de Fleximy entendió nuestro flujo mejor que nosotros.",
     },
 
     // ── Pricing ──
@@ -173,35 +184,124 @@ export const translations = {
     pricingPopular: { en: "Most Popular", es: "Más Popular" },
 
     // ── FAQ ──
+    // ── FAQ ──
+    faqBadge: { en: "CLEAR ANSWERS", es: "RESPUESTAS CLARAS" },
     faqTitle: { en: "Frequently Asked Questions", es: "Preguntas Frecuentes" },
     faqSub: {
-      en: "Everything you need to know about building your Vessel.",
-      es: "Todo lo que necesitas saber sobre construir tu Vessel.",
+      en: "Everything you need to know before taking the step to digitalize your business.",
+      es: "Todo lo que necesitás saber antes de dar el paso y digitalizar tu negocio.",
     },
-    faq1Q: { en: "How long does it take to build a Vessel?", es: "¿Cuánto tiempo toma construir un Vessel?" },
+    faq1Q: { en: "How long does it take to launch my website and dashboard?", es: "¿Cuánto tiempo tarda la puesta en marcha de mi web y dashboard?" },
     faq1A: {
-      en: "Most projects launch in 6–10 weeks. The first 2 weeks are discovery and design, the next 4–6 are development and testing, and the final week is deployment and training. Enterprise projects may take longer.",
-      es: "La mayoría de los proyectos se lanzan en 6–10 semanas. Las primeras 2 semanas son de descubrimiento y diseño, las siguientes 4–6 de desarrollo y pruebas, y la última semana es despliegue y capacitación.",
+      en: "On average, between 7 and 14 business days from when you provide your basic business information (logo, photos, and key data). We take care of the entire initial setup so you don't waste time.",
+      es: "En promedio, entre 7 y 14 días hábiles desde que nos entregás la información básica de tu negocio (logo, fotos y datos clave). Nos encargamos de todo el armado inicial para que no pierdas tiempo.",
     },
-    faq2Q: { en: "Can I integrate my existing tools?", es: "¿Puedo integrar mis herramientas existentes?" },
+    faq2Q: { en: "Do I need technical knowledge or coding skills to use the dashboard?", es: "¿Necesito conocimientos técnicos o saber programar para usar el panel?" },
     faq2A: {
-      en: "Yes. We build custom APIs to connect with your existing POS, accounting, or inventory systems. If it has an API, we can connect it.",
-      es: "Sí. Construimos APIs personalizadas para conectar con tus sistemas POS, contables o de inventario existentes. Si tiene API, podemos conectarlo.",
+      en: "Not at all. If you know how to use WhatsApp or edit an Instagram post, you can manage our dashboard. It's 100% intuitive, and we also train you and your team in a 30-minute session.",
+      es: "Para nada. Si sabés usar WhatsApp o editar una publicación de Instagram, podés manejar nuestro dashboard. Es 100% intuitivo y además te capacitamos a vos y a tu equipo en una sesión de 30 minutos.",
     },
-    faq3Q: { en: "Do I own my code and data?", es: "¿Soy dueño de mi código y datos?" },
+    faq3Q: { en: "How do I update my prices or products due to inflation?", es: "¿Cómo modifico mis precios o productos ante la inflación?" },
     faq3A: {
-      en: "Absolutely. You retain full ownership of all code, data, and intellectual property. There are no lock-in contracts.",
-      es: "Absolutamente. Retienes la propiedad total de todo el código, datos y propiedad intelectual. No hay contratos de exclusividad.",
+      en: "You do it yourself in real time from your phone or computer in 2 clicks. Change a price, take down an out-of-stock product, or modify a service and it instantly updates on your website. Without depending on anyone.",
+      es: "Lo hacés vos mismo en tiempo real desde tu celular o computadora en 2 clics. Cambiás un precio, bajás un producto sin stock o modificás un servicio e instantáneamente se actualiza en tu sitio web. Sin depender de nadie.",
     },
-    faq4Q: { en: "What if I need changes after launch?", es: "¿Qué pasa si necesito cambios después del lanzamiento?" },
+    faq4Q: { en: "Is there a lock-in contract or penalty clauses?", es: "¿Hay contrato de permanencia o cláusulas de atadura?" },
     faq4A: {
-      en: "We provide ongoing maintenance and support. You can request new features, design changes, or scaling improvements at any time.",
-      es: "Proporcionamos mantenimiento y soporte continuo. Puedes solicitar nuevas funciones, cambios de diseño o mejoras de escalamiento en cualquier momento.",
+      en: "No. The service is paid month to month. We trust the value our system brings to your daily operations for you to choose to stay with us.",
+      es: "No. El servicio se abona mes a mes. Confiamos en el valor que aporta nuestro sistema a tu operación diaria para que elijas quedarte con nosotros.",
     },
-    faq5Q: { en: "Is Vessel suitable for my industry?", es: "¿Vessel es adecuado para mi industria?" },
+    faq5Q: { en: "What exactly does the $150,000 ARS/month subscription include?", es: "¿Qué incluye exactamente la suscripción de $150.000 ARS/mes?" },
     faq5A: {
-      en: "Vessel is designed for any business that manages inventory, clients, sales, and operations. Coffee shops, restaurants, clinics, retail stores, gyms , if you run a physical business, Vessel works.",
-      es: "Vessel está diseñado para cualquier negocio que gestione inventario, clientes, ventas y operaciones. Cafeterías, restaurantes, clínicas, tiendas, gimnasios , si tienes un negocio físico, Vessel funciona.",
+      en: "It includes high-speed cloud hosting, SSL security certificate, system maintenance, direct WhatsApp technical support, data backups, and unlimited access to your operational dashboard.",
+      es: "Incluye el hosting cloud de alta velocidad, certificado de seguridad SSL, el mantenimiento del sistema, soporte técnico directo por WhatsApp, copias de seguridad de tus datos y el acceso ilimitado a tu dashboard operativo.",
+    },
+    faq6Q: { en: "Can I request custom features in the future?", es: "¿Puedo pedir funcionalidades a medida en el futuro?" },
+    faq6A: {
+      en: "Yes! The system is designed to grow with your SMB. If over time your business requires specific integrations, custom reports, or new modules, we can develop them on your same platform.",
+      es: "¡Sí! El sistema está pensado para crecer con tu PyME. Si con el tiempo tu negocio requiere integraciones específicas, reportes personalizados o nuevos módulos, podemos desarrollarlos a medida sobre tu misma plataforma.",
+    },
+
+    // ── Final CTA Banner ──
+    ctaBannerTitle: {
+      en: "Ready to organize your business and take your SMB to the next level?",
+      es: "¿Listo para ordenar tu negocio y llevar tu PyME al siguiente nivel?",
+    },
+    ctaBannerSub: {
+      en: "Try a live demo or talk to a specialist today. No commitment.",
+      es: "Probá una demo en vivo o hablá hoy mismo con un especialista. Sin compromiso.",
+    },
+    ctaBannerWhatsApp: { en: "💬 Talk on WhatsApp", es: "💬 Hablar por WhatsApp" },
+    ctaBannerDemo: { en: "📅 Schedule 15min Demo", es: "📅 Agendar Demo de 15 min" },
+
+    // ── Industry Cards ──
+    industryBadge: { en: "SOLUTIONS BY INDUSTRY", es: "SOLUCIONES POR INDUSTRIA" },
+    industryTitle: { en: "A solution designed for the reality of your field", es: "Una solución diseñada para la realidad de tu rubro" },
+    industrySub: { en: "Choose your industry and discover how to combine a high-impact website with a custom operational dashboard.", es: "Elegí tu industria y descubrí cómo combinar un sitio web de alto impacto con un dashboard operativo a medida." },
+    industries: {
+      gastronomy: {
+        label: { en: "Gastronomy", es: "Gastronomía" },
+        title: { en: "QR Digital Menu + Real-time Reservations & Orders Panel", es: "Menú Digital QR + Panel de Reservas y Comandas en tiempo real" },
+        features: {
+          en: ["Digital menu with QR code", "Table manager with real-time status", "Integrated orders to kitchen screen"],
+          es: ["Menú digital con código QR", "Gestor de mesas con estado en vivo", "Comandas integradas a pantalla de cocina"],
+        },
+        cta: { en: "View Gastronomy Demo", es: "Ver Demo Gastronomía" },
+      },
+      services: {
+        label: { en: "Services & Appointments", es: "Servicios y Turnos" },
+        title: { en: "24/7 Booking Portal + Interactive Agenda with Client History", es: "Portal de Turnos 24/7 + Agenda interactiva con historial de clientes" },
+        features: {
+          en: ["Online booking 24/7", "Interactive weekly agenda", "Automated reminders & client history"],
+          es: ["Turnos online 24/7", "Agenda semanal interactiva", "Recordatorios automáticos e historial"],
+        },
+        cta: { en: "View Services Demo", es: "Ver Demo Servicios" },
+      },
+      pymes: {
+        label: { en: "Management & SMEs", es: "Gestión & PyMEs" },
+        title: { en: "Project Manager like ClickUp + Team Task Control", es: "Gestor de Proyectos estilo ClickUp + Control de tareas para tu equipo" },
+        features: {
+          en: ["Kanban board with drag & drop", "Task assignment and deadlines", "Progress reports & analytics"],
+          es: ["Tablero Kanban con drag & drop", "Asignación de tareas y vencimientos", "Reportes de avance y analíticas"],
+        },
+        cta: { en: "View Management Demo", es: "Ver Demo Gestión" },
+      },
+      retail: {
+        label: { en: "Commerce & Retail", es: "Comercio & Retail" },
+        title: { en: "Web Catalog + Simple Stock Control and Quick Price Updates", es: "Catálogo Web + Control de stock simple y actualización rápida de precios" },
+        features: {
+          en: ["Product catalog with instant updates", "Real-time stock control", "WhatsApp integration for orders"],
+          es: ["Catálogo de productos con actualización instantánea", "Control de stock en tiempo real", "Integración con WhatsApp para pedidos"],
+        },
+        cta: { en: "View Retail Demo", es: "Ver Demo Comercio" },
+      },
+      realty: {
+        label: { en: "Real Estate", es: "Inmobiliaria" },
+        title: { en: "Property Portal + Virtual Tour Scheduling & CRM", es: "Portal de Propiedades + Agenda de visitas y CRM" },
+        features: {
+          en: ["Property catalog with filters", "Visit scheduling & reminders", "Client management & follow-ups"],
+          es: ["Catálogo de propiedades con filtros", "Agenda de visitas y recordatorios", "Gestión de clientes y seguimientos"],
+        },
+        cta: { en: "View Real Estate Demo", es: "Ver Demo Inmobiliaria" },
+      },
+      education: {
+        label: { en: "Education", es: "Educación" },
+        title: { en: "Online Academy + Student Progress Tracking Dashboard", es: "Academia Online + Dashboard de progreso de estudiantes" },
+        features: {
+          en: ["Course catalog & enrollment", "Student progress tracking", "Task & assignment management"],
+          es: ["Catálogo de cursos e inscripción", "Seguimiento de progreso", "Gestión de tareas y trabajos"],
+        },
+        cta: { en: "View Education Demo", es: "Ver Demo Educación" },
+      },
+      workshop: {
+        label: { en: "Workshops & Repair", es: "Talleres & Reparaciones" },
+        title: { en: "Work Order System + Parts Inventory & Client Notifications", es: "Sistema de Órdenes + Inventario de repuestos y notificaciones" },
+        features: {
+          en: ["Work order management", "Parts inventory control", "Client status notifications"],
+          es: ["Gestión de órdenes de trabajo", "Control de inventario de repuestos", "Notificaciones de estado al cliente"],
+        },
+        cta: { en: "View Workshop Demo", es: "Ver Demo Taller" },
+      },
     },
 
     // ── Final CTA ──
@@ -210,16 +310,85 @@ export const translations = {
       es: "¿Listo para contenerizar tu negocio?",
     },
     ctaSub: {
-      en: "Stop juggling tools. Start running your business from one powerful Vessel.",
-      es: "Deja de manejar herramientas. Empieza a dirigir tu negocio desde un solo Vessel.",
+      en: "Stop juggling tools. Start running your business from one powerful Fleximy.",
+      es: "Deja de manejar herramientas. Empieza a dirigir tu negocio desde un solo Fleximy.",
     },
     ctaBtn: { en: "Schedule Your Free Consultation", es: "Agenda Tu Consultoría Gratis" },
+
+    // ── Comparison Table ──
+    compareBadge: { en: "THE REAL DIFFERENTIAL", es: "EL VERDADERO DIFERENCIAL" },
+    compareTitle: {
+      en: "Why a traditional website is no longer enough for your SMB",
+      es: "Por qué una web tradicional ya no es suficiente para tu PyME",
+    },
+    compareSub: {
+      en: "Compare the difference between having a static digital brochure or a system that runs your business 24/7.",
+      es: "Compará la diferencia entre tener un folleto digital estático o un sistema que opera tu negocio 24/7.",
+    },
+    compareTraditional: { en: "The Traditional Website", es: "La Web Tradicional" },
+    compareFleximy: { en: "Your Website + Custom Dashboard", es: "Tu Sitio Web + Dashboard A Medida" },
+    compareRecommended: { en: "RECOMMENDED", es: "RECOMENDADO" },
+
+    // ── Plan All-in-One ──
+    planBadge: { en: "ONE PLAN. EVERYTHING INCLUDED.", es: "UN SOLO PLAN. TODO INCLUIDO." },
+    planTitle: {
+      en: "No hidden costs or surprises at the end of the month",
+      es: "Sin costos ocultos ni sorpresas a fin de mes",
+    },
+    planSub: {
+      en: "Centralize your business website and operational dashboard in a single fixed subscription in Argentine pesos.",
+      es: "Centralizá la web de tu negocio y tu panel operativo en una sola suscripción fija en pesos argentinos.",
+    },
+    planIncluded: { en: "EVERYTHING INCLUDED", es: "TODO INCLUIDO" },
+    planCurrency: { en: "Argentine pesos", es: "Pesos argentinos" },
+    planPriceSub: {
+      en: "No exorbitant entry cost. Maintenance, server and support included.",
+      es: "Sin costo de entrada exorbitante. Mantenimiento, servidor y soporte incluidos.",
+    },
+    planFeat1: {
+      en: "100% custom Institutional Website / Catalog tailored to your brand.",
+      es: "Sitio Web Institucional / Catálogo 100% personalizado a tu marca.",
+    },
+    planFeat2: {
+      en: "Custom Admin Dashboard (Project/Task Manager, Appointments or Orders according to your industry).",
+      es: "Dashboard Administrativo a medida (Gestor de Proyectos/Tareas, Turnos o Pedidos según tu rubro).",
+    },
+    planFeat3: {
+      en: "WhatsApp Business integration and payment gateways.",
+      es: "Integración con WhatsApp Business y pasarelas de pago.",
+    },
+    planFeat4: {
+      en: "High-speed cloud hosting and SSL security certificate.",
+      es: "Hosting de alta velocidad en la nube y Certificado SSL de seguridad.",
+    },
+    planFeat5: {
+      en: "Real-time updates of prices, stock and menus.",
+      es: "Actualización rápida de precios, stock y menúes en tiempo real.",
+    },
+    planFeat6: {
+      en: "Direct technical support and ongoing maintenance.",
+      es: "Soporte técnico directo y mantenimiento continuo.",
+    },
+    planCTA: { en: "I Want to Digitalize My Business", es: "Quiero Digitalizar mi Negocio" },
+    planTableTitle: { en: "How much do you save per month?", es: "¿Cuánto te ahorrás por mes?" },
+    planTableSub: {
+      en: "Compare the cost of separate tools vs. our all-in-one plan.",
+      es: "Compará el costo de herramientas separadas vs. nuestro plan todo incluido.",
+    },
+    planTableHeader: { en: "Traditional Service / Tool", es: "Herramienta / Servicio Tradicional" },
+    planTableHeaderCost: { en: "Estimated Cost", es: "Costo Estimado" },
+    planTableTotal: { en: "TOTAL COST SEPARATELY:", es: "COSTO TOTAL POR SEPARADO:" },
+    planSavingsBadge: { en: "SAVINGS HIGHLIGHT", es: "DESTACADO DE AHORRO" },
+    planSavingsText: {
+      en: "With us you pay only $150,000 ARS/month instead of $705,000. You save more than $555,000 ARS every month and have EVERYTHING unified in one place.",
+      es: "Con nosotros pagás solo $150.000 ARS/mes en vez de $705.000. Te ahorrás más de $555.000 ARS cada mes y tenés TODO unificado en un solo lugar.",
+    },
   },
   services: {
     title: { en: "What We Build", es: "Lo Que Construimos" },
     sub: {
-      en: "Every Vessel is a complete digital operating system for your business , crafted at three levels.",
-      es: "Cada Vessel es un sistema operativo digital completo para tu negocio , creado en tres niveles.",
+      en: "Every Fleximy is a complete digital operating system for your business , crafted at three levels.",
+      es: "Cada Fleximy es un sistema operativo digital completo para tu negocio , creado en tres niveles.",
     },
     webTitle: { en: "Public Website", es: "Sitio Web Público" },
     webDesc: {
@@ -247,7 +416,7 @@ export const translations = {
   },
   whyUs: {
     // ── Hero ──
-    heroTag: { en: "Why Vessel", es: "Por Qué Vessel" },
+    heroTag: { en: "Why Fleximy", es: "Por Qué Fleximy" },
     heroTitle: {
       en: "The operating system your business deserves",
       es: "El sistema operativo que tu negocio merece",
@@ -256,7 +425,7 @@ export const translations = {
       en: "We don't build websites. We build unified digital containers that replace 6+ tools with one seamless experience. Here's why it matters.",
       es: "No construimos sitios web. Construimos contenedores digitales unificados que reemplazan 6+ herramientas con una experiencia fluida. Esto es por qué importa.",
     },
-    heroCTA: { en: "Start Your Vessel", es: "Comienza Tu Vessel" },
+    heroCTA: { en: "Start Your Fleximy", es: "Comienza Tu Fleximy" },
     heroCTA2: { en: "Explore Modules", es: "Explorar Módulos" },
 
     // ── Manifesto ──
@@ -269,8 +438,8 @@ export const translations = {
       es: "La mayoría de los negocios funcionan con 6+ herramientas desconectadas. El sitio web aquí. El POS allá. El inventario en una hoja de cálculo. El CRM en otra app. Las analíticas en otro lugar. Esta fragmentación te cuesta dinero, tiempo y cordura.",
     },
     manifestoSolution: {
-      en: "Vessel replaces them all with one beautiful, unified system.",
-      es: "Vessel las reemplaza todas con un sistema unificado y hermoso.",
+      en: "Fleximy replaces them all with one beautiful, unified system.",
+      es: "Fleximy las reemplaza todas con un sistema unificado y hermoso.",
     },
 
     // ── The Cost of Fragmentation ──
@@ -287,14 +456,14 @@ export const translations = {
     costToolsVal: { en: "6–10 tools", es: "6–10 herramientas" },
     costErrors: { en: "Data error rate", es: "Tasa de errores de datos" },
     costErrorsVal: { en: "Up to 15%", es: "Hasta 15%" },
-    costCTALabel: { en: "With Vessel: one tool, one login, one truth.", es: "Con Vessel: una herramienta, un login, una verdad." },
+    costCTALabel: { en: "With Fleximy: one tool, one login, one truth.", es: "Con Fleximy: una herramienta, un login, una verdad." },
     costCTALabel2: { en: "Zero fragmentation. Zero redundancy.", es: "Cero fragmentación. Cero redundancia." },
 
     // ── Modules ──
     modulesTitle: { en: "Every Module, One Container", es: "Cada Módulo, Un Contenedor" },
     modulesSub: {
-      en: "Each Vessel module is designed to work together , sharing data, context, and state in real time.",
-      es: "Cada módulo de Vessel está diseñado para funcionar junto , compartiendo datos, contexto y estado en tiempo real.",
+      en: "Each Fleximy module is designed to work together , sharing data, context, and state in real time.",
+      es: "Cada módulo de Fleximy está diseñado para funcionar junto , compartiendo datos, contexto y estado en tiempo real.",
     },
 
     module1Title: { en: "📦 Inventory Control", es: "📦 Control de Inventario" },
@@ -358,14 +527,14 @@ export const translations = {
     module5Feat5: { en: "Analytics integration", es: "Integración de analíticas" },
 
     // ── Comparison ──
-    comparisonTitle: { en: "Vessel vs. The Old Way", es: "Vessel vs. La Forma Antigua" },
+    comparisonTitle: { en: "Fleximy vs. The Old Way", es: "Fleximy vs. La Forma Antigua" },
     comparisonSub: {
       en: "Stop paying for 6 tools when you need one. Here's how we stack up.",
       es: "Deja de pagar por 6 herramientas cuando necesitas una. Así nos comparamos.",
     },
     compFeature: { en: "Feature", es: "Característica" },
     compOldWay: { en: "Old Way (Scattered Tools)", es: "Forma Antigua (Herramientas Dispersas)" },
-    compVessel: { en: "Vessel", es: "Vessel" },
+    compFleximy: { en: "Fleximy", es: "Fleximy" },
     compRow1: { en: "Public website", es: "Sitio web público" },
     compRow1Old: { en: "Separate , $30–200/mo", es: "Separado , $30–200/mes" },
     compRow1New: { en: "Included", es: "Incluido" },
@@ -391,8 +560,8 @@ export const translations = {
     // ── Stats ──
     statsTitle: { en: "The Numbers Don't Lie", es: "Los Números No Mienten" },
     statsSub: {
-      en: "Businesses that switch to Vessel see measurable results from day one.",
-      es: "Los negocios que cambian a Vessel ven resultados medibles desde el día uno.",
+      en: "Businesses that switch to Fleximy see measurable results from day one.",
+      es: "Los negocios que cambian a Fleximy ven resultados medibles desde el día uno.",
     },
     stat1: { en: "100%", es: "100%" },
     stat1Desc: { en: "Control of your ecosystem", es: "Control de tu ecosistema" },
@@ -414,7 +583,7 @@ export const translations = {
     },
 
     // ── Process ──
-    processTitle: { en: "How We Build Your Vessel", es: "Cómo Construimos Tu Vessel" },
+    processTitle: { en: "How We Build Your Fleximy", es: "Cómo Construimos Tu Fleximy" },
     processSub: {
       en: "A proven methodology that delivers your complete operating system in weeks, not months.",
       es: "Una metodología probada que entrega tu sistema operativo completo en semanas, no meses.",
@@ -436,8 +605,8 @@ export const translations = {
     },
     process4Title: { en: "Continuous Evolution", es: "Evolución Continua" },
     process4Desc: {
-      en: "Your business changes. So does your Vessel. We provide ongoing updates, new features, and scaling as you grow.",
-      es: "Tu negocio cambia. Tu Vessel también. Proporcionamos actualizaciones continuas, nuevas funciones y escalamiento a medida que creces.",
+      en: "Your business changes. So does your Fleximy. We provide ongoing updates, new features, and scaling as you grow.",
+      es: "Tu negocio cambia. Tu Fleximy también. Proporcionamos actualizaciones continuas, nuevas funciones y escalamiento a medida que creces.",
     },
 
     // ── Final CTA ──
@@ -493,7 +662,7 @@ export const translations = {
     ],
   },
   contact: {
-    title: { en: "Let's Build Your Vessel", es: "Construyamos Tu Vessel" },
+    title: { en: "Let's Build Your Fleximy", es: "Construyamos Tu Fleximy" },
     sub: {
       en: "Tell us about your business and we'll design a complete digital system tailored to you.",
       es: "Cuéntanos sobre tu negocio y diseñaremos un sistema digital completo a tu medida.",
@@ -507,8 +676,8 @@ export const translations = {
   },
   footer: {
     tagline: {
-      en: "Your business deserves a vessel, not just a website.",
-      es: "Tu negocio merece un vessel, no solo un sitio web.",
+      en: "Your business deserves a Fleximy, not just a website.",
+      es: "Tu negocio merece Flexear, no solo un sitio web.",
     },
     rights: { en: "All rights reserved.", es: "Todos los derechos reservados." },
   },

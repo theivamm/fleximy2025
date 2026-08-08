@@ -26,7 +26,7 @@ function DashboardMockup({ modIdx, features, accent }) {
         <div className="flex items-center gap-2">
           <div className={`w-3 h-3 rounded-full ${accent.from.replace("from-", "bg-")}`} />
           <span className="text-[10px] font-semibold text-slate-400 tracking-wider uppercase">
-            Vessel OS
+            Fleximy OS
           </span>
         </div>
         <div className="flex gap-1.5">

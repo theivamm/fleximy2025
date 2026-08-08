@@ -193,7 +193,7 @@ export default function EcosystemTabs() {
               >
                 {view === "website"
                   ? (lang === "es" ? "Sitio Web Público" : "Public Website")
-                  : (lang === "es" ? "Dashboard Vessel" : "Vessel Dashboard")}
+                  : (lang === "es" ? "Dashboard Fleximy" : "Fleximy Dashboard")}
               </p>
               <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
                 {typeDescs[active][view][lang]}

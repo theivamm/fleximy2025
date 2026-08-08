@@ -264,7 +264,7 @@ export default function CrearImagen() {
   const [step, setStep] = useState(0)
   const [selectedTemplate] = useState("simple")
 
-  const [titleWords, setTitleWords] = useState([{ text: "Tu negocio merece un Vessel", bold: false, color: "#ffffff", isGradient: true, gradientId: "indigo-purple" }])
+  const [titleWords, setTitleWords] = useState([{ text: "Tu negocio merece Flexear", bold: false, color: "#ffffff", isGradient: true, gradientId: "indigo-purple" }])
   const [subtitleWords, setSubtitleWords] = useState([{ text: "Unifica tu web y dashboard en un solo sistema", bold: false, color: "#ffffff", isGradient: false, gradientId: "none" }])
 
   const [backgroundImage, setBackgroundImage] = useState(null)
@@ -375,7 +375,7 @@ export default function CrearImagen() {
       const dataUrl = canvas.toDataURL("image/png")
       const a = document.createElement("a")
       a.href = dataUrl
-      a.download = `vessel-${formatId}-${Date.now()}.png`
+      a.download = `fleximy-${formatId}-${Date.now()}.png`
       a.click()
     } catch (err) { console.error("Export error:", err) }
     setExporting(false)

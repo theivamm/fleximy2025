@@ -13,6 +13,12 @@ import Services from "./pages/Services"
 import WhyUs from "./pages/WhyUs"
 import Blog from "./pages/Blog"
 import Contact from "./pages/Contact"
+import Gastronomia from "./pages/Gastronomia"
+import GestionPymes from "./pages/GestionPymes"
+import Turnos from "./pages/Turnos"
+import Demos from "./pages/Demos"
+import Precios from "./pages/Precios"
+import Nosotros from "./pages/Nosotros"
 import Login from "./pages/Login"
 import DashboardHome from "./pages/DashboardHome"
 import AiImages from "./pages/AiImages"
@@ -65,6 +71,12 @@ function AppContent() {
             <Route path="/" element={<PageTransition><Home /></PageTransition>} />
             <Route path="/services" element={<PageTransition><Services /></PageTransition>} />
             <Route path="/why-us" element={<PageTransition><WhyUs /></PageTransition>} />
+            <Route path="/gastronomia" element={<PageTransition><Gastronomia /></PageTransition>} />
+            <Route path="/gestion-pymes" element={<PageTransition><GestionPymes /></PageTransition>} />
+            <Route path="/turnos" element={<PageTransition><Turnos /></PageTransition>} />
+            <Route path="/demos" element={<PageTransition><Demos /></PageTransition>} />
+            <Route path="/precios" element={<PageTransition><Precios /></PageTransition>} />
+            <Route path="/nosotros" element={<PageTransition><Nosotros /></PageTransition>} />
             <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
             <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
           </Routes>

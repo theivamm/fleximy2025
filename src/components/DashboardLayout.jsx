@@ -34,7 +34,7 @@ export default function DashboardLayout({ children }) {
       <aside className="w-56 shrink-0 border-r border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl flex flex-col">
         <div className="px-5 py-6 border-b border-slate-100 dark:border-slate-800">
           <Link to="/dashboard" className="text-lg font-bold text-slate-900 dark:text-white">
-            Vessel
+            Fleximy
           </Link>
           <p className="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">Dashboard</p>
         </div>

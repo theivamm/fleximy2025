@@ -29,7 +29,7 @@ export default function GlobalCTA() {
   const { lang } = useLang()
 
   const line1 = lang === "es" ? "Tu negocio merece" : "Your business deserves"
-  const line2 = lang === "es" ? "un Vessel" : "a Vessel"
+  const line2 = lang === "es" ? "un Fleximy" : "a Fleximy"
 
   const letters1 = useMemo(() => line1.split(""), [line1])
   const letters2 = useMemo(() => line2.split(""), [line2])

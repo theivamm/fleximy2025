@@ -19,8 +19,8 @@ const contactInfo = [
   {
     icon: Mail,
     label: { en: "Email", es: "Correo" },
-    value: "hello@vessel.agency",
-    href: "mailto:hello@vessel.agency",
+    value: "hello@fleximy.agency",
+    href: "mailto:hello@fleximy.agency",
   },
   {
     icon: MapPin,
@@ -121,7 +121,7 @@ export default function Contact() {
     const texts = {
       heroTag: { en: "Get in Touch", es: "Contáctanos" },
       heroTitle: { en: "Let's build something extraordinary together", es: "Construyamos algo extraordinario juntos" },
-      heroSub: { en: "Tell us about your business vision and we'll design a Vessel that transforms the way you operate.", es: "Cuéntanos sobre tu visión de negocio y diseñaremos un Vessel que transforme tu forma de operar." },
+      heroSub: { en: "Tell us about your business vision and we'll design a Fleximy that transforms the way you operate.", es: "Cuéntanos sobre tu visión de negocio y diseñaremos un Fleximy que transforme tu forma de operar." },
       heroCTA: { en: "Start the Conversation", es: "Iniciar la Conversación" },
       formTitle: { en: "Send us a message", es: "Envíanos un mensaje" },
       formSub: { en: "Fill out the form and we'll get back to you within 24 hours.", es: "Completa el formulario y te responderemos en menos de 24 horas." },
@@ -334,10 +334,10 @@ export default function Contact() {
                 {t("direct")}
               </h4>
               <a
-                href="mailto:hello@vessel.agency"
+                href="mailto:hello@fleximy.agency"
                 className="text-indigo-600 dark:text-indigo-400 text-sm font-medium hover:underline"
               >
-                hello@vessel.agency
+                hello@fleximy.agency
               </a>
               <div className="mt-4 flex gap-3">
                 {["X", "LI", "IG"].map((s) => (
