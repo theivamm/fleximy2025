@@ -1,0 +1,47 @@
+# ───────────────────────────────────────────────
+# Fleximy — Configuración para Apache/LiteSpeed
+# Corrige MIME types, fallback SPA y caché estática
+# ───────────────────────────────────────────────
+
+# MIME Types correctos para ES Modules (Vite)
+AddType text/javascript .js .mjs
+AddType application/javascript .mjs
+AddType text/css .css
+AddType image/svg+xml .svg
+AddType image/x-icon .ico
+AddType application/json .json
+AddType application/wasm .wasm
+
+# Compresión
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript application/json image/svg+xml
+</IfModule>
+
+# Caché de estáticos (los assets de Vite tienen hash)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 month"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType application/json "access plus 1 month"
+</IfModule>
+
+# Headers de seguridad
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Fallback SPA: todas las rutas del router sirven index.html
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
