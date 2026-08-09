@@ -550,6 +550,81 @@ el sistema global; sin casos ilustrativos presentados como clientes reales ✔
 
 ---
 
+## Reporte — Fase 8: Legales y estados
+
+**Estado:** Completada · **Commit:** `2ed7951` · **Criterio de cierre:** privacidad, términos,
+gracias y 404 montados según `18`, `19`, `21` y `22`; textos legales marcados como borrador sujeto
+a validación profesional ✔
+
+### Qué se hizo
+
+1. **Datos (`src/data/legal.js`):** `PRIVACIDAD` (13 secciones) y `TERMINOS` (18 secciones) con el
+   contenido estructural literal de los MD (`[RAZÓN SOCIAL]`, `[CUIT]`, `[DOMICILIO]`, `[EMAIL]`,
+   `[FECHA DE ACTUALIZACIÓN]`, etc.) y `LEGAL_NOTA` de borrador. Bloques tipados: párrafos,
+   listas viñeta y listas numeradas.
+2. **Componente documental (`src/components/legal/LegalDoc.jsx`):** página documental con ancho de
+   lectura contenido, índice lateral sticky con anclas en desktop, selector desplegable en mobile,
+   fecha de actualización visible, botón "Imprimir o guardar como PDF" (funcional vía
+   `window.print()`), secciones numeradas con `id` navegable, nota de borrador y bloque de versión.
+   Aplica el mismo sistema documental a Privacidad y Términos.
+3. **Privacidad (`pages/Privacidad.jsx`, `/privacidad`):** 13 secciones del `18-POLITICA.md`
+   (Responsable, Alcance, Datos, Finalidades, Base legal, Proveedores, Conservación, Derechos,
+   Seguridad, Cookies, Menores, Cambios, Contacto). Resuelve el enlace de Seguridad (`/privacidad`)
+   y del footer/nav.
+4. **Términos (`pages/Terminos.jsx`, `/terminos`):** 18 secciones del `19-TERMINOS.md`
+   (Identificación, Objeto, Prelación, Alcance, Implementación, Suscripción, Plazo, Uso permitido,
+   Datos, Propiedad intelectual, Disponibilidad, Soporte, Integraciones, Responsabilidad,
+   Confidencialidad, Modificaciones, Ley y jurisdicción, Contacto).
+5. **Gracias (`pages/GraciasDiagnostico.jsx`, rework):** H1 "Recibimos tu solicitud", texto con
+   `[PLAZO VALIDADO]`, sección "Mientras tanto" con 3 tarjetas (Mirá Fleximy en acción → `/demos`;
+   **Conocé la solución de tu rubro** → CTA dinámico según la selección del formulario persistida
+   en `sessionStorage` (`fleximy_rubro`) mapeando rubro → ruta de solución, con fallback a
+   `/soluciones`; ¿Tu consulta es urgente? → WhatsApp con `[HORARIO REAL]`). Confirmación con check
+   SVG sin confeti, aparición escalonada con framer-motion (stagger ≤ 1,2 s) y `useReducedMotion`
+   para omitir la animación.
+6. **Contacto (`pages/Contacto.jsx`):** guarda el rubro en `sessionStorage` al enviar para
+   personalizar Gracias.
+7. **404 (`pages/NotFound.jsx`, rework):** H1 "Esta página no está disponible", CTAs Volver al
+   inicio / Ver soluciones, accesos recomendados (demos, precios, FAQ, contacto) y **escena propia
+   Sitio → 404 → Panel**: SVG con nodos "Sitio" y "Panel" y la conexión interrumpida en el nodo
+   404; al pasar el cursor o enfocar el nodo la conexión se recompone (línea lima + estado
+   "reconectado"). Mensaje y CTAs visibles desde el primer frame; sin juegos que bloqueen la
+   salida; en mobile es una interacción simple por toque.
+8. **404 real (HTTP):** `scripts/generate-404.mjs` copia `dist/index.html` a `dist/404.html`
+   después del build; `netlify.toml` reemplaza el catch-all `/* → index.html 200` por reglas
+   explícitas de cada ruta del SPA (HTTP 200) y un fallback `/* → /404.html` con **status 404**
+   real para rutas inexistentes (se conservan headers de seguridad y caché de assets).
+9. **Rutas (`src/App.jsx`):** `/privacidad` y `/terminos` lazy. Enlaces de navegación secundaria,
+   footer y Seguridad a `/privacidad` ahora resuelven.
+
+### Reglas respetadas
+
+- Textos legales son **borrador estructural** con nota visible y placeholders `[RAZÓN SOCIAL]`,
+  `[CUIT]`, `[EMAIL]`, `[FECHA DE ACTUALIZACIÓN]` — sin inventar datos de la empresa.
+- Sin SLA, sin porcentajes de disponibilidad, sin promesas no validadas en textos legales.
+- 404 sin ilustración espacial, robot triste ni gráfico genérico; escena de marca con salida clara.
+- Gracias sin confeti, animación corta, omitida con `prefers-reduced-motion`.
+- Datos legales como contenido estructurado (imprimibles y con jerarquía sin estilos).
+
+### Validación
+
+- `npm run build` → OK; `LegalDoc` 4,2 kB gzip, `Privacidad`/`Terminos` 0,15 kB, `NotFound` 1,6 kB,
+  `GraciasDiagnostico` 1,75 kB (chunks lazy). `dist/404.html` generado correctamente.
+- `npm run lint` → sin errores; solo warnings preexistentes (ninguno en archivos nuevos).
+- `vite preview` → HTTP 200 en `/`, `/privacidad`, `/terminos`, `/gracias-diagnostico`,
+  `/soluciones`, `/seguridad` y ruta inexistente (el status 404 real lo aplica Netlify).
+
+### Pendientes de esta fase (acción humana / QA)
+
+- [ ] Redactar y validar profesionalmente los textos de privacidad y términos antes de publicar;
+      completar razón social, CUIT, domicilio y emails.
+- [ ] Validar plazo real de implementación (`[PLAZO VALIDADO]`) y horario de WhatsApp
+      (`[HORARIO REAL]`).
+- [ ] Confirmar el dominio definitivo para canónicos/OG/sitemap (ver Fase 9).
+- [ ] Verificar el comportamiento del 404 real en el preview de Netlify tras el deploy.
+
+---
+
 ## Próximas fases
 
 | Fase | Descripción | Estado |
@@ -560,7 +635,7 @@ el sistema global; sin casos ilustrativos presentados como clientes reales ✔
 | 5 | Demos (laboratorio interactivo) | ✔ Completada |
 | 6 | Comercial (cómo funciona, precios, nosotros, contacto, FAQ) | ✔ Completada |
 | 7 | Confianza y recursos (seguridad, recursos, casos de uso) | ✔ Completada |
-| 8 | Legales y estados (privacidad, términos, gracias, 404) | Pendiente |
+| 8 | Legales y estados (privacidad, términos, gracias, 404) | ✔ Completada |
 | 9 | SEO y analítica | Pendiente |
 | 10 | QA final | Pendiente |
 
