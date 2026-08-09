@@ -265,7 +265,7 @@ verbo "operar" con contraste suficiente sobre papel.
 
 ## Reporte — Fase 4: Soluciones
 
-**Estado:** Completada · **Commit:** `A-COMPLETAR` · **Criterio de cierre:** hub + 7 páginas por
+**Estado:** Completada · **Commit:** `e60095a` · **Criterio de cierre:** hub + 7 páginas por
 industria funcionando con escenas simuladas y contenido alineado a los MD ✔
 
 ### Qué se hizo
