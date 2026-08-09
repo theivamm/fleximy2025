@@ -263,13 +263,82 @@ verbo "operar" con contraste suficiente sobre papel.
 
 ---
 
+## Reporte — Fase 4: Soluciones
+
+**Estado:** Completada · **Commit:** `A-COMPLETAR` · **Criterio de cierre:** hub + 7 páginas por
+industria funcionando con escenas simuladas y contenido alineado a los MD ✔
+
+### Qué se hizo
+
+1. **Hub (`src/pages/Soluciones.jsx`):**
+   - Hero GSAP (máscara de líneas + fade, respeta `prefers-reduced-motion` vía `gsap.matchMedia`).
+   - Selector "¿Qué necesitás ordenar primero?" con preguntas literales de los MD que filtran y
+     desplazan al catálogo.
+   - Catálogo con `Workbench` por industria (módulos + filas de panel + acento de industria) y barra
+     de progreso animada; sticky en desktop.
+   - Arquitectura modular (11 módulos transversales), "Incluye normalmente" vs "Se cotiza por
+     separado", CTA final sobre ink.
+2. **Datos (`src/data/soluciones.js`):** `SOLUCIONES` con 7 soluciones completas (eyebrow, h1, hero,
+   CTAs, problema, experiencia/grupos, panel, módulos/automatizaciones/modalidades/integraciones,
+   recorrido, audiencia, FAQ, CTA) + `whatsapp` por industria vía `wa.me/541111111111`.
+3. **Primitivas mock UI (`src/components/soluciones/Primitives.jsx`):** `Chrome`, `Status`,
+   `CheckDot`, `Bullet`, `Avatar`, `PanelTitle`.
+4. **Hero de solución (`SolutionHero.jsx`):** máscara de líneas + fade + parallax de escena.
+5. **Bloques (`Blocks.jsx`):** `SectionHead`, `Problem`, `Duo`, `FeatureList`, `Groups`,
+   `ModuleChips`, `Automations`, `Reports`, `Modalidades`, `Integraciones`, `Recorrido`, `Audience`,
+   `FaqBlock` (acordeón accesible), `CtaBlock` (primario + WhatsApp + otras soluciones), `CrossLink`.
+6. **Escenas simuladas (`scenes/`):** cada industria con un micro-interfaz distinta y datos
+   coherentes, marcadas como "demo · datos ilustrativos":
+   - `GastroScene`: menú QR por categorías → comandas en cocina con avance de estado.
+   - `TurnosScene`: reserva servicio/profesional/día/horario → la agenda bloquea el horario.
+   - `GestionScene`: pipeline Nueva→En contacto→Propuesta→Proyecto + tareas al crear proyecto.
+   - `ComercioScene`: ficha pública con precio/stock editables desde el panel + switch agotado.
+   - `InmobScene`: buscador de 4 propiedades + mapa SVG + lead que ingresa al CRM.
+   - `EducacionScene`: curso → "Inscribirme" → portal del estudiante con tabs.
+   - `TalleresScene`: OT #1042 con wizard de 7 estados, repuestos y consulta del cliente.
+7. **Páginas (`src/pages/soluciones/`):** `Gastronomia`, `ServiciosTurnos`, `GestionPymes`,
+   `ComercioRetail`, `Inmobiliarias`, `Educacion`, `TalleresReparaciones` — cada una compone el
+   layout con una secuencia propia de bloques y escena.
+8. **Rutas (`src/App.jsx`):** `/soluciones` y las 7 rutas `/soluciones/*`. Las rutas viejas
+   `/gastronomia`, `/gestion-pymes` y `/turnos` ahora sirven las páginas nuevas (sin enlaces rotos).
+   Se eliminaron las páginas legacy huérfanas `src/pages/Gastronomia.jsx`, `GestionPymes.jsx` y
+   `Turnos.jsx` (solo referenciadas desde App.jsx).
+
+### Reglas respetadas
+
+- Cero métricas inventadas y cero testimonios ficticios.
+- Sin promesas no soportadas: no "LMS completo" en educación, no "ERP" en gestión, integración/stock/
+  pago siempre con nota de evaluación.
+- Datos simulados identificados ("demo · datos ilustrativos").
+- Todas las escenas usan interfaces diferentes entre sí.
+- CTA de "¿No sabés qué solución elegir?" revisado: son dos acciones distintas (diagnóstico →
+  `/contacto`, demos → `/demos`), no un duplicado literal.
+
+### Validación
+
+- `npm run build` → OK; las 7 páginas como chunks lazy separados (6–8 kB gzip c/u; hub ~4 kB gzip).
+- `npm run lint` → sin errores; sin warnings en los archivos nuevos (se limpió un `Icon` sin uso en
+  el hub).
+- `vite preview` → HTTP 200 en `/soluciones`, las 7 rutas `/soluciones/*` y los alias
+  `/gastronomia`, `/gestion-pymes`, `/turnos`.
+- Campos de datos verificados contra los bloques que consumen cada página (agenda/gestion,
+  automatizaciones, reportes, modalidades, integraciones).
+
+### Pendientes de esta fase (acción humana / QA)
+
+- [ ] Revisión visual en desktop y mobile de las 7 páginas y el hub.
+- [ ] Verificar el paso 2 (Mega menú) apunte a `/soluciones` correctamente.
+- [ ] Aprobar la Fase 4 antes de avanzar a Demos (Fase 5).
+
+---
+
 ## Próximas fases
 
 | Fase | Descripción | Estado |
 |---|---|---|
 | 2 | Sistema global (tokens, tipografía, header, footer, motion) | ✔ Completada |
 | 3 | Inicio (Home completa según `01-INICIO.md`) | ✔ Completada |
-| 4 | Soluciones (hub + 7 industrias) | Pendiente |
+| 4 | Soluciones (hub + 7 industrias) | ✔ Completada |
 | 5 | Demos (laboratorio interactivo) | Pendiente |
 | 6 | Comercial (cómo funciona, precios, nosotros, contacto, FAQ) | Pendiente |
 | 7 | Confianza y recursos (seguridad, recursos, casos de uso) | Pendiente |
