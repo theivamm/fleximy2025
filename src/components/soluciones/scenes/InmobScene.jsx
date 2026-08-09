@@ -17,7 +17,7 @@ const ZONAS = [
   { id: "Caballito", cx: "60%", cy: "68%" },
 ]
 
-export default function InmobScene() {
+export default function InmobScene({ onAction }) {
   const [activa, setActiva] = useState("p1")
   const [lead, setLead] = useState(null)
   const prop = PROPIEDADES.find((p) => p.id === activa)
@@ -30,6 +30,7 @@ export default function InmobScene() {
       zona: prop.zona,
       estado: "Nuevo lead",
     })
+    onAction?.("consultar_propiedad")
   }
 
   return (

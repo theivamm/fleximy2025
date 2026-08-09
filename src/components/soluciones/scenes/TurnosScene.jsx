@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronRight, CalendarDays, Clock } from "lucide-react"
+import { ChevronRight, CalendarDays, Clock, Lock, History, ArrowRightLeft } from "lucide-react"
 import { Chrome, Status } from "../Primitives"
 
 const SERVICIOS = [
@@ -23,37 +23,89 @@ const DIAS = [
 
 const HORARIOS = ["09:00", "10:30", "12:00", "16:00", "17:30", "19:00"]
 
+const HISTORIAL = [
+  "Corte + barba · hace 45 días",
+  "Corte · hace 90 días",
+]
+
 let reservaId = 0
 
-export default function TurnosScene() {
+export default function TurnosScene({ mode, onAction }) {
   const [dia, setDia] = useState("1")
   const [servicio, setServicio] = useState("corte")
   const [profesional, setProfesional] = useState("lucas")
   const [reservados, setReservados] = useState([])
+  const [bloqueados, setBloqueados] = useState([])
+
+  const notificar = (accion) => onAction?.(accion)
 
   const reservar = (hora) => {
-    if (reservados.includes(hora)) return
+    if (reservados.includes(hora) || bloqueados.includes(hora)) return
     setReservados((r) => [...r, hora])
+    notificar("reservar_turno")
   }
+
+  const bloquear = () => {
+    const libre = HORARIOS.find((h) => !reservados.includes(h) && !bloqueados.includes(h))
+    if (!libre) return
+    setBloqueados((b) => [...b, libre])
+    notificar("bloquear_horario")
+  }
+
+  const reprogramar = () => {
+    if (reservados.length === 0) return
+    const [, ...resto] = reservados
+    const libre = HORARIOS.find((h) => !reservados.includes(h) && !bloqueados.includes(h))
+    if (!libre) return
+    setReservados([...resto, libre])
+    notificar("reprogramar")
+  }
+
+  const mostrarAmbos = !mode
 
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,5fr)_minmax(0,5fr)]">
-      <ReservaCliente
-        dia={dia}
-        setDia={setDia}
-        servicio={servicio}
-        setServicio={setServicio}
-        profesional={profesional}
-        setProfesional={setProfesional}
-        reservados={reservados}
-        reservar={reservar}
-      />
-      <AgendaProfesional reservados={reservados} />
+      {mode !== "equipo" && (
+        <ReservaCliente
+          dia={dia}
+          setDia={setDia}
+          servicio={servicio}
+          setServicio={setServicio}
+          profesional={profesional}
+          setProfesional={setProfesional}
+          reservados={reservados}
+          bloqueados={bloqueados}
+          reservar={reservar}
+          notificar={notificar}
+        />
+      )}
+      {mode !== "cliente" && (
+        <AgendaProfesional
+          reservados={reservados}
+          bloqueados={bloqueados}
+          controles={mode === "equipo"}
+          bloquear={bloquear}
+          reprogramar={reprogramar}
+          mostrarAmbos={mostrarAmbos}
+          onAction={onAction}
+        />
+      )}
     </div>
   )
 }
 
-function ReservaCliente({ dia, setDia, servicio, setServicio, profesional, setProfesional, reservados, reservar }) {
+function ReservaCliente({
+  dia,
+  setDia,
+  servicio,
+  setServicio,
+  profesional,
+  setProfesional,
+  reservados,
+  bloqueados,
+  reservar,
+  notificar,
+}) {
   const elegido = SERVICIOS.find((s) => s.id === servicio)
   return (
     <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper-bright shadow-lift">
@@ -68,11 +120,14 @@ function ReservaCliente({ dia, setDia, servicio, setServicio, profesional, setPr
         </div>
 
         <p className="mt-4 font-mono text-micro text-muted">Servicio</p>
-        <div className="mt-2 flex flex-wrap gap-1.5">
+        <div className="mt-2 flex flex-wrap gap-1.5" data-guiado="elegir_servicio">
           {SERVICIOS.map((s) => (
             <button
               key={s.id}
-              onClick={() => setServicio(s.id)}
+              onClick={() => {
+                setServicio(s.id)
+                notificar("elegir_servicio")
+              }}
               className={`rounded-full px-3 py-1.5 text-small transition-colors ${
                 servicio === s.id ? "bg-ink text-text-invert" : "border border-line bg-paper text-muted"
               }`}
@@ -83,11 +138,14 @@ function ReservaCliente({ dia, setDia, servicio, setServicio, profesional, setPr
         </div>
 
         <p className="mt-4 font-mono text-micro text-muted">Profesional</p>
-        <div className="mt-2 flex gap-1.5">
+        <div className="mt-2 flex gap-1.5" data-guiado="elegir_profesional">
           {PROFESIONALES.map((p) => (
             <button
               key={p.id}
-              onClick={() => setProfesional(p.id)}
+              onClick={() => {
+                setProfesional(p.id)
+                notificar("elegir_profesional")
+              }}
               className={`rounded-full px-4 py-1.5 text-small transition-colors ${
                 profesional === p.id ? "bg-ink text-text-invert" : "border border-line bg-paper text-muted"
               }`}
@@ -116,12 +174,13 @@ function ReservaCliente({ dia, setDia, servicio, setServicio, profesional, setPr
         <p className="mt-4 font-mono text-micro text-muted">Horarios disponibles</p>
         <div className="mt-2 grid grid-cols-3 gap-1.5">
           {HORARIOS.map((h) => {
-            const ocupado = reservados.includes(h)
+            const ocupado = reservados.includes(h) || bloqueados.includes(h)
             return (
               <button
                 key={h}
                 disabled={ocupado}
                 onClick={() => reservar(h)}
+                data-guiado="reservar_turno"
                 className={`rounded-lg border py-2 text-small transition-colors ${
                   ocupado
                     ? "cursor-not-allowed border-line bg-paper text-muted/40 line-through"
@@ -147,26 +206,89 @@ function ReservaCliente({ dia, setDia, servicio, setServicio, profesional, setPr
   )
 }
 
-function AgendaProfesional({ reservados }) {
+function AgendaProfesional({ reservados, bloqueados, controles, bloquear, reprogramar, mostrarAmbos, onAction }) {
+  const [historial, setHistorial] = useState(false)
   const items = reservados.map((hora, i) => ({
     id: reservaId + i,
     hora,
     nombre: ["Camila S.", "Javier P.", "Mora L.", "Santiago R."][i % 4],
     estado: i === 0 ? "Confirmado" : "Agendado",
   }))
+  const total = items.length + bloqueados.length
 
   return (
     <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-ink text-text-invert shadow-lift">
       <Chrome
         dark
         url="panel · agenda profesional"
-        right={<span className="font-mono text-micro text-cyan">{items.length} turnos</span>}
+        right={<span className="font-mono text-micro text-cyan">{total} turnos</span>}
       />
       <div className="flex-1 p-4">
         <div className="flex items-center justify-between">
           <p className="text-sm font-semibold">Miércoles 12</p>
           <span className="font-mono text-micro text-text-invert/50">demo · datos ilustrativos</span>
         </div>
+
+        {controles && (
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              onClick={bloquear}
+              data-guiado="bloquear_horario"
+              className="inline-flex h-8 items-center gap-1.5 rounded-[var(--radius-btn)] border border-line-dark px-3 font-mono text-micro text-text-invert/80 hover:border-accent hover:text-text-invert"
+            >
+              <Lock className="size-3.5" />
+              Bloquear horario
+            </button>
+            <button
+              onClick={reprogramar}
+              disabled={reservados.length === 0}
+              data-guiado="reprogramar"
+              className="inline-flex h-8 items-center gap-1.5 rounded-[var(--radius-btn)] border border-line-dark px-3 font-mono text-micro text-text-invert/80 hover:border-accent hover:text-text-invert disabled:opacity-40"
+            >
+              <ArrowRightLeft className="size-3.5" />
+              Reprogramar
+            </button>
+            <button
+              onClick={() => {
+                setHistorial((h) => !h)
+                if (!historial) onAction?.("ver_historial")
+              }}
+              data-guiado="ver_historial"
+              aria-expanded={historial}
+              className="inline-flex h-8 items-center gap-1.5 rounded-[var(--radius-btn)] border border-line-dark px-3 font-mono text-micro text-text-invert/80 hover:border-accent hover:text-text-invert"
+            >
+              <History className="size-3.5" />
+              Historial del cliente
+            </button>
+          </div>
+        )}
+
+        <AnimatePresence>
+          {historial && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="overflow-hidden"
+            >
+              <div className="mt-3 rounded-xl border border-line-dark bg-ink-soft p-3">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-medium">Camila S. · últimas visitas</p>
+                  <Status tone="activo" dark>
+                    4 visitas
+                  </Status>
+                </div>
+                <ul className="mt-2 grid gap-1">
+                  {HISTORIAL.map((h) => (
+                    <li key={h} className="font-mono text-micro text-text-invert/60">
+                      · {h}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <ul className="mt-4 grid gap-2">
           <AnimatePresence initial={false}>
@@ -193,10 +315,33 @@ function AgendaProfesional({ reservados }) {
                 </Status>
               </motion.li>
             ))}
+            {bloqueados.map((hora) => (
+              <motion.li
+                layout
+                key={`bloq-${hora}`}
+                initial={{ opacity: 0, x: 24 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                className="flex items-center justify-between gap-3 rounded-xl border border-dashed border-line-dark bg-ink-muted px-3 py-2.5"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="grid size-9 place-items-center rounded-lg bg-ink text-text-invert/50">
+                    <Lock className="size-4" />
+                  </span>
+                  <div>
+                    <p className="text-sm font-medium text-text-invert/60">Bloqueado</p>
+                    <p className="font-mono text-micro text-text-invert/40">{hora} hs</p>
+                  </div>
+                </div>
+                <Status tone="espera" dark>
+                  No disponible
+                </Status>
+              </motion.li>
+            ))}
           </AnimatePresence>
         </ul>
 
-        {items.length === 0 && (
+        {total === 0 && (
           <div className="mt-6 grid place-items-center gap-2 rounded-xl border border-dashed border-line-dark py-10 text-center">
             <CalendarDays className="size-5 text-text-invert/40" />
             <p className="text-small text-text-invert/50">
@@ -205,6 +350,12 @@ function AgendaProfesional({ reservados }) {
               <span className="font-mono text-micro text-text-invert/35">se bloquea acá al instante</span>
             </p>
           </div>
+        )}
+
+        {mostrarAmbos && (
+          <p className="mt-4 font-mono text-micro text-text-invert/40">
+            cada reserva del cliente bloquea el horario en la agenda
+          </p>
         )}
       </div>
     </div>

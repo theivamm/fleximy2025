@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import { Minus, Plus, Check, ShoppingCart } from "lucide-react"
 import { Chrome, Status } from "../Primitives"
 
-export default function ComercioScene() {
+export default function ComercioScene({ onAction }) {
   const [precio, setPrecio] = useState(189900)
   const [stock, setStock] = useState(4)
   const [agotado, setAgotado] = useState(false)
@@ -11,6 +11,7 @@ export default function ComercioScene() {
 
   const guardar = () => {
     setGuardado(true)
+    onAction?.("guardar_producto")
     setTimeout(() => setGuardado(false), 1400)
   }
 
@@ -28,6 +29,7 @@ export default function ComercioScene() {
         setAgotado={setAgotado}
         guardar={guardar}
         guardado={guardado}
+        onAction={onAction}
       />
     </div>
   )
@@ -91,7 +93,7 @@ function BiciGeometrica() {
   )
 }
 
-function PanelEdicion({ precio, setPrecio, stock, setStock, agotado, setAgotado, guardar, guardado }) {
+function PanelEdicion({ precio, setPrecio, stock, setStock, agotado, setAgotado, guardar, guardado, onAction }) {
   return (
     <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-ink text-text-invert shadow-lift">
       <Chrome
@@ -123,7 +125,7 @@ function PanelEdicion({ precio, setPrecio, stock, setStock, agotado, setAgotado,
             <input
               type="number"
               value={precio}
-              onChange={(e) => setPrecio(Number(e.target.value) || 0)}
+              onChange={(e) => { setPrecio(Number(e.target.value) || 0); onAction?.("editar_precio") }}
               className="w-full bg-transparent font-mono text-lg text-text-invert outline-none"
               aria-label="Precio del producto"
             />
@@ -135,7 +137,7 @@ function PanelEdicion({ precio, setPrecio, stock, setStock, agotado, setAgotado,
           <span className="font-mono text-micro text-text-invert/60">Stock</span>
           <div className="flex items-center justify-between rounded-xl border border-line-dark bg-ink-soft px-3 py-2">
             <button
-              onClick={() => setStock((s) => Math.max(0, s - 1))}
+              onClick={() => { setStock((s) => Math.max(0, s - 1)); onAction?.("editar_stock") }}
               aria-label="Quitar stock"
               className="grid size-8 place-items-center rounded-lg bg-ink-muted text-text-invert"
             >
@@ -143,7 +145,7 @@ function PanelEdicion({ precio, setPrecio, stock, setStock, agotado, setAgotado,
             </button>
             <span className="font-mono text-lg">{stock}</span>
             <button
-              onClick={() => setStock((s) => s + 1)}
+              onClick={() => { setStock((s) => s + 1); onAction?.("editar_stock") }}
               aria-label="Sumar stock"
               className="grid size-8 place-items-center rounded-lg bg-ink-muted text-text-invert"
             >
@@ -155,7 +157,7 @@ function PanelEdicion({ precio, setPrecio, stock, setStock, agotado, setAgotado,
         <label className="flex items-center justify-between rounded-xl border border-line-dark bg-ink-soft px-3 py-2.5">
           <span className="text-small">Marcar como agotado</span>
           <button
-            onClick={() => setAgotado((a) => !a)}
+            onClick={() => { setAgotado((a) => !a); onAction?.("cambiar_disponibilidad") }}
             role="switch"
             aria-checked={agotado}
             className={`relative h-6 w-11 rounded-full transition-colors ${agotado ? "bg-accent" : "bg-ink-muted"}`}

@@ -20,10 +20,20 @@ const TABS = [
   { id: "tarea", label: "Tarea", icon: FileText },
 ]
 
-export default function EducacionScene() {
+export default function EducacionScene({ onAction }) {
   const [vista, setVista] = useState("curso")
   const [tab, setTab] = useState("contenido")
   const [entregada, setEntregada] = useState(false)
+
+  const inscribirse = () => {
+    setVista("portal")
+    onAction?.("inscribirse")
+  }
+
+  const entregar = () => {
+    setEntregada(true)
+    onAction?.("entregar_tarea")
+  }
 
   return (
     <div className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper-bright shadow-lift">
@@ -51,7 +61,7 @@ export default function EducacionScene() {
               <div className="mt-4 flex items-center justify-between gap-3 rounded-xl bg-accent-soft px-4 py-3">
                 <p className="text-sm font-semibold text-text">¿Arrancás en este curso?</p>
                 <button
-                  onClick={() => setVista("portal")}
+                  onClick={inscribirse}
                   className="inline-flex h-9 shrink-0 items-center gap-2 rounded-[var(--radius-btn)] bg-accent px-4 text-sm font-semibold text-ink"
                 >
                   Inscribirme
@@ -159,7 +169,7 @@ export default function EducacionScene() {
                       Subí un documento con el mapa del sitio y los contenidos de tu proyecto.
                     </p>
                     <button
-                      onClick={() => setEntregada(true)}
+                      onClick={entregar}
                       disabled={entregada}
                       className={`mt-4 inline-flex h-10 items-center gap-2 rounded-[var(--radius-btn)] px-4 text-sm font-semibold ${
                         entregada ? "bg-ink-muted text-text-invert" : "bg-accent text-ink"

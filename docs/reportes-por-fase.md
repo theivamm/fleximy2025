@@ -332,6 +332,72 @@ industria funcionando con escenas simuladas y contenido alineado a los MD ✔
 
 ---
 
+## Reporte — Fase 5: Demos
+
+**Estado:** Completada · **Commit:** `A-COMPLETAR` · **Criterio de cierre:** todos los botones
+producen una acción visible ✔
+
+### Qué se hizo
+
+1. **Registro (`src/data/demos.js`):** `DEMOS` con las 7 demos (rubro, estado, descripción,
+   pasos por modo según las "acciones mínimas" del `10-DEMOS.md`, guía opcional).
+2. **Laboratorio (`src/components/demos/DemoLab.jsx`):**
+   - Superficie central donde se cargan las interfaces reales de las escenas de Fase 4.
+   - Selector de rubro en la página + tarjetas de catálogo con estado real (Disponible /
+     Recorrido guiado / Próximamente).
+   - Conmutador **Cliente/Equipo** en las 3 demos principales: el cambio de modo conserva el
+     mismo dato de la escena (no se remonta), demostrando la conexión.
+   - **Reiniciar demo** (remonta la escena con estado inicial) y **Salir** (vuelve al catálogo,
+     salida visible).
+   - Estado de avance: barra de progreso que cuenta las acciones reales realizadas contra los
+     pasos del MD ("X de Y acciones").
+   - **Recorrido guiado** opcional (solo cuando el usuario lo pide): tarjeta de pasos con
+     Anterior/Siguiente/Terminar que resalta el elemento objetivo con un anillo
+     (`.demo-guia-active`) y cambia de modo automáticamente entre cliente y equipo.
+   - Transiciones GSAP en el hero y framer-motion (AnimatePresence) entre demos.
+   - Nota de pie que identifica que no se genera una compra o reserva real.
+3. **Escenas adaptadas (retrocompatibles con las páginas de Fase 4):**
+   - `GastroScene`: prop `mode` (cliente→menú, equipo→cocina + control de menú con precio y
+     disponibilidad que se reflejan al instante) + `onAction`.
+   - `TurnosScene`: modo equipo con bloquear horario, reprogramar y historial del cliente;
+     `onAction` por acción.
+   - `GestionScene`: vista cliente nueva (portal con avances, próximas entregas, archivos y
+     comentario) que comparte el mismo estado del pipeline; vista equipo con mover tarea,
+     asignar responsable y cambiar fecha.
+   - Comercio / Inmob / Educación / Talleres: reciben `onAction` para reportar sus acciones
+     (vista integrada, ya que muestran cliente y equipo en la misma superficie).
+4. **Página (`src/pages/Demos.jsx`):** hero GSAP ("Probá Fleximy antes de imaginarlo") +
+   filtros (Todas + 7 rubros) + catálogo o laboratorio + banda "¿Preferís que te lo mostremos?"
+   (Agendar demostración → `/contacto`) + CTA final "¿Querés ver Fleximy con la lógica de tu
+   negocio?" (Solicitar demo personalizada → `/contacto`, Ver soluciones → `/soluciones`).
+   Reemplaza la página legacy (glows, `InteractiveBackground`, `SectionWrapper`).
+
+### Reglas respetadas
+
+- Todos los botones abren una interacción o página real (ningún botón sin acción).
+- Datos ficticios identificados en todas las superficies ("demo · datos ilustrativos").
+- Sin registro previo para probar.
+- Cliente y equipo comparten el mismo dato en las vistas conmutables.
+- Medición de acciones centralizada en `onAction`: punto de enganche listo para eventos de
+  analítica (se conecta en Fase 9).
+- Hero con `prefers-reduced-motion` vía `gsap.matchMedia`.
+
+### Validación
+
+- `npm run build` → OK (Demos ~5,7 kB gzip; escenas compartidas con Fase 4 en chunks propios).
+- `npm run lint` → sin errores; sin warnings en los archivos nuevos.
+- `vite preview` → HTTP 200 en `/demos`, `/soluciones` y `/`.
+- Retrocompatibilidad verificada: las páginas de solución siguen renderizando las escenas en
+  vista completa (mode indefinido).
+
+### Pendientes de esta fase (acción humana / QA)
+
+- [ ] Revisión visual e interacción en desktop y mobile del laboratorio (7 demos + guiado).
+- [ ] Validar el ritmo del recorrido guiado y el comportamiento de la barra de avance.
+- [ ] Conectar la medición de inicio/interacción/finalización/CTA en Fase 9.
+
+---
+
 ## Próximas fases
 
 | Fase | Descripción | Estado |
@@ -339,7 +405,7 @@ industria funcionando con escenas simuladas y contenido alineado a los MD ✔
 | 2 | Sistema global (tokens, tipografía, header, footer, motion) | ✔ Completada |
 | 3 | Inicio (Home completa según `01-INICIO.md`) | ✔ Completada |
 | 4 | Soluciones (hub + 7 industrias) | ✔ Completada |
-| 5 | Demos (laboratorio interactivo) | Pendiente |
+| 5 | Demos (laboratorio interactivo) | ✔ Completada |
 | 6 | Comercial (cómo funciona, precios, nosotros, contacto, FAQ) | Pendiente |
 | 7 | Confianza y recursos (seguridad, recursos, casos de uso) | Pendiente |
 | 8 | Legales y estados (privacidad, términos, gracias, 404) | Pendiente |

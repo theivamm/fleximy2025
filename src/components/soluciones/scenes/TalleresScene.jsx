@@ -18,13 +18,19 @@ const REPUESTOS = [
   { codigo: "R-0340", nombre: "Filtro de aceite", cantidad: 1, estado: "En pedido" },
 ]
 
-export default function TalleresScene() {
+export default function TalleresScene({ onAction }) {
   const [estado, setEstado] = useState(0)
 
   const actual = ESTADOS[estado]
 
-  const avanzar = () => setEstado((e) => Math.min(e + 1, ESTADOS.length - 1))
-  const reiniciar = () => setEstado(0)
+  const avanzar = () => {
+    setEstado((e) => Math.min(e + 1, ESTADOS.length - 1))
+    onAction?.("avanzar_estado")
+  }
+  const reiniciar = () => {
+    setEstado(0)
+    onAction?.("reiniciar_demo")
+  }
 
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,6fr)_minmax(0,4fr)]">
