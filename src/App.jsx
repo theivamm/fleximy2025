@@ -25,6 +25,9 @@ const ComoFunciona = lazy(() => import("./pages/ComoFunciona"))
 const Contacto = lazy(() => import("./pages/Contacto"))
 const GraciasDiagnostico = lazy(() => import("./pages/GraciasDiagnostico"))
 const PreguntasFrecuentes = lazy(() => import("./pages/PreguntasFrecuentes"))
+const Seguridad = lazy(() => import("./pages/Seguridad"))
+const Recursos = lazy(() => import("./pages/Recursos"))
+const CasosDeUso = lazy(() => import("./pages/CasosDeUso"))
 const NotFound = lazy(() => import("./pages/NotFound"))
 
 const Login = lazy(() => import("./pages/Login"))
@@ -109,6 +112,9 @@ function AppContent() {
           <Route path="/contacto" element={<PageTransition><Contacto /></PageTransition>} />
           <Route path="/gracias-diagnostico" element={<PageTransition><GraciasDiagnostico /></PageTransition>} />
           <Route path="/preguntas-frecuentes" element={<PageTransition><PreguntasFrecuentes /></PageTransition>} />
+          <Route path="/seguridad" element={<PageTransition><Seguridad /></PageTransition>} />
+          <Route path="/recursos" element={<PageTransition><Recursos /></PageTransition>} />
+          <Route path="/casos-de-uso" element={<PageTransition><CasosDeUso /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>
