@@ -625,6 +625,71 @@ a validación profesional ✔
 
 ---
 
+## Reporte — Fase 9: SEO y analítica
+
+**Estado:** Completada · **Commit:** `dc4beab` · **Criterio de cierre:** metadatos por ruta,
+sitemap, robots, schema, canonicals, Open Graph, eventos y tracking de formularios ✔
+
+### Qué se hizo
+
+1. **`index.html`:** `lang="es"`, title y meta description en español, `theme-color`, canonical
+   base, Open Graph (og:type/site_name/locale/title/description/url/image), Twitter Card y
+   **schema JSON-LD** (`Organization` + `WebSite` con `@id`, url, idioma y publisher).
+2. **`public/robots.txt`:** permite todo, excluye `/login`, `/dashboard` y `/gracias-diagnostico`,
+   referencia el sitemap.
+3. **`public/sitemap.xml`:** 20 URLs públicas con `lastmod` (2026-08-08), `changefreq` y
+   `priority`; excluye el área privada y la página de gracias (noindex).
+4. **`public/og-default.svg`:** imagen social 1200×630 con marca (ink + lima) como placeholder.
+5. **Sistema SEO por ruta (`src/data/seo.js` + `src/components/seo/Seo.jsx`):** `SITE_URL`
+   centralizado, mapa `SEO_META` con title/description/robots para las 20 rutas públicas + área
+   privada (noindex) + catch-all 404 (`noindex,follow`). El componente `Seo` se monta en
+   `AppContent` y actualiza `document.title`, meta description, robots, canonical (absoluta salvo
+   noindex), og:title/description/url/type y twitter card en cada navegación.
+6. **Analítica (`src/lib/analytics.js`):** `track(event, props)` emite un `CustomEvent`
+   `fleximy:analytics` (log en consola solo en dev) e `initAnalytics()` como listener global de
+   clicks que captura `[data-track]` (+ `data-track-props` JSON) y enlaces `wa.me` automáticos
+   (`click_whatsapp`). Sin herramienta de terceros cargada (pendiente decisión y consentimiento).
+7. **Eventos conectados:**
+   - `cta_diagnostico`: Header (desktop y mobile), Home hero y CTA final.
+   - `cta_demo`: Home hero.
+   - `click_whatsapp`: cualquier enlace `wa.me` del sitio (auto).
+   - `formulario_iniciado` (primer avance de paso en Contacto), `rubro_seleccionado` (chip de
+     rubro), `formulario_enviado` (submit con rubro y necesidad).
+   - `gracias_visto` (con rubro) y `gracias_click_demo`.
+   - `404_visto` (URL solicitada y página de origen, una sola vez por visita) y `404_cta`
+     (cuál acceso se usó).
+   - `demo_iniciada` (al abrir cada demo), `demo_completada` (100% de acciones, reseteable) y
+     `vista_sitio_panel` (cambio cliente/equipo en el laboratorio y en el selector de Home).
+8. **`App.jsx`:** se extrae `renderShell(location, isDashboard)` y se monta `<Seo />` para todas
+   las rutas (públicas y del dashboard).
+
+### Reglas respetadas
+
+- Sin analítica de terceros cargada sin consentimiento: el track es un evento propio sin red, listo
+  para conectar la herramienta definitiva (pendiente de `28-DECISIONES.md`).
+- Descripciones sin métricas ni promesas no verificadas.
+- Canonical absoluto centralizado en `SITE_URL` (único punto a confirmar con el dominio final).
+- Página de gracias y área privada en noindex; 404 en `noindex,follow`.
+- Gracias sigue sin volver a disparar la conversión al recargar (evento de vista informativo).
+
+### Validación
+
+- `npm run build` → OK; `404.html` regenerado; robots/sitemap/og copiados a `dist`.
+- `npm run lint` → sin errores; se limpió el único warning nuevo (deps de `Seo.jsx`).
+- `dist/index.html` verificado: `lang="es"`, og:title, canonical y JSON-LD presentes.
+- `vite preview` → HTTP 200 en rutas nuevas y `robots.txt`, `sitemap.xml`, `og-default.svg`.
+
+### Pendientes de esta fase (acción humana / QA)
+
+- [ ] Confirmar dominio definitivo y reemplazar `SITE_URL` en `src/data/seo.js`, `sitemap.xml`,
+      `robots.txt`, `index.html` y `og-default.svg` (hoy asume `fleximy2025.netlify.app`).
+- [ ] Generar imagen social real (OG/Twitter 1200×630, PNG/JPG) en lugar del placeholder SVG.
+- [ ] Decidir herramienta de analítica y condiciones de consentimiento; conectar al CustomEvent
+      `fleximy:analytics`.
+- [ ] Validar en Netlify la respuesta 404 real y los canonicals servidos.
+
+---
+
 ## Próximas fases
 
 | Fase | Descripción | Estado |
@@ -636,7 +701,7 @@ a validación profesional ✔
 | 6 | Comercial (cómo funciona, precios, nosotros, contacto, FAQ) | ✔ Completada |
 | 7 | Confianza y recursos (seguridad, recursos, casos de uso) | ✔ Completada |
 | 8 | Legales y estados (privacidad, términos, gracias, 404) | ✔ Completada |
-| 9 | SEO y analítica | Pendiente |
+| 9 | SEO y analítica | ✔ Completada |
 | 10 | QA final | Pendiente |
 
 > **Punto de aprobación obligatorio** antes de la Fase 4: paleta, tipografía, hero, dashboard CSS,
