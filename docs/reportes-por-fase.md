@@ -485,6 +485,71 @@ montadas sobre el sistema global, sin precios ni métricas inventados ✔
 
 ---
 
+## Reporte — Fase 7: Confianza y recursos
+
+**Estado:** Completada · **Criterio de cierre:** Seguridad, Recursos y Casos de uso montados sobre
+el sistema global; sin casos ilustrativos presentados como clientes reales ✔
+
+### Qué se hizo
+
+1. **Datos (`src/data/confianza.js`):** capas de seguridad, accesos, protección de datos,
+   respaldos, disponibilidad, terceros, incidentes y cobertura de privacidad; categorías y
+   contenidos de recursos; descargables y newsletter; 4 casos de uso con situación/dispersión/
+   configuración/indicadores y estructura de caso real futuro.
+2. **Seguridad (`pages/Seguridad.jsx`, `/seguridad`):** hero, diagrama de flujo
+   "cliente → plataforma → infraestructura → respaldo" (4 capas con etiquetas textuales, sin
+   escudos ni candados decorativos), accesos con responsabilidad del cliente, protección de datos
+   con la advertencia sobre AES-256, tabla de respaldos con `[DEFINIR]` y nota de recuperación,
+   disponibilidad solo con compromisos `[DEFINIR]` (sin usar "SLA" sin acuerdo), dependencias de
+   terceros, proceso de incidentes (6 pasos), privacidad con enlace a `/privacidad` (se resuelve
+   en Fase 8) y CTA final. Advertencia de revisión técnica/legal registrada en el reporte.
+3. **Recursos (`pages/Recursos.jsx`, `/recursos`):** hero, recurso destacado con arte tipográfico,
+   filtros por las 7 categorías con transición suave, grilla editorial de guías/checklists/
+   comparativas (todas marcadas "en preparación" — sin enlaces muertos; los artículos se publican
+   al completarse), banda a `/casos-de-uso`, 4 descargables "en preparación", newsletter como
+   bloque informativo (no activado, sin formulario falso) y CTA final.
+4. **Casos de uso (`pages/CasosDeUso.jsx`, `/casos-de-uso`):** hero con aviso visible "escenarios
+   ilustrativos · no representan clientes ni resultados comprobados", 4 casos (Restaurante,
+   Servicios, B2B, Inmobiliaria) como historias operativas: situación → configuración →
+   indicadores, vista "cómo operás hoy (información dispersa)" vs "con Fleximy (flujo conectado)"
+   con datos específicos de cada rubro, CTA a la solución correspondiente; sección de estructura
+   de caso real futuro (9 ítems) y CTA final.
+5. **Rutas (`src/App.jsx`):** `/seguridad`, `/recursos`, `/casos-de-uso`. El enlace de Home
+   ("Conocer seguridad y continuidad") y el ítem del nav "Recursos" ahora resuelven. `/casos-de-uso`
+   es alcanzable desde Recursos (no está en el header, según el mapa de navegación).
+
+### Reglas respetadas
+
+- Cero casos presentados como clientes reales; aviso de escenario ilustrativo siempre visible.
+- Cero logos, personas, métricas, testimonios o certificaciones inventadas (no se dibujan sellos
+  ni "AES-256" sin validación).
+- Afirmaciones de seguridad solo como prácticas reales implementadas/documentadas; lo pendiente
+  queda como `[VALIDAR]`/`[DEFINIR]`/`[CONFIRMAR DISPONIBILIDAD]`.
+- Sin términos inflados: no se usa "SLA" sin acuerdo de nivel de servicio aplicable.
+- Recursos y newsletter sin falsos formularios ni descargas inexistentes ("en preparación").
+- GSAP acotado al hero con `prefers-reduced-motion` vía `gsap.matchMedia`.
+
+### Validación
+
+- `npm run build` → OK; `Seguridad` 3,0 kB gzip, `Recursos` 2,9 kB, `CasosDeUso` 2,3 kB, `confianza`
+  3,1 kB (chunks lazy).
+- `npm run lint` → sin errores; sin warnings en los archivos nuevos (se corrigió un parámetro sin
+  uso en `CasosDeUso.jsx`).
+- `vite preview` → HTTP 200 en `/seguridad`, `/recursos`, `/casos-de-uso` (más `/contacto` y
+  `/preguntas-frecuentes` de regresión).
+
+### Pendientes de esta fase (acción humana / QA)
+
+- [ ] Revisión técnica y legal de la página de Seguridad antes de publicar; eliminar todo control
+      no implementado (`[CONFIRMAR DISPONIBILIDAD]`, `[VALIDAR ARQUITECTURA/TECNOLOGÍA]`,
+      `[DEFINIR]` en respaldos y disponibilidad).
+- [ ] Redactar y publicar los artículos de Recursos (6 iniciales) y los 4 descargables reales.
+- [ ] Decidir la activación de la newsletter con capacidad editorial.
+- [ ] Cuando existan clientes autorizados, evolucionar "Casos de uso" → "Casos de éxito".
+- [ ] `/privacidad` (enlazado desde Seguridad) se publica en Fase 8.
+
+---
+
 ## Próximas fases
 
 | Fase | Descripción | Estado |
@@ -494,7 +559,7 @@ montadas sobre el sistema global, sin precios ni métricas inventados ✔
 | 4 | Soluciones (hub + 7 industrias) | ✔ Completada |
 | 5 | Demos (laboratorio interactivo) | ✔ Completada |
 | 6 | Comercial (cómo funciona, precios, nosotros, contacto, FAQ) | ✔ Completada |
-| 7 | Confianza y recursos (seguridad, recursos, casos de uso) | Pendiente |
+| 7 | Confianza y recursos (seguridad, recursos, casos de uso) | ✔ Completada |
 | 8 | Legales y estados (privacidad, términos, gracias, 404) | Pendiente |
 | 9 | SEO y analítica | Pendiente |
 | 10 | QA final | Pendiente |
