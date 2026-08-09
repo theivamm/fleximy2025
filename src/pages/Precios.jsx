@@ -1,304 +1,206 @@
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown, Check } from "lucide-react"
-import InteractiveBackground from "../components/InteractiveBackground"
-import SectionWrapper from "../components/SectionWrapper"
-
-const BENEFITS = [
-  "Sitio Web Profesional & Adaptado a Celulares (Gastronomía, Turnos o PyMEs).",
-  "Panel Administrativo / Dashboard Personalizado para tu Rubro.",
-  "Hosting Cloud de Alta Velocidad + Certificado SSL de Seguridad.",
-  "Actualizaciones Ilimitadas de Precios, Menúes, Productos o Servicios.",
-  "Integración con WhatsApp Business y Mercado Pago.",
-  "Soporte Técnico Directo y Mantenimiento Continuo.",
-]
-
-const SAVINGS_ROWS = [
-  { service: "Mantenimiento y Desarrollo Web", cost: "~$120.000 ARS / mes" },
-  { service: "Hosting Cloud + Servidores + SSL", cost: "~$25.000 ARS / mes" },
-  { service: "Gestor de Turnos / Menú QR / CRM", cost: "~$45.000 ARS / mes" },
-  { service: "Gestor de Proyectos / Tareas (SaaS)", cost: "~$30.000 ARS / mes" },
-]
-
-const FAQS = [
-  {
-    q: "¿El precio de $150.000 ARS/mes está en pesos argentinos?",
-    a: "Sí, 100% en ARS, sin impuestos PAIS/tarjeta ni variaciones en dólares. El precio es fijo en moneda local para que puedas presupuestar sin sobresaltos.",
-  },
-  {
-    q: "¿Hay un costo inicial de configuración (Setup)?",
-    a: "La puesta en marcha estándar está incluida en la activación inicial junto a la carga de tus primeros datos. No hay costos de setup ocultos ni cargos de instalación.",
-  },
-  {
-    q: "¿Qué medios de pago aceptan?",
-    a: "Aceptamos transferencia bancaria, CBU/CVU, débito automático y Mercado Pago. Te emitimos factura electrónica todos los meses.",
-  },
-]
+import { useLayoutEffect, useRef } from "react"
+import gsap from "gsap"
+import { ArrowUpRight } from "lucide-react"
+import Button from "../components/ui/Button"
+import Accordion from "../components/comercial/Accordion"
+import { CONTACT } from "../data/navigation"
+import {
+  PLANES,
+  INCLUYE_SUBSCRIPCION,
+  COSTOS_ADICIONALES,
+  COMPARACION,
+  MENSAJE_COMPARACION,
+  PRECIO_FAQ,
+} from "../data/comercial"
 
 export default function Precios() {
-  const [openFaq, setOpenFaq] = useState(null)
+  const root = useRef(null)
+
+  useLayoutEffect(() => {
+    const mm = gsap.matchMedia()
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap
+        .timeline({ defaults: { ease: "power3.out" } })
+        .fromTo(
+          ".pr-line-inner",
+          { yPercent: 110 },
+          { yPercent: 0, duration: 1, stagger: 0.13, ease: "power4.out" }
+        )
+        .fromTo(
+          ".pr-fade",
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 },
+          "-=0.45"
+        )
+    })
+    return () => mm.revert()
+  }, [])
 
   return (
-    <>
-      {/* ═══════════════════════════════════════════
-          MODULE 1 — HERO
-      ════════════════════════════════════════════ */}
-      <section className="relative min-h-[60vh] flex items-center px-4 sm:px-6 lg:px-8 pt-32 pb-20 overflow-hidden">
-        <InteractiveBackground />
-        <div className="mx-auto max-w-6xl w-full relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl"
-          >
-            <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full text-xs font-semibold tracking-widest uppercase text-emerald-400 border border-emerald-500/40 bg-emerald-500/10 shadow-[0_0_20px_-4px_rgba(34,197,94,0.15)]">
-              <span>💳</span>
-              INVERSIÓN TRANSPARENTE EN PESOS
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1]">
-              <span className="text-white">
-                Un solo plan con todo lo que tu negocio{" "}
-              </span>
-              <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                necesita para operar
-              </span>
-            </h1>
-
-            <p className="mt-6 text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl">
-              Sin costos ocultos, sin comisiones por venta ni sorpresas en dólares. Centralizá tu sitio web y tu sistema de gestión en un abono fijo y predecible.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          MODULE 2 — PLAN CARD
-      ════════════════════════════════════════════ */}
-      <SectionWrapper>
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="relative max-w-3xl mx-auto overflow-hidden rounded-2xl border border-emerald-500/30 bg-[#131b2e] p-8 sm:p-12 md:p-14 text-center"
-          style={{ boxShadow: "0 0 40px -8px rgba(34,197,94,0.15), 0 0 80px -16px rgba(6,182,212,0.08)" }}
-        >
-          <div className="absolute -top-16 -right-16 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl" />
-          <div className="absolute -bottom-16 -left-16 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl" />
-
-          <div className="relative z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest text-cyan-400 border border-cyan-500/30 bg-cyan-500/10 mb-6">
-              TODO INCLUIDO • ALL-IN-ONE
-            </div>
-
-            <div className="flex items-baseline justify-center gap-1">
-              <span className="text-5xl sm:text-6xl md:text-7xl font-bold text-white tracking-tight">$150.000</span>
-              <span className="text-lg sm:text-xl text-emerald-400 font-semibold">ARS</span>
-            </div>
-            <div className="text-sm text-slate-500 mt-1">/ mes</div>
-
-            <p className="mt-6 text-sm text-slate-400 max-w-lg mx-auto leading-relaxed">
-              Incluye puesta en marcha, hosting cloud, sistema administrativo a medida y soporte técnico directo.
-            </p>
-
-            <div className="mt-10 space-y-3 text-left max-w-lg mx-auto">
-              {BENEFITS.map((b, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <div className="w-5 h-5 mt-0.5 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
-                    <Check size={12} className="text-emerald-400" />
-                  </div>
-                  <span className="text-sm text-slate-300">{b}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-10 flex flex-col items-center gap-4">
-              <a
-                href="https://wa.me/541111111111"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative inline-flex items-center justify-center gap-2 px-10 py-4 rounded-xl text-base font-bold tracking-wide text-white bg-[#25D366] hover:bg-[#1da851] shadow-lg shadow-[#25D366]/30 hover:shadow-[#25D366]/50 transition-all duration-300 active:scale-[0.98]"
-              >
-                💬 Empezar Ahora por WhatsApp
-                <span className="absolute inset-0 rounded-xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </a>
-
-              <div className="flex items-center gap-2 text-xs text-slate-500">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                Sin contratos de atadura. Cancelás cuando quieras.
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </SectionWrapper>
-
-      {/* ═══════════════════════════════════════════
-          MODULE 3 — SAVINGS TABLE
-      ════════════════════════════════════════════ */}
-      <SectionWrapper className="!pt-0">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white tracking-tight">
-              ¿Cuánto te ahorrás por mes?
-            </h2>
-            <p className="mt-3 text-sm text-slate-400">
-              Compará el costo de herramientas separadas vs. nuestro plan todo incluido.
-            </p>
-          </div>
-
-          <div className="overflow-hidden rounded-xl border border-[#1e293b] bg-[#131b2e]">
-            <div className="grid grid-cols-[1fr_auto_auto] gap-0 text-sm">
-              {/* Header */}
-              <div className="px-4 sm:px-6 py-4 bg-slate-800/40 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                Servicio / Herramienta por Separado
-              </div>
-              <div className="px-4 sm:px-6 py-4 bg-slate-800/40 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">
-                Costo Estimado
-              </div>
-              <div className="px-4 sm:px-6 py-4 bg-slate-800/40 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">
-                Con Nosotros
-              </div>
-
-              {/* Rows */}
-              {SAVINGS_ROWS.map((row, i) => (
-                <div
-                  key={i}
-                  className={`contents ${
-                    i < SAVINGS_ROWS.length - 1 ? "border-b border-[#1e293b]" : ""
-                  }`}
-                >
-                  <div className="px-4 sm:px-6 py-4 text-sm text-slate-300">{row.service}</div>
-                  <div className="px-4 sm:px-6 py-4 text-sm text-slate-400 text-right whitespace-nowrap">{row.cost}</div>
-                  <div className="px-4 sm:px-6 py-4 text-sm font-bold text-emerald-400 text-right">INCLUIDO</div>
-                </div>
-              ))}
-
-              {/* Total */}
-              <div className="col-span-3 border-t border-[#1e293b] bg-slate-800/30">
-                <div className="grid grid-cols-[1fr_auto_auto]">
-                  <div className="px-4 sm:px-6 py-4 text-sm font-bold text-white">COSTO TOTAL SEPARADO:</div>
-                  <div className="px-4 sm:px-6 py-4 text-sm font-bold text-rose-400 text-right whitespace-nowrap">~$220.000 ARS / mes</div>
-                  <div className="px-4 sm:px-6 py-4 text-sm font-bold text-emerald-400 text-right">$150.000 ARS / mes</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Savings highlight */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-6 p-4 sm:p-5 rounded-xl bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-emerald-500/10 border border-emerald-500/30 text-center"
-            style={{ boxShadow: "0 0 30px -8px rgba(34,197,94,0.12)" }}
-          >
-            <span className="text-sm sm:text-base font-semibold text-emerald-400">
-              Te ahorrás más de <strong className="text-white">$70.000 ARS/mes</strong> y tenés un solo proveedor para todo.
+    <main ref={root} className="bg-paper text-text">
+      <section className="relative overflow-hidden pb-16 pt-28 lg:pt-36">
+        <div className="container-site">
+          <p className="pr-fade kicker">Precios y alcance</p>
+          <h1 className="mt-6 max-w-[18ch] text-hero text-text">
+            <span className="block overflow-hidden pb-[0.08em]">
+              <span className="pr-line-inner block">Una inversión clara para una</span>
             </span>
-          </motion.div>
-        </motion.div>
-      </SectionWrapper>
-
-      {/* ═══════════════════════════════════════════
-          MODULE 4 — FAQ ACCORDION
-      ════════════════════════════════════════════ */}
-      <SectionWrapper className="!pt-0">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="max-w-3xl mx-auto"
-        >
-          <h2 className="text-2xl sm:text-3xl font-semibold text-white text-center tracking-tight mb-10">
-            Preguntas Frecuentes Financieras
-          </h2>
-
-          <div className="space-y-3">
-            {FAQS.map((faq, i) => (
-              <div
-                key={i}
-                className="rounded-xl border border-[#1e293b] bg-[#131b2e] overflow-hidden transition-colors hover:border-emerald-500/20"
-              >
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="flex items-center justify-between w-full px-5 py-4 text-sm font-medium text-slate-200 hover:text-white transition-colors text-left cursor-pointer"
-                >
-                  <span className="pr-4">{faq.q}</span>
-                  <ChevronDown
-                    size={16}
-                    className={`shrink-0 text-slate-500 transition-transform duration-300 ${
-                      openFaq === i ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                <AnimatePresence>
-                  {openFaq === i && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.25 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-5 pb-4 text-sm text-slate-400 leading-relaxed border-t border-[#1e293b] pt-3">
-                        {faq.a}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
+            <span className="block overflow-hidden pb-[0.08em]">
+              <span className="pr-line-inner block">solución que tu equipo puede usar.</span>
+            </span>
+          </h1>
+          <p className="pr-fade mt-6 max-w-[52ch] text-lead text-muted">
+            Comenzá con los módulos que resuelven tu necesidad principal y ampliá la plataforma a
+            medida que tu operación evoluciona.
+          </p>
+          <div className="pr-fade mt-8">
+            <Button to="/contacto" size="lg">
+              Solicitar propuesta
+              <ArrowUpRight className="size-4" />
+            </Button>
           </div>
-        </motion.div>
-      </SectionWrapper>
-
-      {/* ═══════════════════════════════════════════
-          MODULE 5 — CTA BANNER
-      ════════════════════════════════════════════ */}
-      <section className="relative px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-        <div className="mx-auto max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#131b2e] via-[#1a2540] to-[#131b2e] border border-[#1e293b] p-8 sm:p-12 md:p-16 text-center"
-          >
-            <div className="absolute -top-20 -left-20 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl" />
-            <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl" />
-
-            <div className="relative z-10">
-              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white leading-tight">
-                ¿Tenés dudas sobre cómo se adapta la plataforma a tu negocio?
-              </h2>
-              <p className="mt-4 text-base sm:text-lg text-slate-400 max-w-xl mx-auto leading-relaxed">
-                Hablemos 10 minutos por WhatsApp y te mostramos cómo funciona.
-              </p>
-              <div className="mt-8">
-                <a
-                  href="https://wa.me/541111111111"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative inline-flex items-center justify-center gap-2 px-10 py-4 rounded-xl text-base font-bold tracking-wide text-white bg-[#25D366] hover:bg-[#1da851] shadow-lg shadow-[#25D366]/30 hover:shadow-[#25D366]/50 transition-all duration-300 active:scale-[0.98]"
-                >
-                  💬 Hablar con un Asesor Financiero/Comercial
-                  <span className="absolute inset-0 rounded-xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </a>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
-    </>
+
+      <section className="container-site py-20 lg:py-28">
+        <p className="kicker">Tres niveles de la misma plataforma</p>
+        <h2 className="mt-4 max-w-[16ch] text-h1">Empezá por lo que necesitás hoy</h2>
+        <div className="mt-12 grid gap-4 lg:grid-cols-3">
+          {PLANES.map((plan) => (
+            <article
+              key={plan.id}
+              className="flex flex-col rounded-[var(--radius-card)] border border-line bg-paper-bright p-6 lg:p-8"
+            >
+              <p className="font-mono text-micro text-muted">plan {plan.nombre}</p>
+              <p className="mt-3 text-h3">{plan.nombre}</p>
+              <p className="mt-2 flex-1 text-small text-muted">{plan.para}</p>
+              <div className="mt-6 border-t border-line pt-5">
+                <p className="font-mono text-micro text-muted">desde</p>
+                <p className="mt-1 text-h2 text-text">
+                  {plan.precio.includes("[") ? (
+                    <span className="font-mono text-h4">{plan.precio}</span>
+                  ) : (
+                    plan.precio
+                  )}
+                  {plan.precioNota && <span className="ml-1 text-h4 text-muted">{plan.precioNota}</span>}
+                </p>
+              </div>
+              <ul className="mt-6 grid gap-2.5">
+                {plan.items.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-small text-text">
+                    <span className="mt-1 size-2 shrink-0 rounded-full bg-accent" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8">
+                <Button to="/contacto" variant="secondary" className="w-full">
+                  {plan.cta}
+                </Button>
+              </div>
+            </article>
+          ))}
+        </div>
+        <p className="mt-6 max-w-[62ch] font-mono text-micro text-muted">
+          el monto final se confirma en el diagnóstico según módulos, usuarios y volumen · los
+          valores aquí presentados son niveles de referencia pendientes de validación comercial
+        </p>
+      </section>
+
+      <section className="border-y border-line bg-paper-bright py-20 lg:py-28">
+        <div className="container-site grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
+          <div>
+            <p className="kicker">Incluido</p>
+            <h2 className="mt-4 text-h1">Toda suscripción incluye</h2>
+            <ul className="mt-8 grid gap-2.5">
+              {INCLUYE_SUBSCRIPCION.map((item) => (
+                <li key={item} className="flex items-start gap-3 rounded-xl border border-line bg-paper px-4 py-3 text-small">
+                  <span className="mt-1 size-2 shrink-0 rounded-full bg-accent" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="font-mono text-micro text-muted">se cotiza por separado cuando corresponde</p>
+            <ul className="mt-4 grid gap-2.5">
+              {COSTOS_ADICIONALES.map((item) => (
+                <li key={item} className="flex items-start gap-3 rounded-xl border border-line bg-paper px-4 py-3 text-small text-muted">
+                  <span className="mt-1 size-2 shrink-0 rounded-full bg-ink/20" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="container-site py-20 lg:py-28">
+        <p className="kicker">Comparación realista</p>
+        <h2 className="mt-4 max-w-[16ch] text-h1">Contra la forma habitual de operar</h2>
+        <div className="mt-12 overflow-x-auto rounded-[var(--radius-card)] border border-line">
+          <table className="w-full min-w-[620px] border-collapse bg-paper-bright text-left">
+            <thead>
+              <tr className="border-b border-line">
+                <th className="sticky top-16 bg-paper-bright px-5 py-4 font-mono text-micro text-muted md:top-20">
+                  Situación habitual
+                </th>
+                <th className="sticky top-16 bg-paper-bright px-5 py-4 font-mono text-micro text-muted md:top-20">
+                  Herramientas separadas
+                </th>
+                <th className="sticky top-16 bg-paper-bright px-5 py-4 font-mono text-micro text-ink md:top-20">
+                  Con Fleximy
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {COMPARACION.map((row) => (
+                <tr key={row.situacion} className="border-b border-line last:border-b-0">
+                  <td className="px-5 py-4 text-small font-semibold text-text">{row.situacion}</td>
+                  <td className="px-5 py-4 text-small text-muted">{row.separadas}</td>
+                  <td className="px-5 py-4 text-small font-medium text-text">{row.fleximy}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <blockquote className="mt-8 max-w-[56ch] border-l-2 border-accent pl-5 text-lead text-muted">
+          {MENSAJE_COMPARACION}
+        </blockquote>
+      </section>
+
+      <section className="container-site py-20 lg:py-28">
+        <div className="mx-auto max-w-3xl">
+          <p className="kicker">Preguntas de precio</p>
+          <h2 className="mt-4 text-h1">Dudas frecuentes sobre costos</h2>
+          <div className="mt-10">
+            <Accordion items={PRECIO_FAQ} idPrefix="precio-faq" />
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-ink text-text-invert">
+        <div className="container-site py-24 text-center lg:py-32">
+          <p className="kicker justify-center" style={{ color: "rgba(244,243,238,0.55)" }}>
+            Propuesta
+          </p>
+          <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">
+            Recibí una propuesta basada en lo que realmente necesitás
+          </h2>
+          <p className="mx-auto mt-5 max-w-[52ch] text-lead text-text-invert/70">
+            En el diagnóstico definimos una primera versión, los módulos incluidos, el plazo y el
+            precio antes de comenzar.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Button to="/contacto" size="lg">
+              Solicitar propuesta
+            </Button>
+            <Button href={CONTACT.whatsapp} variant="secondary" size="lg">
+              Hablar por WhatsApp
+            </Button>
+          </div>
+        </div>
+      </section>
+    </main>
   )
 }

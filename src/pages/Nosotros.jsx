@@ -1,252 +1,219 @@
-import { motion } from "framer-motion"
-import { Shield, Zap, MessageCircle, Server, CheckCircle } from "lucide-react"
-import InteractiveBackground from "../components/InteractiveBackground"
-import SectionWrapper, { SectionHeader } from "../components/SectionWrapper"
-import Button from "../components/Button"
-
-const PILLARS = [
-  {
-    icon: MessageCircle,
-    title: "Diseñado para la Realidad Local",
-    desc: "Precios transparentes en pesos argentinos, actualizaciones inmediatas de precios ante la inflación e integración nativa con herramientas como WhatsApp y Mercado Pago.",
-  },
-  {
-    icon: Zap,
-    title: "Simplicidad ante todo (Zero Friction)",
-    desc: "Si un panel de control requiere semanas de capacitación, está mal diseñado. Nuestras interfaces son tan intuitivas que vos y tu equipo aprenden a usarlas en 30 minutos.",
-  },
-  {
-    icon: Shield,
-    title: "Acompañamiento y Soporte Real",
-    desc: "No somos una plataforma en el extranjero que responde tickets en inglés 5 días después. Tenés un canal directo por WhatsApp con nuestro equipo para lo que necesites.",
-  },
-  {
-    icon: Server,
-    title: "Infraestructura & Evolución Continua",
-    desc: "Nos encargamos de los servidores, la seguridad, las copias de respaldo y el mantenimiento para que vos te enfoques exclusivamente en hacer crecer tu PyME.",
-  },
-]
-
-const INFRA_BADGES = [
-  { icon: "🟢", label: "Servidores Cloud con 99.9% Uptime" },
-  { icon: "🔒", label: "Cifrado de Datos SSL & Backups Diarios" },
-  { icon: "⚡", label: "Carga Ultra Rápida Optimizada para Móviles" },
-]
+import { useLayoutEffect, useRef } from "react"
+import gsap from "gsap"
+import { ArrowUpRight } from "lucide-react"
+import Button from "../components/ui/Button"
+import { PRINCIPIOS, COMO_TRABAJAMOS } from "../data/comercial"
 
 export default function Nosotros() {
+  const root = useRef(null)
+
+  useLayoutEffect(() => {
+    const mm = gsap.matchMedia()
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap
+        .timeline({ defaults: { ease: "power3.out" } })
+        .fromTo(
+          ".no-line-inner",
+          { yPercent: 110 },
+          { yPercent: 0, duration: 1, stagger: 0.13, ease: "power4.out" }
+        )
+        .fromTo(
+          ".no-fade",
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 },
+          "-=0.45"
+        )
+    })
+    return () => mm.revert()
+  }, [])
+
   return (
-    <>
-      {/* ═══════════════════════════════════════════
-          MODULE 1 — HERO
-      ════════════════════════════════════════════ */}
-      <section className="relative min-h-[65vh] flex items-center px-4 sm:px-6 lg:px-8 pt-32 pb-20 overflow-hidden">
-        <InteractiveBackground />
-        <div className="mx-auto max-w-6xl w-full relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl"
-          >
-            <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full text-xs font-semibold tracking-widest uppercase text-blue-400 border border-blue-500/40 bg-blue-500/10 shadow-[0_0_20px_-4px_rgba(37,99,235,0.15)]">
-              <span>🚀</span>
-              NUESTRO COMPROMISO CON LAS PYMES
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1]">
-              <span className="text-white">
-                Creamos sitios web que{" "}
-              </span>
-              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                operan tu negocio
-              </span>
-              <span className="text-white">
-                , no solo que decoran internet.
-              </span>
-            </h1>
-
-            <p className="mt-6 text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl">
-              Nacimos con una misión clara: eliminar la brecha entre los sitios web estáticos inservibles y los sistemas de gestión ultra complejos. Ofrecemos herramientas digitales simples que ordenan el día a día de las empresas argentinas.
-            </p>
-          </motion.div>
+    <main ref={root} className="bg-paper text-text">
+      <section className="relative overflow-hidden pb-16 pt-28 lg:pt-36">
+        <div className="container-site">
+          <p className="no-fade kicker">Sobre Fleximy</p>
+          <h1 className="mt-6 max-w-[18ch] text-hero text-text">
+            <span className="block overflow-hidden pb-[0.08em]">
+              <span className="no-line-inner block">Creamos Fleximy para que la</span>
+            </span>
+            <span className="block overflow-hidden pb-[0.08em]">
+              <span className="no-line-inner block">tecnología se adapte a la PyME.</span>
+            </span>
+          </h1>
+          <p className="no-fade mt-6 max-w-[52ch] text-lead text-muted">
+            Muchas empresas no necesitan un sistema enorme. Necesitan ordenar lo que ya hacen,
+            reducir tareas manuales y contar con una herramienta que su equipo realmente pueda usar.
+          </p>
+          <div className="no-fade mt-8">
+            <Button href="#como-trabajamos" size="lg">
+              Conocer nuestra forma de trabajo
+              <ArrowUpRight className="size-4" />
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════
-          MODULE 2 — MANIFIESTO
-      ════════════════════════════════════════════ */}
-      <SectionWrapper>
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="relative max-w-4xl mx-auto overflow-hidden rounded-2xl border border-blue-500/20 bg-[#131b2e] p-8 sm:p-12 md:p-14"
-          style={{ boxShadow: "0 0 40px -12px rgba(37,99,235,0.10)" }}
-        >
-          <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-blue-500 to-cyan-500" />
-
-          <div className="relative z-10 space-y-8">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white tracking-tight leading-tight">
-              El problema del desarrollo web tradicional en Argentina
-            </h2>
-
-            <div className="space-y-6 text-base sm:text-lg text-slate-400 leading-relaxed">
-              <p className="pl-6 border-l-2 border-slate-700/50 italic text-slate-300">
-                "Durante años, las PyMEs pagaron fortunas por sitios web que terminaron siendo folletos digitales abandonados."
-              </p>
-
-              <p className="pl-6 border-l-2 border-slate-700/50 italic text-slate-300">
-                "Por otro lado, los sistemas de gestión tradicionales son difíciles de usar, caros y pensados para multinacionales, obligando a los dueños a manejar su negocio en decenas de planillas de Excel desordenadas."
-              </p>
-
-              <p className="pl-6 border-l-2 border-blue-500/50 italic text-white font-medium">
-                "Nosotros unificamos ambos mundos: tu presencia pública online unida a tu centro de mando operativo interno en una sola plataforma fluida."
-              </p>
-            </div>
-          </div>
-        </motion.div>
-      </SectionWrapper>
-
-      {/* ═══════════════════════════════════════════
-          MODULE 3 — 4 PILARES (2x2 Grid)
-      ════════════════════════════════════════════ */}
-      <SectionWrapper className="!pt-0">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white tracking-tight">
-            Los 4 Pilares de Nuestra Plataforma
+      <section className="border-y border-line bg-paper-bright py-20 lg:py-28">
+        <div className="container-site">
+          <p className="kicker">Nuestra razón de ser</p>
+          <h2 className="mt-4 max-w-[20ch] text-h1">
+            Entre una web estática y un sistema complejo había un espacio sin resolver
           </h2>
-        </div>
 
-        <div className="grid sm:grid-cols-2 gap-6 max-w-5xl mx-auto">
-          {PILLARS.map((pillar, i) => {
-            const Icon = pillar.icon
-            const iconColors = [
-              "bg-blue-500/15 text-blue-400 border-blue-500/30",
-              "bg-cyan-500/15 text-cyan-400 border-cyan-500/30",
-              "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-              "bg-violet-500/15 text-violet-400 border-violet-500/30",
-            ]
-            return (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group rounded-xl border border-[#1e293b] bg-[#131b2e] p-6 sm:p-8 hover:border-blue-500/20 transition-all duration-300"
-              >
-                <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 border ${iconColors[i]} group-hover:scale-110 transition-transform duration-300`}
-                >
-                  <Icon size={22} />
-                </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">
-                  {pillar.title}
-                </h3>
-                <p className="text-sm text-slate-400 leading-relaxed">
-                  {pillar.desc}
-                </p>
-              </motion.div>
-            )
-          })}
-        </div>
-      </SectionWrapper>
-
-      {/* ═══════════════════════════════════════════
-          MODULE 4 — INFRAESTRUCTURA TÉCNICA
-      ════════════════════════════════════════════ */}
-      <SectionWrapper className="!pt-0">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
-              Infraestructura Técnica
-            </h2>
-            <p className="mt-3 text-sm text-slate-400">
-              Todo el poder técnico para que no tengas que preocuparte por nada.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-3 gap-4">
-            {INFRA_BADGES.map((badge, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="flex items-center gap-3 px-5 py-4 rounded-xl border border-[#1e293b] bg-[#131b2e] hover:border-cyan-500/20 hover:bg-[#1a2540] transition-all duration-300"
-              >
-                <span className="text-lg">{badge.icon}</span>
-                <span className="text-sm font-medium text-slate-300">{badge.label}</span>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Extra infra details */}
-          <div className="mt-6 grid sm:grid-cols-3 gap-4">
-            {[
-              { label: "Tiempo de actividad", value: "99.9% Uptime SLA" },
-              { label: "Backups", value: "Automáticos diarios" },
-              { label: "Seguridad", value: "SSL / Cifrado AES-256" },
-            ].map((item, i) => (
-              <div key={i} className="text-center px-4 py-3 rounded-lg bg-slate-800/30 border border-[#1e293b]">
-                <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">{item.label}</div>
-                <div className="text-sm font-semibold text-cyan-400 mt-1">{item.value}</div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      </SectionWrapper>
-
-      {/* ═══════════════════════════════════════════
-          MODULE 5 — CTA BANNER
-      ════════════════════════════════════════════ */}
-      <section className="relative px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-        <div className="mx-auto max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#131b2e] via-[#1a2540] to-[#131b2e] border border-[#1e293b] p-8 sm:p-12 md:p-16 text-center"
-          >
-            <div className="absolute -top-20 -left-20 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl" />
-            <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl" />
-
-            <div className="relative z-10">
-              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white leading-tight">
-                ¿Querés formar parte de las empresas que ya simplificaron su operación?
-              </h2>
-              <p className="mt-4 text-base sm:text-lg text-slate-400 max-w-xl mx-auto leading-relaxed">
-                Conversemos sin compromiso sobre cómo podemos ayudarte a ordenar tu negocio.
+          <div className="mt-12 grid gap-8 lg:grid-cols-3">
+            <div className="rounded-[var(--radius-card)] border border-line bg-paper p-6 lg:p-8">
+              <p className="font-mono text-micro text-muted">por un lado</p>
+              <p className="mt-3 text-h3">Webs que muestran</p>
+              <p className="mt-3 text-small text-muted">
+                Las PyMEs invertían en sitios que mostraban información pero no ayudaban a operar.
               </p>
-              <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="https://wa.me/541111111111"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold tracking-wide text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 active:scale-[0.98]"
-                >
-                  💬 Hablar con el Equipo por WhatsApp
-                </a>
-                <a
-                  href="/demos"
-                  className="group relative inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold tracking-wide text-cyan-400 bg-slate-800/60 border border-cyan-500/30 hover:bg-slate-800/80 hover:border-cyan-400/50 transition-all duration-300 active:scale-[0.98]"
-                >
-                  🎮 Probar las Demos Interactivas
-                </a>
-              </div>
             </div>
-          </motion.div>
+            <div className="rounded-[var(--radius-card)] border border-line bg-paper p-6 lg:p-8">
+              <p className="font-mono text-micro text-muted">por el otro</p>
+              <p className="mt-3 text-h3">Sistemas que complican</p>
+              <p className="mt-3 text-small text-muted">
+                Encontraban sistemas rígidos, costosos o sobredimensionados para su realidad.
+              </p>
+            </div>
+            <div className="rounded-[var(--radius-card)] border border-line bg-ink p-6 text-text-invert lg:p-8">
+              <p className="font-mono text-micro text-text-invert/60">en el medio</p>
+              <p className="mt-3 text-h3 text-accent">Fleximy conecta ambos mundos</p>
+              <p className="mt-3 text-small text-text-invert/80">
+                Una experiencia profesional para el cliente y herramientas simples para el equipo
+                que gestiona el negocio.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-12 grid gap-10 lg:grid-cols-2">
+            <div className="border-t border-line pt-6">
+              <p className="font-mono text-micro text-muted">misión</p>
+              <p className="mt-3 text-lead">
+                Ayudar a las PyMEs a trabajar con mayor claridad mediante herramientas digitales
+                accesibles, conectadas y adaptadas a su operación.
+              </p>
+            </div>
+            <div className="border-t border-line pt-6">
+              <p className="font-mono text-micro text-muted">visión</p>
+              <p className="mt-3 text-lead">
+                Que una empresa pequeña o mediana pueda acceder a una plataforma profesional sin
+                depender de múltiples herramientas, procesos técnicos innecesarios o desarrollos
+                imposibles de sostener.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
-    </>
+
+      <section className="container-site py-20 lg:py-28">
+        <p className="kicker">Principios</p>
+        <h2 className="mt-4 max-w-[16ch] text-h1">Cómo decidimos</h2>
+        <div className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+          {PRINCIPIOS.map((p, i) => (
+            <div key={p.titulo} className="bg-paper-bright p-6 lg:p-8">
+              <p className="font-mono text-micro text-muted">{String(i + 1).padStart(2, "0")}</p>
+              <h3 className="mt-3 text-h3">{p.titulo}</h3>
+              <p className="mt-3 text-small text-muted">{p.texto}</p>
+            </div>
+          ))}
+          <div className="flex flex-col justify-between gap-4 bg-ink p-6 text-text-invert lg:p-8">
+            <p className="text-h4 text-accent">¿Cómo se nota en la práctica?</p>
+            <p className="text-small text-text-invert/75">
+              En cada proyecto hay un alcance documentado, una persona que valida y una primera
+              versión que se puede medir.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-line bg-paper-bright py-20 lg:py-28">
+        <div className="container-site grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
+          <div>
+            <p className="kicker">El equipo</p>
+            <h2 className="mt-4 text-h1">Gente responsable detrás de la plataforma</h2>
+          </div>
+          <div className="rounded-[var(--radius-card)] border border-dashed border-ink/30 bg-paper p-6 lg:p-8">
+            <p className="font-mono text-micro text-muted">sección en preparación</p>
+            <p className="mt-4 text-lead">
+              Las biografías y fotografías reales del equipo se incorporan antes de la publicación.
+              No reemplazamos esa información con perfiles ficticios.
+            </p>
+            <div className="mt-6">
+              <Button to="/contacto" variant="secondary">
+                Conocer al equipo en una reunión
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="container-site py-20 lg:py-28">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
+          <div>
+            <p className="kicker">Experiencia y respaldo</p>
+            <h2 className="mt-4 text-h1">Datos verificables, sin cifras de relleno</h2>
+          </div>
+          <div className="rounded-[var(--radius-card)] border border-line bg-paper-bright p-6 lg:p-8">
+            <p className="font-mono text-micro text-muted">pendiente de validación</p>
+            <p className="mt-4 text-lead text-muted">
+              Años de experiencia, proyectos implementados, industrias atendidas y certificaciones
+              se incorporan únicamente cuando pueden respaldarse con fuentes reales.
+            </p>
+            <ul className="mt-6 grid gap-2.5">
+              {["Años de experiencia combinada.", "Proyectos implementados.", "Industrias atendidas.", "Partners y tecnologías relevantes."].map((t) => (
+                <li key={t} className="flex items-start gap-3 text-small text-muted">
+                  <span className="mt-1 size-2 shrink-0 rounded-full bg-ink/20" />
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="como-trabajamos" className="bg-ink py-20 text-text-invert lg:py-28">
+        <div className="container-site">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div className="max-w-2xl">
+              <p className="kicker" style={{ color: "rgba(244,243,238,0.55)" }}>
+                Cómo trabajamos
+              </p>
+              <h2 className="mt-4 text-h1">Un orden simple que se cumple</h2>
+            </div>
+            <Button to="/como-funciona" variant="dark" size="lg">
+              Ver cómo funciona la implementación
+              <ArrowUpRight className="size-4" />
+            </Button>
+          </div>
+          <ol className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-line-dark sm:grid-cols-2 lg:grid-cols-3">
+            {COMO_TRABAJAMOS.map((paso, i) => (
+              <li key={paso} className="flex items-start gap-4 bg-ink-soft p-6">
+                <span className="font-mono text-micro text-accent">{String(i + 1).padStart(2, "0")}</span>
+                <span className="text-small text-text-invert/85">{paso}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="bg-ink text-text-invert">
+        <div className="container-site py-24 text-center lg:py-32">
+          <p className="kicker justify-center" style={{ color: "rgba(244,243,238,0.55)" }}>
+            Conversemos
+          </p>
+          <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">
+            Hablemos sobre la operación que querés mejorar
+          </h2>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Button to="/contacto" size="lg">
+              Conocer al equipo en una reunión
+            </Button>
+            <Button to="/soluciones" variant="secondary" size="lg">
+              Ver soluciones
+            </Button>
+          </div>
+        </div>
+      </section>
+    </main>
   )
 }

@@ -10,10 +10,6 @@ import RouteFallback from "./components/motion/RouteFallback"
 import DashboardLayout from "./components/DashboardLayout"
 
 const Home = lazy(() => import("./pages/Home"))
-const Services = lazy(() => import("./pages/Services"))
-const WhyUs = lazy(() => import("./pages/WhyUs"))
-const Blog = lazy(() => import("./pages/Blog"))
-const Contact = lazy(() => import("./pages/Contact"))
 const Soluciones = lazy(() => import("./pages/Soluciones"))
 const SolucionGastronomia = lazy(() => import("./pages/soluciones/Gastronomia"))
 const SolucionTurnos = lazy(() => import("./pages/soluciones/ServiciosTurnos"))
@@ -25,6 +21,10 @@ const SolucionTalleres = lazy(() => import("./pages/soluciones/TalleresReparacio
 const Demos = lazy(() => import("./pages/Demos"))
 const Precios = lazy(() => import("./pages/Precios"))
 const Nosotros = lazy(() => import("./pages/Nosotros"))
+const ComoFunciona = lazy(() => import("./pages/ComoFunciona"))
+const Contacto = lazy(() => import("./pages/Contacto"))
+const GraciasDiagnostico = lazy(() => import("./pages/GraciasDiagnostico"))
+const PreguntasFrecuentes = lazy(() => import("./pages/PreguntasFrecuentes"))
 const NotFound = lazy(() => import("./pages/NotFound"))
 
 const Login = lazy(() => import("./pages/Login"))
@@ -94,8 +94,6 @@ function AppContent() {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageTransition><Home /></PageTransition>} />
-          <Route path="/services" element={<PageTransition><Services /></PageTransition>} />
-          <Route path="/why-us" element={<PageTransition><WhyUs /></PageTransition>} />
           <Route path="/soluciones" element={<PageTransition><Soluciones /></PageTransition>} />
           <Route path="/soluciones/gastronomia" element={<PageTransition><SolucionGastronomia /></PageTransition>} />
           <Route path="/soluciones/servicios-turnos" element={<PageTransition><SolucionTurnos /></PageTransition>} />
@@ -105,10 +103,12 @@ function AppContent() {
           <Route path="/soluciones/educacion" element={<PageTransition><SolucionEducacion /></PageTransition>} />
           <Route path="/soluciones/talleres-reparaciones" element={<PageTransition><SolucionTalleres /></PageTransition>} />
           <Route path="/demos" element={<PageTransition><Demos /></PageTransition>} />
+          <Route path="/como-funciona" element={<PageTransition><ComoFunciona /></PageTransition>} />
           <Route path="/precios" element={<PageTransition><Precios /></PageTransition>} />
           <Route path="/nosotros" element={<PageTransition><Nosotros /></PageTransition>} />
-          <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
-          <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+          <Route path="/contacto" element={<PageTransition><Contacto /></PageTransition>} />
+          <Route path="/gracias-diagnostico" element={<PageTransition><GraciasDiagnostico /></PageTransition>} />
+          <Route path="/preguntas-frecuentes" element={<PageTransition><PreguntasFrecuentes /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>
