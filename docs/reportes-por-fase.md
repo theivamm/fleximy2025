@@ -334,7 +334,7 @@ industria funcionando con escenas simuladas y contenido alineado a los MD ✔
 
 ## Reporte — Fase 5: Demos
 
-**Estado:** Completada · **Commit:** `A-COMPLETAR` · **Criterio de cierre:** todos los botones
+**Estado:** Completada · **Commit:** `cafa955` · **Criterio de cierre:** todos los botones
 producen una acción visible ✔
 
 ### Qué se hizo
