@@ -195,12 +195,80 @@ en uso para páginas antiguas: `InteractiveBackground`, `GlassCard`, etc., hasta
 
 ---
 
+## Reporte — Fase 3: Inicio (Home)
+
+**Estado:** Completada · **Criterio de cierre:** Home nueva montada según `01-INICIO.md` sobre el
+sistema global, sin métricas inventadas, con revisión de QA visual pendiente ✔
+
+### Qué se hizo
+
+Home reconstruida de cero en `src/pages/Home.jsx`, compuesta por 11 secciones nuevas bajo
+`src/components/home/`:
+
+1. **Hero (`HomeHero.jsx`):** titular "Tu web también puede **operar** tu negocio" con reveal de
+   líneas por máscara (GSAP) y cambio de color sutil en "operar" (cyan → cyan-deep), kicker, CTAs
+   a `/contacto` (diagnóstico) y `/demos`, microcopy de confianza. Parallax suave del simulador al
+   hacer scroll (ScrollTrigger, respeta `prefers-reduced-motion` vía `gsap.matchMedia`).
+2. **Simulador Sitio/Panel (`SimuladorHero.jsx`):** escena en dos planos (web de "Panadería La
+   Espiga" a la izquierda, panel interno a la derecha) que cicla sola: una consulta entra desde la
+   web → se confirma → aparece en el panel como "Nueva" → pasa a "Asignada". Sin métricas falsas;
+   datos ilustrativos de ejemplo.
+3. **Franja de identificación (`Franja.jsx`):** banda ink — "Si hoy tu negocio depende de WhatsApp,
+   Excel y tareas manuales, Fleximy puede ayudarte" + 5 beneficios operativos.
+4. **Qué es Fleximy — dos lados (`DosLados.jsx`):** selector cliente/equipo con transición
+   sincronizada entre vista de web pública y vista de panel, listas de qué ve cada lado.
+5. **Soluciones por rubro (`SelectorIndustrias.jsx`):** selector de las 7 industrias con vista
+   previa que cambia de acento/ícono según el rubro activo y CTA a cada `/soluciones/*`.
+6. **La diferencia (`Transformacion.jsx`):** Antes (herramientas sueltas, caos) vs. Con Fleximy
+   (operación conectada) con animación de aparición al scrollear.
+7. **Cómo funciona (`Proceso.jsx`):** 4 pasos (diagnóstico gratuito, base diseñada, carga y puesta
+   en marcha, activación) sobre fondo ink + barra de progreso que avanza con el scroll.
+8. **Demo (`DemoSeccion.jsx`):** tarjeta ink "Miralo funcionar" — demos reales, no capturas; CTA a
+   `/demos` y a demo personalizada.
+9. **Confianza (`Confianza.jsx`):** 6 ítems (alojamiento y dominio, datos con respaldo, capacitación
+   incluida, soporte humano, actualizaciones, sin permanencia) + CTA a `/seguridad`.
+10. **Precios (`PrecioIntro.jsx`):** "Una base clara y un alcance definido antes de comenzar" — sin
+    número de precio publicado (pendiente de validación según `28-DECISIONES.md`), con CTA a
+    `/precios`.
+11. **FAQ breve (`FaqBreve.jsx`):** 4 preguntas en acordeón accesible (aria-expanded/controls) +
+    CTA a `/preguntas-frecuentes`.
+12. **CTA final (`CtaFinal.jsx`):** banda ink con diagnóstico gratuito + WhatsApp.
+
+Detalles del sistema: se agregó el token `--color-cyan-deep` (`#2f8f8b`) para el resaltado del
+verbo "operar" con contraste suficiente sobre papel.
+
+### Reglas respetadas
+
+- Cero métricas inventadas, cero testimonios ficticios.
+- Solo sistema global de Fase 2 (`Button`, `SectionHeader` no usado en Home, tokens, `container-site`,
+  `.kicker`, monoespaciados del sistema).
+- Se reemplazó la Home antigua (hero con parallax, `InteractiveBackground`, `ProcessSteps`,
+  `ComparisonTable`, `PlanAllInOne`, `IndustryCards`, `FAQ` viejos). Esos componentes quedan sin uso
+  de Home; se revisan para su eliminación en Fases 4+.
+
+### Validación
+
+- `npm run build` → OK (Home ~37 kB / 9,5 kB gzip, code splitting intacto).
+- `npm run lint` → sin errores; solo warnings preexistentes (ninguno en los archivos nuevos).
+- `vite preview` → HTTP 200 en `/`.
+- Clases críticas verificadas en el CSS compilado (`text-cyan-deep`, `bg-cyan/15`, `bg-accent-soft`,
+  `bg-line-dark`, `text-text-invert`, `shadow-lift`, `container-site`).
+
+### Pendientes de esta fase (acción humana / QA)
+
+- [ ] Revisión visual en desktop y mobile (composición del simulador, selector de industrias).
+- [ ] Validar ritmo de animación del hero y del ciclo del simulador.
+- [ ] Aprobación del punto de control obligatorio (paleta, tipografía, hero, ritmo, mobile) antes de
+      la Fase 4.
+
+---
+
 ## Próximas fases
 
 | Fase | Descripción | Estado |
 |---|---|---|
 | 2 | Sistema global (tokens, tipografía, header, footer, motion) | ✔ Completada |
-| 3 | Inicio (Home completa según `01-INICIO.md`) | Pendiente |
+| 3 | Inicio (Home completa según `01-INICIO.md`) | ✔ Completada |
 | 4 | Soluciones (hub + 7 industrias) | Pendiente |
 | 5 | Demos (laboratorio interactivo) | Pendiente |
 | 6 | Comercial (cómo funciona, precios, nosotros, contacto, FAQ) | Pendiente |
