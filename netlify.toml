@@ -2,11 +2,93 @@
   command = "npm run build"
   publish = "dist"
 
-# Fallback SPA: todas las rutas del router sirven index.html
+# Rutas del SPA → sirven index.html con HTTP 200 (carga directa de URLs)
 [[redirects]]
-  from = "/*"
+  from = "/"
   to = "/index.html"
   status = 200
+
+[[redirects]]
+  from = "/soluciones/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/demos"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/como-funciona"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/precios"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/nosotros"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/contacto"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/gracias-diagnostico"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/preguntas-frecuentes"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/seguridad"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/recursos"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/casos-de-uso"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacidad"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/terminos"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/login"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/dashboard/*"
+  to = "/index.html"
+  status = 200
+
+# Todo lo demás que no es una ruta del sitio ni un archivo real → HTTP 404 real
+# (404.html se genera en el build desde index.html, ver scripts/generate-404.mjs)
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
 
 # Headers de seguridad y MIME
 [[headers]]

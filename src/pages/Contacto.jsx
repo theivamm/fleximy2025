@@ -169,6 +169,7 @@ export default function Contacto() {
     e.preventDefault()
     if (!validarPaso()) return
     setEnviando(true)
+    window.sessionStorage.setItem("fleximy_rubro", form.rubro)
     setTimeout(() => navigate("/gracias-diagnostico"), 350)
   }
 
