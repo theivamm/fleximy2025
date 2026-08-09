@@ -144,11 +144,62 @@ verificadas (50+, 99.9%, 40%, 3x) ni testimonios ficticios; tocar `main`.
 
 ---
 
+## Reporte — Fase 2: Sistema global
+
+**Estado:** Completada · **Commit:** `55e7f49` · **Criterio de cierre:** componentes globales
+utilizables en desktop y mobile ✔
+
+### Qué se hizo
+
+1. **Tokens (`src/styles/tokens.css`):** paleta "minimalismo operativo" — ink `#151714`, paper
+   `#f4f3ee`, paper-bright `#fafaf7`, acento lima `#c8ff3d`, cyan `#52d6d1`, líneas, sombras,
+   radios, anchos máximos y duraciones de motion. Acentos por industria (gastro ámbar, turnos
+   cian, gestión menta, comercio violeta, inmobiliarias coral, educación azul, talleres naranja).
+2. **Tipografía y retícula (`src/styles/global.css`):** escala fluida con `clamp()` (hero, h1–h4,
+   lead, body, small, micro), `container-site`/`container-narrow` (max 1280/960), `.measure`,
+   `.kicker`, color-scheme y `prefers-reduced-motion` global.
+3. **Button system (`ui/Button.jsx`):** variantes primary (lima/ink), secondary (outline),
+   dark (ink), text; tamaños sm/md/lg con altura mínima 44 px; renderiza `Link`/`a`/`button`.
+4. **Section header (`ui/SectionHeader.jsx`):** kicker + índice + titular editorial + descripción,
+   con alineación configurable.
+5. **Datos (`data/navigation.js`, `data/industries.js`):** 7 industrias con URLs finales
+   `/soluciones/*` y navegación principal/secundaria/legal.
+6. **Header (`navigation/Header.jsx`):** fijo, sólido al scroll, mega menú de Soluciones con vista
+   previa (7 industrias + enlace al hub), CTA persistente, menú mobile accesible (Escape, aria,
+   bloqueo de scroll, cierre en navegación).
+7. **Footer (`Footer.jsx`):** propuesta resumida, navegación completa, soluciones, legal y contacto
+   sobre fondo ink.
+8. **Route loading:** `React.lazy` + `Suspense` con `RouteFallback` en todas las rutas; bundle
+   principal bajó de 1,2 MB a ~575 KB con code splitting por página.
+9. **404 real (`pages/NotFound.jsx`):** ruta catch-all con CTAs y accesos recomendados.
+
+### Eliminado (orbs/partículas/glass heredados)
+
+`BackgroundOrbs`, `ParticlesBackground`, `GlobalCTA`, `Navbar` (reemplazado por Header). Siguen
+en uso para páginas antiguas: `InteractiveBackground`, `GlassCard`, etc., hasta su refactor.
+
+### Validación
+
+- `npm run build` → OK, code splitting por ruta verificado.
+- `npm run lint` → sin errores; solo warnings preexistentes.
+- `vite preview` → HTTP 200 en Home.
+- Tokens verificados en CSS compilado (`bg-accent`, `bg-paper-bright`, `border-line`, `.kicker`,
+  `.container-site`, `.text-hero`).
+
+### Notas
+
+- Las páginas antiguas aún usan la estética dark/glass; se migran por fase (3+). El header y
+  footer nuevos ya usan el sistema global.
+- Navegación apunta a rutas finales (`/soluciones/*`, `/como-funciona`, `/precios`, `/recursos`,
+  `/contacto`) que se crean en Fases 4–6; el 404 evita pantallas rotas mientras tanto.
+
+---
+
 ## Próximas fases
 
 | Fase | Descripción | Estado |
 |---|---|---|
-| 2 | Sistema global (tokens, tipografía, header, footer, motion) | Pendiente |
+| 2 | Sistema global (tokens, tipografía, header, footer, motion) | ✔ Completada |
 | 3 | Inicio (Home completa según `01-INICIO.md`) | Pendiente |
 | 4 | Soluciones (hub + 7 industrias) | Pendiente |
 | 5 | Demos (laboratorio interactivo) | Pendiente |
