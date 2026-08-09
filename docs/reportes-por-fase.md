@@ -690,6 +690,57 @@ sitemap, robots, schema, canonicals, Open Graph, eventos y tracking de formulari
 
 ---
 
+## Reporte — Fase 10: QA final
+
+**Estado:** Completada (QA automatizado y de código; QA humano pendiente) · **Criterio de cierre:**
+build/lint limpios, 30/30 URLs respondiendo, un solo H1 por página, enlaces internos resueltos,
+marcadores de datos pendientes identificados ✔
+
+### Qué se validó
+
+1. **Build y lint:** `npm run build` → OK (942 ms, 2310 módulos; `dist/404.html` regenerado;
+   robots/sitemap/og en `dist`). `npm run lint` → **0 errores**; solo warnings preexistentes de
+   fases anteriores (ninguno en los archivos de Fases 8/9).
+2. **Cobertura de rutas:** smoke con `vite preview` → **30/30 URLs HTTP 200**: las 20 públicas
+   del sitemap + `/gracias-diagnostico` + `/login` + 4 rutas del dashboard + `/robots.txt`,
+   `/sitemap.xml`, `/og-default.svg` y una ruta inexistente (el 404 real se sirve en Netlify vía
+   redirect; localmente cae al fallback SPA).
+3. **Jerarquía:** un solo `<h1>` por página en las 12 públicas + dashboard (Contacto, Gracias,
+   Demos, CasosDeUso, ComoFunciona, NotFound, Nosotros, Precios, PreguntasFrecuentes, Seguridad,
+   Recursos, Soluciones).
+4. **Enlaces internos:** 48 `to="/…"` extraídos y contrastados contra el mapa de rutas — todos
+   resueltos (no hay rutas rotas ni rutas heredadas `/services`, `/why-us`, `/blog`).
+5. **Enlaces externos:** solo `wa.me/541111111111` (placeholder de teléfono) y `calendly.com`
+   (placeholder de agendamiento) — ambos pendientes humanos conocidos.
+6. **Accesibilidad de base:** formularios con `label` + `htmlFor` (Contacto y buscador de FAQ con
+   `sr-only`); `prefers-reduced-motion` cubierto a nivel global (`global.css` con override) y por
+   componente (GSAP `matchMedia`/`useReducedMotion`); botones con altura mínima 44 px; menú mobile
+   con Escape/aria.
+7. **SEO:** sitemap con 20 URLs indexables; noindex correctos (`/gracias-diagnostico`, `/login`,
+   `/dashboard/*`); canonical/OG/JSON-LD presentes en `dist/index.html`.
+8. **Markers de datos pendientes:** 27 apariciones de `[PLAZO VALIDADO]`, `[HORARIO REAL]`,
+   `[PRECIO …]`, `[DEFINIR]`, `[VALIDAR]`, `[RAZÓN SOCIAL]`, `[CUIT]`, `[DOMICILIO]`, `[EMAIL]`,
+   `[FECHA DE ACTUALIZACIÓN]` — todas en datos de negocio (`comercial.js`, `confianza.js`,
+   `legal.js`) y copy puntual (Contacto, Gracias, ComoFunciona), sin excepción intencional y
+   visibles para el QA humano; `Seguridad.jsx` explica la convención en su nota al pie.
+9. **Dashboard:** páginas exclusivas (`Login`, `DashboardHome`, `AiImages`, `CrearImagen`,
+   `MisDisenos`) siguen lazy en el subárbol privado; Supabase no carga en páginas públicas.
+10. **Netlify:** `netlify.toml` con redirects 200 explícitos para todas las rutas del SPA + fallback
+    `/*` → `/404.html` (404 real) + headers de seguridad.
+
+### No cubierto (requiere QA humano, según `27-CHECKLIST.md`)
+
+- Revisión visual en navegadores reales (Chrome/Firefox/Safari/Edge) y dispositivos móviles
+  (320–1920 px), tocar `dashboard` desde un teléfono real.
+- Recorrido con teclado completo (Tab order, focus visible, lectura con lector de pantalla).
+- Consola de browser en vivo (los eventos `fleximy:analytics` solo loguean en dev).
+- Lighthouse (Performance/SEO/A11y/Best Practices) y PageSpeed real.
+- Deploy en Netlify: validar 404 real, redirects, canonicals y cabeceras en producción.
+- Validar con el equipo que ningún texto garantice métricas ni plazos sin verificar.
+- Conectar el formulario a un backend real (hoy guarda en `sessionStorage` y `mailto`).
+
+---
+
 ## Próximas fases
 
 | Fase | Descripción | Estado |
@@ -702,7 +753,7 @@ sitemap, robots, schema, canonicals, Open Graph, eventos y tracking de formulari
 | 7 | Confianza y recursos (seguridad, recursos, casos de uso) | ✔ Completada |
 | 8 | Legales y estados (privacidad, términos, gracias, 404) | ✔ Completada |
 | 9 | SEO y analítica | ✔ Completada |
-| 10 | QA final | Pendiente |
+| 10 | QA final | ✔ Completada |
 
 > **Punto de aprobación obligatorio** antes de la Fase 4: paleta, tipografía, hero, dashboard CSS,
 > ritmo de animación, composición mobile, header y footer.
