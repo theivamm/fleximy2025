@@ -1,7 +1,9 @@
+import { useEffect } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import { Check, MessageCircle, Play, ArrowRight, Building2 } from "lucide-react"
 import Button from "../components/ui/Button"
 import { CONTACT } from "../data/navigation"
+import { track } from "../lib/analytics"
 
 const RUBRO_A_SOLUCION = {
   Gastronomía: { to: "/soluciones/gastronomia", label: "Ver solución de Gastronomía" },
@@ -36,6 +38,10 @@ const item = {
 export default function GraciasDiagnostico() {
   const reduce = useReducedMotion()
   const solucion = rubroSeleccionado()
+
+  useEffect(() => {
+    track("gracias_visto", { rubro: solucion ? solucion.to : null })
+  }, [solucion])
 
   const animProps = reduce
     ? { initial: false, animate: "show" }
@@ -100,7 +106,7 @@ export default function GraciasDiagnostico() {
                 </p>
               </div>
               <div className="mt-6">
-                <Button to="/demos" variant="secondary">
+                <Button to="/demos" variant="secondary" data-track="gracias_click_demo">
                   Probar demos
                   <ArrowRight className="size-4" />
                 </Button>

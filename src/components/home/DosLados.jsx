@@ -2,6 +2,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import Button from "../ui/Button"
 import { Send, Check } from "lucide-react"
+import { track } from "../../lib/analytics"
 
 const LADOS = [
   {
@@ -50,7 +51,10 @@ export default function DosLados() {
               <button
                 key={l.id}
                 aria-pressed={activo === l.id}
-                onClick={() => setActivo(l.id)}
+                onClick={() => {
+                  setActivo(l.id)
+                  track("vista_sitio_panel", { lado: l.id })
+                }}
                 className={`rounded-full px-5 py-2 text-sm font-semibold transition-colors ${
                   activo === l.id ? "bg-ink text-text-invert" : "text-muted hover:text-text"
                 }`}

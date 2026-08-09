@@ -75,10 +75,10 @@ export default function HomeHero() {
               una base para tu rubro y la adaptamos a cómo trabaja tu equipo.
             </p>
             <div className="hero-fade mt-8 flex flex-wrap gap-3">
-              <Button to="/contacto" size="lg">
+              <Button to="/contacto" size="lg" data-track="cta_diagnostico">
                 {CONTACT.ctaPrimary}
               </Button>
-              <Button to="/demos" variant="secondary" size="lg">
+              <Button to="/demos" variant="secondary" size="lg" data-track="cta_demo">
                 {CONTACT.ctaSecondary}
               </Button>
             </div>

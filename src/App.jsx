@@ -8,6 +8,7 @@ import Header from "./components/navigation/Header"
 import Footer from "./components/Footer"
 import RouteFallback from "./components/motion/RouteFallback"
 import DashboardLayout from "./components/DashboardLayout"
+import Seo from "./components/seo/Seo"
 
 const Home = lazy(() => import("./pages/Home"))
 const Soluciones = lazy(() => import("./pages/Soluciones"))
@@ -61,10 +62,7 @@ function PublicShell({ children }) {
   )
 }
 
-function AppContent() {
-  const location = useLocation()
-  const isDashboard = location.pathname.startsWith("/dashboard") || location.pathname === "/login"
-
+function renderShell(location, isDashboard) {
   if (isDashboard) {
     if (location.pathname === "/login") {
       return (
@@ -123,6 +121,18 @@ function AppContent() {
         </Routes>
       </AnimatePresence>
     </PublicShell>
+  )
+}
+
+function AppContent() {
+  const location = useLocation()
+  const isDashboard = location.pathname.startsWith("/dashboard") || location.pathname === "/login"
+
+  return (
+    <>
+      <Seo />
+      {renderShell(location, isDashboard)}
+    </>
   )
 }
 

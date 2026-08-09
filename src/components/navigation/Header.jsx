@@ -173,6 +173,7 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <Link
               to="/contacto"
+              data-track="cta_diagnostico"
               className="hidden lg:inline-flex h-11 items-center gap-2 px-5 rounded-[var(--radius-btn)] bg-accent text-ink text-sm font-semibold transition-colors hover:bg-[color-mix(in_srgb,var(--color-accent)_85%,white)]"
             >
               {CONTACT.ctaPrimary}
@@ -260,6 +261,7 @@ export default function Header() {
 
               <Link
                 to="/contacto"
+                data-track="cta_diagnostico"
                 className="mt-3 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[var(--radius-btn)] bg-accent text-ink text-sm font-semibold"
               >
                 {CONTACT.ctaPrimary}

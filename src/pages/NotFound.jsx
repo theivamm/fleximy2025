@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import { ArrowLeft, ArrowRight, PlugZap } from "lucide-react"
+import { track } from "../lib/analytics"
 
 const ACCESOS = [
   { label: "Probar demos", to: "/demos" },
@@ -11,6 +12,13 @@ const ACCESOS = [
 
 export default function NotFound() {
   const [reconectado, setReconectado] = useState(false)
+  const reportado = useRef(false)
+
+  useEffect(() => {
+    if (reportado.current) return
+    reportado.current = true
+    track("404_visto", { url: window.location.pathname, origen: document.referrer })
+  }, [])
 
   const atender = (activo) => () => setReconectado(activo)
 
@@ -109,6 +117,8 @@ export default function NotFound() {
       <div className="mt-10 flex flex-wrap gap-3">
         <Link
           to="/"
+          data-track="404_cta"
+          data-track-props='{"cta":"volver_al_inicio"}'
           className={`inline-flex h-12 items-center gap-2 rounded-[var(--radius-btn)] px-6 text-sm font-semibold transition-all ${
             reconectado ? "bg-accent text-ink shadow-lift" : "bg-accent text-ink"
           }`}
@@ -118,6 +128,8 @@ export default function NotFound() {
         </Link>
         <Link
           to="/soluciones"
+          data-track="404_cta"
+          data-track-props='{"cta":"ver_soluciones"}'
           className="inline-flex h-12 items-center gap-2 rounded-[var(--radius-btn)] border border-line bg-paper-bright px-6 text-sm font-semibold text-text transition-colors hover:border-ink/30"
         >
           Ver soluciones
@@ -127,7 +139,13 @@ export default function NotFound() {
 
       <nav className="mt-14 flex flex-wrap gap-x-6 gap-y-2" aria-label="Accesos recomendados">
         {ACCESOS.map((item) => (
-          <Link key={item.label} to={item.to} className="text-small text-muted hover:text-text">
+          <Link
+            key={item.label}
+            to={item.to}
+            data-track="404_cta"
+            data-track-props={`{"cta":"${item.label}"}`}
+            className="text-small text-muted hover:text-text"
+          >
             {item.label}
           </Link>
         ))}

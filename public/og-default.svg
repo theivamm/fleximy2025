@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#151714"/>
+  <rect x="60" y="60" width="1080" height="510" rx="24" fill="none" stroke="#2a2d27" stroke-width="2"/>
+  <circle cx="1060" cy="140" r="90" fill="#c8ff3d"/>
+  <circle cx="1060" cy="140" r="46" fill="#151714"/>
+  <rect x="80" y="470" width="120" height="6" rx="3" fill="#c8ff3d"/>
+  <text x="90" y="430" font-family="Inter, Arial, sans-serif" font-size="96" font-weight="700" fill="#f4f3ee">Fleximy</text>
+  <text x="90" y="470" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="500" fill="#6b6f64">Tu web también puede operar tu negocio</text>
+</svg>

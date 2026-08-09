@@ -4,6 +4,7 @@ import { ArrowUpRight, MonitorPlay } from "lucide-react"
 import Button from "../components/ui/Button"
 import DemoLab from "../components/demos/DemoLab"
 import { DEMOS, demoById } from "../data/demos"
+import { track } from "../lib/analytics"
 
 const ACCENTS = {
   gastronomia: "var(--color-acc-gastro)",
@@ -47,6 +48,7 @@ export default function Demos() {
   }, [])
 
   const abrir = (id) => {
+    if (id !== "todas") track("demo_iniciada", { demo: id })
     setFiltro(id)
     requestAnimationFrame(() => labRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }))
   }

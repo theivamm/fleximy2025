@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { ArrowRight, ArrowLeft, MessageCircle, CalendarDays, Mail, Check } from "lucide-react"
 import Button from "../components/ui/Button"
 import { CONTACT } from "../data/navigation"
+import { track } from "../lib/analytics"
 import {
   RUBROS,
   NECESIDADES,
@@ -81,6 +82,7 @@ export default function Contacto() {
   const [paso, setPaso] = useState(1)
   const [errores, setErrores] = useState({})
   const [enviando, setEnviando] = useState(false)
+  const iniciado = useRef(false)
 
   const [form, setForm] = useState({
     nombre: "",
@@ -157,7 +159,13 @@ export default function Contacto() {
   }
 
   const siguiente = () => {
-    if (validarPaso()) setPaso((p) => Math.min(p + 1, TOTAL_STEPS))
+    if (validarPaso()) {
+      if (!iniciado.current) {
+        iniciado.current = true
+        track("formulario_iniciado")
+      }
+      setPaso((p) => Math.min(p + 1, TOTAL_STEPS))
+    }
   }
 
   const atras = () => {
@@ -170,6 +178,7 @@ export default function Contacto() {
     if (!validarPaso()) return
     setEnviando(true)
     window.sessionStorage.setItem("fleximy_rubro", form.rubro)
+    track("formulario_enviado", { rubro: form.rubro, necesidad: form.necesidad })
     setTimeout(() => navigate("/gracias-diagnostico"), 350)
   }
 
@@ -274,7 +283,15 @@ export default function Contacto() {
                   {paso === 2 && (
                     <>
                       <Campo id="campo-rubro" label="Rubro" required error={errores.rubro}>
-                        <ChipGroup name="rubro" options={RUBROS} value={form.rubro} onChange={(v) => setForm((f) => ({ ...f, rubro: v }))} />
+                        <ChipGroup
+                          name="rubro"
+                          options={RUBROS}
+                          value={form.rubro}
+                          onChange={(v) => {
+                            setForm((f) => ({ ...f, rubro: v }))
+                            if (v) track("rubro_seleccionado", { rubro: v })
+                          }}
+                        />
                       </Campo>
                       <Campo id="campo-necesidad" label="Principal necesidad" required error={errores.necesidad}>
                         <ChipGroup name="necesidad" options={NECESIDADES} value={form.necesidad} onChange={(v) => setForm((f) => ({ ...f, necesidad: v }))} />

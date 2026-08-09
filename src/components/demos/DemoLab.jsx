@@ -8,6 +8,7 @@ import ComercioScene from "../soluciones/scenes/ComercioScene"
 import InmobScene from "../soluciones/scenes/InmobScene"
 import EducacionScene from "../soluciones/scenes/EducacionScene"
 import TalleresScene from "../soluciones/scenes/TalleresScene"
+import { track } from "../../lib/analytics"
 
 const SCENES = {
   gastronomia: GastroScene,
@@ -34,11 +35,19 @@ export default function DemoLab({ demo, onExit }) {
   const [acciones, setAcciones] = useState([])
   const [guiado, setGuiado] = useState(false)
   const [guiadoPaso, setGuiadoPaso] = useState(0)
+  const completada = useRef(false)
 
   const badge = ESTADO_BADGE[demo.estado] || ESTADO_BADGE.proximamente
   const pasos = demo.modal ? (modo === "cliente" ? demo.cliente.pasos : demo.equipo.pasos) : []
   const hechos = pasos.filter(([id]) => acciones.includes(id)).length
   const progreso = pasos.length ? Math.round((hechos / pasos.length) * 100) : 0
+
+  useLayoutEffect(() => {
+    if (progreso >= 100 && !completada.current && pasos.length) {
+      completada.current = true
+      track("demo_completada", { demo: demo.id })
+    }
+  }, [progreso, pasos.length, demo.id])
 
   const pasoGuia = demo.guiado ? demo.guia[guiadoPaso] : null
 
@@ -51,6 +60,7 @@ export default function DemoLab({ demo, onExit }) {
     setAcciones([])
     setGuiadoPaso(0)
     setModo("cliente")
+    completada.current = false
   }
 
   const salir = () => {
@@ -107,7 +117,10 @@ export default function DemoLab({ demo, onExit }) {
               {["cliente", "equipo"].map((m) => (
                 <button
                   key={m}
-                  onClick={() => setModo(m)}
+                  onClick={() => {
+                    setModo(m)
+                    track("vista_sitio_panel", { modo: m, demo: demo.id })
+                  }}
                   role="tab"
                   aria-selected={modo === m}
                   className={`rounded-full px-3 py-1.5 font-mono text-micro transition-colors ${

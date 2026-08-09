@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /dashboard
+Disallow: /gracias-diagnostico
+
+Sitemap: https://fleximy2025.netlify.app/sitemap.xml

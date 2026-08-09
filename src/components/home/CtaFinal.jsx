@@ -16,7 +16,7 @@ export default function CtaFinal() {
           Fleximy es un buen punto de partida.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button to="/contacto" size="lg">
+          <Button to="/contacto" size="lg" data-track="cta_diagnostico">
             {CONTACT.ctaPrimary}
           </Button>
           <Button href={CONTACT.whatsapp} variant="secondary" size="lg">
