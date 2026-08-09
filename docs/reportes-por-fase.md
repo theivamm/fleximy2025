@@ -398,6 +398,93 @@ producen una acción visible ✔
 
 ---
 
+## Reporte — Fase 6: Comercial
+
+**Estado:** Completada · **Criterio de cierre:** Cómo funciona, Precios, Nosotros, Contacto, FAQ
+montadas sobre el sistema global, sin precios ni métricas inventados ✔
+
+### Qué se hizo
+
+1. **Datos (`src/data/comercial.js`):** etapas de `11-COMO-FUNCIONA.md` (6 con "qué
+   hacemos/acordamos/configuramos" + "qué recibís" + notas), factores de plazo, responsabilidades
+   Fleximy/Cliente, `PLANES` (3 niveles), incluidos/costos adicionales, comparación con mensaje,
+   `PRECIO_FAQ`, `PRINCIPIOS`, `COMO_TRABAJAMOS`, `FAQ_CATEGORIAS` (7 categorías), opciones de
+   contacto (rubros, necesidades, usuarios, plazos, inversión, pasos posteriores, expectativas).
+2. **Acordeón reutilizable (`components/comercial/Accordion.jsx`):** acordeón accesible con
+   animación de altura controlada, usado por Precios.
+3. **Cómo funciona (`pages/ComoFunciona.jsx`):** hero GSAP, principio de trabajo, 6 etapas en
+   columna editorial + **escena sticky en desktop** que arma el sistema capa por capa según la
+   etapa en vista (IntersectionObserver; capas: mapa de proceso → módulos → identidad → revisión →
+   publicación → soporte; en mobile las etapas quedan como capítulos sin pin), tiempos con
+   `[PLAZO VALIDADO]`, responsabilidades sobre ink y CTA final.
+4. **Precios (`pages/Precios.jsx`, reescrito):** hero, tres planes "de la misma arquitectura" sin
+   badges "más popular", con placeholders `[PRECIO ESENCIAL]` / `[PRECIO OPERACIÓN]` /
+   "Cotización personalizada" y nota de que el monto se confirma en el diagnóstico (no se publica
+   un precio inventado), "toda suscripción incluye" vs "se cotiza por separado", comparación
+   realista (tabla con encabezado sticky), mensaje de ahorro, FAQ de precio con `[RESPUESTA
+   CONTRACTUAL VALIDADA]` y CTA final. **Eliminado** el pricing falso del legacy ($150.000 ARS/mes,
+   tabla de ahorro inventada, "sin costos de setup", "sin permanencia" sin validar).
+5. **Nosotros (`pages/Nosotros.jsx`, reescrito):** manifiesto, razón de ser (web estática ↔
+   sistema complejo → Fleximy), misión y visión, 5 principios en composición de grilla asimétrica,
+   **sección Equipo en borrador explícito** (sin identidades ficticias), experiencia y respaldo
+   "pendiente de validación" (sin contadores de relleno; se eliminó el "99.9% uptime" del legacy),
+   cómo trabajamos (6 pasos) y CTA final.
+6. **Contacto y diagnóstico (`pages/Contacto.jsx`):** formulario multipaso (Identificación →
+   Situación → Detalle opcional) con barra de progreso sobria, campos obligatorios según el MD
+   (sin CUIT/facturación), campos opcionales progresivos, validación con mensajes específicos y
+   foco dirigido al primer error, resumen dinámico a la derecha con "módulos posibles" por rubro
+   (con aclaración "no es una propuesta definitiva"), expectativas, "qué sucede después" y canales
+   alternativos (WhatsApp real vía `CONTACT`, reunión y email como pendientes). El envío redirige a
+   `/gracias-diagnostico`.
+7. **Gracias (`pages/GraciasDiagnostico.jsx`):** página posterior obligatoria con mensaje
+   `[PLAZO VALIDADO]` y botones a Demos, Soluciones y WhatsApp.
+8. **Preguntas frecuentes (`pages/PreguntasFrecuentes.jsx`):** buscador con resaltado de
+   coincidencias, filtros por categoría + índice lateral sticky, acordeones accesibles que
+   actualizan la URL con ancla compartible (`#pregunta-<id>`), "más consultadas" destacadas por
+   tipografía y CTA final (Consultar con el equipo → `/contacto`, WhatsApp como secundario).
+9. **Rutas (`src/App.jsx`):** agregadas `/como-funciona`, `/contacto`, `/gracias-diagnostico`,
+   `/preguntas-frecuentes`; `/precios` y `/nosotros` pasan a servir las páginas nuevas. Se
+   **eliminaron** las páginas huérfanas `Services.jsx`, `WhyUs.jsx`, `Blog.jsx` y `Contact.jsx`
+   (rutas `/services`, `/why-us`, `/blog`, `/contact` → caen en el 404). Verificado que ninguna
+   parte del sitio las referenciaba.
+
+### Reglas respetadas
+
+- Cero métricas inventadas, cero precios falsos, cero testimonios ficticios.
+- Equipo y experiencia de Nosotros sin identidades ni números ficticios (borrador explícito).
+- Precios con placeholders `[PRECIO ESENCIAL]`/`[PRECIO OPERACIÓN]` y nota de validación, según la
+  decisión de `12-PRECIOS.md` y `28-DECISIONES.md`; no se comunican "sin costo inicial" ni
+  "sin permanencia" (pendientes de validación contractual).
+- Formulario sin campos sensibles (sin CUIT/facturación) y sin chatbots falsos; HTML nativo.
+- Todos los botones producen una acción visible o son información explícita (la reunión no es un
+  enlace muerto: se muestra como dato con "agenda por WhatsApp o email").
+- GSAP acotado al hero en estas páginas; la escena de Cómo funciona usa IntersectionObserver
+  (sin `pin` frágil), respetando `prefers-reduced-motion` en los reveals.
+
+### Validación
+
+- `npm run build` → OK; páginas nuevas como chunks lazy (`ComoFunciona` 3,4 kB gzip,
+  `Precios` 2,6 kB, `Nosotros` 2,6 kB, `Contacto` 4,9 kB, `PreguntasFrecuentes` 2,9 kB,
+  `GraciasDiagnostico` 0,65 kB).
+- `npm run lint` → sin errores; sin warnings en los archivos nuevos.
+- `vite preview` → HTTP 200 en `/`, `/soluciones`, `/demos`, `/como-funciona`, `/precios`,
+  `/nosotros`, `/contacto`, `/gracias-diagnostico`, `/preguntas-frecuentes`.
+- Verificado que ninguna página huérfana eliminada sigue siendo importada.
+
+### Pendientes de esta fase (acción humana / QA)
+
+- [ ] Validar valores de precios (`[PRECIO ESENCIAL]`, `[PRECIO OPERACIÓN]`) y política de
+      actualización/permanencia/implementación antes de publicar números.
+- [ ] Validar plazo real de implementación (`[PLAZO VALIDADO]`) y reemplazar en Cómo funciona,
+      Gracias y FAQ.
+- [ ] Completar Equipo (fotografías y biografías reales) y datos verificables de experiencia.
+- [ ] Conectar el formulario a backend/email y la agenda de reuniones con disponibilidad real.
+- [ ] Consistencia pendiente en Home (Fase 3): `PrecioIntro` aún afirma "sin permanencia" sin
+      validación contractual; revisar junto con la política de precios.
+- [ ] Enlaces a `/seguridad`, `/recursos`, `/privacidad`, `/terminos` se completan en Fases 7 y 8.
+
+---
+
 ## Próximas fases
 
 | Fase | Descripción | Estado |
@@ -406,7 +493,7 @@ producen una acción visible ✔
 | 3 | Inicio (Home completa según `01-INICIO.md`) | ✔ Completada |
 | 4 | Soluciones (hub + 7 industrias) | ✔ Completada |
 | 5 | Demos (laboratorio interactivo) | ✔ Completada |
-| 6 | Comercial (cómo funciona, precios, nosotros, contacto, FAQ) | Pendiente |
+| 6 | Comercial (cómo funciona, precios, nosotros, contacto, FAQ) | ✔ Completada |
 | 7 | Confianza y recursos (seguridad, recursos, casos de uso) | Pendiente |
 | 8 | Legales y estados (privacidad, términos, gracias, 404) | Pendiente |
 | 9 | SEO y analítica | Pendiente |
