@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { ArrowRight } from "lucide-react"
 import { NAV, CONTACT } from "../data/navigation"
 import { INDUSTRIES } from "../data/industries"
-import logoSvg from "../assets/logo-fleximy.svg"
+import logoSvg from "../assets/logo-fleximy.svg?raw"
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -13,10 +13,16 @@ export default function Footer() {
         <div className="grid gap-12 lg:gap-8 lg:grid-cols-12">
           {/* Marca */}
           <div className="lg:col-span-4 flex flex-col gap-6">
-            <img src={logoSvg} alt="Fleximy" className="h-9 w-auto" />
-            <p className="text-h4 max-w-[20ch] text-text-invert">
-              Tu web también puede operar tu negocio.
-            </p>
+            <div className="flex items-center gap-4">
+              <span
+                aria-hidden="true"
+                dangerouslySetInnerHTML={{ __html: logoSvg }}
+                className="block h-9 w-auto shrink-0 text-text-invert [&>svg]:block [&>svg]:h-full [&>svg]:w-auto"
+              />
+              <p className="text-h4 text-text-invert">
+                Tu web también puede operar tu negocio.
+              </p>
+            </div>
             <p className="text-small text-text-invert/60 measure-narrow">
               Plataforma digital para PyMEs que integra un sitio web profesional con un panel
               de gestión adaptado a la operación de cada negocio.

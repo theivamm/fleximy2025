@@ -4,12 +4,16 @@ import { AnimatePresence, motion } from "framer-motion"
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react"
 import { NAV, CONTACT } from "../../data/navigation"
 import { INDUSTRIES } from "../../data/industries"
-import logoSvg from "../../assets/logo-fleximy.svg"
+import logoSvg from "../../assets/logo-fleximy.svg?raw"
 
 function Logo() {
   return (
-    <Link to="/" aria-label="Fleximy — Inicio" className="flex items-center shrink-0">
-      <img src={logoSvg} alt="" className="h-8 md:h-9 w-auto" />
+    <Link to="/" aria-label="Fleximy — Inicio" className="flex items-center shrink-0 text-ink">
+      <span
+        aria-hidden="true"
+        dangerouslySetInnerHTML={{ __html: logoSvg }}
+        className="block h-8 md:h-9 w-auto [&>svg]:block [&>svg]:h-full [&>svg]:w-auto"
+      />
     </Link>
   )
 }
