@@ -57,7 +57,10 @@ export default function Proceso() {
   }, [])
 
   return (
-    <section className="relative overflow-hidden bg-night py-24 text-on-night lg:py-32">
+    <section
+      data-header-theme="dark"
+      className="relative overflow-hidden bg-gradient-night py-16 text-on-night lg:py-24"
+    >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 grid-pattern-dark opacity-40"
@@ -68,7 +71,7 @@ export default function Proceso() {
             <p className="kicker" style={{ color: "rgba(246,247,255,0.55)" }}>
               Cómo funciona
             </p>
-            <h2 className="mt-5 text-h1">
+            <h2 className="mt-4 text-h1">
               De la primera conversación a tu{" "}
               <span className="text-primary-on-dark">plataforma activa</span>
             </h2>
@@ -80,10 +83,13 @@ export default function Proceso() {
 
         <div
           ref={ref}
-          className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-outline-night bg-outline-night lg:grid-cols-4"
+          className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-outline-night bg-outline-night lg:grid-cols-4"
         >
           {PASOS.map((paso) => (
-            <div key={paso.num} className="flex flex-col gap-4 bg-night-elevated p-6 lg:p-8">
+            <div
+              key={paso.num}
+              className="flex flex-col gap-4 bg-gradient-night-elevated p-6 lg:p-7"
+            >
               <span className="font-mono text-micro text-secondary">{paso.num}</span>
               <h3 className="text-h4">{paso.titulo}</h3>
               <p className="text-small text-on-night/65">{paso.detalle}</p>
@@ -96,7 +102,7 @@ export default function Proceso() {
           ))}
         </div>
 
-        <div className="mt-6 flex items-center gap-3">
+        <div className="mt-5 flex items-center gap-3">
           <div className="relative h-1 flex-1 rounded-full bg-night-mid">
             <div
               ref={markRef}

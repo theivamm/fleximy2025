@@ -36,12 +36,12 @@ const ITEMS = [
 
 export default function Confianza() {
   return (
-    <section className="bg-bg-primary py-24 lg:py-32">
+    <section className="relative bg-bg-secondary/50 py-16 lg:py-24">
       <div className="container-site">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
             <p className="kicker">Confianza</p>
-            <h2 className="mt-5 text-h1">
+            <h2 className="mt-4 text-h1">
               Tecnología administrada. <span className="text-primary">Acompañamiento humano.</span>
             </h2>
           </div>
@@ -50,15 +50,15 @@ export default function Confianza() {
           </Button>
         </div>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {ITEMS.map((item) => {
             const Icon = item.icon
             return (
               <div
                 key={item.titulo}
-                className="rounded-2xl border border-outline bg-surface p-6 shadow-[var(--shadow-soft)]"
+                className="group rounded-2xl border border-outline bg-gradient-surface p-6 shadow-[var(--shadow-soft)] transition-all duration-[var(--motion-base)] hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)]"
               >
-                <span className="grid size-9 place-items-center rounded-lg bg-primary-soft text-primary-deep">
+                <span className="grid size-10 place-items-center rounded-xl bg-gradient-primary-soft text-primary-deep transition-transform duration-[var(--motion-base)] group-hover:scale-110">
                   <Icon className="size-4" />
                 </span>
                 <h3 className="mt-4 text-h4 text-ink-primary">{item.titulo}</h3>

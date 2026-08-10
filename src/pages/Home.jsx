@@ -12,7 +12,7 @@ import CtaFinal from "../components/home/CtaFinal"
 
 export default function Home() {
   return (
-    <main className="bg-bg-primary text-ink-primary">
+    <main className="bg-gradient-page text-ink-primary">
       <HomeHero />
       <Franja />
       <ViajeConsulta />

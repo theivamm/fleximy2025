@@ -18,29 +18,29 @@ export default function HomeHero() {
       tl.fromTo(
         ".hero-line-inner",
         { yPercent: 112 },
-        { yPercent: 0, duration: 1.05, stagger: 0.12, ease: "power4.out" }
+        { yPercent: 0, duration: 0.6, stagger: 0.08, ease: "power4.out" }
       )
         .fromTo(
           ".hero-em",
-          { backgroundSize: "0% 0.2em" },
-          { backgroundSize: "100% 0.2em", duration: 0.7, ease: "power2.out" },
-          "-=0.45"
+          { backgroundSize: "0% 0.24em" },
+          { backgroundSize: "100% 0.24em", duration: 0.42, ease: "power2.out" },
+          "-=0.32"
         )
         .fromTo(
           ".hero-fade",
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.7, stagger: 0.09 },
-          "-=0.5"
+          { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.45, stagger: 0.06 },
+          "-=0.38"
         )
         .fromTo(
           ".hero-stage",
-          { opacity: 0, y: 46 },
-          { opacity: 1, y: 0, duration: 0.9 },
-          "-=0.5"
+          { opacity: 0, y: 34 },
+          { opacity: 1, y: 0, duration: 0.65 },
+          "-=0.3"
         )
 
       gsap.to(".hero-stage", {
-        yPercent: 4,
+        yPercent: 3,
         ease: "none",
         scrollTrigger: {
           trigger: root.current,
@@ -55,34 +55,42 @@ export default function HomeHero() {
   }, [])
 
   return (
-    <section ref={root} className="relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
+    <section
+      ref={root}
+      className="relative overflow-hidden pt-24 pb-16 md:pt-28 md:pb-20 lg:pt-36 lg:pb-24"
+    >
+      {/* Atmósfera del hero */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-x-0 top-0 h-[70vh] bg-gradient-to-b from-bg-secondary via-transparent to-transparent" />
-        <div className="absolute inset-0 grid-pattern opacity-60 [mask-image:linear-gradient(to_bottom,black,transparent_70%)]" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 size-[52rem] rounded-full bg-primary-soft/70 blur-3xl" />
+        <div className="absolute top-24 -right-40 size-[32rem] rounded-full bg-secondary-soft/60 blur-3xl" />
+        <div className="absolute inset-x-0 top-0 h-[62vh] bg-gradient-to-b from-surface/70 via-transparent to-transparent" />
+        <div className="absolute inset-0 grid-pattern opacity-50 [mask-image:linear-gradient(to_bottom,black,transparent_72%)]" />
       </div>
 
       <div className="container-site">
         <p className="kicker">Fleximy — Sitio web operativo para PyMEs</p>
 
-        <h1 className="mt-6 text-hero text-ink-primary">
-          <span className="block overflow-hidden pb-[0.08em]">
+        <h1 className="mt-5 text-hero text-ink-primary">
+          <span className="block overflow-hidden pb-[0.14em]">
             <span className="hero-line-inner block">Tu web también</span>
           </span>
-          <span className="block overflow-hidden pb-[0.1em]">
-            <span className="hero-line-inner block">puede <em className="hero-em not-italic text-primary">operar</em></span>
+          <span className="block overflow-hidden pb-[0.16em]">
+            <span className="hero-line-inner block">
+              puede <em className="hero-em not-italic text-primary">operar</em>
+            </span>
           </span>
-          <span className="block overflow-hidden pb-[0.08em]">
+          <span className="block overflow-hidden pb-[0.14em]">
             <span className="hero-line-inner block">tu negocio.</span>
           </span>
         </h1>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+        <div className="mt-7 grid gap-9 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
             <p className="hero-fade max-w-[52ch] text-lead text-ink-secondary">
               Cada consulta que entra por tu web se estructura sola: se registra, se clasifica y
               llega ordenada a tu panel, lista para responder y convertir.
             </p>
-            <div className="hero-fade mt-8 flex flex-wrap gap-3">
+            <div className="hero-fade mt-6 flex flex-wrap gap-3">
               <Button to="/contacto" size="lg" data-track="cta_diagnostico">
                 {CONTACT.ctaPrimary}
               </Button>
@@ -102,7 +110,7 @@ export default function HomeHero() {
               { n: "3", t: "responde en el panel" },
             ].map((s) => (
               <span key={s.n} className="flex items-center gap-2.5">
-                <span className="grid size-6 place-items-center rounded-full border border-outline-strong font-mono text-micro text-ink-primary">
+                <span className="grid size-6 place-items-center rounded-full border border-outline-strong bg-surface font-mono text-micro text-ink-primary">
                   {s.n}
                 </span>
                 <span className="font-mono text-micro text-ink-secondary">{s.t}</span>
@@ -111,13 +119,17 @@ export default function HomeHero() {
           </div>
         </div>
 
-        <div className="hero-stage mt-14 lg:mt-16">
-          <div className="flex items-center gap-4">
-            <span className="font-mono text-micro text-ink-muted">escenario · el viaje de una consulta</span>
-            <span aria-hidden="true" className="h-px flex-1 bg-outline" />
-          </div>
-          <div className="mt-5">
-            <SistemaVivo />
+        <div className="hero-stage mt-12 lg:mt-14">
+          <div className="relative rounded-[calc(var(--radius-card)*1.15)] bg-gradient-surface p-5 ring-1 ring-outline sm:p-7">
+            <div className="flex items-center gap-4">
+              <span className="font-mono text-micro text-ink-muted">
+                escenario · el viaje de una consulta
+              </span>
+              <span aria-hidden="true" className="h-px flex-1 bg-gradient-to-r from-outline to-transparent" />
+            </div>
+            <div className="mt-4">
+              <SistemaVivo />
+            </div>
           </div>
         </div>
       </div>

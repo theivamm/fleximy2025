@@ -6,6 +6,8 @@ import { NAV, CONTACT } from "../../data/navigation"
 import { INDUSTRIES } from "../../data/industries"
 import logoSvg from "../../assets/logo-fleximy.svg?raw"
 
+const DARK_SELECTOR = "[data-header-theme='dark']"
+
 function Logo({ invert = false }) {
   return (
     <Link to="/" aria-label="Fleximy — Inicio" className="flex items-center shrink-0">
@@ -27,7 +29,7 @@ function MegaMenu({ onClose }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 8 }}
       transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[44rem] max-w-[calc(100vw-2rem)] rounded-2xl bg-surface border border-outline shadow-[var(--shadow-lift)] overflow-hidden"
+      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[44rem] max-w-[calc(100vw-2rem)] rounded-2xl bg-gradient-surface border border-outline shadow-[var(--shadow-lift)] overflow-hidden"
     >
       <div className="grid grid-cols-2 gap-1 p-2">
         {INDUSTRIES.map((industry) => (
@@ -43,9 +45,7 @@ function MegaMenu({ onClose }) {
               style={{ backgroundColor: industry.accent }}
             />
             <span className="flex flex-col gap-0.5">
-              <span className="text-sm font-semibold text-ink-primary group-hover:text-ink-primary">
-                {industry.label}
-              </span>
+              <span className="text-sm font-semibold text-ink-primary">{industry.label}</span>
               <span className="text-xs text-ink-muted group-hover:text-ink-secondary">
                 {industry.tagline}
               </span>
@@ -61,7 +61,7 @@ function MegaMenu({ onClose }) {
           className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-primary hover:text-primary transition-colors"
         >
           Ver todas las soluciones
-          <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+          <ArrowRight size={16} />
         </Link>
       </div>
     </motion.div>
@@ -70,18 +70,40 @@ function MegaMenu({ onClose }) {
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
+  const [dark, setDark] = useState(false)
   const [megaOpen, setMegaOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileSolucionesOpen, setMobileSolucionesOpen] = useState(false)
   const location = useLocation()
   const megaTimeout = useRef(null)
+  const headerRef = useRef(null)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => setScrolled(window.scrollY > 8)
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
+
+  useEffect(() => {
+    setDark(false)
+    const darkSections = document.querySelectorAll(DARK_SELECTOR)
+    if (darkSections.length === 0) return
+    const band = headerRef.current?.offsetHeight ?? 80
+    const onObserve = (entries) => {
+      setDark(
+        entries.some(
+          (e) =>
+            e.isIntersecting &&
+            e.boundingClientRect.top <= band &&
+            e.boundingClientRect.bottom > 0
+        )
+      )
+    }
+    const io = new IntersectionObserver(onObserve, { rootMargin: "0px" })
+    darkSections.forEach((s) => io.observe(s))
+    return () => io.disconnect()
+  }, [location.pathname])
 
   useEffect(() => {
     setMobileOpen(false)
@@ -117,17 +139,22 @@ export default function Header() {
 
   const isActive = (to) => location.pathname === to || location.pathname.startsWith(to + "/")
 
+  const effectiveDark = dark && !mobileOpen
+
+  const barBg = scrolled || mobileOpen || megaOpen
+    ? effectiveDark
+      ? "bg-night/85 backdrop-blur-xl border-b border-outline-night"
+      : "bg-surface/85 backdrop-blur-xl border-b border-outline"
+    : "bg-transparent border-b border-transparent"
+
+  const navInk = effectiveDark ? "text-on-night/70 hover:text-on-night" : "text-ink-muted hover:text-ink-primary"
+  const navActive = effectiveDark ? "text-on-night" : "text-ink-primary"
+
   return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-[var(--motion-base)] ${
-        scrolled || mobileOpen
-          ? "bg-surface/85 backdrop-blur-xl border-b border-outline"
-          : "bg-transparent border-b border-transparent"
-      }`}
-    >
+    <header ref={headerRef} className={`fixed top-0 inset-x-0 z-50 transition-all duration-[var(--motion-base)] ${barBg}`}>
       <div className="container-site">
         <div className="flex items-center justify-between h-16 md:h-[4.5rem]">
-          <Logo />
+          <Logo invert={effectiveDark} />
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-1" aria-label="Principal">
@@ -140,9 +167,7 @@ export default function Header() {
                     aria-haspopup="true"
                     onFocus={openMega}
                     className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      megaOpen || isActive("/soluciones")
-                        ? "text-ink-primary"
-                        : "text-ink-muted hover:text-ink-primary"
+                      megaOpen || isActive("/soluciones") ? navActive : navInk
                     }`}
                   >
                     {item.label}
@@ -160,7 +185,7 @@ export default function Header() {
                   key={item.label}
                   to={item.to}
                   className={`group relative px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    isActive(item.to) ? "text-ink-primary" : "text-ink-muted hover:text-ink-primary"
+                    isActive(item.to) ? navActive : navInk
                   }`}
                 >
                   {item.label}
@@ -191,7 +216,11 @@ export default function Header() {
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
               aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
-              className="lg:hidden grid place-items-center w-11 h-11 rounded-xl border border-outline text-ink-primary bg-surface/60"
+              className={`lg:hidden grid place-items-center w-11 h-11 rounded-xl border transition-colors ${
+                effectiveDark
+                  ? "border-outline-night text-on-night bg-night/40"
+                  : "border-outline text-ink-primary bg-surface/60"
+              }`}
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -208,7 +237,7 @@ export default function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:hidden overflow-hidden bg-surface border-t border-outline"
+            className="lg:hidden overflow-hidden bg-gradient-surface border-t border-outline"
           >
             <nav className="container-site py-4 flex flex-col gap-1" aria-label="Principal mobile">
               <button

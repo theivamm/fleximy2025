@@ -25,23 +25,28 @@ export default function SelectorIndustrias() {
   const ind = INDUSTRIES[activo]
 
   return (
-    <section className="bg-surface py-24 lg:py-32">
+    <section className="relative py-16 lg:py-24">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute top-1/4 -left-40 size-[30rem] rounded-full bg-primary-soft/50 blur-3xl" />
+        <div className="absolute bottom-0 right-0 size-[24rem] rounded-full bg-secondary-soft/40 blur-3xl" />
+      </div>
+
       <div className="container-site">
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <div>
             <p className="kicker">Soluciones por rubro</p>
-            <h2 className="mt-5 text-h1">
+            <h2 className="mt-4 text-h1">
               Una base diseñada para tu <span className="text-primary">tipo de negocio</span>
             </h2>
-            <p className="mt-5 max-w-[44ch] text-lead text-ink-secondary">
+            <p className="mt-4 max-w-[44ch] text-lead text-ink-secondary">
               Elegí el rubro y mirá cómo se ve: la misma web, la misma consulta, el mismo panel.
               Cambia el acento, cambia la operación.
             </p>
           </div>
 
           <div className="lg:sticky lg:top-24 lg:self-start">
-            <div className="overflow-hidden rounded-2xl border border-outline bg-bg-secondary shadow-[var(--shadow-lift)]">
-              <div className="flex items-center gap-2 border-b border-outline bg-surface px-4 py-2.5">
+            <div className="overflow-hidden rounded-2xl border border-outline bg-gradient-primary-soft/60 shadow-[var(--shadow-lift)]">
+              <div className="flex items-center gap-2 border-b border-outline bg-gradient-surface px-4 py-2.5">
                 <span aria-hidden="true" className="size-2.5 rounded-full bg-outline-strong" />
                 <span aria-hidden="true" className="size-2.5 rounded-full bg-outline-strong" />
                 <span aria-hidden="true" className="size-2.5 rounded-full bg-outline-strong" />
@@ -62,7 +67,7 @@ export default function SelectorIndustrias() {
                   <div className="flex items-center gap-3">
                     <span
                       aria-hidden="true"
-                      className="size-3 shrink-0 rounded-full"
+                      className="size-3 shrink-0 rounded-full shadow-[0_0_0_4px_rgba(0,0,0,0.05)]"
                       style={{ backgroundColor: ind.accent }}
                     />
                     <p className="font-mono text-micro text-ink-muted">
@@ -70,8 +75,11 @@ export default function SelectorIndustrias() {
                     </p>
                   </div>
 
-                  <div className="mt-5 rounded-xl border border-outline bg-surface p-4">
-                    <p className="text-small text-ink-primary">{CONSULTA[ind.slug]}</p>
+                  <div className="mt-5 rounded-xl border border-outline bg-gradient-surface p-4 shadow-[var(--shadow-soft)]">
+                    <div className="flex items-center gap-2">
+                      <span className="size-2 shrink-0 animate-pulse rounded-full bg-primary" />
+                      <p className="text-small text-ink-primary">{CONSULTA[ind.slug]}</p>
+                    </div>
                     <div className="mt-3 flex flex-wrap gap-2">
                       <span className="rounded-full bg-primary px-2.5 py-1 font-mono text-micro text-white">
                         nueva
@@ -92,7 +100,7 @@ export default function SelectorIndustrias() {
                     {FEATURES.map((f) => (
                       <div
                         key={f}
-                        className="flex items-center gap-3 rounded-xl border border-outline bg-surface px-3.5 py-2.5"
+                        className="flex items-center gap-3 rounded-xl border border-outline bg-gradient-surface px-3.5 py-2.5"
                       >
                         <span
                           className="grid size-5 shrink-0 place-items-center rounded-full"
@@ -119,7 +127,7 @@ export default function SelectorIndustrias() {
         </div>
 
         {/* Índice editorial */}
-        <div className="mt-16 grid gap-0.5 lg:mt-24">
+        <div className="mt-12 grid gap-0.5 lg:mt-16">
           {INDUSTRIES.map((item, i) => {
             const active = i === activo
             return (
@@ -127,10 +135,17 @@ export default function SelectorIndustrias() {
                 key={item.slug}
                 aria-pressed={active}
                 onClick={() => setActivo(i)}
-                className={`group flex items-baseline gap-5 border-t border-outline px-2 py-5 text-left transition-colors duration-[var(--motion-fast)] last:border-b md:gap-8 md:px-4 ${
-                  active ? "bg-bg-secondary" : "hover:bg-bg-secondary/60"
+                className={`group relative flex items-baseline gap-5 border-t border-outline px-2 py-4 text-left transition-colors duration-[var(--motion-fast)] last:border-b md:gap-8 md:px-4 ${
+                  active ? "bg-bg-secondary/60" : "hover:bg-bg-secondary/40"
                 }`}
               >
+                <span
+                  aria-hidden="true"
+                  className={`absolute inset-y-3 left-0 w-0.5 rounded-full transition-opacity duration-[var(--motion-base)] ${
+                    active ? "opacity-100" : "opacity-0"
+                  }`}
+                  style={{ backgroundColor: item.accent }}
+                />
                 <span
                   className={`font-mono text-micro transition-colors duration-[var(--motion-fast)] ${
                     active ? "text-primary" : "text-ink-muted"

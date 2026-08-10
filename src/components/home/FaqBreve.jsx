@@ -26,16 +26,16 @@ export default function FaqBreve() {
   const [abierta, setAbierta] = useState(0)
 
   return (
-    <section className="container-site py-24 lg:py-32">
+    <section className="container-site py-16 lg:py-24">
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
           <p className="kicker justify-center">Preguntas frecuentes</p>
-          <h2 className="mx-auto mt-5 max-w-[18ch] text-h1">
+          <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">
             Lo que nos preguntan <span className="text-primary">antes de empezar</span>
           </h2>
         </div>
 
-        <div className="mt-10 flex flex-col divide-y divide-outline border-y border-outline">
+        <div className="mt-8 flex flex-col divide-y divide-outline border-y border-outline">
           {FAQS.map((f, i) => {
             const open = abierta === i
             return (
@@ -44,9 +44,11 @@ export default function FaqBreve() {
                   onClick={() => setAbierta(open ? -1 : i)}
                   aria-expanded={open}
                   aria-controls={`faq-breve-${i}`}
-                  className="flex w-full items-center justify-between gap-4 py-5 text-left"
+                  className="group flex w-full items-center justify-between gap-4 py-5 text-left transition-colors hover:bg-bg-secondary/40"
                 >
-                  <span className="text-h4 text-ink-primary">{f.q}</span>
+                  <span className="text-h4 text-ink-primary transition-colors duration-[var(--motion-fast)] group-hover:text-primary">
+                    {f.q}
+                  </span>
                   <ChevronDown
                     className={`size-5 shrink-0 text-ink-muted transition-transform duration-[var(--motion-fast)] ${
                       open ? "rotate-180" : ""

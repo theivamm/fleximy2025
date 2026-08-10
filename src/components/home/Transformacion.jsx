@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { X, Check } from "lucide-react"
+import { X, Check, ArrowRight } from "lucide-react"
 
 const ANTES = [
   "El WhatsApp se llena de consultas a cualquier hora",
@@ -17,27 +17,27 @@ const DESPUES = [
 
 export default function Transformacion() {
   return (
-    <section className="bg-bg-primary py-24 lg:py-32">
+    <section className="relative py-16 lg:py-24">
       <div className="container-site">
         <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
           <div>
             <p className="kicker">La diferencia</p>
-            <h2 className="mt-5 text-h1">
+            <h2 className="mt-4 text-h1">
               Del caos operativo <span className="text-primary">a un sistema vivo</span>
             </h2>
-            <p className="mt-5 max-w-[42ch] text-lead text-ink-secondary">
+            <p className="mt-4 max-w-[42ch] text-lead text-ink-secondary">
               El problema no es tener clientes. Es que cada consulta exige memoria, atención y
               tiempo. Fleximy convierte ese caos en un flujo visible.
             </p>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="relative grid gap-6 lg:grid-cols-2 lg:gap-10">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="rounded-2xl border border-outline bg-surface p-7 md:p-8"
+              className="rounded-2xl border border-outline bg-gradient-surface p-6 shadow-[var(--shadow-soft)] md:p-7"
             >
               <div className="flex items-center gap-2.5">
                 <span className="grid size-8 place-items-center rounded-full bg-error-container text-error">
@@ -48,7 +48,7 @@ export default function Transformacion() {
                 </p>
               </div>
               <h3 className="mt-4 text-h3 text-ink-muted">Herramientas sueltas</h3>
-              <ul className="mt-6 grid gap-4">
+              <ul className="mt-5 grid gap-4">
                 {ANTES.map((item, i) => (
                   <li
                     key={item}
@@ -67,7 +67,7 @@ export default function Transformacion() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="relative overflow-hidden rounded-2xl border border-outline-night bg-night p-7 text-on-night shadow-[var(--shadow-night)] md:p-8"
+              className="relative overflow-hidden rounded-2xl border border-outline-night bg-gradient-night p-6 text-on-night shadow-[var(--shadow-night)] md:p-7"
             >
               <div
                 aria-hidden="true"
@@ -82,10 +82,10 @@ export default function Transformacion() {
                 </p>
               </div>
               <h3 className="relative mt-4 text-h3">Operación conectada</h3>
-              <ul className="relative mt-6 grid gap-4">
+              <ul className="relative mt-5 grid gap-4">
                 {DESPUES.map((item) => (
                   <li key={item} className="flex gap-3 text-body text-on-night/90">
-                    <span className="mt-1 grid size-5 shrink-0 place-items-center rounded-full bg-primary text-[10px] font-bold text-white">
+                    <span className="mt-1 grid size-5 shrink-0 place-items-center rounded-full bg-primary text-white">
                       <Check className="size-3" />
                     </span>
                     {item}
@@ -93,6 +93,13 @@ export default function Transformacion() {
                 ))}
               </ul>
             </motion.div>
+
+            <span
+              aria-hidden="true"
+              className="absolute left-1/2 top-1/2 hidden size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-outline bg-gradient-surface text-ink-primary shadow-[var(--shadow-lift)] lg:grid"
+            >
+              <ArrowRight className="size-5" />
+            </span>
           </div>
         </div>
       </div>

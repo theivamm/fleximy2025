@@ -803,3 +803,57 @@ tocar rutas, contenido, IA, Supabase, dashboard ni SEO:
 - Migrar visualmente las páginas internas (soluciones, demos, comercial) al token v3 — hoy
   compilan con la paleta mapeada pero conservan su composición anterior.
 - Aprobación de la Home antes de continuar con el resto de las secciones.
+
+---
+
+## Reporte — Home v2: refinamiento visual y profundidad (v3.1)
+
+**Rama:** `rework/home-v2` (derivada de `main`). **Fecha:** 2026-08-09.
+
+### Correcciones críticas
+
+1. **Hero al cargar (3.1):** timeline de intro comprimido a ~1,1 s (líneas 0,6 s + stagger 0,08;
+   highlight 0,42 s; fades 0,45 s). `pb` de líneas aumentado a 0.14–0.16em para no cortar
+   descendentes. Padding superior reducido (`pt-24/28/36`) para que titular y CTA entren en el
+   primer viewport. Fallback intacto para `prefers-reduced-motion` (GSAP `matchMedia`).
+2. **Header superpuesto (3.2):** nuevo tema claro/oscuro por sección — `IntersectionObserver`
+   sobre `[data-header-theme="dark"]` (Proceso, CtaFinal, Footer) alterna el fondo, texto, borde
+   y logo del header. Frosting desde `scrollY > 8`. Reseteo del estado al navegar.
+3. **Scroll largo (3.3):** paddings de sección reducidos de `py-24/32` a `py-16/24` (y equivalentes
+   en night blocks), margen del índice de industrias acortado, hero `pb` compactado.
+   Reducción estimada del recorrido ~15–20%.
+
+### Sistema de gradientes
+
+Tokens nuevos bajo el namespace de Tailwind v4 `--background-image-*` (generan utilidades
+`bg-gradient-*`): `gradient-page` (fondo de la Home), `gradient-surface` (tarjetas), 
+`gradient-primary-soft` (bandas de acento), `gradient-night` / `gradient-night-elevated`
+(bloques inmersivos), `gradient-ink-text` (números display). Aplicados a: fondo del `<main>`,
+tarjetas de ViajeConsulta, SelectorIndustrias, Transformacion, PrecioIntro y Confianza; bloques
+de Proceso, DemoSeccion, CtaFinal y Footer; números del viaje con `bg-clip-text`.
+
+### Refinamiento por sección
+
+- **HomeHero:** auroras radiales difusas, marco del escenario con `gradient-surface` + ring.
+- **Franja:** banda `gradient-primary-soft` con cabecera mono ("lo que ordena el sistema").
+- **ViajeConsulta:** rail de progreso en la columna sticky (ScrollTrigger, activa por paso),
+  números con gradiente y hover, tarjetas `gradient-surface` con elevación al hover.
+- **SelectorIndustrias:** glows laterales, escena con `gradient-surface` + borde de acento activo
+  en el índice.
+- **Transformacion:** tarjeta "después" en `gradient-night`, flecha central que une ambos planos.
+- **Proceso/Demo/CtaFinal/Footer:** bloques `gradient-night` con glows y `grid-pattern-dark`.
+- **Footer:** nuevo — declaración editorial con texto en gradiente, mini-card de contacto,
+  estado "plataforma activa" y watermark gigante "FLEXIMY" (`.footer-watermark`).
+
+### Validación
+
+- `npm run build` → OK (2310 módulos); `dist/404.html` regenerado.
+- Utilidades de gradiente verificadas en el CSS emitido (6/6 presentes).
+- `npm run lint` → 0 errores; sin warnings nuevos en archivos de esta fase.
+- Smoke `vite preview` → HTTP 200 en `/`.
+
+### Pendientes (QA humano)
+
+- Revisión visual en navegadores reales: altura del primer viewport, contraste del header sobre
+  Proceso/CtaFinal/Footer, tamaño del watermark en móvil, marquee.
+- Deploy preview de `rework/home-v2` para validación del cliente antes de pasar a `main`.
