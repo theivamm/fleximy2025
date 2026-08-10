@@ -8,7 +8,7 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-ink text-text-invert">
+    <footer className="bg-dark-surface text-text-invert">
       <div className="container-site py-16 md:py-20">
         <div className="grid gap-12 lg:gap-8 lg:grid-cols-12">
           {/* Marca */}
@@ -29,7 +29,7 @@ export default function Footer() {
             </p>
             <Link
               to="/contacto"
-              className="inline-flex items-center gap-2 w-fit h-12 px-6 rounded-[var(--radius-btn)] bg-accent text-ink text-sm font-semibold transition-colors hover:bg-[color-mix(in_srgb,var(--color-accent)_85%,white)]"
+              className="inline-flex items-center gap-2 w-fit h-12 px-6 rounded-[var(--radius-btn)] bg-accent text-on-accent text-sm font-semibold transition-colors hover:bg-accent-hover"
             >
               {CONTACT.ctaPrimary}
               <ArrowRight size={16} />

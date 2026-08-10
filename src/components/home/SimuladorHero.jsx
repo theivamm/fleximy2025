@@ -16,7 +16,7 @@ const NUEVA_CONSULTA = {
 const estadoBadge = (estado) => {
   if (estado === "seguimiento") return { label: "En seguimiento", cls: "bg-cyan/15 text-cyan" }
   if (estado === "asignada") return { label: "Asignada", cls: "bg-ink-muted text-text-invert" }
-  return { label: "Nueva", cls: "bg-accent text-ink" }
+  return { label: "Nueva", cls: "bg-accent text-on-accent" }
 }
 
 export default function SimuladorHero() {
@@ -37,7 +37,7 @@ export default function SimuladorHero() {
     <div className="grid gap-3 lg:grid-cols-[1fr_auto_1fr] lg:items-stretch lg:gap-4">
       <WebPlane completa={completa} enviada={enviada} />
       <div className="flex items-center justify-center gap-2 text-ink lg:flex-col">
-        <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-ink">
+        <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-on-accent">
           <MoveRight className="size-4 rotate-90 lg:rotate-0" />
         </span>
         <span className="font-mono text-micro text-muted">consulta → registro</span>
@@ -61,7 +61,7 @@ function WebPlane({ completa, enviada }) {
 
       <div className="flex flex-1 flex-col gap-4 p-4">
         <div className="flex items-center gap-3">
-          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-ink font-mono text-sm text-text-invert">
+          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-dark-surface font-mono text-sm text-text-invert">
             M
           </span>
           <div className="min-w-0">
@@ -75,7 +75,7 @@ function WebPlane({ completa, enviada }) {
             <p className="truncate text-sm font-semibold text-text">Torta por encargo</p>
             <p className="truncate text-small text-muted">personalizada · consulta previa</p>
           </div>
-          <span className="shrink-0 rounded-full bg-ink px-3 py-1 text-small text-text-invert">
+          <span className="shrink-0 rounded-full bg-dark-surface px-3 py-1 text-small text-text-invert">
             Reservar
           </span>
         </div>
@@ -86,7 +86,7 @@ function WebPlane({ completa, enviada }) {
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-2.5 rounded-xl border border-accent bg-accent-soft px-4 py-3"
           >
-            <span className="grid size-6 shrink-0 place-items-center rounded-full bg-accent text-ink">
+            <span className="grid size-6 shrink-0 place-items-center rounded-full bg-accent text-on-accent">
               <Check className="size-3.5" />
             </span>
             <div>
@@ -111,7 +111,7 @@ function WebPlane({ completa, enviada }) {
             />
             <button
               type="submit"
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-[var(--radius-btn)] bg-accent px-4 text-sm font-semibold text-ink"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-[var(--radius-btn)] bg-accent px-4 text-sm font-semibold text-on-accent"
             >
               Enviar consulta
               <Send className="size-3.5" />
@@ -130,7 +130,7 @@ function PanelPlane({ enviada, asignada }) {
   const nuevaFila = enviada ? NUEVA_CONSULTA : null
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-ink text-text-invert shadow-lift">
+    <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-dark-surface text-text-invert shadow-lift">
       <div className="flex items-center justify-between border-b border-line-dark px-4 py-2.5">
         <p className="font-mono text-micro text-text-invert/70">panel interno · Fleximy</p>
         <span className="relative grid size-7 place-items-center rounded-full bg-ink-soft text-cyan">
@@ -197,7 +197,7 @@ function PanelPlane({ enviada, asignada }) {
                 </div>
                 <span
                   className={`shrink-0 rounded-full px-2.5 py-1 font-mono text-micro ${
-                    asignada ? "bg-cyan/15 text-cyan" : "bg-accent text-ink"
+                    asignada ? "bg-cyan/15 text-cyan" : "bg-accent text-on-accent"
                   }`}
                 >
                   {asignada ? "Asignada" : "Nueva"}

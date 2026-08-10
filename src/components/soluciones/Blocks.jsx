@@ -10,7 +10,7 @@ export function SectionHead({ kicker, title, lead, dark = false, center = false,
   const muted = dark ? "text-text-invert/65" : "text-muted"
   return (
     <div className={`${center ? "mx-auto text-center" : ""} max-w-2xl ${className}`}>
-      <p className="kicker justify-center" style={{ color: dark ? "rgba(244,243,238,0.55)" : undefined }}>
+      <p className="kicker justify-center" style={{ color: dark ? "rgba(245,246,255,0.55)" : undefined }}>
         {kicker}
       </p>
       <h2 className={`mt-4 text-h1 ${text}`}>{title}</h2>
@@ -41,11 +41,11 @@ export function Problem({ data, accent }) {
 
 export function Duo({ data, accent }) {
   return (
-    <section className="bg-ink py-20 text-text-invert lg:py-28">
+    <section className="bg-dark-surface py-20 text-text-invert lg:py-28">
       <div className="container-site">
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
-            <p className="kicker" style={{ color: "rgba(244,243,238,0.55)" }}>
+            <p className="kicker" style={{ color: "rgba(245,246,255,0.55)" }}>
               Para el cliente
             </p>
             <h2 className="mt-4 text-h1">{data.experiencia.titulo}</h2>
@@ -68,7 +68,7 @@ export function Duo({ data, accent }) {
           </div>
 
           <div className="lg:pl-10">
-            <p className="kicker" style={{ color: "rgba(244,243,238,0.55)" }}>
+            <p className="kicker" style={{ color: "rgba(245,246,255,0.55)" }}>
               Para el equipo
             </p>
             <h2 className="mt-4 text-h1">{data.panel.titulo}</h2>
@@ -92,7 +92,7 @@ export function Duo({ data, accent }) {
 }
 
 export function FeatureList({ title, lead, items, accent, dark = false, nota }) {
-  const base = dark ? "bg-ink text-text-invert" : ""
+  const base = dark ? "bg-dark-surface text-text-invert" : ""
   return (
     <div className={base}>
       <div className="container-site py-20 lg:py-28">
@@ -217,7 +217,7 @@ export function Reports({ data, accent }) {
 
 export function Modalidades({ data, accent }) {
   return (
-    <section className="bg-ink py-20 text-text-invert lg:py-28">
+    <section className="bg-dark-surface py-20 text-text-invert lg:py-28">
       <div className="container-site">
         <SectionHead kicker="Modalidades" title={data.modalidades.titulo} dark lead={data.modalidades.nota} />
         <div className="mt-12 grid gap-4 md:grid-cols-3">
@@ -335,10 +335,10 @@ export function FaqBlock({ data }) {
 export function CtaBlock({ data }) {
   const otras = INDUSTRIES.filter((i) => i.slug !== data.slug)
   return (
-    <section className="bg-ink text-text-invert">
+    <section className="bg-dark-surface text-text-invert">
       <div className="container-site py-24 lg:py-32">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="kicker justify-center" style={{ color: "rgba(244,243,238,0.55)" }}>
+          <p className="kicker justify-center" style={{ color: "rgba(245,246,255,0.55)" }}>
             Empecemos
           </p>
           <h2 className="mx-auto mt-4 max-w-[20ch] text-h1">{data.cta.titulo}</h2>

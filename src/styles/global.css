@@ -17,7 +17,7 @@
 
   ::selection {
     background-color: var(--color-accent);
-    color: var(--color-ink);
+    color: var(--color-on-accent);
   }
 
   :focus-visible {
@@ -152,6 +152,6 @@
 
 /* Laboratorio de demos: resaltado del paso guiado */
 .demo-guia-active {
-  box-shadow: 0 0 0 3px var(--color-accent), 0 0 0 7px rgba(200, 255, 61, 0.22);
+  box-shadow: 0 0 0 3px var(--color-accent), 0 0 0 7px rgba(67, 85, 217, 0.22);
   border-radius: var(--radius-btn);
 }

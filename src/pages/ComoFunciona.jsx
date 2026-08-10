@@ -70,7 +70,7 @@ function CapaRevision() {
       <ul className="mt-3 grid gap-1.5">
         {["Desktop y mobile", "Formularios", "Integraciones"].map((t) => (
           <li key={t} className="flex items-center gap-2 text-small text-text">
-            <span className="grid size-4 place-items-center rounded-full bg-accent text-ink">
+            <span className="grid size-4 place-items-center rounded-full bg-accent text-on-accent">
               <Check className="size-3" />
             </span>
             {t}
@@ -86,8 +86,8 @@ function CapaLanzamiento() {
     <div className="rounded-xl border border-line bg-paper p-4">
       <div className="flex items-center justify-between">
         <p className="font-mono text-micro text-muted">Estado</p>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-2.5 py-1 font-mono text-micro text-ink">
-          <span className="size-1.5 rounded-full bg-ink" /> Publicado
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-2.5 py-1 font-mono text-micro text-on-accent">
+          <span className="size-1.5 rounded-full bg-dark-surface" /> Publicado
         </span>
       </div>
       <div className="mt-3 flex items-center justify-between">
@@ -133,9 +133,9 @@ function Tablero({ activo }) {
   return (
     <div className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper-bright shadow-lift">
       <div className="flex items-center gap-1.5 border-b border-line px-4 py-2.5">
-        <span className="size-2.5 rounded-full bg-ink/15" />
-        <span className="size-2.5 rounded-full bg-ink/15" />
-        <span className="size-2.5 rounded-full bg-ink/15" />
+        <span className="size-2.5 rounded-full bg-dark-surface/15" />
+        <span className="size-2.5 rounded-full bg-dark-surface/15" />
+        <span className="size-2.5 rounded-full bg-dark-surface/15" />
         <span className="ml-2 flex-1 truncate rounded-md bg-paper px-2 py-1 font-mono text-micro text-muted">
           fleximy.app/armado
         </span>
@@ -147,7 +147,7 @@ function Tablero({ activo }) {
             etapa {String(activo + 1).padStart(2, "0")} / {String(ETAPAS.length).padStart(2, "0")}
           </p>
         </div>
-        <div className="h-1 overflow-hidden rounded-full bg-ink/10">
+        <div className="h-1 overflow-hidden rounded-full bg-dark-surface/10">
           <div
             className="h-full rounded-full bg-accent transition-all duration-500"
             style={{ width: `${((activo + 1) / ETAPAS.length) * 100}%` }}
@@ -159,7 +159,7 @@ function Tablero({ activo }) {
           </div>
         ))}
         {activo === ETAPAS.length - 1 && (
-          <div className="rounded-xl border border-line bg-ink p-4 text-text-invert">
+          <div className="rounded-xl border border-line bg-dark-surface p-4 text-text-invert">
             <p className="text-small font-semibold">Fleximy en operación</p>
             <p className="mt-1 font-mono text-micro text-text-invert/60">
               seguimos administrando la infraestructura y acompañando al equipo
@@ -324,7 +324,7 @@ export default function ComoFunciona() {
             <ul className="mt-4 grid gap-2.5">
               {FACTORES_PLAZO.map((f) => (
                 <li key={f} className="flex items-start gap-3 rounded-xl border border-line bg-paper-bright px-4 py-3 text-small">
-                  <span className="mt-1 size-2 shrink-0 rounded-full bg-ink/20" />
+                  <span className="mt-1 size-2 shrink-0 rounded-full bg-dark-surface/20" />
                   {f}
                 </li>
               ))}
@@ -333,15 +333,15 @@ export default function ComoFunciona() {
         </div>
       </section>
 
-      <section className="bg-ink py-20 text-text-invert lg:py-28">
+      <section className="bg-dark-surface py-20 text-text-invert lg:py-28">
         <div className="container-site">
-          <p className="kicker" style={{ color: "rgba(244,243,238,0.55)" }}>
+          <p className="kicker" style={{ color: "rgba(245,246,255,0.55)" }}>
             Responsabilidades
           </p>
           <h2 className="mt-4 max-w-[18ch] text-h1">Cada parte sabe qué le toca</h2>
           <div className="mt-12 grid gap-6 lg:grid-cols-2">
             <div className="rounded-[var(--radius-card)] border border-line-dark bg-ink-soft p-6 lg:p-8">
-              <p className="text-h4 text-accent">Fleximy</p>
+              <p className="text-h4 text-accent-on-dark">Fleximy</p>
               <ul className="mt-5 grid gap-2.5">
                 {RESPONSABILIDADES.fleximy.map((r) => (
                   <li key={r} className="flex items-start gap-3 text-small text-text-invert/85">
@@ -366,9 +366,9 @@ export default function ComoFunciona() {
         </div>
       </section>
 
-      <section className="bg-ink text-text-invert">
+      <section className="bg-dark-surface text-text-invert">
         <div className="container-site py-24 text-center lg:py-32">
-          <p className="kicker justify-center" style={{ color: "rgba(244,243,238,0.55)" }}>
+          <p className="kicker justify-center" style={{ color: "rgba(245,246,255,0.55)" }}>
             Empecemos
           </p>
           <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">Empecemos por entender tu operación</h2>

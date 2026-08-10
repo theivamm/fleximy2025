@@ -56,7 +56,7 @@ export default function DosLados() {
                   track("vista_sitio_panel", { lado: l.id })
                 }}
                 className={`rounded-full px-5 py-2 text-sm font-semibold transition-colors ${
-                  activo === l.id ? "bg-ink text-text-invert" : "text-muted hover:text-text"
+                  activo === l.id ? "bg-dark-surface text-text-invert" : "text-muted hover:text-text"
                 }`}
               >
                 {l.titulo.replace("El lado ", "Lado ").replace(": tu web", "").replace(": tu panel", "")}
@@ -77,7 +77,7 @@ export default function DosLados() {
             <ul className="mt-5 grid gap-2.5">
               {lado.items.map((item) => (
                 <li key={item} className="flex items-center gap-3 text-body">
-                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-accent text-[10px] font-bold text-ink">
+                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-accent text-[10px] font-bold text-on-accent">
                     ✓
                   </span>
                   {item}
@@ -132,14 +132,14 @@ function WebMini() {
         <p className="mt-2 text-small text-muted">
           Información clara y un botón para consultar, reservar o pedir.
         </p>
-        <div className="mt-5 inline-flex h-11 items-center gap-2 rounded-[var(--radius-btn)] bg-accent px-5 text-sm font-semibold text-ink">
+        <div className="mt-5 inline-flex h-11 items-center gap-2 rounded-[var(--radius-btn)] bg-accent px-5 text-sm font-semibold text-on-accent">
           Consultar
           <Send className="size-3.5" />
         </div>
         <div className="mt-6 grid gap-2">
           {["Confirmación automática", "Consulta ordenada en el panel"].map((item) => (
             <div key={item} className="flex items-center gap-2.5 rounded-xl border border-line bg-paper px-3 py-2.5 text-small">
-              <span className="grid size-5 shrink-0 place-items-center rounded-full bg-accent text-[10px] font-bold text-ink">
+              <span className="grid size-5 shrink-0 place-items-center rounded-full bg-accent text-[10px] font-bold text-on-accent">
                 ✓
               </span>
               {item}
@@ -153,7 +153,7 @@ function WebMini() {
 
 function PanelMini() {
   return (
-    <div className="bg-ink text-text-invert">
+    <div className="bg-dark-surface text-text-invert">
       <div className="flex items-center justify-between border-b border-line-dark px-4 py-2.5">
         <p className="font-mono text-micro text-text-invert/70">panel interno · Fleximy</p>
         <span className="rounded-full bg-ink-soft px-2 py-0.5 font-mono text-micro text-cyan">
@@ -167,7 +167,7 @@ function PanelMini() {
         </p>
         <div className="mt-5 grid gap-2">
           {[
-            { nombre: "Camila S.", estado: "Nueva", cls: "bg-accent text-ink" },
+            { nombre: "Camila S.", estado: "Nueva", cls: "bg-accent text-on-accent" },
             { nombre: "Josefina M.", estado: "Asignada", cls: "bg-cyan/15 text-cyan" },
             { nombre: "Lucas R.", estado: "En seguimiento", cls: "bg-cyan/15 text-cyan" },
           ].map((row) => (
@@ -183,7 +183,7 @@ function PanelMini() {
           ))}
         </div>
         <div className="mt-5 flex items-center gap-2 font-mono text-micro text-text-invert/50">
-          <Check className="size-3.5 text-accent" />
+          <Check className="size-3.5 text-accent-on-dark" />
           historial completo por cliente
         </div>
       </div>

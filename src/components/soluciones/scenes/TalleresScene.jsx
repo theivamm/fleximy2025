@@ -42,7 +42,7 @@ export default function TalleresScene({ onAction }) {
 
 function OrdenTrabajo({ actual, avanzar, reiniciar }) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-ink text-text-invert shadow-lift">
+    <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-dark-surface text-text-invert shadow-lift">
       <Chrome
         dark
         url="panel · orden de trabajo #1042"
@@ -64,7 +64,7 @@ function OrdenTrabajo({ actual, avanzar, reiniciar }) {
             <div key={e} className="flex shrink-0 items-center gap-1">
               <span
                 className={`grid size-6 place-items-center rounded-full font-mono text-[10px] ${
-                  i < actual ? "bg-accent text-ink" : i === actual ? "border border-cyan text-cyan" : "bg-ink-muted text-text-invert/40"
+                  i < actual ? "bg-accent text-on-accent" : i === actual ? "border border-cyan text-cyan" : "bg-ink-muted text-text-invert/40"
                 }`}
               >
                 {i < actual ? "✓" : i + 1}
@@ -113,7 +113,7 @@ function OrdenTrabajo({ actual, avanzar, reiniciar }) {
           <button
             onClick={avanzar}
             disabled={actual >= ESTADOS.length - 1}
-            className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-[var(--radius-btn)] bg-accent text-sm font-semibold text-ink disabled:opacity-40"
+            className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-[var(--radius-btn)] bg-accent text-sm font-semibold text-on-accent disabled:opacity-40"
           >
             Avanzar estado
             <ChevronRight className="size-4" />
@@ -140,7 +140,7 @@ function ConsultaCliente({ actual }) {
         <p className="text-sm font-semibold text-text">Seguimiento de tu trabajo</p>
         <p className="mt-1 font-mono text-micro text-muted">OT #1042 · Peugeot 208</p>
 
-        <div className="mt-4 rounded-xl bg-ink p-4 text-text-invert">
+        <div className="mt-4 rounded-xl bg-dark-surface p-4 text-text-invert">
           <p className="font-mono text-micro text-text-invert/50">Estado actual</p>
           <AnimatePresence mode="wait">
             <motion.p

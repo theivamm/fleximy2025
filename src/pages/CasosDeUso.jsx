@@ -16,7 +16,7 @@ function WorkspaceAntes({ items }) {
             className="flex items-center justify-between gap-3 rounded-lg border border-line bg-paper-bright px-3 py-2"
           >
             <span className="text-small text-text">{tool}</span>
-            <span className="shrink-0 rounded-full bg-ink/10 px-2 py-0.5 font-mono text-micro text-muted">
+            <span className="shrink-0 rounded-full bg-dark-surface/10 px-2 py-0.5 font-mono text-micro text-muted">
               sin conexión
             </span>
           </li>
@@ -170,9 +170,9 @@ export default function CasosDeUso() {
         </div>
       </section>
 
-      <section className="bg-ink text-text-invert">
+      <section className="bg-dark-surface text-text-invert">
         <div className="container-site py-24 text-center lg:py-32">
-          <p className="kicker justify-center" style={{ color: "rgba(244,243,238,0.55)" }}>
+          <p className="kicker justify-center" style={{ color: "rgba(245,246,255,0.55)" }}>
             Tu caso
           </p>
           <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">

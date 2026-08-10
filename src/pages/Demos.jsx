@@ -17,9 +17,9 @@ const ACCENTS = {
 }
 
 const ESTADO_BADGE = {
-  disponible: { label: "Disponible", cls: "bg-accent text-ink" },
-  guiado: { label: "Recorrido guiado", cls: "bg-cyan/15 text-cyan" },
-  proximamente: { label: "Próximamente", cls: "bg-ink/10 text-muted" },
+  disponible: { label: "Disponible", cls: "bg-accent text-on-accent" },
+  guiado: { label: "Recorrido guiado", cls: "bg-cyan/15 text-cyan-deep" },
+  proximamente: { label: "Próximamente", cls: "bg-dark-surface/10 text-muted" },
 }
 
 export default function Demos() {
@@ -84,7 +84,7 @@ export default function Demos() {
             <button
               onClick={() => abrir("todas")}
               className={`rounded-full px-4 py-2 text-small transition-colors ${
-                filtro === "todas" ? "bg-ink text-text-invert" : "border border-line bg-paper text-muted hover:text-text"
+                filtro === "todas" ? "bg-dark-surface text-text-invert" : "border border-line bg-paper text-muted hover:text-text"
               }`}
             >
               Todas
@@ -94,7 +94,7 @@ export default function Demos() {
                 key={d.id}
                 onClick={() => abrir(d.id)}
                 className={`rounded-full px-4 py-2 text-small transition-colors ${
-                  filtro === d.id ? "bg-ink text-text-invert" : "border border-line bg-paper text-muted hover:text-text"
+                  filtro === d.id ? "bg-dark-surface text-text-invert" : "border border-line bg-paper text-muted hover:text-text"
                 }`}
               >
                 {d.rubro}
@@ -156,10 +156,10 @@ export default function Demos() {
         )}
       </section>
 
-      <section className="bg-ink py-20 text-text-invert lg:py-28">
+      <section className="bg-dark-surface py-20 text-text-invert lg:py-28">
         <div className="container-site grid items-center gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
           <div className="max-w-2xl">
-            <p className="kicker" style={{ color: "rgba(244,243,238,0.55)" }}>
+            <p className="kicker" style={{ color: "rgba(245,246,255,0.55)" }}>
               Recorrido guiado
             </p>
             <h2 className="mt-4 text-h1">¿Preferís que te lo mostremos?</h2>
@@ -175,7 +175,7 @@ export default function Demos() {
             </div>
           </div>
           <div className="grid place-items-center rounded-[var(--radius-card)] border border-line-dark bg-ink-soft p-8 text-center">
-            <span className="grid size-14 place-items-center rounded-2xl bg-accent text-ink">
+            <span className="grid size-14 place-items-center rounded-2xl bg-accent text-on-accent">
               <MonitorPlay className="size-7" />
             </span>
             <p className="mt-4 font-mono text-micro text-text-invert/60">20 minutos · sin compromiso</p>
@@ -184,9 +184,9 @@ export default function Demos() {
         </div>
       </section>
 
-      <section className="bg-ink text-text-invert">
+      <section className="bg-dark-surface text-text-invert">
         <div className="container-site border-t border-line-dark py-24 text-center lg:py-32">
-          <p className="kicker justify-center" style={{ color: "rgba(244,243,238,0.55)" }}>
+          <p className="kicker justify-center" style={{ color: "rgba(245,246,255,0.55)" }}>
             Demo personalizada
           </p>
           <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">

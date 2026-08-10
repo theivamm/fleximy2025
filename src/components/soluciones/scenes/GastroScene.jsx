@@ -107,7 +107,7 @@ function MenuPhone({ pedido, agregar, precioDe, disponibleDe, notificar }) {
                 notificar("filtrar_categoria")
               }}
               className={`rounded-full px-3 py-1.5 font-mono text-micro transition-colors ${
-                cat === c ? "bg-ink text-text-invert" : "bg-paper text-muted"
+                cat === c ? "bg-dark-surface text-text-invert" : "bg-paper text-muted"
               }`}
             >
               {c}
@@ -137,7 +137,7 @@ function MenuPhone({ pedido, agregar, precioDe, disponibleDe, notificar }) {
                   {!disponible ? (
                     <Status tone="gris">Agotado</Status>
                   ) : pedido.includes(p.id) ? (
-                    <span className="grid size-8 place-items-center rounded-full bg-ink text-text-invert">
+                    <span className="grid size-8 place-items-center rounded-full bg-dark-surface text-text-invert">
                       <CheckIcon />
                     </span>
                   ) : (
@@ -145,7 +145,7 @@ function MenuPhone({ pedido, agregar, precioDe, disponibleDe, notificar }) {
                       onClick={() => agregar(p)}
                       aria-label={`Agregar ${p.nombre}`}
                       data-guiado="agregar_plato"
-                      className="grid size-8 place-items-center rounded-full bg-accent text-ink"
+                      className="grid size-8 place-items-center rounded-full bg-accent text-on-accent"
                     >
                       <Plus className="size-4" />
                     </button>
@@ -167,7 +167,7 @@ function MenuPhone({ pedido, agregar, precioDe, disponibleDe, notificar }) {
               notificar("enviar_pedido")
             }}
             data-guiado="enviar_pedido"
-            className="mt-2 inline-flex h-9 w-full items-center justify-center gap-2 rounded-[var(--radius-btn)] bg-accent text-sm font-semibold text-ink disabled:opacity-40"
+            className="mt-2 inline-flex h-9 w-full items-center justify-center gap-2 rounded-[var(--radius-btn)] bg-accent text-sm font-semibold text-on-accent disabled:opacity-40"
           >
             Enviar pedido
             <ChevronRight className="size-4" />
@@ -198,7 +198,7 @@ function Cocina({
   notificar,
 }) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-ink text-text-invert shadow-lift">
+    <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-dark-surface text-text-invert shadow-lift">
       <Chrome
         dark
         url="panel · pantalla de cocina"
@@ -280,11 +280,11 @@ function Cocina({
                       aria-checked={disponibleDe(p)}
                       data-guiado="cambiar_disponibilidad"
                       className={`relative h-5 w-9 shrink-0 rounded-full transition-colors ${
-                        disponibleDe(p) ? "bg-accent" : "bg-ink"
+                        disponibleDe(p) ? "bg-accent" : "bg-dark-surface"
                       }`}
                     >
                       <span
-                        className={`absolute top-0.5 size-4 rounded-full bg-ink transition-all ${
+                        className={`absolute top-0.5 size-4 rounded-full bg-dark-surface transition-all ${
                           disponibleDe(p) ? "left-[18px]" : "left-0.5"
                         }`}
                       />

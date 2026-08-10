@@ -193,7 +193,7 @@ export default function Soluciones() {
           </span>
         </div>
 
-        <div className="mt-4 h-1 overflow-hidden rounded-full bg-ink/10">
+        <div className="mt-4 h-1 overflow-hidden rounded-full bg-dark-surface/10">
           <motion.div
             animate={{ width: `${((activo + 1) / INDUSTRIES.length) * 100}%` }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -241,10 +241,10 @@ export default function Soluciones() {
         </div>
       </section>
 
-      <section className="bg-ink py-20 text-text-invert lg:py-28">
+      <section className="bg-dark-surface py-20 text-text-invert lg:py-28">
         <div className="container-site">
           <div className="max-w-2xl">
-            <p className="kicker" style={{ color: "rgba(244,243,238,0.55)" }}>
+            <p className="kicker" style={{ color: "rgba(245,246,255,0.55)" }}>
               Arquitectura modular
             </p>
             <h2 className="mt-4 text-h1">Tu solución no queda encerrada en una categoría</h2>
@@ -289,7 +289,7 @@ export default function Soluciones() {
             <ul className="mt-4 grid gap-2.5">
               {COTIZA.map((item) => (
                 <li key={item} className="flex items-start gap-3 rounded-xl border border-line bg-paper-bright px-4 py-3 text-small text-muted">
-                  <span className="mt-1 size-2 shrink-0 rounded-full bg-ink/20" />
+                  <span className="mt-1 size-2 shrink-0 rounded-full bg-dark-surface/20" />
                   {item}
                 </li>
               ))}
@@ -298,9 +298,9 @@ export default function Soluciones() {
         </div>
       </section>
 
-      <section className="bg-ink text-text-invert">
+      <section className="bg-dark-surface text-text-invert">
         <div className="container-site py-24 text-center lg:py-32">
-          <p className="kicker justify-center" style={{ color: "rgba(244,243,238,0.55)" }}>
+          <p className="kicker justify-center" style={{ color: "rgba(245,246,255,0.55)" }}>
             ¿Dudás?
           </p>
           <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">
@@ -332,9 +332,9 @@ function Workbench({ ind }) {
   return (
     <div className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper-bright shadow-lift">
       <div className="flex items-center gap-1.5 border-b border-line px-4 py-2.5">
-        <span className="size-2.5 rounded-full bg-ink/15" />
-        <span className="size-2.5 rounded-full bg-ink/15" />
-        <span className="size-2.5 rounded-full bg-ink/15" />
+        <span className="size-2.5 rounded-full bg-dark-surface/15" />
+        <span className="size-2.5 rounded-full bg-dark-surface/15" />
+        <span className="size-2.5 rounded-full bg-dark-surface/15" />
         <span className="ml-2 flex-1 truncate rounded-md bg-paper px-2 py-1 font-mono text-micro text-muted">
           fleximy.app/{ind.slug}
         </span>
@@ -343,7 +343,7 @@ function Workbench({ ind }) {
 
       <div className="p-6">
         <div className="flex items-center gap-3">
-          <span className="grid size-12 place-items-center rounded-xl" style={{ backgroundColor: ind.accent, color: "#151714" }}>
+          <span className="grid size-12 place-items-center rounded-xl" style={{ backgroundColor: ind.accent, color: "var(--color-ink)" }}>
             <Icon className="size-6" />
           </span>
           <div>
@@ -369,7 +369,7 @@ function Workbench({ ind }) {
               </div>
               <span
                 className={`shrink-0 rounded-full px-2.5 py-1 font-mono text-micro ${
-                  r.est === "nueva" ? "bg-accent text-ink" : "bg-cyan/15 text-cyan-deep"
+                  r.est === "nueva" ? "bg-accent text-on-accent" : "bg-cyan/15 text-cyan-deep"
                 }`}
               >
                 {r.est === "nueva" ? "Nuevo" : "Activo"}

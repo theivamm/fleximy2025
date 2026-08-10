@@ -39,7 +39,7 @@ export default function Transformacion() {
                 className="flex gap-3 text-body text-muted"
                 style={{ transform: i % 2 ? "rotate(0.4deg)" : "rotate(-0.4deg)" }}
               >
-                <span className="mt-2 size-2 shrink-0 rounded-full bg-ink/15" />
+                <span className="mt-2 size-2 shrink-0 rounded-full bg-dark-surface/15" />
                 {item}
               </li>
             ))}
@@ -51,14 +51,14 @@ export default function Transformacion() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="rounded-[var(--radius-card)] border border-ink bg-ink p-8 text-text-invert"
+          className="rounded-[var(--radius-card)] border border-ink/30 bg-dark-surface p-8 text-text-invert"
         >
           <p className="font-mono text-micro text-cyan">con fleximy</p>
           <h3 className="mt-2 text-h3">Operación conectada</h3>
           <ul className="mt-6 grid gap-4">
             {DESPUES.map((item) => (
               <li key={item} className="flex gap-3 text-body text-text-invert/90">
-                <span className="mt-1 grid size-5 shrink-0 place-items-center rounded-full bg-accent text-[10px] font-bold text-ink">
+                <span className="mt-1 grid size-5 shrink-0 place-items-center rounded-full bg-accent text-[10px] font-bold text-on-accent">
                   ✓
                 </span>
                 {item}

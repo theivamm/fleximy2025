@@ -1,23 +1,85 @@
 @theme {
-  /* Paleta — minimalismo operativo */
-  --color-ink: #151714;
-  --color-ink-soft: #1e201c;
-  --color-ink-muted: #2a2d27;
-  --color-paper: #f4f3ee;
-  --color-paper-bright: #fafaf7;
-  --color-accent: #c8ff3d;
-  --color-accent-soft: rgba(200, 255, 61, 0.14);
-  --color-cyan: #52d6d1;
-  --color-cyan-deep: #2f8f8b;
+  /* ============================================================
+     Sistema visual — Material Design 3 · interpretación Fleximy
+     Los tokens heredados (ink/paper/accent/cyan) se mantienen con
+     los mismos nombres para no tocar la estructura de los componentes,
+     pero apuntan a los nuevos valores MD3. Los nombres canónicos MD3
+     también están disponibles (--color-primary, --color-surface, etc.).
+     ============================================================ */
 
-  --color-line: rgba(21, 23, 20, 0.14);
-  --color-line-dark: rgba(244, 243, 238, 0.16);
+  /* Primario (botones, CTAs, selección) */
+  --color-primary: #4355d9;
+  --color-primary-hover: #3547c4;
+  --color-primary-dark: #2938a8;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #e1e5ff;
+  --color-on-primary-container: #1b277d;
 
-  --color-text: #151714;
-  --color-text-invert: #f4f3ee;
-  --color-muted: #6b6f64;
+  /* Secundario (acento cian de marca) */
+  --color-secondary: #00a6b2;
+  --color-secondary-dark: #007c86;
+  --color-secondary-container: #d5f5f6;
+  --color-on-secondary-container: #004f56;
 
-  /* Acentos por industria */
+  /* Superficies */
+  --color-background: #f7f8fc;
+  --color-surface: #ffffff;
+  --color-surface-low: #f3f4fa;
+  --color-surface-container: #eef1f8;
+  --color-surface-high: #e6e9f2;
+
+  /* Texto */
+  --color-text-primary: #1b1b1f;
+  --color-text-secondary: #5d5e66;
+  --color-text-muted: #777985;
+
+  /* Bordes */
+  --color-outline: #d9dce7;
+  --color-outline-strong: #b7bbc8;
+
+  /* Estados */
+  --color-success: #16855b;
+  --color-success-container: #d7f5e6;
+  --color-warning: #b86b00;
+  --color-warning-container: #ffebca;
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+
+  /* Superficies oscuras (footer, bandas, secciones dark) */
+  --color-dark-surface: #20265c;
+  --color-dark-surface-alt: #293273;
+  --color-on-dark: #f5f6ff;
+
+  /* ------------------------------------------------------------
+     Tokens heredados — mapeados a la paleta MD3
+     ------------------------------------------------------------ */
+  --color-ink: #1b1b1f;
+  --color-ink-soft: #293273;
+  --color-ink-muted: #343d7e;
+
+  --color-paper: #f7f8fc;
+  --color-paper-bright: #ffffff;
+
+  --color-accent: #4355d9;
+  --color-accent-hover: #3547c4;
+  --color-accent-dark: #2938a8;
+  --color-on-accent: #ffffff;
+  --color-accent-soft: #e1e5ff;
+  --color-on-accent-soft: #1b277d;
+  --color-accent-on-dark: #b9c1ff;
+
+  --color-cyan: #00a6b2;
+  --color-cyan-deep: #007c86;
+  --color-cyan-soft: #d5f5f6;
+
+  --color-line: #d9dce7;
+  --color-line-dark: rgba(245, 246, 255, 0.16);
+
+  --color-text: #1b1b1f;
+  --color-text-invert: #f5f6ff;
+  --color-muted: #5d5e66;
+
+  /* Acentos por industria (identidad de marca, se conservan) */
   --color-acc-gastro: #e8a33d;
   --color-acc-turnos: #52d6d1;
   --color-acc-gestion: #7fd8a4;
@@ -35,14 +97,14 @@
   --content-narrow: 960px;
   --container-pad: clamp(1.25rem, 4vw, 2.5rem);
 
-  /* Radios */
-  --radius-btn: 0.625rem;
-  --radius-card: 1rem;
-  --radius-field: 0.625rem;
+  /* Radios — amplios pero controlados */
+  --radius-btn: 0.875rem;
+  --radius-card: 1.25rem;
+  --radius-field: 0.875rem;
 
-  /* Sombras */
-  --shadow-soft: 0 1px 2px rgba(21, 23, 20, 0.06), 0 4px 16px rgba(21, 23, 20, 0.06);
-  --shadow-lift: 0 2px 4px rgba(21, 23, 20, 0.08), 0 12px 32px rgba(21, 23, 20, 0.12);
+  /* Sombras — elevación suave y difusa, tinte azulado MD3 */
+  --shadow-soft: 0 1px 2px rgba(27, 39, 125, 0.04), 0 2px 6px rgba(27, 39, 125, 0.05), 0 8px 20px rgba(27, 39, 125, 0.06);
+  --shadow-lift: 0 2px 4px rgba(27, 39, 125, 0.06), 0 12px 24px rgba(27, 39, 125, 0.1), 0 28px 56px rgba(27, 39, 125, 0.12);
 
   /* Movimiento */
   --motion-fast: 180ms;

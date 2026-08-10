@@ -76,7 +76,7 @@ export default function InmobScene({ onAction }) {
             </div>
             <button
               onClick={consultar}
-              className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-[var(--radius-btn)] bg-accent px-4 text-sm font-semibold text-ink"
+              className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-[var(--radius-btn)] bg-accent px-4 text-sm font-semibold text-on-accent"
             >
               Consultar
               <ArrowUpRight className="size-4" />
@@ -85,7 +85,7 @@ export default function InmobScene({ onAction }) {
         </div>
       </div>
 
-      <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-ink text-text-invert shadow-lift">
+      <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-dark-surface text-text-invert shadow-lift">
         <Chrome dark url="panel · crm" />
         <div className="flex-1 p-4">
           <p className="text-sm font-semibold">Mapa de la zona</p>
@@ -119,7 +119,7 @@ export default function InmobScene({ onAction }) {
                 </g>
               ))}
             </svg>
-            <span className="absolute left-2 top-2 rounded-full bg-ink/80 px-2 py-1 font-mono text-[10px] text-text-invert/70">
+            <span className="absolute left-2 top-2 rounded-full bg-dark-surface/80 px-2 py-1 font-mono text-[10px] text-text-invert/70">
               {prop.zona}
             </span>
           </div>

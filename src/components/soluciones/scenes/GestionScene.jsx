@@ -103,7 +103,7 @@ function Pipeline({ lead, avanzar, nuevaConsulta, actividad }) {
         right={
           <button
             onClick={nuevaConsulta}
-            className="inline-flex h-7 items-center gap-1.5 rounded-full bg-accent px-3 font-mono text-micro font-semibold text-ink"
+            className="inline-flex h-7 items-center gap-1.5 rounded-full bg-accent px-3 font-mono text-micro font-semibold text-on-accent"
           >
             <Plus className="size-3.5" />
             Nueva consulta
@@ -130,7 +130,7 @@ function Pipeline({ lead, avanzar, nuevaConsulta, actividad }) {
             {ETAPAS.map((e, i) => (
               <div key={e} className="flex flex-1 flex-col gap-1.5">
                 <div
-                  className={`h-1 rounded-full ${i <= lead.etapa ? "bg-[var(--color-acc-gestion)]" : "bg-ink/10"}`}
+                  className={`h-1 rounded-full ${i <= lead.etapa ? "bg-[var(--color-acc-gestion)]" : "bg-dark-surface/10"}`}
                 />
                 <span className={`hidden font-mono text-[10px] sm:block ${i <= lead.etapa ? "text-text" : "text-muted"}`}>
                   {e}
@@ -144,7 +144,7 @@ function Pipeline({ lead, avanzar, nuevaConsulta, actividad }) {
               onClick={avanzar}
               disabled={lead.etapa >= ETAPAS.length - 1}
               data-guiado="avanzar_etapa"
-              className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-[var(--radius-btn)] bg-ink text-sm font-semibold text-text-invert disabled:opacity-40"
+              className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-[var(--radius-btn)] bg-dark-surface text-sm font-semibold text-text-invert disabled:opacity-40"
             >
               Avanzar etapa
               <ChevronRight className="size-4" />
@@ -177,7 +177,7 @@ function Pipeline({ lead, avanzar, nuevaConsulta, actividad }) {
 
 function Tablero({ lead, tareas, moverTarea, asignar, cambiarFecha, controles }) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-ink text-text-invert shadow-lift">
+    <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-dark-surface text-text-invert shadow-lift">
       <Chrome dark url="panel · proyectos" />
       <div className="flex-1 p-4">
         <p className="text-sm font-semibold">Proyecto en curso</p>
@@ -301,7 +301,7 @@ function PortalCliente({ lead, tareas, actividad, notificar }) {
             </span>
           </div>
           <p className="mt-2 text-h4 text-text">{ETAPAS[lead.etapa]}</p>
-          <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-ink/10">
+          <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-dark-surface/10">
             <motion.div
               animate={{ width: `${((lead.etapa + 1) / ETAPAS.length) * 100}%` }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -328,7 +328,7 @@ function PortalCliente({ lead, tareas, actividad, notificar }) {
                   className="flex items-center justify-between gap-3 rounded-xl border border-line bg-paper px-3 py-2.5"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="grid size-8 place-items-center rounded-lg bg-accent-soft text-text">
+                    <span className="grid size-8 place-items-center rounded-lg bg-accent-soft text-on-accent-soft">
                       <FileText className="size-4" />
                     </span>
                     <div className="min-w-0">
@@ -377,7 +377,7 @@ function PortalCliente({ lead, tareas, actividad, notificar }) {
               onClick={enviar}
               disabled={!comentario.trim()}
               data-guiado="dejar_comentario"
-              className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-[var(--radius-btn)] bg-accent px-4 text-sm font-semibold text-ink disabled:opacity-40"
+              className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-[var(--radius-btn)] bg-accent px-4 text-sm font-semibold text-on-accent disabled:opacity-40"
             >
               <Send className="size-3.5" />
               Enviar

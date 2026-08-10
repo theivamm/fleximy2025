@@ -140,7 +140,7 @@ export default function PreguntasFrecuentes() {
                       setAbierta({})
                     }}
                     className={`rounded-full px-4 py-2 text-small transition-colors ${
-                      active ? "bg-ink text-text-invert" : "border border-line bg-paper text-muted hover:text-text"
+                      active ? "bg-dark-surface text-text-invert" : "border border-line bg-paper text-muted hover:text-text"
                     }`}
                   >
                     {cat.nombre}
@@ -252,9 +252,9 @@ export default function PreguntasFrecuentes() {
         </div>
       </section>
 
-      <section className="bg-ink text-text-invert">
+      <section className="bg-dark-surface text-text-invert">
         <div className="container-site py-24 text-center lg:py-32">
-          <p className="kicker justify-center" style={{ color: "rgba(244,243,238,0.55)" }}>
+          <p className="kicker justify-center" style={{ color: "rgba(245,246,255,0.55)" }}>
             ¿Dudas?
           </p>
           <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">¿Tu pregunta no está acá?</h2>

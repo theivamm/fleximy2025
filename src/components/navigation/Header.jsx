@@ -45,7 +45,7 @@ function MegaMenu({ open, onClose }) {
             key={industry.slug}
             to={industry.to}
             onClick={onClose}
-            className="flex items-start gap-3 rounded-xl px-4 py-3.5 transition-colors hover:bg-ink hover:text-text-invert group"
+            className="flex items-start gap-3 rounded-xl px-4 py-3.5 transition-colors hover:bg-dark-surface hover:text-text-invert group"
           >
             <IndustryIcon accent={industry.accent} />
             <span className="flex flex-col gap-0.5">
@@ -178,7 +178,7 @@ export default function Header() {
             <Link
               to="/contacto"
               data-track="cta_diagnostico"
-              className="hidden lg:inline-flex h-11 items-center gap-2 px-5 rounded-[var(--radius-btn)] bg-accent text-ink text-sm font-semibold transition-colors hover:bg-[color-mix(in_srgb,var(--color-accent)_85%,white)]"
+              className="hidden lg:inline-flex h-11 items-center gap-2 px-5 rounded-[var(--radius-btn)] bg-accent text-on-accent text-sm font-semibold transition-colors hover:bg-accent-hover"
             >
               {CONTACT.ctaPrimary}
             </Link>
@@ -266,7 +266,7 @@ export default function Header() {
               <Link
                 to="/contacto"
                 data-track="cta_diagnostico"
-                className="mt-3 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[var(--radius-btn)] bg-accent text-ink text-sm font-semibold"
+                className="mt-3 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[var(--radius-btn)] bg-accent text-on-accent text-sm font-semibold"
               >
                 {CONTACT.ctaPrimary}
               </Link>

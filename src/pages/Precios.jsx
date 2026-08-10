@@ -126,7 +126,7 @@ export default function Precios() {
             <ul className="mt-4 grid gap-2.5">
               {COSTOS_ADICIONALES.map((item) => (
                 <li key={item} className="flex items-start gap-3 rounded-xl border border-line bg-paper px-4 py-3 text-small text-muted">
-                  <span className="mt-1 size-2 shrink-0 rounded-full bg-ink/20" />
+                  <span className="mt-1 size-2 shrink-0 rounded-full bg-dark-surface/20" />
                   {item}
                 </li>
               ))}
@@ -179,9 +179,9 @@ export default function Precios() {
         </div>
       </section>
 
-      <section className="bg-ink text-text-invert">
+      <section className="bg-dark-surface text-text-invert">
         <div className="container-site py-24 text-center lg:py-32">
-          <p className="kicker justify-center" style={{ color: "rgba(244,243,238,0.55)" }}>
+          <p className="kicker justify-center" style={{ color: "rgba(245,246,255,0.55)" }}>
             Propuesta
           </p>
           <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">

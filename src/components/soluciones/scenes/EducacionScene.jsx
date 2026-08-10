@@ -62,7 +62,7 @@ export default function EducacionScene({ onAction }) {
                 <p className="text-sm font-semibold text-text">¿Arrancás en este curso?</p>
                 <button
                   onClick={inscribirse}
-                  className="inline-flex h-9 shrink-0 items-center gap-2 rounded-[var(--radius-btn)] bg-accent px-4 text-sm font-semibold text-ink"
+                  className="inline-flex h-9 shrink-0 items-center gap-2 rounded-[var(--radius-btn)] bg-accent px-4 text-sm font-semibold text-on-accent"
                 >
                   Inscribirme
                   <ArrowRightMini />
@@ -98,7 +98,7 @@ export default function EducacionScene({ onAction }) {
                       key={t.id}
                       onClick={() => setTab(t.id)}
                       className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-small transition-colors ${
-                        tab === t.id ? "bg-ink text-text-invert" : "border border-line bg-paper text-muted"
+                        tab === t.id ? "bg-dark-surface text-text-invert" : "border border-line bg-paper text-muted"
                       }`}
                     >
                       <Icon className="size-3.5" />
@@ -120,10 +120,10 @@ export default function EducacionScene({ onAction }) {
                       >
                         <span
                           className={`grid size-6 shrink-0 place-items-center rounded-full ${
-                            u.lista ? "bg-accent text-ink" : "bg-paper text-muted"
+                            u.lista ? "bg-accent text-on-accent" : "bg-paper text-on-accent"
                           }`}
                         >
-                          {u.lista ? <Check className="size-3.5" strokeWidth={3} /> : <span className="size-1.5 rounded-full bg-ink/30" />}
+                          {u.lista ? <Check className="size-3.5" strokeWidth={3} /> : <span className="size-1.5 rounded-full bg-dark-surface/30" />}
                         </span>
                         <span className={`text-small ${u.lista ? "text-text" : "text-muted"}`}>{u.nombre}</span>
                       </li>
@@ -152,7 +152,7 @@ export default function EducacionScene({ onAction }) {
                       {UNIDADES.map((u, i) => (
                         <div key={u.id} className="flex flex-col items-center gap-1 rounded-xl border border-line bg-paper py-2">
                           <span
-                            className={`size-2 rounded-full ${u.lista ? "bg-accent" : "bg-ink/15"}`}
+                            className={`size-2 rounded-full ${u.lista ? "bg-accent" : "bg-dark-surface/15"}`}
                           />
                           <span className="font-mono text-[10px] text-muted">{i + 1}</span>
                         </div>
@@ -172,7 +172,7 @@ export default function EducacionScene({ onAction }) {
                       onClick={entregar}
                       disabled={entregada}
                       className={`mt-4 inline-flex h-10 items-center gap-2 rounded-[var(--radius-btn)] px-4 text-sm font-semibold ${
-                        entregada ? "bg-ink-muted text-text-invert" : "bg-accent text-ink"
+                        entregada ? "bg-ink-muted text-text-invert" : "bg-accent text-on-accent"
                       }`}
                     >
                       {entregada ? (

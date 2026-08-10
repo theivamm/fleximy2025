@@ -55,7 +55,7 @@ export default function Confianza() {
               key={item.titulo}
               className="rounded-[var(--radius-card)] border border-line bg-paper-bright p-6"
             >
-              <span className="grid size-9 place-items-center rounded-lg bg-accent-soft text-ink">
+              <span className="grid size-9 place-items-center rounded-lg bg-accent-soft text-on-accent-soft">
                 <Icon className="size-4" />
               </span>
               <h3 className="mt-4 text-h4">{item.titulo}</h3>

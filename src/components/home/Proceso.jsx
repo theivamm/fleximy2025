@@ -57,11 +57,11 @@ export default function Proceso() {
   }, [])
 
   return (
-    <section className="bg-ink py-20 text-text-invert lg:py-28">
+    <section className="bg-dark-surface py-20 text-text-invert lg:py-28">
       <div className="container-site">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
-            <p className="kicker" style={{ color: "rgba(244,243,238,0.55)" }}>
+            <p className="kicker" style={{ color: "rgba(245,246,255,0.55)" }}>
               Cómo funciona
             </p>
             <h2 className="mt-4 text-h1">
@@ -78,12 +78,12 @@ export default function Proceso() {
           className="mt-14 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-line-dark lg:grid-cols-4"
         >
           {PASOS.map((paso) => (
-            <div key={paso.num} className="flex flex-col gap-4 bg-ink p-6 lg:p-8">
+            <div key={paso.num} className="flex flex-col gap-4 bg-dark-surface p-6 lg:p-8">
               <span className="font-mono text-micro text-cyan">{paso.num}</span>
               <h3 className="text-h4">{paso.titulo}</h3>
               <p className="text-small text-text-invert/65">{paso.detalle}</p>
               {paso.tag && (
-                <span className="mt-auto w-fit rounded-full bg-accent px-3 py-1 font-mono text-micro text-ink">
+                <span className="mt-auto w-fit rounded-full bg-accent px-3 py-1 font-mono text-micro text-on-accent">
                   {paso.tag}
                 </span>
               )}

@@ -21,9 +21,9 @@ const SCENES = {
 }
 
 const ESTADO_BADGE = {
-  disponible: { label: "Disponible", tone: "bg-accent text-ink" },
-  guiado: { label: "Recorrido guiado", tone: "bg-cyan/15 text-cyan" },
-  proximamente: { label: "Próximamente", tone: "bg-ink/10 text-muted" },
+  disponible: { label: "Disponible", tone: "bg-accent text-on-accent" },
+  guiado: { label: "Recorrido guiado", tone: "bg-cyan/15 text-cyan-deep" },
+  proximamente: { label: "Próximamente", tone: "bg-dark-surface/10 text-muted" },
 }
 
 export default function DemoLab({ demo, onExit }) {
@@ -124,7 +124,7 @@ export default function DemoLab({ demo, onExit }) {
                   role="tab"
                   aria-selected={modo === m}
                   className={`rounded-full px-3 py-1.5 font-mono text-micro transition-colors ${
-                    modo === m ? "bg-ink text-text-invert" : "text-muted hover:text-text"
+                    modo === m ? "bg-dark-surface text-text-invert" : "text-muted hover:text-text"
                   }`}
                 >
                   {m === "cliente" ? "Cliente" : "Equipo"}
@@ -175,7 +175,7 @@ export default function DemoLab({ demo, onExit }) {
                 {hechos} de {pasos.length} acciones
               </span>
             </div>
-            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-ink/10">
+            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-dark-surface/10">
               <motion.div
                 animate={{ width: `${progreso}%` }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
@@ -209,9 +209,9 @@ export default function DemoLab({ demo, onExit }) {
 
         {guiado && demo.guia && pasoGuia && (
           <div className="pointer-events-none absolute inset-0 z-20 flex items-end justify-center p-4 lg:items-start lg:justify-end lg:p-6">
-            <div className="pointer-events-auto w-full max-w-md rounded-2xl border border-line-dark bg-ink p-4 text-text-invert shadow-lift">
+            <div className="pointer-events-auto w-full max-w-md rounded-2xl border border-line-dark bg-dark-surface p-4 text-text-invert shadow-lift">
               <div className="flex items-center justify-between gap-3">
-                <p className="font-mono text-micro text-accent">
+                <p className="font-mono text-micro text-accent-on-dark">
                   Recorrido guiado · paso {guiadoPaso + 1} de {demo.guia.length}
                 </p>
                 <button
@@ -243,7 +243,7 @@ export default function DemoLab({ demo, onExit }) {
                   </button>
                   <button
                     onClick={avanzarGuia}
-                    className="inline-flex h-8 items-center gap-1.5 rounded-[var(--radius-btn)] bg-accent px-3 font-mono text-micro font-semibold text-ink"
+                    className="inline-flex h-8 items-center gap-1.5 rounded-[var(--radius-btn)] bg-accent px-3 font-mono text-micro font-semibold text-on-accent"
                   >
                     {guiadoPaso >= demo.guia.length - 1 ? "Terminar" : "Siguiente"}
                     <ArrowRight className="size-3.5" />

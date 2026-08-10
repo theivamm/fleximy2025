@@ -8,7 +8,7 @@ const BENEFICIOS = [
 
 export default function Franja() {
   return (
-    <section className="bg-ink text-text-invert">
+    <section className="bg-dark-surface text-text-invert">
       <div className="container-site py-14 lg:py-16">
         <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
           <h2 className="max-w-[34ch] text-h3">

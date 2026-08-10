@@ -75,9 +75,9 @@ export default function Nosotros() {
                 Encontraban sistemas rígidos, costosos o sobredimensionados para su realidad.
               </p>
             </div>
-            <div className="rounded-[var(--radius-card)] border border-line bg-ink p-6 text-text-invert lg:p-8">
+            <div className="rounded-[var(--radius-card)] border border-line bg-dark-surface p-6 text-text-invert lg:p-8">
               <p className="font-mono text-micro text-text-invert/60">en el medio</p>
-              <p className="mt-3 text-h3 text-accent">Fleximy conecta ambos mundos</p>
+              <p className="mt-3 text-h3 text-accent-on-dark">Fleximy conecta ambos mundos</p>
               <p className="mt-3 text-small text-text-invert/80">
                 Una experiencia profesional para el cliente y herramientas simples para el equipo
                 que gestiona el negocio.
@@ -116,8 +116,8 @@ export default function Nosotros() {
               <p className="mt-3 text-small text-muted">{p.texto}</p>
             </div>
           ))}
-          <div className="flex flex-col justify-between gap-4 bg-ink p-6 text-text-invert lg:p-8">
-            <p className="text-h4 text-accent">¿Cómo se nota en la práctica?</p>
+          <div className="flex flex-col justify-between gap-4 bg-dark-surface p-6 text-text-invert lg:p-8">
+            <p className="text-h4 text-accent-on-dark">¿Cómo se nota en la práctica?</p>
             <p className="text-small text-text-invert/75">
               En cada proyecto hay un alcance documentado, una persona que valida y una primera
               versión que se puede medir.
@@ -162,7 +162,7 @@ export default function Nosotros() {
             <ul className="mt-6 grid gap-2.5">
               {["Años de experiencia combinada.", "Proyectos implementados.", "Industrias atendidas.", "Partners y tecnologías relevantes."].map((t) => (
                 <li key={t} className="flex items-start gap-3 text-small text-muted">
-                  <span className="mt-1 size-2 shrink-0 rounded-full bg-ink/20" />
+                  <span className="mt-1 size-2 shrink-0 rounded-full bg-dark-surface/20" />
                   {t}
                 </li>
               ))}
@@ -171,11 +171,11 @@ export default function Nosotros() {
         </div>
       </section>
 
-      <section id="como-trabajamos" className="bg-ink py-20 text-text-invert lg:py-28">
+      <section id="como-trabajamos" className="bg-dark-surface py-20 text-text-invert lg:py-28">
         <div className="container-site">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div className="max-w-2xl">
-              <p className="kicker" style={{ color: "rgba(244,243,238,0.55)" }}>
+              <p className="kicker" style={{ color: "rgba(245,246,255,0.55)" }}>
                 Cómo trabajamos
               </p>
               <h2 className="mt-4 text-h1">Un orden simple que se cumple</h2>
@@ -188,7 +188,7 @@ export default function Nosotros() {
           <ol className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-line-dark sm:grid-cols-2 lg:grid-cols-3">
             {COMO_TRABAJAMOS.map((paso, i) => (
               <li key={paso} className="flex items-start gap-4 bg-ink-soft p-6">
-                <span className="font-mono text-micro text-accent">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-mono text-micro text-accent-on-dark">{String(i + 1).padStart(2, "0")}</span>
                 <span className="text-small text-text-invert/85">{paso}</span>
               </li>
             ))}
@@ -196,9 +196,9 @@ export default function Nosotros() {
         </div>
       </section>
 
-      <section className="bg-ink text-text-invert">
+      <section className="bg-dark-surface text-text-invert">
         <div className="container-site py-24 text-center lg:py-32">
-          <p className="kicker justify-center" style={{ color: "rgba(244,243,238,0.55)" }}>
+          <p className="kicker justify-center" style={{ color: "rgba(245,246,255,0.55)" }}>
             Conversemos
           </p>
           <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">

@@ -65,7 +65,7 @@ export default function Recursos() {
         <article className="grid overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper-bright lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
           <div className="flex flex-col justify-center gap-4 p-8 lg:p-14">
             <div className="flex items-center gap-2">
-              <span className="grid size-8 place-items-center rounded-lg bg-accent text-ink">
+              <span className="grid size-8 place-items-center rounded-lg bg-accent text-on-accent">
                 <FormatoDestacado className="size-4" />
               </span>
               <span className="font-mono text-micro text-muted">recurso destacado · {destacado.categoria}</span>
@@ -74,11 +74,11 @@ export default function Recursos() {
             <p className="max-w-[48ch] text-lead text-muted">{destacado.descripcion}</p>
             <div className="mt-2 flex items-center gap-3 font-mono text-micro text-muted">
               <span>lectura {destacado.lectura}</span>
-              <span className="size-1 rounded-full bg-ink/20" />
+              <span className="size-1 rounded-full bg-dark-surface/20" />
               <span>en preparación</span>
             </div>
           </div>
-          <div className="grid place-items-center border-t border-line bg-ink p-8 text-text-invert lg:border-l lg:border-t-0">
+          <div className="grid place-items-center border-t border-line bg-dark-surface p-8 text-text-invert lg:border-l lg:border-t-0">
             <div className="text-center">
               <p className="font-mono text-micro text-text-invert/60">próximamente</p>
               <p className="mt-3 max-w-[24ch] text-h4">
@@ -97,7 +97,7 @@ export default function Recursos() {
             <button
               onClick={() => setFiltro("todas")}
               className={`rounded-full px-4 py-2 text-small transition-colors ${
-                filtro === "todas" ? "bg-ink text-text-invert" : "border border-line bg-paper text-muted hover:text-text"
+                filtro === "todas" ? "bg-dark-surface text-text-invert" : "border border-line bg-paper text-muted hover:text-text"
               }`}
             >
               Todas
@@ -107,7 +107,7 @@ export default function Recursos() {
                 key={cat}
                 onClick={() => setFiltro(cat)}
                 className={`rounded-full px-4 py-2 text-small transition-colors ${
-                  filtro === cat ? "bg-ink text-text-invert" : "border border-line bg-paper text-muted hover:text-text"
+                  filtro === cat ? "bg-dark-surface text-text-invert" : "border border-line bg-paper text-muted hover:text-text"
                 }`}
               >
                 {cat}
@@ -162,10 +162,10 @@ export default function Recursos() {
         </div>
       </section>
 
-      <section className="bg-ink py-20 text-text-invert lg:py-28">
+      <section className="bg-dark-surface py-20 text-text-invert lg:py-28">
         <div className="container-site grid items-center gap-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)]">
           <div>
-            <p className="kicker" style={{ color: "rgba(244,243,238,0.55)" }}>
+            <p className="kicker" style={{ color: "rgba(245,246,255,0.55)" }}>
               Casos de uso
             </p>
             <h2 className="mt-4 max-w-[16ch] text-h1">La teoría puesta en una operación concreta</h2>
@@ -182,7 +182,7 @@ export default function Recursos() {
           </div>
           <div className="grid place-items-center rounded-[var(--radius-card)] border border-line-dark bg-ink-soft p-8 text-center">
             <p className="font-mono text-micro text-text-invert/60">escenarios ilustrativos</p>
-            <p className="mt-3 text-h4 text-accent">no representan clientes reales</p>
+            <p className="mt-3 text-h4 text-accent-on-dark">no representan clientes reales</p>
             <p className="mt-3 font-mono text-micro text-text-invert/60">salvo identificación expresa</p>
           </div>
         </div>
@@ -218,16 +218,16 @@ export default function Recursos() {
           </div>
           <div className="flex items-center justify-between gap-4 rounded-[var(--radius-card)] border border-line bg-paper p-6">
             <p className="text-small text-muted">Suscribite cuando esté disponible</p>
-            <span className="rounded-full bg-ink px-4 py-2 font-mono text-micro text-text-invert">
+            <span className="rounded-full bg-dark-surface px-4 py-2 font-mono text-micro text-text-invert">
               próximo lanzamiento
             </span>
           </div>
         </div>
       </section>
 
-      <section className="bg-ink text-text-invert">
+      <section className="bg-dark-surface text-text-invert">
         <div className="container-site py-24 text-center lg:py-32">
-          <p className="kicker justify-center" style={{ color: "rgba(244,243,238,0.55)" }}>
+          <p className="kicker justify-center" style={{ color: "rgba(245,246,255,0.55)" }}>
             Aplicar una idea
           </p>
           <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">

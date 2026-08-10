@@ -129,7 +129,7 @@ function ReservaCliente({
                 notificar("elegir_servicio")
               }}
               className={`rounded-full px-3 py-1.5 text-small transition-colors ${
-                servicio === s.id ? "bg-ink text-text-invert" : "border border-line bg-paper text-muted"
+                servicio === s.id ? "bg-dark-surface text-text-invert" : "border border-line bg-paper text-muted"
               }`}
             >
               {s.nombre} · {s.duracion}
@@ -147,7 +147,7 @@ function ReservaCliente({
                 notificar("elegir_profesional")
               }}
               className={`rounded-full px-4 py-1.5 text-small transition-colors ${
-                profesional === p.id ? "bg-ink text-text-invert" : "border border-line bg-paper text-muted"
+                profesional === p.id ? "bg-dark-surface text-text-invert" : "border border-line bg-paper text-muted"
               }`}
             >
               {p.nombre}
@@ -162,7 +162,7 @@ function ReservaCliente({
               key={d.id}
               onClick={() => setDia(d.id)}
               className={`flex flex-col items-center rounded-xl border py-2 transition-colors ${
-                dia === d.id ? "border-ink bg-ink text-text-invert" : "border-line bg-paper text-muted"
+                dia === d.id ? "border-ink bg-dark-surface text-text-invert" : "border-line bg-paper text-muted"
               }`}
             >
               <span className="font-mono text-micro">{d.dia}</span>
@@ -197,7 +197,7 @@ function ReservaCliente({
           <span className="text-small font-medium text-text">
             {elegido.nombre} · {PROFESIONALES.find((p) => p.id === profesional).nombre}
           </span>
-          <span className="grid size-7 place-items-center rounded-full bg-accent text-ink">
+          <span className="grid size-7 place-items-center rounded-full bg-accent text-on-accent">
             <ChevronRight className="size-4" />
           </span>
         </div>
@@ -217,7 +217,7 @@ function AgendaProfesional({ reservados, bloqueados, controles, bloquear, reprog
   const total = items.length + bloqueados.length
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-ink text-text-invert shadow-lift">
+    <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-dark-surface text-text-invert shadow-lift">
       <Chrome
         dark
         url="panel · agenda profesional"
@@ -325,7 +325,7 @@ function AgendaProfesional({ reservados, bloqueados, controles, bloquear, reprog
                 className="flex items-center justify-between gap-3 rounded-xl border border-dashed border-line-dark bg-ink-muted px-3 py-2.5"
               >
                 <div className="flex items-center gap-3">
-                  <span className="grid size-9 place-items-center rounded-lg bg-ink text-text-invert/50">
+                  <span className="grid size-9 place-items-center rounded-lg bg-dark-surface text-text-invert/50">
                     <Lock className="size-4" />
                   </span>
                   <div>

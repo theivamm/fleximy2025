@@ -8,10 +8,10 @@ const sizeClasses = {
 
 const variantClasses = {
   primary:
-    "bg-accent text-ink hover:bg-[color-mix(in_srgb,var(--color-accent)_85%,white)] border border-transparent",
+    "bg-accent text-on-accent hover:bg-accent-hover active:bg-accent-dark border border-transparent",
   secondary:
     "border border-line bg-paper-bright text-text hover:border-ink/30 hover:bg-paper-bright/70",
-  dark: "bg-ink text-text-invert border border-line-dark hover:bg-ink-soft",
+  dark: "bg-dark-surface text-text-invert border border-line-dark hover:bg-dark-surface-alt",
   text: "border border-transparent text-text hover:text-ink/70 underline-offset-4 hover:underline",
 }
 

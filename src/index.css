@@ -116,7 +116,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #f8fafc;
+    background-color: var(--color-paper);
   }
   html.dark {
     background-color: #020617;
@@ -125,12 +125,12 @@
     @apply font-sans antialiased;
   }
   ::selection {
-    background-color: #6366f1;
-    color: #ffffff;
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
   }
   ::-moz-selection {
-    background-color: #6366f1;
-    color: #ffffff;
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
   }
 }
 

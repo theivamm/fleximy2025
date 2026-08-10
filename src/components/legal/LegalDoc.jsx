@@ -68,7 +68,7 @@ export default function LegalDoc({ doc }) {
             </button>
           </div>
 
-          <p className="mt-6 max-w-[60ch] rounded-xl border border-line bg-accent-soft px-4 py-3 text-small text-text">
+          <p className="mt-6 max-w-[60ch] rounded-xl border border-line bg-accent-soft px-4 py-3 text-small text-on-accent-soft">
             {LEGAL_NOTA}
           </p>
         </div>

@@ -74,7 +74,7 @@ export default function Seguridad() {
                   <div className="group flex-1 rounded-[var(--radius-card)] border border-line bg-paper p-5 transition-colors hover:border-ink/30">
                     <div className="flex items-center justify-between">
                       <span className="font-mono text-micro text-muted">capa {capa.n}</span>
-                      <span className="grid size-8 place-items-center rounded-lg bg-accent-soft text-ink">
+                      <span className="grid size-8 place-items-center rounded-lg bg-accent-soft text-on-accent-soft">
                         <Icon className="size-4" />
                       </span>
                     </div>
@@ -243,9 +243,9 @@ export default function Seguridad() {
         </div>
       </section>
 
-      <section className="bg-ink text-text-invert">
+      <section className="bg-dark-surface text-text-invert">
         <div className="container-site py-24 text-center lg:py-32">
-          <p className="kicker justify-center" style={{ color: "rgba(244,243,238,0.55)" }}>
+          <p className="kicker justify-center" style={{ color: "rgba(245,246,255,0.55)" }}>
             Requisitos
           </p>
           <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">

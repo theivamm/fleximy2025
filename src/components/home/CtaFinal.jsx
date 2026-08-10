@@ -3,9 +3,9 @@ import { CONTACT } from "../../data/navigation"
 
 export default function CtaFinal() {
   return (
-    <section className="bg-ink text-text-invert">
+    <section className="bg-dark-surface text-text-invert">
       <div className="container-narrow py-24 text-center lg:py-32">
-        <p className="kicker justify-center" style={{ color: "rgba(244,243,238,0.55)" }}>
+        <p className="kicker justify-center" style={{ color: "rgba(245,246,255,0.55)" }}>
           Empecemos
         </p>
         <h2 className="mx-auto mt-4 max-w-[16ch] text-h1">

@@ -34,10 +34,10 @@ export default function SelectorIndustrias() {
   const Icon = ICONS[ind.slug]
 
   return (
-    <section className="bg-ink py-20 text-text-invert lg:py-28">
+    <section className="bg-dark-surface py-20 text-text-invert lg:py-28">
       <div className="container-site">
         <div className="max-w-2xl">
-          <p className="kicker" style={{ color: "rgba(244,243,238,0.55)" }}>
+          <p className="kicker" style={{ color: "rgba(245,246,255,0.55)" }}>
             Soluciones por rubro
           </p>
           <h2 className="mt-4 text-h1">Una base diseñada para tu tipo de negocio</h2>
@@ -87,9 +87,9 @@ export default function SelectorIndustrias() {
               className="overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-paper-bright text-text shadow-lift"
             >
               <div className="flex items-center gap-1.5 border-b border-line px-4 py-2.5">
-                <span className="size-2.5 rounded-full bg-ink/15" />
-                <span className="size-2.5 rounded-full bg-ink/15" />
-                <span className="size-2.5 rounded-full bg-ink/15" />
+                <span className="size-2.5 rounded-full bg-dark-surface/15" />
+                <span className="size-2.5 rounded-full bg-dark-surface/15" />
+                <span className="size-2.5 rounded-full bg-dark-surface/15" />
                 <span className="ml-2 flex-1 truncate rounded-md bg-paper px-2 py-1 font-mono text-micro text-muted">
                   fleximy.app/{ind.slug}
                 </span>
@@ -99,7 +99,7 @@ export default function SelectorIndustrias() {
                 <div className="flex items-center gap-3">
                   <span
                     className="grid size-11 shrink-0 place-items-center rounded-xl"
-                    style={{ backgroundColor: ind.accent, color: "#151714" }}
+                    style={{ backgroundColor: ind.accent, color: "var(--color-ink)" }}
                   >
                     <Icon className="size-5" />
                   </span>

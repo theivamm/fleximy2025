@@ -54,7 +54,7 @@ export default function GraciasDiagnostico() {
           <motion.div {...animProps} variants={container}>
             <motion.span
               variants={item}
-              className="mx-auto grid size-16 place-items-center rounded-2xl bg-accent text-ink"
+              className="mx-auto grid size-16 place-items-center rounded-2xl bg-accent text-on-accent"
             >
               <motion.span
                 initial={reduce ? false : { scale: 0.6, opacity: 0 }}
@@ -97,7 +97,7 @@ export default function GraciasDiagnostico() {
               className="flex flex-col justify-between rounded-[var(--radius-card)] border border-line bg-paper p-6 lg:p-8"
             >
               <div>
-                <span className="grid size-11 place-items-center rounded-xl bg-accent text-ink">
+                <span className="grid size-11 place-items-center rounded-xl bg-accent text-on-accent">
                   <Play className="size-5" />
                 </span>
                 <h2 className="mt-5 text-h3">Mirá Fleximy en acción</h2>
@@ -141,7 +141,7 @@ export default function GraciasDiagnostico() {
               className="flex flex-col justify-between rounded-[var(--radius-card)] border border-line bg-paper p-6 lg:p-8"
             >
               <div>
-                <span className="grid size-11 place-items-center rounded-xl bg-ink text-text-invert">
+                <span className="grid size-11 place-items-center rounded-xl bg-dark-surface text-text-invert">
                   <MessageCircle className="size-5" />
                 </span>
                 <h2 className="mt-5 text-h3">¿Tu consulta es urgente?</h2>

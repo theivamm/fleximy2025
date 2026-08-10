@@ -64,7 +64,7 @@ function ChipGroup({ options, value, onChange, name }) {
             onClick={() => onChange(active ? "" : opt)}
             className={`rounded-full border px-4 py-2 text-small transition-colors ${
               active
-                ? "border-ink bg-ink text-text-invert"
+                ? "border-ink bg-dark-surface text-text-invert"
                 : "border-line bg-paper text-muted hover:text-text"
             }`}
           >
@@ -214,7 +214,7 @@ export default function Contacto() {
               </p>
               <p className="font-mono text-micro text-muted">menos de 3 minutos</p>
             </div>
-            <div className="mt-2 h-1 overflow-hidden rounded-full bg-ink/10">
+            <div className="mt-2 h-1 overflow-hidden rounded-full bg-dark-surface/10">
               <div
                 className="h-full rounded-full bg-accent transition-all duration-500"
                 style={{ width: `${(paso / TOTAL_STEPS) * 100}%` }}
@@ -371,7 +371,7 @@ export default function Contacto() {
                             type="checkbox"
                             checked={form.consentimiento}
                             onChange={set("consentimiento")}
-                            className="mt-0.5 size-4 shrink-0 accent-[var(--color-ink)]"
+                            className="mt-0.5 size-4 shrink-0 accent-[var(--color-accent)]"
                           />
                           <span className="text-small text-text">
                             Acepto que Fleximy use estos datos para responder mi consulta y preparar
@@ -497,7 +497,7 @@ export default function Contacto() {
               rel="noopener noreferrer"
               className="group flex items-center gap-4 rounded-[var(--radius-card)] border border-line bg-paper p-6 transition-colors hover:border-ink/30"
             >
-              <span className="grid size-11 place-items-center rounded-xl bg-accent text-ink">
+              <span className="grid size-11 place-items-center rounded-xl bg-accent text-on-accent">
                 <MessageCircle className="size-5" />
               </span>
               <span>
@@ -518,7 +518,7 @@ export default function Contacto() {
               href="mailto:[EMAIL COMERCIAL REAL]"
               className="group flex items-center gap-4 rounded-[var(--radius-card)] border border-line bg-paper p-6 transition-colors hover:border-ink/30"
             >
-              <span className="grid size-11 place-items-center rounded-xl bg-ink/10 text-ink">
+              <span className="grid size-11 place-items-center rounded-xl bg-dark-surface/10 text-ink">
                 <Mail className="size-5" />
               </span>
               <span>

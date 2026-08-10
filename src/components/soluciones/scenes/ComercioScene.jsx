@@ -63,7 +63,7 @@ function FichaPublica({ precio, disponible, stock }) {
           </motion.p>
           <button
             disabled={!disponible}
-            className="mt-3 inline-flex h-10 items-center justify-center gap-2 rounded-[var(--radius-btn)] bg-accent text-sm font-semibold text-ink disabled:opacity-40"
+            className="mt-3 inline-flex h-10 items-center justify-center gap-2 rounded-[var(--radius-btn)] bg-accent text-sm font-semibold text-on-accent disabled:opacity-40"
           >
             <ShoppingCart className="size-4" />
             Consultar / Comprar
@@ -95,7 +95,7 @@ function BiciGeometrica() {
 
 function PanelEdicion({ precio, setPrecio, stock, setStock, agotado, setAgotado, guardar, guardado, onAction }) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-ink text-text-invert shadow-lift">
+    <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-dark-surface text-text-invert shadow-lift">
       <Chrome
         dark
         url="panel · editar producto"
@@ -163,14 +163,14 @@ function PanelEdicion({ precio, setPrecio, stock, setStock, agotado, setAgotado,
             className={`relative h-6 w-11 rounded-full transition-colors ${agotado ? "bg-accent" : "bg-ink-muted"}`}
           >
             <span
-              className={`absolute top-1 size-4 rounded-full bg-ink transition-all ${agotado ? "left-6" : "left-1"}`}
+              className={`absolute top-1 size-4 rounded-full bg-dark-surface transition-all ${agotado ? "left-6" : "left-1"}`}
             />
           </button>
         </label>
 
         <button
           onClick={guardar}
-          className="mt-auto inline-flex h-11 items-center justify-center gap-2 rounded-[var(--radius-btn)] bg-accent font-semibold text-ink"
+          className="mt-auto inline-flex h-11 items-center justify-center gap-2 rounded-[var(--radius-btn)] bg-accent font-semibold text-on-accent"
         >
           Guardar cambios
         </button>

@@ -23,11 +23,11 @@ export function Chrome({ url, dark = false, right }) {
 }
 
 const TONES = {
-  nueva: "bg-accent text-ink",
+  nueva: "bg-accent text-on-accent",
   activo: "bg-cyan/15 text-cyan",
   listo: "bg-ink-muted text-text-invert",
-  gris: "bg-ink/10 text-muted",
-  vivo: "bg-accent text-ink",
+  gris: "bg-dark-surface/10 text-muted",
+  vivo: "bg-accent text-on-accent",
   espera: "bg-ink-muted text-text-invert",
 }
 
@@ -36,7 +36,7 @@ export function Status({ tone = "gris", children, dark = false }) {
     ? tone === "activo"
       ? "bg-cyan/15 text-cyan"
       : tone === "nueva"
-        ? "bg-accent text-ink"
+        ? "bg-accent text-on-accent"
         : "bg-ink-muted text-text-invert"
     : TONES[tone] || TONES.gris
   return (
@@ -50,7 +50,7 @@ export function CheckDot({ accent = "var(--color-accent)" }) {
   return (
     <span
       className="grid size-5 shrink-0 place-items-center rounded-full text-[10px] font-bold"
-      style={{ backgroundColor: accent, color: "#151714" }}
+      style={{ backgroundColor: accent, color: "var(--color-ink)" }}
     >
       <Check className="size-3" strokeWidth={3} />
     </span>

@@ -120,7 +120,7 @@ export default function NotFound() {
           data-track="404_cta"
           data-track-props='{"cta":"volver_al_inicio"}'
           className={`inline-flex h-12 items-center gap-2 rounded-[var(--radius-btn)] px-6 text-sm font-semibold transition-all ${
-            reconectado ? "bg-accent text-ink shadow-lift" : "bg-accent text-ink"
+            reconectado ? "bg-accent text-on-accent shadow-lift" : "bg-accent text-on-accent"
           }`}
         >
           <ArrowLeft size={16} />
