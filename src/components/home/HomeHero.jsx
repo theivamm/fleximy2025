@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Button from "../ui/Button"
-import SimuladorHero from "./SimuladorHero"
+import SistemaVivo from "./SistemaVivo"
 import { CONTACT } from "../../data/navigation"
 
 gsap.registerPlugin(ScrollTrigger)
@@ -17,14 +17,14 @@ export default function HomeHero() {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
       tl.fromTo(
         ".hero-line-inner",
-        { yPercent: 110 },
-        { yPercent: 0, duration: 1, stagger: 0.14, ease: "power4.out" }
+        { yPercent: 112 },
+        { yPercent: 0, duration: 1.05, stagger: 0.12, ease: "power4.out" }
       )
         .fromTo(
-          ".hero-operar",
-          { color: "var(--color-cyan)" },
-          { color: "var(--color-cyan-deep)", duration: 0.8, ease: "power2.out" },
-          "-=0.4"
+          ".hero-em",
+          { backgroundSize: "0% 0.2em" },
+          { backgroundSize: "100% 0.2em", duration: 0.7, ease: "power2.out" },
+          "-=0.45"
         )
         .fromTo(
           ".hero-fade",
@@ -33,14 +33,14 @@ export default function HomeHero() {
           "-=0.5"
         )
         .fromTo(
-          ".hero-sim",
-          { opacity: 0, y: 40 },
+          ".hero-stage",
+          { opacity: 0, y: 46 },
           { opacity: 1, y: 0, duration: 0.9 },
           "-=0.5"
         )
 
-      gsap.to(".hero-sim", {
-        yPercent: 6,
+      gsap.to(".hero-stage", {
+        yPercent: 4,
         ease: "none",
         scrollTrigger: {
           trigger: root.current,
@@ -55,24 +55,32 @@ export default function HomeHero() {
   }, [])
 
   return (
-    <section ref={root} className="relative overflow-hidden pb-20 pt-28 lg:pb-28 lg:pt-36">
+    <section ref={root} className="relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute inset-x-0 top-0 h-[70vh] bg-gradient-to-b from-bg-secondary via-transparent to-transparent" />
+        <div className="absolute inset-0 grid-pattern opacity-60 [mask-image:linear-gradient(to_bottom,black,transparent_70%)]" />
+      </div>
+
       <div className="container-site">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_1fr] lg:items-center">
+        <p className="kicker">Fleximy — Sitio web operativo para PyMEs</p>
+
+        <h1 className="mt-6 text-hero text-ink-primary">
+          <span className="block overflow-hidden pb-[0.08em]">
+            <span className="hero-line-inner block">Tu web también</span>
+          </span>
+          <span className="block overflow-hidden pb-[0.1em]">
+            <span className="hero-line-inner block">puede <em className="hero-em not-italic text-primary">operar</em></span>
+          </span>
+          <span className="block overflow-hidden pb-[0.08em]">
+            <span className="hero-line-inner block">tu negocio.</span>
+          </span>
+        </h1>
+
+        <div className="mt-10 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
-            <p className="hero-fade kicker">Fleximy — Sitio web operativo para PyMEs</p>
-            <h1 className="mt-6 text-hero text-text">
-              <span className="block overflow-hidden pb-[0.08em]">
-                <span className="hero-line-inner block">Tu web también puede</span>
-              </span>
-              <span className="block overflow-hidden pb-[0.08em]">
-                <span className="hero-line-inner block">
-                  <span className="hero-operar text-cyan-deep">operar</span> tu negocio
-                </span>
-              </span>
-            </h1>
-            <p className="hero-fade mt-6 max-w-[52ch] text-lead text-muted">
-              Una web que recibe consultas y un panel que las convierte en trabajo ordenado. Elegí
-              una base para tu rubro y la adaptamos a cómo trabaja tu equipo.
+            <p className="hero-fade max-w-[52ch] text-lead text-ink-secondary">
+              Cada consulta que entra por tu web se estructura sola: se registra, se clasifica y
+              llega ordenada a tu panel, lista para responder y convertir.
             </p>
             <div className="hero-fade mt-8 flex flex-wrap gap-3">
               <Button to="/contacto" size="lg" data-track="cta_diagnostico">
@@ -82,13 +90,34 @@ export default function HomeHero() {
                 {CONTACT.ctaSecondary}
               </Button>
             </div>
-            <p className="hero-fade mt-4 font-mono text-micro text-muted">
+            <p className="hero-fade mt-4 font-mono text-micro text-ink-muted">
               diagnóstico gratuito · sin permanencia · sin compromiso
             </p>
           </div>
 
-          <div className="hero-sim">
-            <SimuladorHero />
+          <div className="hero-fade flex flex-wrap gap-x-8 gap-y-3 lg:justify-end">
+            {[
+              { n: "1", t: "consulta entra" },
+              { n: "2", t: "se estructura sola" },
+              { n: "3", t: "responde en el panel" },
+            ].map((s) => (
+              <span key={s.n} className="flex items-center gap-2.5">
+                <span className="grid size-6 place-items-center rounded-full border border-outline-strong font-mono text-micro text-ink-primary">
+                  {s.n}
+                </span>
+                <span className="font-mono text-micro text-ink-secondary">{s.t}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="hero-stage mt-14 lg:mt-16">
+          <div className="flex items-center gap-4">
+            <span className="font-mono text-micro text-ink-muted">escenario · el viaje de una consulta</span>
+            <span aria-hidden="true" className="h-px flex-1 bg-outline" />
+          </div>
+          <div className="mt-5">
+            <SistemaVivo />
           </div>
         </div>
       </div>

@@ -21,15 +21,15 @@ const PUNTOS = [
 
 export default function PrecioIntro() {
   return (
-    <section className="container-site py-20 lg:py-28">
-      <div className="rounded-[calc(var(--radius-card)*1.5)] border border-line bg-paper-bright px-8 py-14 lg:px-16 lg:py-20">
+    <section className="container-site py-24 lg:py-32">
+      <div className="rounded-[calc(var(--radius-card)*1.5)] border border-outline bg-surface px-8 py-14 shadow-[var(--shadow-lift)] lg:px-16 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="kicker">Precios</p>
-            <h2 className="mt-4 text-h1">
-              Una base clara y un alcance definido antes de comenzar
+            <h2 className="mt-5 text-h1">
+              Una base clara y un alcance definido <span className="text-primary">antes de comenzar</span>
             </h2>
-            <p className="mt-5 max-w-[40ch] text-lead text-muted">
+            <p className="mt-5 max-w-[40ch] text-lead text-ink-secondary">
               Sabés qué se va a hacer y cuánto sale antes de empezar. Sin cargos ocultos ni
               permanencia.
             </p>
@@ -45,9 +45,9 @@ export default function PrecioIntro() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             {PUNTOS.map((p) => (
-              <div key={p.titulo} className="rounded-2xl border border-line bg-paper p-5">
-                <h3 className="text-h4">{p.titulo}</h3>
-                <p className="mt-2 text-small text-muted">{p.detalle}</p>
+              <div key={p.titulo} className="rounded-2xl border border-outline bg-bg-secondary p-5">
+                <h3 className="text-h4 text-ink-primary">{p.titulo}</h3>
+                <p className="mt-2 text-small text-ink-secondary">{p.detalle}</p>
               </div>
             ))}
           </div>

@@ -1,25 +1,17 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import {
-  ArrowUpRight,
-  Utensils,
-  CalendarClock,
-  LayoutDashboard,
-  ShoppingCart,
-  Building2,
-  GraduationCap,
-  Wrench,
-} from "lucide-react"
+import { AnimatePresence, motion } from "framer-motion"
+import { ArrowUpRight, Check } from "lucide-react"
 import { INDUSTRIES } from "../../data/industries"
 
-const ICONS = {
-  gastronomia: Utensils,
-  turnos: CalendarClock,
-  pymes: LayoutDashboard,
-  comercio: ShoppingCart,
-  inmobiliarias: Building2,
-  educacion: GraduationCap,
-  talleres: Wrench,
+const CONSULTA = {
+  gastronomia: "¿Tienen mesas libres mañana a las 19?",
+  turnos: "Quiero turno para el jueves a las 15 hs",
+  pymes: "Necesito una cotización para el nuevo proyecto",
+  comercio: "¿Cuánto sale el modelo Y con envío?",
+  inmobiliarias: "¿La propiedad sigue disponible para visitar?",
+  educacion: "Quiero info sobre la inscripción 2026",
+  talleres: "¿Pueden arreglar el equipo esta semana?",
 }
 
 const FEATURES = [
@@ -31,110 +23,141 @@ const FEATURES = [
 export default function SelectorIndustrias() {
   const [activo, setActivo] = useState(0)
   const ind = INDUSTRIES[activo]
-  const Icon = ICONS[ind.slug]
 
   return (
-    <section className="bg-dark-surface py-20 text-text-invert lg:py-28">
+    <section className="bg-surface py-24 lg:py-32">
       <div className="container-site">
-        <div className="max-w-2xl">
-          <p className="kicker" style={{ color: "rgba(245,246,255,0.55)" }}>
-            Soluciones por rubro
-          </p>
-          <h2 className="mt-4 text-h1">Una base diseñada para tu tipo de negocio</h2>
-          <p className="mt-5 max-w-[44ch] text-lead text-text-invert/70">
-            Elegí el rubro y mirá cómo se ve la propuesta: web + panel pensados para esa operación.
-          </p>
-        </div>
-
-        <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
-          <div className="flex flex-col gap-1">
-            {INDUSTRIES.map((item, i) => {
-              const active = i === activo
-              return (
-                <button
-                  key={item.slug}
-                  aria-pressed={active}
-                  onClick={() => setActivo(i)}
-                  className={`flex items-start gap-4 rounded-xl border px-4 py-3 text-left transition-colors ${
-                    active
-                      ? "border-line-dark bg-ink-soft"
-                      : "border-transparent hover:bg-ink-soft/60"
-                  }`}
-                >
-                  <span className="font-mono text-micro text-text-invert/40">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="flex-1">
-                    <span className="block text-h4">{item.label}</span>
-                    <span className="mt-1 hidden text-small text-text-invert/55 lg:block">
-                      {item.tagline}
-                    </span>
-                  </span>
-                  {active && (
-                    <span
-                      className="mt-1.5 size-2 shrink-0 rounded-full"
-                      style={{ backgroundColor: item.accent }}
-                    />
-                  )}
-                </button>
-              )
-            })}
+        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+          <div>
+            <p className="kicker">Soluciones por rubro</p>
+            <h2 className="mt-5 text-h1">
+              Una base diseñada para tu <span className="text-primary">tipo de negocio</span>
+            </h2>
+            <p className="mt-5 max-w-[44ch] text-lead text-ink-secondary">
+              Elegí el rubro y mirá cómo se ve: la misma web, la misma consulta, el mismo panel.
+              Cambia el acento, cambia la operación.
+            </p>
           </div>
 
-          <div className="lg:sticky lg:top-24">
-            <div
-              aria-live="polite"
-              className="overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-paper-bright text-text shadow-lift"
-            >
-              <div className="flex items-center gap-1.5 border-b border-line px-4 py-2.5">
-                <span className="size-2.5 rounded-full bg-dark-surface/15" />
-                <span className="size-2.5 rounded-full bg-dark-surface/15" />
-                <span className="size-2.5 rounded-full bg-dark-surface/15" />
-                <span className="ml-2 flex-1 truncate rounded-md bg-paper px-2 py-1 font-mono text-micro text-muted">
-                  fleximy.app/{ind.slug}
+          <div className="lg:sticky lg:top-24 lg:self-start">
+            <div className="overflow-hidden rounded-2xl border border-outline bg-bg-secondary shadow-[var(--shadow-lift)]">
+              <div className="flex items-center gap-2 border-b border-outline bg-surface px-4 py-2.5">
+                <span aria-hidden="true" className="size-2.5 rounded-full bg-outline-strong" />
+                <span aria-hidden="true" className="size-2.5 rounded-full bg-outline-strong" />
+                <span aria-hidden="true" className="size-2.5 rounded-full bg-outline-strong" />
+                <span className="ml-2 flex-1 truncate rounded-md bg-bg-secondary px-2 py-1 font-mono text-micro text-ink-muted">
+                  tunegocio.ar · solución {ind.slug}
                 </span>
               </div>
 
-              <div className="p-6">
-                <div className="flex items-center gap-3">
-                  <span
-                    className="grid size-11 shrink-0 place-items-center rounded-xl"
-                    style={{ backgroundColor: ind.accent, color: "var(--color-ink)" }}
-                  >
-                    <Icon className="size-5" />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="font-mono text-micro text-muted">solución {ind.label}</p>
-                    <h3 className="text-h3">{ind.label}</h3>
-                  </div>
-                </div>
-                <p className="mt-4 text-body text-muted">{ind.tagline}</p>
-
-                <div className="mt-5 grid gap-2">
-                  {FEATURES.map((f) => (
-                    <div
-                      key={f}
-                      className="flex items-center justify-between gap-3 rounded-xl border border-line bg-paper px-3 py-2.5"
-                    >
-                      <span className="text-small">{f}</span>
-                      <span
-                        className="size-2 shrink-0 rounded-full"
-                        style={{ backgroundColor: ind.accent }}
-                      />
-                    </div>
-                  ))}
-                </div>
-
-                <Link
-                  to={ind.to}
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold hover:underline underline-offset-4"
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={ind.slug}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="p-6"
                 >
-                  Ver solución para {ind.label}
-                  <ArrowUpRight className="size-4" />
-                </Link>
-              </div>
+                  <div className="flex items-center gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="size-3 shrink-0 rounded-full"
+                      style={{ backgroundColor: ind.accent }}
+                    />
+                    <p className="font-mono text-micro text-ink-muted">
+                      {ind.label} · {ind.tagline}
+                    </p>
+                  </div>
+
+                  <div className="mt-5 rounded-xl border border-outline bg-surface p-4">
+                    <p className="text-small text-ink-primary">{CONSULTA[ind.slug]}</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <span className="rounded-full bg-primary px-2.5 py-1 font-mono text-micro text-white">
+                        nueva
+                      </span>
+                      <span
+                        className="rounded-full px-2.5 py-1 font-mono text-micro text-white"
+                        style={{ backgroundColor: ind.accent }}
+                      >
+                        {ind.label}
+                      </span>
+                      <span className="rounded-full bg-bg-secondary px-2.5 py-1 font-mono text-micro text-ink-secondary">
+                        se asigna
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 grid gap-2">
+                    {FEATURES.map((f) => (
+                      <div
+                        key={f}
+                        className="flex items-center gap-3 rounded-xl border border-outline bg-surface px-3.5 py-2.5"
+                      >
+                        <span
+                          className="grid size-5 shrink-0 place-items-center rounded-full"
+                          style={{ backgroundColor: ind.accent }}
+                        >
+                          <Check className="size-3 text-ink-primary" />
+                        </span>
+                        <span className="text-small text-ink-primary">{f}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Link
+                    to={ind.to}
+                    className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-primary hover:text-primary transition-colors"
+                  >
+                    Ver solución para {ind.label}
+                    <ArrowUpRight className="size-4" />
+                  </Link>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
+        </div>
+
+        {/* Índice editorial */}
+        <div className="mt-16 grid gap-0.5 lg:mt-24">
+          {INDUSTRIES.map((item, i) => {
+            const active = i === activo
+            return (
+              <button
+                key={item.slug}
+                aria-pressed={active}
+                onClick={() => setActivo(i)}
+                className={`group flex items-baseline gap-5 border-t border-outline px-2 py-5 text-left transition-colors duration-[var(--motion-fast)] last:border-b md:gap-8 md:px-4 ${
+                  active ? "bg-bg-secondary" : "hover:bg-bg-secondary/60"
+                }`}
+              >
+                <span
+                  className={`font-mono text-micro transition-colors duration-[var(--motion-fast)] ${
+                    active ? "text-primary" : "text-ink-muted"
+                  }`}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span
+                  className={`flex-1 font-display text-h3 tracking-tight transition-colors duration-[var(--motion-fast)] ${
+                    active ? "text-primary" : "text-ink-primary"
+                  }`}
+                >
+                  {item.label}
+                </span>
+                <span className="hidden flex-[1.2] text-body text-ink-secondary md:block">
+                  {item.tagline}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className={`hidden size-2 shrink-0 rounded-full transition-transform duration-[var(--motion-base)] group-hover:scale-125 md:block ${
+                    active ? "" : "opacity-0"
+                  }`}
+                  style={{ backgroundColor: item.accent }}
+                />
+              </button>
+            )
+          })}
         </div>
       </div>
     </section>

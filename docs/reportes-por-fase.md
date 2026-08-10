@@ -757,3 +757,49 @@ marcadores de datos pendientes identificados ✔
 
 > **Punto de aprobación obligatorio** antes de la Fase 4: paleta, tipografía, hero, dashboard CSS,
 > ritmo de animación, composición mobile, header y footer.
+
+---
+
+## Reporte — Rework visual y experiencial (v3)
+
+**Rama:** `rework/visual-experiencial` (derivada de `rework/md3-visual`). **Fecha:** 2026-08-09.
+
+### Qué se hizo
+
+Reconstrucción visual y experiencial de la capa pública (dirección "minimalismo operativo"), sin
+tocar rutas, contenido, IA, Supabase, dashboard ni SEO:
+
+1. **Tokens (`src/styles/tokens.css`):** paleta v3 con `bg-primary #f5f7fb`, `surface #fff`,
+   `ink-primary #121525`, `primary #4f5ee8`, `secondary #00a7b5`, `night #121735` y tokens
+   heredados mapeados a la nueva paleta (compatibilidad con páginas internas).
+2. **Tipografía:** Space Grotesk (display) + Inter (UI); escala fluida `text-hero` hasta 6.75rem;
+   trackings editoriales.
+3. **Header (`Header.jsx`):** nuevo diseño editorial fijo→flotante, logo invertible, mega menú
+   con índice de industrias, underline animada y acordeón mobile.
+4. **Home reescrita componente por componente:**
+   - `HomeHero`: titular editorial con reveal por líneas + subrayado animado + "escenario" del
+     viaje de la consulta (`SistemaVivo`).
+   - `SistemaVivo` (nuevo): loop animado web → panel → asignación, con leyenda de estados.
+   - `Franja`: marquee operativo (consultas, turnos, pedidos…).
+   - `ViajeConsulta` (nuevo, reemplaza `DosLados`): 4 pasos sticky con mini-visuales.
+   - `SelectorIndustrias`: índice editorial + escena viva por rubro con acento propio.
+   - `Transformacion`, `Proceso`, `DemoSeccion`, `Confianza`, `PrecioIntro`, `FaqBreve`,
+     `CtaFinal`: reestilizadas a la nueva paleta (noche/cielo).
+   - Eliminados `DosLados.jsx` y `SimuladorHero.jsx` (absorbidos por `ViajeConsulta` y
+     `SistemaVivo`).
+5. **Button y Footer:** variantes con tokens nuevos; footer noche editorial con declaración,
+   navegación completa y logotipo.
+
+### Validación
+
+- `npm run build` → OK (2310 módulos; `dist/404.html` regenerado).
+- `npm run lint` → 0 errores; warnings preexistentes (el único nuevo, imports sin usar en
+  `SistemaVivo`, ya corregido).
+- Smoke `vite preview` → HTTP 200 en `/`.
+
+### Pendientes (QA humano)
+
+- Revisión visual en navegadores reales y móvil; ajustes finos de ritmo y espaciados.
+- Migrar visualmente las páginas internas (soluciones, demos, comercial) al token v3 — hoy
+  compilan con la paleta mapeada pero conservan su composición anterior.
+- Aprobación de la Home antes de continuar con el resto de las secciones.

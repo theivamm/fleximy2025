@@ -1,41 +1,43 @@
 @theme {
   /* ============================================================
-     Sistema visual — Material Design 3 · interpretación Fleximy
-     Los tokens heredados (ink/paper/accent/cyan) se mantienen con
-     los mismos nombres para no tocar la estructura de los componentes,
-     pero apuntan a los nuevos valores MD3. Los nombres canónicos MD3
-     también están disponibles (--color-primary, --color-surface, etc.).
+     FLEXIMY — Sistema visual "Minimalismo operativo" (v3)
+     Dirección editorial · SaaS premium · Material como fundamento
      ============================================================ */
 
-  /* Primario (botones, CTAs, selección) */
-  --color-primary: #4355d9;
-  --color-primary-hover: #3547c4;
-  --color-primary-dark: #2938a8;
-  --color-on-primary: #ffffff;
-  --color-primary-container: #e1e5ff;
-  --color-on-primary-container: #1b277d;
-
-  /* Secundario (acento cian de marca) */
-  --color-secondary: #00a6b2;
-  --color-secondary-dark: #007c86;
-  --color-secondary-container: #d5f5f6;
-  --color-on-secondary-container: #004f56;
-
   /* Superficies */
-  --color-background: #f7f8fc;
+  --color-bg-primary: #f5f7fb;
+  --color-bg-secondary: #edf0f7;
   --color-surface: #ffffff;
-  --color-surface-low: #f3f4fa;
-  --color-surface-container: #eef1f8;
-  --color-surface-high: #e6e9f2;
+  --color-surface-soft: #e8ecf5;
 
-  /* Texto */
-  --color-text-primary: #1b1b1f;
-  --color-text-secondary: #5d5e66;
-  --color-text-muted: #777985;
+  /* Tinta */
+  --color-ink-primary: #121525;
+  --color-ink-secondary: #565c70;
+  --color-ink-muted: #7c8295;
+
+  /* Primario */
+  --color-primary: #4f5ee8;
+  --color-primary-hover: #4051df;
+  --color-primary-deep: #2937a8;
+  --color-primary-soft: #dde2ff;
+  --color-primary-on-dark: #9aa7ff;
+
+  /* Secundario (cian de marca) */
+  --color-secondary: #00a7b5;
+  --color-secondary-deep: #007f8c;
+  --color-secondary-soft: #d5f5f6;
+
+  /* Noche (superficies inmersivas de sistema) */
+  --color-night: #121735;
+  --color-night-elevated: #1b2250;
+  --color-night-mid: #242e5c;
+  --color-on-night: #f6f7ff;
 
   /* Bordes */
-  --color-outline: #d9dce7;
-  --color-outline-strong: #b7bbc8;
+  --color-outline: rgba(39, 47, 91, 0.14);
+  --color-outline-strong: rgba(39, 47, 91, 0.32);
+  --color-outline-night: rgba(246, 247, 255, 0.16);
+  --color-outline-night-strong: rgba(246, 247, 255, 0.34);
 
   /* Estados */
   --color-success: #16855b;
@@ -45,66 +47,66 @@
   --color-error: #ba1a1a;
   --color-error-container: #ffdad6;
 
-  /* Superficies oscuras (footer, bandas, secciones dark) */
-  --color-dark-surface: #20265c;
-  --color-dark-surface-alt: #293273;
-  --color-on-dark: #f5f6ff;
-
   /* ------------------------------------------------------------
-     Tokens heredados — mapeados a la paleta MD3
+     Tokens heredados — mapeados a la paleta v3 (compatibilidad)
      ------------------------------------------------------------ */
-  --color-ink: #1b1b1f;
-  --color-ink-soft: #293273;
-  --color-ink-muted: #343d7e;
+  --color-ink: #121525;
+  --color-ink-soft: #1b2250;
+  --color-ink-muted: #242e5c;
 
-  --color-paper: #f7f8fc;
+  --color-paper: #f5f7fb;
   --color-paper-bright: #ffffff;
+  --color-paper-dim: #edf0f7;
 
-  --color-accent: #4355d9;
-  --color-accent-hover: #3547c4;
-  --color-accent-dark: #2938a8;
+  --color-accent: #4f5ee8;
+  --color-accent-hover: #4051df;
+  --color-accent-dark: #2937a8;
   --color-on-accent: #ffffff;
-  --color-accent-soft: #e1e5ff;
-  --color-on-accent-soft: #1b277d;
-  --color-accent-on-dark: #b9c1ff;
+  --color-accent-soft: #dde2ff;
+  --color-on-accent-soft: #2937a8;
+  --color-accent-on-dark: #9aa7ff;
 
-  --color-cyan: #00a6b2;
-  --color-cyan-deep: #007c86;
+  --color-cyan: #00a7b5;
+  --color-cyan-deep: #007f8c;
   --color-cyan-soft: #d5f5f6;
 
-  --color-line: #d9dce7;
-  --color-line-dark: rgba(245, 246, 255, 0.16);
+  --color-line: rgba(39, 47, 91, 0.14);
+  --color-line-dark: rgba(246, 247, 255, 0.16);
 
-  --color-text: #1b1b1f;
-  --color-text-invert: #f5f6ff;
-  --color-muted: #5d5e66;
+  --color-text: #121525;
+  --color-text-invert: #f6f7ff;
+  --color-muted: #565c70;
 
-  /* Acentos por industria (identidad de marca, se conservan) */
+  /* Acentos por industria (identidad de marca) */
   --color-acc-gastro: #e8a33d;
-  --color-acc-turnos: #52d6d1;
-  --color-acc-gestion: #7fd8a4;
-  --color-acc-comercio: #a08cff;
+  --color-acc-turnos: #00c2cc;
+  --color-acc-gestion: #4cd697;
+  --color-acc-comercio: #9a8cff;
   --color-acc-inmob: #f08f8f;
   --color-acc-educacion: #5aa3f0;
   --color-acc-talleres: #f0924c;
 
-  /* Tipografía */
+  /* ------------------------------------------------------------
+     Tipografía
+     ------------------------------------------------------------ */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  /* Retícula y contenedores */
+  /* Retícula */
   --content-max: 1280px;
-  --content-narrow: 960px;
+  --content-wide: 1480px;
+  --content-narrow: 800px;
   --container-pad: clamp(1.25rem, 4vw, 2.5rem);
 
-  /* Radios — amplios pero controlados */
-  --radius-btn: 0.875rem;
+  /* Radios */
+  --radius-btn: 0.75rem;
   --radius-card: 1.25rem;
   --radius-field: 0.875rem;
 
-  /* Sombras — elevación suave y difusa, tinte azulado MD3 */
-  --shadow-soft: 0 1px 2px rgba(27, 39, 125, 0.04), 0 2px 6px rgba(27, 39, 125, 0.05), 0 8px 20px rgba(27, 39, 125, 0.06);
-  --shadow-lift: 0 2px 4px rgba(27, 39, 125, 0.06), 0 12px 24px rgba(27, 39, 125, 0.1), 0 28px 56px rgba(27, 39, 125, 0.12);
+  /* Sombras — elevación azulada, difusa y suave */
+  --shadow-soft: 0 1px 2px rgba(23, 32, 84, 0.04), 0 4px 12px rgba(23, 32, 84, 0.05);
+  --shadow-lift: 0 2px 4px rgba(23, 32, 84, 0.06), 0 16px 32px rgba(23, 32, 84, 0.09), 0 40px 80px rgba(23, 32, 84, 0.12);
+  --shadow-night: 0 1px 2px rgba(0, 0, 0, 0.3), 0 16px 40px rgba(0, 0, 0, 0.35);
 
   /* Movimiento */
   --motion-fast: 180ms;
@@ -113,17 +115,18 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
-  /* Escala tipográfica fluida */
-  --text-hero: clamp(2.75rem, 6vw, 5.5rem);
-  --text-h1: clamp(2.25rem, 4.5vw, 3.75rem);
-  --text-h2: clamp(1.75rem, 3.4vw, 2.75rem);
-  --text-h3: clamp(1.35rem, 2.2vw, 1.75rem);
-  --text-h4: clamp(1.1rem, 1.6vw, 1.3rem);
+  /* Escala tipográfica fluida — titulares display editoriales */
+  --text-hero: clamp(3rem, 7.5vw, 6.75rem);
+  --text-h1: clamp(2.25rem, 4.5vw, 4rem);
+  --text-h2: clamp(1.75rem, 3.4vw, 3rem);
+  --text-h3: clamp(1.35rem, 2.2vw, 1.9rem);
+  --text-h4: clamp(1.1rem, 1.6vw, 1.35rem);
   --text-lead: clamp(1.125rem, 1.6vw, 1.375rem);
   --text-body: 1rem;
   --text-small: 0.875rem;
   --text-micro: 0.75rem;
 
-  --tracking-tight: -0.03em;
-  --tracking-normal: -0.01em;
+  --tracking-tight: -0.035em;
+  --tracking-normal: -0.015em;
+  --tracking-display: -0.045em;
 }

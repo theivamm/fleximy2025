@@ -1,6 +1,6 @@
 import HomeHero from "../components/home/HomeHero"
 import Franja from "../components/home/Franja"
-import DosLados from "../components/home/DosLados"
+import ViajeConsulta from "../components/home/ViajeConsulta"
 import SelectorIndustrias from "../components/home/SelectorIndustrias"
 import Transformacion from "../components/home/Transformacion"
 import Proceso from "../components/home/Proceso"
@@ -12,10 +12,10 @@ import CtaFinal from "../components/home/CtaFinal"
 
 export default function Home() {
   return (
-    <main className="bg-paper text-text">
+    <main className="bg-bg-primary text-ink-primary">
       <HomeHero />
       <Franja />
-      <DosLados />
+      <ViajeConsulta />
       <SelectorIndustrias />
       <Transformacion />
       <Proceso />

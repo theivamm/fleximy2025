@@ -26,16 +26,16 @@ export default function FaqBreve() {
   const [abierta, setAbierta] = useState(0)
 
   return (
-    <section className="container-site py-20 lg:py-28">
+    <section className="container-site py-24 lg:py-32">
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
           <p className="kicker justify-center">Preguntas frecuentes</p>
-          <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">
-            Lo que nos preguntan antes de empezar
+          <h2 className="mx-auto mt-5 max-w-[18ch] text-h1">
+            Lo que nos preguntan <span className="text-primary">antes de empezar</span>
           </h2>
         </div>
 
-        <div className="mt-10 flex flex-col divide-y divide-line border-y border-line">
+        <div className="mt-10 flex flex-col divide-y divide-outline border-y border-outline">
           {FAQS.map((f, i) => {
             const open = abierta === i
             return (
@@ -46,9 +46,9 @@ export default function FaqBreve() {
                   aria-controls={`faq-breve-${i}`}
                   className="flex w-full items-center justify-between gap-4 py-5 text-left"
                 >
-                  <span className="text-h4">{f.q}</span>
+                  <span className="text-h4 text-ink-primary">{f.q}</span>
                   <ChevronDown
-                    className={`size-5 shrink-0 text-muted transition-transform duration-[var(--motion-fast)] ${
+                    className={`size-5 shrink-0 text-ink-muted transition-transform duration-[var(--motion-fast)] ${
                       open ? "rotate-180" : ""
                     }`}
                   />
@@ -63,7 +63,7 @@ export default function FaqBreve() {
                       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <p className="max-w-[52ch] pb-5 text-body text-muted">{f.a}</p>
+                      <p className="max-w-[52ch] pb-5 text-body text-ink-secondary">{f.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>

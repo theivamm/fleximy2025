@@ -1,29 +1,33 @@
-const BENEFICIOS = [
-  "Menos tareas manuales",
-  "Consultas que no se pierden",
-  "Una web que trabaja por vos",
-  "Historial por cliente",
-  "Un solo lugar para operar",
+const TERMINOS = [
+  "consultas",
+  "turnos",
+  "pedidos",
+  "stock",
+  "presupuestos",
+  "clientes",
+  "seguimiento",
+  "recordatorios",
+  "propiedades",
+  "inscripciones",
+  "órdenes de trabajo",
+  "reservas",
 ]
 
 export default function Franja() {
+  const fila = [...TERMINOS, ...TERMINOS]
   return (
-    <section className="bg-dark-surface text-text-invert">
-      <div className="container-site py-14 lg:py-16">
-        <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-          <h2 className="max-w-[34ch] text-h3">
-            Si hoy tu negocio depende de{" "}
-            <span className="text-cyan">WhatsApp, Excel y tareas manuales</span>, Fleximy puede
-            ayudarte.
-          </h2>
-          <ul className="grid gap-2.5 lg:max-w-sm">
-            {BENEFICIOS.map((b) => (
-              <li key={b} className="flex items-center gap-3 text-small text-text-invert/80">
-                <span className="size-1.5 shrink-0 rounded-full bg-accent" />
-                {b}
-              </li>
-            ))}
-          </ul>
+    <section aria-label="Lo que ordena el sistema" className="border-y border-outline bg-surface py-4">
+      <div className="fx-marquee">
+        <div className="fx-marquee-track">
+          {fila.map((t, i) => (
+            <span
+              key={`${t}-${i}`}
+              className="flex shrink-0 items-center gap-6 pr-6 font-mono text-micro uppercase tracking-[0.14em] text-ink-muted"
+            >
+              {t}
+              <span aria-hidden="true" className="size-1 rounded-full bg-primary/60" />
+            </span>
+          ))}
         </div>
       </div>
     </section>

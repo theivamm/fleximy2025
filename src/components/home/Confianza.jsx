@@ -36,33 +36,37 @@ const ITEMS = [
 
 export default function Confianza() {
   return (
-    <section className="container-site py-20 lg:py-28">
-      <div className="flex flex-wrap items-end justify-between gap-6">
-        <div className="max-w-2xl">
-          <p className="kicker">Confianza</p>
-          <h2 className="mt-4 text-h1">Tecnología administrada. Acompañamiento humano.</h2>
+    <section className="bg-bg-primary py-24 lg:py-32">
+      <div className="container-site">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div className="max-w-2xl">
+            <p className="kicker">Confianza</p>
+            <h2 className="mt-5 text-h1">
+              Tecnología administrada. <span className="text-primary">Acompañamiento humano.</span>
+            </h2>
+          </div>
+          <Button to="/seguridad" variant="secondary">
+            Conocer seguridad y continuidad
+          </Button>
         </div>
-        <Button to="/seguridad" variant="secondary">
-          Conocer seguridad y continuidad
-        </Button>
-      </div>
 
-      <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {ITEMS.map((item) => {
-          const Icon = item.icon
-          return (
-            <div
-              key={item.titulo}
-              className="rounded-[var(--radius-card)] border border-line bg-paper-bright p-6"
-            >
-              <span className="grid size-9 place-items-center rounded-lg bg-accent-soft text-on-accent-soft">
-                <Icon className="size-4" />
-              </span>
-              <h3 className="mt-4 text-h4">{item.titulo}</h3>
-              <p className="mt-2 text-small text-muted">{item.detalle}</p>
-            </div>
-          )
-        })}
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {ITEMS.map((item) => {
+            const Icon = item.icon
+            return (
+              <div
+                key={item.titulo}
+                className="rounded-2xl border border-outline bg-surface p-6 shadow-[var(--shadow-soft)]"
+              >
+                <span className="grid size-9 place-items-center rounded-lg bg-primary-soft text-primary-deep">
+                  <Icon className="size-4" />
+                </span>
+                <h3 className="mt-4 text-h4 text-ink-primary">{item.titulo}</h3>
+                <p className="mt-2 text-small text-ink-secondary">{item.detalle}</p>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </section>
   )

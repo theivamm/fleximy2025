@@ -6,38 +6,28 @@ import { NAV, CONTACT } from "../../data/navigation"
 import { INDUSTRIES } from "../../data/industries"
 import logoSvg from "../../assets/logo-fleximy.svg?raw"
 
-function Logo() {
+function Logo({ invert = false }) {
   return (
-    <Link to="/" aria-label="Fleximy — Inicio" className="flex items-center shrink-0 text-ink">
+    <Link to="/" aria-label="Fleximy — Inicio" className="flex items-center shrink-0">
       <span
         aria-hidden="true"
         dangerouslySetInnerHTML={{ __html: logoSvg }}
-        className="block h-8 md:h-9 w-auto [&>svg]:block [&>svg]:h-full [&>svg]:w-auto"
+        className={`block h-8 md:h-9 w-auto [&>svg]:block [&>svg]:h-full [&>svg]:w-auto ${
+          invert ? "[&>svg]:text-on-night" : "[&>svg]:text-ink-primary"
+        }`}
       />
     </Link>
   )
 }
 
-function IndustryIcon({ accent }) {
-  return (
-    <span
-      aria-hidden="true"
-      className="w-9 h-9 rounded-lg grid place-items-center border"
-      style={{ backgroundColor: "color-mix(in srgb, var(--color-paper-bright) 90%, transparent)", borderColor: accent }}
-    >
-      <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: accent }} />
-    </span>
-  )
-}
-
-function MegaMenu({ open, onClose }) {
+function MegaMenu({ onClose }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 8 }}
       transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[42rem] rounded-2xl bg-paper-bright border border-line shadow-[var(--shadow-lift)] overflow-hidden"
+      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[44rem] max-w-[calc(100vw-2rem)] rounded-2xl bg-surface border border-outline shadow-[var(--shadow-lift)] overflow-hidden"
     >
       <div className="grid grid-cols-2 gap-1 p-2">
         {INDUSTRIES.map((industry) => (
@@ -45,27 +35,33 @@ function MegaMenu({ open, onClose }) {
             key={industry.slug}
             to={industry.to}
             onClick={onClose}
-            className="flex items-start gap-3 rounded-xl px-4 py-3.5 transition-colors hover:bg-dark-surface hover:text-text-invert group"
+            className="group flex items-start gap-3 rounded-xl px-4 py-3.5 transition-colors hover:bg-bg-secondary"
           >
-            <IndustryIcon accent={industry.accent} />
+            <span
+              aria-hidden="true"
+              className="mt-1.5 w-2 h-2 rounded-full shrink-0"
+              style={{ backgroundColor: industry.accent }}
+            />
             <span className="flex flex-col gap-0.5">
-              <span className="text-sm font-semibold">{industry.label}</span>
-              <span className="text-xs text-muted group-hover:text-text-invert/70">
+              <span className="text-sm font-semibold text-ink-primary group-hover:text-ink-primary">
+                {industry.label}
+              </span>
+              <span className="text-xs text-ink-muted group-hover:text-ink-secondary">
                 {industry.tagline}
               </span>
             </span>
           </Link>
         ))}
       </div>
-      <div className="border-t border-line px-4 py-3 flex items-center justify-between">
-        <span className="text-xs text-muted">Siete bases listas para adaptar a tu negocio.</span>
+      <div className="border-t border-outline px-5 py-3.5 flex items-center justify-between bg-bg-secondary/60">
+        <span className="font-mono text-micro text-ink-muted">siete bases listas para adaptar</span>
         <Link
           to="/soluciones"
           onClick={onClose}
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink hover:text-ink/60 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-primary hover:text-primary transition-colors"
         >
           Ver todas las soluciones
-          <ArrowRight size={16} />
+          <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
         </Link>
       </div>
     </motion.div>
@@ -78,7 +74,6 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileSolucionesOpen, setMobileSolucionesOpen] = useState(false)
   const location = useLocation()
-  const navRef = useRef(null)
   const megaTimeout = useRef(null)
 
   useEffect(() => {
@@ -124,15 +119,14 @@ export default function Header() {
 
   return (
     <header
-      ref={navRef}
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-[var(--motion-base)] ${
-        scrolled
-          ? "bg-paper-bright/90 backdrop-blur-xl border-b border-line shadow-[var(--shadow-soft)]"
-          : "bg-paper-bright/80 backdrop-blur-sm border-b border-transparent"
+        scrolled || mobileOpen
+          ? "bg-surface/85 backdrop-blur-xl border-b border-outline"
+          : "bg-transparent border-b border-transparent"
       }`}
     >
       <div className="container-site">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-16 md:h-[4.5rem]">
           <Logo />
 
           {/* Desktop nav */}
@@ -146,7 +140,9 @@ export default function Header() {
                     aria-haspopup="true"
                     onFocus={openMega}
                     className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      megaOpen ? "text-text" : "text-muted hover:text-text"
+                      megaOpen || isActive("/soluciones")
+                        ? "text-ink-primary"
+                        : "text-ink-muted hover:text-ink-primary"
                     }`}
                   >
                     {item.label}
@@ -156,29 +152,35 @@ export default function Header() {
                     />
                   </button>
                   <AnimatePresence>
-                    {megaOpen && <MegaMenu open={megaOpen} onClose={() => setMegaOpen(false)} />}
+                    {megaOpen && <MegaMenu onClose={() => setMegaOpen(false)} />}
                   </AnimatePresence>
                 </div>
               ) : (
                 <Link
                   key={item.label}
                   to={item.to}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    isActive(item.to) ? "text-text" : "text-muted hover:text-text"
+                  className={`group relative px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    isActive(item.to) ? "text-ink-primary" : "text-ink-muted hover:text-ink-primary"
                   }`}
                 >
                   {item.label}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute left-4 right-4 bottom-0.5 h-px bg-primary transition-transform origin-left duration-[var(--motion-fast)] ${
+                      isActive(item.to) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                    }`}
+                  />
                 </Link>
               )
             )}
           </nav>
 
           {/* Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <Link
               to="/contacto"
               data-track="cta_diagnostico"
-              className="hidden lg:inline-flex h-11 items-center gap-2 px-5 rounded-[var(--radius-btn)] bg-accent text-on-accent text-sm font-semibold transition-colors hover:bg-accent-hover"
+              className="hidden lg:inline-flex h-11 items-center gap-2 px-5 rounded-[var(--radius-btn)] bg-primary text-white text-sm font-semibold transition-colors hover:bg-primary-hover"
             >
               {CONTACT.ctaPrimary}
             </Link>
@@ -189,7 +191,7 @@ export default function Header() {
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
               aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
-              className="lg:hidden grid place-items-center w-11 h-11 rounded-lg border border-line text-text"
+              className="lg:hidden grid place-items-center w-11 h-11 rounded-xl border border-outline text-ink-primary bg-surface/60"
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -206,14 +208,14 @@ export default function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:hidden overflow-hidden bg-paper-bright border-t border-line"
+            className="lg:hidden overflow-hidden bg-surface border-t border-outline"
           >
             <nav className="container-site py-4 flex flex-col gap-1" aria-label="Principal mobile">
               <button
                 type="button"
                 aria-expanded={mobileSolucionesOpen}
                 onClick={() => setMobileSolucionesOpen((o) => !o)}
-                className="flex items-center justify-between px-4 py-3 rounded-lg text-sm font-semibold text-text hover:bg-paper"
+                className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold text-ink-primary hover:bg-bg-secondary"
               >
                 Soluciones
                 <ChevronDown
@@ -235,7 +237,7 @@ export default function Header() {
                         <Link
                           key={industry.slug}
                           to={industry.to}
-                          className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-muted hover:text-text hover:bg-paper"
+                          className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-ink-secondary hover:text-ink-primary hover:bg-bg-secondary"
                         >
                           <span
                             className="w-2 h-2 rounded-full"
@@ -255,8 +257,8 @@ export default function Header() {
                   <Link
                     key={item.label}
                     to={item.to}
-                    className={`px-4 py-3 rounded-lg text-sm font-semibold hover:bg-paper ${
-                      isActive(item.to) ? "text-text" : "text-muted"
+                    className={`px-4 py-3 rounded-xl text-sm font-semibold hover:bg-bg-secondary ${
+                      isActive(item.to) ? "text-ink-primary" : "text-ink-secondary"
                     }`}
                   >
                     {item.label}
@@ -266,7 +268,7 @@ export default function Header() {
               <Link
                 to="/contacto"
                 data-track="cta_diagnostico"
-                className="mt-3 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[var(--radius-btn)] bg-accent text-on-accent text-sm font-semibold"
+                className="mt-3 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[var(--radius-btn)] bg-primary text-white text-sm font-semibold"
               >
                 {CONTACT.ctaPrimary}
               </Link>
