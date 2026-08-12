@@ -1,9 +1,10 @@
-import { useLayoutEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import gsap from "gsap"
 import { AnimatePresence, motion } from "framer-motion"
 import { ArrowRight, ArrowLeft, MessageCircle, CalendarDays, Mail, Check } from "lucide-react"
 import Button from "../components/ui/Button"
+import PageHero from "../components/ui/PageHero"
+import PrimaryCTA from "../components/ui/PrimaryCTA"
 import { CONTACT } from "../data/navigation"
 import { track } from "../lib/analytics"
 import {
@@ -32,14 +33,14 @@ const TOTAL_STEPS = 3
 function Campo({ label, id, required, error, children, hint }) {
   return (
     <div>
-      <label htmlFor={id} className="flex items-baseline gap-1.5 text-small font-semibold text-text">
+      <label htmlFor={id} className="flex items-baseline gap-1.5 text-small font-semibold text-text-1">
         {label}
-        {required && <span className="text-ink/40" aria-hidden="true">*</span>}
+        {required && <span className="text-text-3" aria-hidden="true">*</span>}
       </label>
       <div className="mt-2">{children}</div>
-      {hint && <p className="mt-1.5 font-mono text-micro text-muted">{hint}</p>}
+      {hint && <p className="mt-1.5 font-mono text-micro text-text-3">{hint}</p>}
       {error && (
-        <p role="alert" className="mt-1.5 text-small font-medium text-ink">
+        <p role="alert" className="mt-1.5 text-small font-medium text-error">
           {error}
         </p>
       )}
@@ -48,7 +49,7 @@ function Campo({ label, id, required, error, children, hint }) {
 }
 
 const inputCls =
-  "w-full rounded-[var(--radius-field)] border border-line bg-paper px-4 py-3 text-sm text-text placeholder:text-muted/60 transition-colors focus:border-ink/40 focus:outline-none focus:ring-2 focus:ring-ink/10"
+  "w-full rounded-[var(--radius-field)] border border-outline bg-surface-1/60 px-4 py-3 text-sm text-text-1 placeholder:text-text-3/60 transition-colors focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/10"
 
 function ChipGroup({ options, value, onChange, name }) {
   return (
@@ -64,8 +65,8 @@ function ChipGroup({ options, value, onChange, name }) {
             onClick={() => onChange(active ? "" : opt)}
             className={`rounded-full border px-4 py-2 text-small transition-colors ${
               active
-                ? "border-ink bg-dark-surface text-text-invert"
-                : "border-line bg-paper text-muted hover:text-text"
+                ? "border-text-1 bg-text-1 text-bg-0"
+                : "border-outline bg-surface-1/60 text-text-2 hover:border-ink/30 hover:text-text-1"
             }`}
           >
             {opt}
@@ -78,7 +79,6 @@ function ChipGroup({ options, value, onChange, name }) {
 
 export default function Contacto() {
   const navigate = useNavigate()
-  const root = useRef(null)
   const [paso, setPaso] = useState(1)
   const [errores, setErrores] = useState({})
   const [enviando, setEnviando] = useState(false)
@@ -106,26 +106,6 @@ export default function Contacto() {
     setForm((f) => ({ ...f, [campo]: valor }))
     setErrores((err) => ({ ...err, [campo]: undefined }))
   }
-
-  useLayoutEffect(() => {
-    const mm = gsap.matchMedia()
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap
-        .timeline({ defaults: { ease: "power3.out" } })
-        .fromTo(
-          ".ct-line-inner",
-          { yPercent: 110 },
-          { yPercent: 0, duration: 1, stagger: 0.13, ease: "power4.out" }
-        )
-        .fromTo(
-          ".ct-fade",
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 },
-          "-=0.45"
-        )
-    })
-    return () => mm.revert()
-  }, [])
 
   const validarPaso = () => {
     const err = {}
@@ -186,35 +166,27 @@ export default function Contacto() {
   const modulosPosibles = MODULOS_POR_RUBRO[form.rubro] || []
 
   return (
-    <main ref={root} className="bg-paper text-text">
-      <section className="relative overflow-hidden pb-12 pt-28 lg:pt-36">
-        <div className="container-site">
-          <p className="ct-fade kicker">Diagnóstico inicial</p>
-          <h1 className="mt-6 max-w-[18ch] text-hero text-text">
-            <span className="block overflow-hidden pb-[0.08em]">
-              <span className="ct-line-inner block">Contanos qué parte de tu</span>
-            </span>
-            <span className="block overflow-hidden pb-[0.08em]">
-              <span className="ct-line-inner block">negocio querés ordenar.</span>
-            </span>
-          </h1>
-          <p className="ct-fade mt-6 max-w-[52ch] text-lead text-muted">
-            No necesitás preparar un documento técnico. Con algunas preguntas podemos entender tu
-            situación y recomendarte un primer paso.
-          </p>
-        </div>
-      </section>
+    <main>
+      <PageHero
+        kicker="Diagnóstico inicial"
+        title={
+          <>
+            Contanos qué parte de tu <span className="text-gradient">negocio querés ordenar.</span>
+          </>
+        }
+        lead="No necesitás preparar un documento técnico. Con algunas preguntas podemos entender tu situación y recomendarte un primer paso."
+      />
 
       <section className="container-site pb-20 lg:pb-28">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:items-start">
           <div>
             <div className="flex items-center justify-between gap-4">
-              <p className="font-mono text-micro text-muted">
+              <p className="font-mono text-micro text-text-3">
                 paso {paso} de {TOTAL_STEPS}
               </p>
-              <p className="font-mono text-micro text-muted">menos de 3 minutos</p>
+              <p className="font-mono text-micro text-text-3">menos de 3 minutos</p>
             </div>
-            <div className="mt-2 h-1 overflow-hidden rounded-full bg-dark-surface/10">
+            <div className="mt-2 h-1 overflow-hidden rounded-full bg-surface-3/40">
               <div
                 className="h-full rounded-full bg-accent transition-all duration-500"
                 style={{ width: `${(paso / TOTAL_STEPS) * 100}%` }}
@@ -319,7 +291,7 @@ export default function Contacto() {
 
                   {paso === 3 && (
                     <>
-                      <p className="font-mono text-micro text-muted">opcional · ayuda a preparar la conversación</p>
+                      <p className="font-mono text-micro text-text-3">opcional · ayuda a preparar la conversación</p>
                       <div className="grid gap-6 sm:grid-cols-2">
                         <Campo id="campo-sitio" label="Sitio web actual">
                           <input
@@ -351,7 +323,7 @@ export default function Contacto() {
                         label="Archivo de referencia"
                         hint="PDF, imagen o documento · opcional"
                       >
-                        <label className="flex cursor-pointer items-center justify-between gap-3 rounded-[var(--radius-field)] border border-dashed border-line bg-paper px-4 py-3 text-small text-muted transition-colors hover:border-ink/30">
+                        <label className="flex cursor-pointer items-center justify-between gap-3 rounded-[var(--radius-field)] border border-dashed border-outline bg-surface-1/60 px-4 py-3 text-small text-text-3 transition-colors hover:border-ink/30">
                           <span className="truncate">{form.archivo || "Elegir archivo…"}</span>
                           <input
                             id="campo-archivo"
@@ -360,12 +332,12 @@ export default function Contacto() {
                             className="sr-only"
                             onChange={(e) => setForm((f) => ({ ...f, archivo: e.target.files?.[0]?.name || "" }))}
                           />
-                          <span className="shrink-0 font-semibold text-ink">Seleccionar</span>
+                          <span className="shrink-0 font-semibold text-text-1">Seleccionar</span>
                         </label>
                       </Campo>
 
                       <div>
-                        <label className="flex items-start gap-3 rounded-xl border border-line bg-paper px-4 py-3.5">
+                        <label className="flex items-start gap-3 rounded-xl border border-outline bg-surface-1/60 px-4 py-3.5">
                           <input
                             id="campo-consentimiento"
                             type="checkbox"
@@ -373,18 +345,18 @@ export default function Contacto() {
                             onChange={set("consentimiento")}
                             className="mt-0.5 size-4 shrink-0 accent-[var(--color-accent)]"
                           />
-                          <span className="text-small text-text">
+                          <span className="text-small text-text-1">
                             Acepto que Fleximy use estos datos para responder mi consulta y preparar
                             la conversación, según su política de privacidad.{" "}
-                            <span className="text-ink/40" aria-hidden="true">*</span>
+                            <span className="text-text-3" aria-hidden="true">*</span>
                           </span>
                         </label>
                         {errores.consentimiento && (
-                          <p role="alert" className="mt-1.5 text-small font-medium text-ink">
+                          <p role="alert" className="mt-1.5 text-small font-medium text-error">
                             {errores.consentimiento}
                           </p>
                         )}
-                        <p className="mt-3 max-w-[56ch] font-mono text-micro text-muted">
+                        <p className="mt-3 max-w-[56ch] font-mono text-micro text-text-3">
                           Usaremos estos datos para responder tu consulta y preparar la conversación.
                           No compartimos tu información con terceros con fines publicitarios.
                         </p>
@@ -418,54 +390,54 @@ export default function Contacto() {
             </form>
           </div>
 
-          <aside className="lg:sticky lg:top-24">
-            <div className="rounded-[var(--radius-card)] border border-line bg-paper-bright p-6 lg:p-8">
-              <p className="font-mono text-micro text-muted">resumen del diagnóstico</p>
+          <aside>
+            <div className="rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6 lg:p-8">
+              <p className="font-mono text-micro text-text-3">resumen del diagnóstico</p>
               {resumenVisible ? (
                 <>
                   {form.rubro && (
-                    <p className="mt-4 text-h4">
-                      Rubro: <span className="text-muted">{form.rubro}</span>
+                    <p className="mt-4 text-h4 text-text-1">
+                      Rubro: <span className="text-text-2">{form.rubro}</span>
                     </p>
                   )}
                   {form.necesidad && (
-                    <p className="mt-2 text-h4">
-                      Necesidad: <span className="text-muted">{form.necesidad}</span>
+                    <p className="mt-2 text-h4 text-text-1">
+                      Necesidad: <span className="text-text-2">{form.necesidad}</span>
                     </p>
                   )}
                   {form.personas && (
-                    <p className="mt-2 text-h4">
-                      Usuarios: <span className="text-muted">{form.personas}</span>
+                    <p className="mt-2 text-h4 text-text-1">
+                      Usuarios: <span className="text-text-2">{form.personas}</span>
                     </p>
                   )}
                   {modulosPosibles.length > 0 && (
-                    <div className="mt-5 border-t border-line pt-5">
-                      <p className="font-mono text-micro text-muted">módulos posibles</p>
+                    <div className="mt-5 border-t border-outline pt-5">
+                      <p className="font-mono text-micro text-text-3">módulos posibles</p>
                       <ul className="mt-3 flex flex-wrap gap-2">
                         {modulosPosibles.map((m) => (
-                          <li key={m} className="rounded-full border border-line bg-paper px-3 py-1.5 text-small text-text">
+                          <li key={m} className="rounded-full border border-outline bg-surface-2/50 px-3 py-1.5 text-small text-text-1">
                             {m}
                           </li>
                         ))}
                       </ul>
-                      <p className="mt-4 font-mono text-micro text-muted">
+                      <p className="mt-4 font-mono text-micro text-text-3">
                         orientación inicial · no es una propuesta definitiva
                       </p>
                     </div>
                   )}
                 </>
               ) : (
-                <p className="mt-3 text-small text-muted">
+                <p className="mt-3 text-small text-text-2">
                   A medida que completás los pasos, este panel muestra cómo se arma tu diagnóstico.
                 </p>
               )}
             </div>
 
-            <div className="mt-6 rounded-[var(--radius-card)] border border-line bg-paper p-6">
-              <p className="font-mono text-micro text-muted">expectativas</p>
+            <div className="mt-6 rounded-[var(--radius-card)] border border-outline bg-surface-2/40 p-6">
+              <p className="font-mono text-micro text-text-3">expectativas</p>
               <ul className="mt-4 grid gap-2.5">
                 {EXPECTATIVAS.map((e) => (
-                  <li key={e} className="flex items-start gap-3 text-small text-muted">
+                  <li key={e} className="flex items-start gap-3 text-small text-text-2">
                     <span className="mt-1 size-2 shrink-0 rounded-full bg-cyan/60" />
                     {e}
                   </li>
@@ -476,16 +448,16 @@ export default function Contacto() {
         </div>
       </section>
 
-      <section className="border-y border-line bg-paper-bright py-20 lg:py-28">
+      <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
         <div className="container-site">
           <p className="kicker">Qué sucede después</p>
-          <h2 className="mt-4 max-w-[16ch] text-h1">De la solicitud a una primera versión</h2>
+          <h2 className="text-h2 mt-4 max-w-[16ch] text-text-1">De la solicitud a una primera versión</h2>
           <ol className="mt-12 grid gap-4 md:grid-cols-3">
             {PASOS_DESPUES.map((paso) => (
-              <li key={paso.n} className="rounded-[var(--radius-card)] border border-line bg-paper p-6 lg:p-8">
-                <span className="font-mono text-micro text-muted">paso {paso.n}</span>
-                <h3 className="mt-3 text-h3">{paso.titulo}</h3>
-                <p className="mt-3 text-small text-muted">{paso.texto}</p>
+              <li key={paso.n} className="rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6 lg:p-8">
+                <span className="font-mono text-micro text-text-3">paso {paso.n}</span>
+                <h3 className="text-h3 mt-3 text-text-1">{paso.titulo}</h3>
+                <p className="mt-3 text-small text-text-2">{paso.texto}</p>
               </li>
             ))}
           </ol>
@@ -495,35 +467,35 @@ export default function Contacto() {
               href={CONTACT.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-4 rounded-[var(--radius-card)] border border-line bg-paper p-6 transition-colors hover:border-ink/30"
+              className="group flex items-center gap-4 rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6 transition-colors hover:border-primary/40"
             >
-              <span className="grid size-11 place-items-center rounded-xl bg-accent text-on-accent">
+              <span className="grid size-11 place-items-center rounded-xl bg-accent text-accent-on">
                 <MessageCircle className="size-5" />
               </span>
               <span>
-                <span className="block text-small font-semibold text-text">WhatsApp</span>
-                <span className="block text-small text-muted">Para una consulta rápida</span>
+                <span className="block text-small font-semibold text-text-1">WhatsApp</span>
+                <span className="block text-small text-text-2">Para una consulta rápida</span>
               </span>
             </a>
-            <div className="group flex items-center gap-4 rounded-[var(--radius-card)] border border-line bg-paper p-6">
-              <span className="grid size-11 place-items-center rounded-xl bg-cyan/15 text-cyan-deep">
+            <div className="group flex items-center gap-4 rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6">
+              <span className="grid size-11 place-items-center rounded-xl bg-cyan/15 text-cyan">
                 <CalendarDays className="size-5" />
               </span>
               <span>
-                <span className="block text-small font-semibold text-text">Reunión de 20 minutos</span>
-                <span className="block text-small text-muted">Agenda por WhatsApp o email</span>
+                <span className="block text-small font-semibold text-text-1">Reunión de 20 minutos</span>
+                <span className="block text-small text-text-2">Agenda por WhatsApp o email</span>
               </span>
             </div>
             <a
               href="mailto:[EMAIL COMERCIAL REAL]"
-              className="group flex items-center gap-4 rounded-[var(--radius-card)] border border-line bg-paper p-6 transition-colors hover:border-ink/30"
+              className="group flex items-center gap-4 rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6 transition-colors hover:border-primary/40"
             >
-              <span className="grid size-11 place-items-center rounded-xl bg-dark-surface/10 text-ink">
+              <span className="grid size-11 place-items-center rounded-xl bg-surface-3/60 text-text-1">
                 <Mail className="size-5" />
               </span>
               <span>
-                <span className="block text-small font-semibold text-text">Email</span>
-                <span className="block text-small text-muted">[EMAIL COMERCIAL REAL]</span>
+                <span className="block text-small font-semibold text-text-1">Email</span>
+                <span className="block text-small text-text-2">[EMAIL COMERCIAL REAL]</span>
               </span>
             </a>
           </div>

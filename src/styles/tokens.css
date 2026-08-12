@@ -1,167 +1,322 @@
-@theme {
-  /* ============================================================
-     FLEXIMY — Sistema visual "Minimalismo operativo" (v3)
-     Dirección editorial · SaaS premium · Material como fundamento
-     ============================================================ */
+/* ==========================================================================
+   FLEXIMY — TOKENS (BRIEF MAESTRO)
+   Dark + Light diseñados, gradientes de marca, escala tipográfica.
+   La convención `--color-*` expone utilities en Tailwind v4.
+   ========================================================================== */
+
+/* ===== Dark (default) ===== */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Escala tipográfica */
+  --hero-title: clamp(4rem, 8vw, 9rem);
+  --display: clamp(3rem, 6vw, 6.5rem);
+  --h2: clamp(2.4rem, 4.5vw, 4.8rem);
+  --h3: clamp(1.4rem, 2.4vw, 2.2rem);
+  --h4: clamp(1.1rem, 1.6vw, 1.35rem);
+  --lead: clamp(1.15rem, 1.7vw, 1.5rem);
+  --body: 1rem;
+  --small: 0.875rem;
+  --micro: 0.75rem;
+
+  /* Layout */
+  --container-pad: clamp(1.25rem, 4vw, 2.5rem);
+  --content-max: 82rem;
+  --content-narrow: 50rem;
+  --radius-card: 1.5rem;
+  --radius-field: 0.875rem;
+  --radius-btn: 0.875rem;
+  --radius-pill: 9999px;
+  --motion-fast: 0.18s;
+  --motion-base: 0.28s;
+  --motion-slow: 0.6s;
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Superficies */
-  --color-bg-primary: #f5f7fb;
-  --color-bg-secondary: #edf0f7;
-  --color-surface: #ffffff;
-  --color-surface-soft: #e8ecf5;
+  --bg: #090b17;
+  --bg-soft: #101326;
+  --surface: #151a30;
+  --surface-elevated: #1d2340;
+  --surface-highlight: #252d50;
 
-  /* Tinta */
-  --color-ink-primary: #121525;
-  --color-ink-secondary: #565c70;
-  --color-ink-muted: #7c8295;
+  /* Texto */
+  --text: #f8f8ff;
+  --text-secondary: #b5bdd4;
+  --text-muted: #7d87a3;
+  --text-faint: #5b6484;
 
-  /* Primario */
-  --color-primary: #4f5ee8;
-  --color-primary-hover: #4051df;
-  --color-primary-deep: #2937a8;
-  --color-primary-soft: #dde2ff;
-  --color-primary-on-dark: #9aa7ff;
-
-  /* Secundario (cian de marca) */
-  --color-secondary: #00a7b5;
-  --color-secondary-deep: #007f8c;
-  --color-secondary-soft: #d5f5f6;
-
-  /* Noche (superficies inmersivas de sistema) */
-  --color-night: #121735;
-  --color-night-elevated: #1b2250;
-  --color-night-mid: #242e5c;
-  --color-on-night: #f6f7ff;
-
-  /* Bordes */
-  --color-outline: rgba(39, 47, 91, 0.14);
-  --color-outline-strong: rgba(39, 47, 91, 0.32);
-  --color-outline-night: rgba(246, 247, 255, 0.16);
-  --color-outline-night-strong: rgba(246, 247, 255, 0.34);
+  /* Marca */
+  --primary: #7c6cff;
+  --primary-strong: #9687ff;
+  --secondary: #20d5c7;
+  --secondary-strong: #45e2d5;
+  --accent: #ff6fae;
+  --accent-strong: #ff8fc1;
+  --warm: #ffb45e;
+  --blue: #4d8dff;
 
   /* Estados */
+  --success: #42d392;
+  --warning: #ffb45e;
+  --error: #ff747f;
+
+  /* Líneas */
+  --outline: rgba(220, 225, 255, 0.14);
+  --outline-strong: rgba(220, 225, 255, 0.25);
+
+  /* Sombras */
+  --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.18);
+  --shadow-md: 0 20px 60px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 35px 100px rgba(0, 0, 0, 0.44);
+
+  /* Gradientes y atmósferas */
+  --gradient-primary: linear-gradient(120deg, #7c6cff 0%, #4d8dff 32%, #20d5c7 65%, #ff6fae 100%);
+  --gradient-warm: linear-gradient(135deg, #ff6fae 0%, #ff8d6c 48%, #ffb45e 100%);
+  --background-atmosphere:
+    radial-gradient(circle at 15% 10%, rgba(124, 108, 255, 0.22), transparent 30%),
+    radial-gradient(circle at 85% 20%, rgba(32, 213, 199, 0.14), transparent 28%),
+    radial-gradient(circle at 55% 75%, rgba(255, 111, 174, 0.1), transparent 30%),
+    linear-gradient(180deg, #090b17 0%, #101326 48%, #090b17 100%);
+
+  /* ===== Exposición para utilities Tailwind (--color-*) ===== */
+  /* @theme expone cada --color-* como utility (bg-paper, text-ink, etc.) */
+}
+
+/* Dark: utilities Tailwind */
+@theme {
+  --color-bg-0: #090b17;
+  --color-bg-1: #101326;
+  --color-bg-2: #0c0e1d;
+  --color-surface-0: #090b17;
+  --color-surface-1: #151a30;
+  --color-surface-2: #1d2340;
+  --color-surface-3: #252d50;
+  --color-surface-elevated: #1d2340;
+  --color-surface-highlight: #252d50;
+
+  --color-text-0: #090b17;
+  --color-text-1: #f8f8ff;
+  --color-text-2: #b5bdd4;
+  --color-text-3: #7d87a3;
+  --color-text-4: #5b6484;
+  --color-text-5: #454e6b;
+  --color-text-inverse: #090b17;
+  --color-text-muted: #7d87a3;
+
+  --color-primary: #7c6cff;
+  --color-primary-strong: #9687ff;
+  --color-primary-soft: rgba(124, 108, 255, 0.14);
+  --color-primary-on: #ffffff;
+
+  --color-cyan: #20d5c7;
+  --color-cyan-strong: #45e2d5;
+  --color-cyan-soft: rgba(32, 213, 199, 0.14);
+  --color-cyan-on: #03201c;
+
+  --color-secondary: var(--cyan);
+  --color-secondary-strong: var(--cyan-strong);
+  --color-secondary-soft: var(--cyan-soft);
+
+  --color-accent: #ff6fae;
+  --color-accent-strong: #ff8fc1;
+  --color-accent-soft: rgba(255, 111, 174, 0.14);
+  --color-accent-on: #2b0718;
+
+  --color-warm: #ffb45e;
+  --color-warm-soft: rgba(255, 180, 94, 0.14);
+  --color-warm-on: #2b1a04;
+
+  --color-blue: #4d8dff;
+  --color-blue-soft: rgba(77, 141, 255, 0.14);
+  --color-blue-on: #04142b;
+
+  --color-success: #42d392;
+  --color-success-soft: rgba(66, 211, 146, 0.14);
+  --color-success-on: #04170e;
+  --color-warning: #ffb45e;
+  --color-warning-soft: rgba(255, 180, 94, 0.14);
+  --color-warning-on: #2b1a04;
+  --color-error: #ff747f;
+  --color-error-soft: rgba(255, 116, 127, 0.14);
+  --color-error-on: #2b070a;
+
+  --color-outline: rgba(220, 225, 255, 0.14);
+  --color-outline-strong: rgba(220, 225, 255, 0.25);
+
+  /* Acents por industria */
+  --color-acc-gastro: #ff6fae;
+  --color-acc-turnos: #20d5c7;
+  --color-acc-gestion: #42d392;
+  --color-acc-comercio: #ffb45e;
+  --color-acc-inmob: #4d8dff;
+  --color-acc-educacion: #7c6cff;
+  --color-acc-talleres: #ff8d6c;
+
+  /* Aliases compatibles (componentes internos) */
+  --color-text-accent: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-muted);
+  --color-border: var(--outline);
+  --color-border-strong: var(--outline-strong);
+  --color-background: var(--bg);
+  --color-surface: var(--surface);
+
+  /* Legacy API de páginas internas (CasosDeUso, ComoFunciona, dashboards, etc.) */
+  --color-paper: var(--bg);
+  --color-paper-bright: var(--surface);
+  --color-dark-surface: var(--surface-highlight);
+  --color-text-invert: var(--text);
+  --color-muted: var(--text-muted);
+  --color-ink: var(--text);
+  --color-ink-primary: var(--text);
+  --color-ink-secondary: var(--text-secondary);
+  --color-ink-muted: var(--surface-highlight);
+  --color-ink-soft: var(--surface-elevated);
+  --color-line: var(--outline);
+  --color-line-dark: var(--outline-strong);
+  --color-outline-night: var(--outline-strong);
+  --color-surface-soft: var(--surface);
+  --color-accent-on-dark: var(--accent);
+  --color-on-accent: var(--primary-on);
+  --color-on-accent-soft: var(--accent);
+  --color-primary-deep: var(--primary-strong);
+  --color-primary-hover: var(--primary-strong);
+  --color-bg-secondary: var(--bg-1);
+  --color-night: var(--surface-2);
+  --color-night-elevated: var(--surface-3);
+  --color-on-night: var(--text);
+}
+
+/* ===== Dark: atmósferas (fuera de @theme para no generar utilities bg-*) ===== */
+:root,
+:root[data-theme="dark"] {
+  --background-image-page: var(--background-atmosphere);
+  --background-image-surface: radial-gradient(ellipse 60% 45% at 12% 0%, rgba(124, 108, 255, 0.12), transparent 55%), radial-gradient(ellipse 50% 40% at 88% 10%, rgba(32, 213, 199, 0.08), transparent 55%), linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 55%, var(--bg) 100%);
+  --background-image-surface-elevated: radial-gradient(ellipse 60% 45% at 12% 0%, rgba(124, 108, 255, 0.14), transparent 55%), radial-gradient(ellipse 50% 40% at 88% 10%, rgba(32, 213, 199, 0.1), transparent 55%), linear-gradient(180deg, var(--surface-elevated) 0%, var(--surface) 100%);
+  --background-image-primary: radial-gradient(ellipse 55% 50% at 15% 0%, rgba(124, 108, 255, 0.28), transparent 55%), radial-gradient(ellipse 50% 45% at 85% 10%, rgba(32, 213, 199, 0.2), transparent 55%), linear-gradient(180deg, #17143a 0%, #0f1228 60%, var(--bg) 100%);
+  --background-image-accent: var(--gradient-primary);
+  --background-image-hilo: conic-gradient(from 180deg at 50% 50%, var(--primary), transparent 40%), conic-gradient(from 40deg at 50% 50%, var(--secondary), transparent 40%);
+  --background-image-gradient-primary: var(--gradient-primary);
+  --background-image-ink-text: linear-gradient(120deg, var(--text) 0%, var(--primary) 38%, var(--secondary) 68%, var(--accent) 100%);
+  --background-image-gradient-ink-text: linear-gradient(120deg, var(--text) 0%, var(--primary) 38%, var(--secondary) 68%, var(--accent) 100%);
+}
+
+/* ===== Light ===== */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #f7f7fc;
+  --bg-soft: #eef0f8;
+  --surface: #ffffff;
+  --surface-elevated: #f5f6fb;
+  --surface-highlight: #e8ebf5;
+
+  --text: #16182a;
+  --text-secondary: #535a70;
+  --text-muted: #7d8497;
+  --text-faint: #9aa1b4;
+
+  --primary: #6555e8;
+  --primary-strong: #4a3cc9;
+  --secondary: #009f95;
+  --secondary-strong: #007f78;
+  --accent: #d94687;
+  --accent-strong: #b52e6e;
+  --warm: #d97706;
+  --blue: #3175dc;
+
+  --success: #16855b;
+  --warning: #a86000;
+  --error: #ba1a1a;
+
+  --outline: rgba(35, 40, 74, 0.13);
+  --outline-strong: rgba(35, 40, 74, 0.24);
+
+  --shadow-sm: 0 8px 24px rgba(39, 47, 91, 0.08);
+  --shadow-md: 0 20px 60px rgba(39, 47, 91, 0.13);
+  --shadow-lg: 0 35px 100px rgba(39, 47, 91, 0.18);
+
+  --background-atmosphere:
+    radial-gradient(circle at 15% 10%, rgba(101, 85, 232, 0.14), transparent 30%),
+    radial-gradient(circle at 85% 20%, rgba(0, 159, 149, 0.1), transparent 28%),
+    radial-gradient(circle at 55% 75%, rgba(217, 70, 135, 0.07), transparent 30%),
+    linear-gradient(180deg, #fafaff 0%, #f0f2fa 100%);
+
+  --color-bg-0: #f7f7fc;
+  --color-bg-1: #eef0f8;
+  --color-bg-2: #e3e6f2;
+  --color-surface-0: #f7f7fc;
+  --color-surface-1: #ffffff;
+  --color-surface-2: #f5f6fb;
+  --color-surface-3: #e8ebf5;
+  --color-surface-elevated: #f5f6fb;
+  --color-surface-highlight: #e8ebf5;
+
+  --color-text-0: #f7f7fc;
+  --color-text-1: #16182a;
+  --color-text-2: #535a70;
+  --color-text-3: #7d8497;
+  --color-text-4: #9aa1b4;
+  --color-text-5: #b3b9c9;
+  --color-text-inverse: #ffffff;
+  --color-text-muted: #7d8497;
+
+  --color-primary: #6555e8;
+  --color-primary-strong: #4a3cc9;
+  --color-primary-soft: rgba(101, 85, 232, 0.12);
+  --color-primary-on: #ffffff;
+
+  --color-cyan: #009f95;
+  --color-cyan-strong: #007f78;
+  --color-cyan-soft: rgba(0, 159, 149, 0.12);
+  --color-cyan-on: #ffffff;
+
+  --color-accent: #d94687;
+  --color-accent-strong: #b52e6e;
+  --color-accent-soft: rgba(217, 70, 135, 0.12);
+  --color-accent-on: #ffffff;
+
+  --color-warm: #d97706;
+  --color-warm-soft: rgba(217, 119, 6, 0.12);
+  --color-warm-on: #ffffff;
+
+  --color-blue: #3175dc;
+  --color-blue-soft: rgba(49, 117, 220, 0.12);
+  --color-blue-on: #ffffff;
+
   --color-success: #16855b;
-  --color-success-container: #d7f5e6;
-  --color-warning: #b86b00;
-  --color-warning-container: #ffebca;
+  --color-success-soft: rgba(22, 133, 91, 0.12);
+  --color-success-on: #ffffff;
+  --color-warning: #a86000;
+  --color-warning-soft: rgba(168, 96, 0, 0.12);
+  --color-warning-on: #ffffff;
   --color-error: #ba1a1a;
-  --color-error-container: #ffdad6;
+  --color-error-soft: rgba(186, 26, 26, 0.12);
+  --color-error-on: #ffffff;
 
-  /* ------------------------------------------------------------
-     Gradientes — sistema de atmósfera Fleximy (v3.1)
-     Profundidad · iluminación · continuidad de planos
-     (namespace de Tailwind v4: --background-image-* → bg-*)
-     ------------------------------------------------------------ */
-  --background-image-gradient-page:
-    radial-gradient(circle at 15% 10%, rgba(79, 94, 232, 0.12), transparent 34%),
-    radial-gradient(circle at 85% 20%, rgba(0, 167, 181, 0.1), transparent 30%),
-    linear-gradient(180deg, #f8f9fd 0%, #eef1f8 100%);
+  --color-outline: rgba(35, 40, 74, 0.13);
+  --color-outline-strong: rgba(35, 40, 74, 0.24);
 
-  --background-image-gradient-surface:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.98) 0%,
-      rgba(235, 239, 250, 0.92) 100%
-    );
+  --color-acc-gastro: #d94687;
+  --color-acc-turnos: #009f95;
+  --color-acc-gestion: #16855b;
+  --color-acc-comercio: #d97706;
+  --color-acc-inmob: #3175dc;
+  --color-acc-educacion: #6555e8;
+  --color-acc-talleres: #e2574a;
 
-  --background-image-gradient-primary-soft:
-    linear-gradient(
-      135deg,
-      rgba(221, 226, 255, 0.95) 0%,
-      rgba(213, 245, 246, 0.78) 100%
-    );
-
-  --background-image-gradient-night:
-    radial-gradient(circle at 18% 0%, rgba(79, 94, 232, 0.32), transparent 42%),
-    radial-gradient(circle at 88% 100%, rgba(0, 167, 181, 0.2), transparent 38%),
-    linear-gradient(180deg, #171d42 0%, #0f1330 100%);
-
-  --background-image-gradient-night-elevated:
-    linear-gradient(160deg, rgba(27, 34, 80, 0.92) 0%, rgba(36, 46, 92, 0.6) 100%);
-
-  --background-image-gradient-ink-text:
-    linear-gradient(120deg, #121525 0%, #2937a8 55%, #4f5ee8 100%);
-
-  /* ------------------------------------------------------------
-     Tokens heredados — mapeados a la paleta v3 (compatibilidad)
-     ------------------------------------------------------------ */
-  --color-ink: #121525;
-  --color-ink-soft: #1b2250;
-  --color-ink-muted: #242e5c;
-
-  --color-paper: #f5f7fb;
-  --color-paper-bright: #ffffff;
-  --color-paper-dim: #edf0f7;
-
-  --color-accent: #4f5ee8;
-  --color-accent-hover: #4051df;
-  --color-accent-dark: #2937a8;
-  --color-on-accent: #ffffff;
-  --color-accent-soft: #dde2ff;
-  --color-on-accent-soft: #2937a8;
-  --color-accent-on-dark: #9aa7ff;
-
-  --color-cyan: #00a7b5;
-  --color-cyan-deep: #007f8c;
-  --color-cyan-soft: #d5f5f6;
-
-  --color-line: rgba(39, 47, 91, 0.14);
-  --color-line-dark: rgba(246, 247, 255, 0.16);
-
-  --color-text: #121525;
-  --color-text-invert: #f6f7ff;
-  --color-muted: #565c70;
-
-  /* Acentos por industria (identidad de marca) */
-  --color-acc-gastro: #e8a33d;
-  --color-acc-turnos: #00c2cc;
-  --color-acc-gestion: #4cd697;
-  --color-acc-comercio: #9a8cff;
-  --color-acc-inmob: #f08f8f;
-  --color-acc-educacion: #5aa3f0;
-  --color-acc-talleres: #f0924c;
-
-  /* ------------------------------------------------------------
-     Tipografía
-     ------------------------------------------------------------ */
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
-
-  /* Retícula */
-  --content-max: 1280px;
-  --content-wide: 1480px;
-  --content-narrow: 800px;
-  --container-pad: clamp(1.25rem, 4vw, 2.5rem);
-
-  /* Radios */
-  --radius-btn: 0.75rem;
-  --radius-card: 1.25rem;
-  --radius-field: 0.875rem;
-
-  /* Sombras — elevación azulada, difusa y suave */
-  --shadow-soft: 0 1px 2px rgba(23, 32, 84, 0.04), 0 4px 12px rgba(23, 32, 84, 0.05);
-  --shadow-lift: 0 2px 4px rgba(23, 32, 84, 0.06), 0 16px 32px rgba(23, 32, 84, 0.09), 0 40px 80px rgba(23, 32, 84, 0.12);
-  --shadow-night: 0 1px 2px rgba(0, 0, 0, 0.3), 0 16px 40px rgba(0, 0, 0, 0.35);
-
-  /* Movimiento */
-  --motion-fast: 180ms;
-  --motion-base: 500ms;
-  --motion-slow: 800ms;
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-
-  /* Escala tipográfica fluida — titulares display editoriales */
-  --text-hero: clamp(3rem, 7.5vw, 6.75rem);
-  --text-h1: clamp(2.25rem, 4.5vw, 4rem);
-  --text-h2: clamp(1.75rem, 3.4vw, 3rem);
-  --text-h3: clamp(1.35rem, 2.2vw, 1.9rem);
-  --text-h4: clamp(1.1rem, 1.6vw, 1.35rem);
-  --text-lead: clamp(1.125rem, 1.6vw, 1.375rem);
-  --text-body: 1rem;
-  --text-small: 0.875rem;
-  --text-micro: 0.75rem;
-
-  --tracking-tight: -0.035em;
-  --tracking-normal: -0.015em;
-  --tracking-display: -0.045em;
+  --background-image-page: var(--background-atmosphere);
+  --background-image-surface: radial-gradient(ellipse 60% 45% at 12% 0%, rgba(101, 85, 232, 0.1), transparent 55%), radial-gradient(ellipse 50% 40% at 88% 10%, rgba(0, 159, 149, 0.08), transparent 55%), linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 55%, var(--bg) 100%);
+  --background-image-surface-elevated: radial-gradient(ellipse 60% 45% at 12% 0%, rgba(101, 85, 232, 0.12), transparent 55%), radial-gradient(ellipse 50% 40% at 88% 10%, rgba(0, 159, 149, 0.1), transparent 55%), linear-gradient(180deg, var(--surface-elevated) 0%, var(--surface) 100%);
+  --background-image-primary: radial-gradient(ellipse 55% 50% at 15% 0%, rgba(101, 85, 232, 0.2), transparent 55%), radial-gradient(ellipse 50% 45% at 85% 10%, rgba(0, 159, 149, 0.16), transparent 55%), linear-gradient(180deg, #e4defb 0%, #eef0f8 60%, var(--bg) 100%);
+  --background-image-accent: var(--gradient-primary);
+  --background-image-hilo: conic-gradient(from 180deg at 50% 50%, var(--primary), transparent 40%), conic-gradient(from 40deg at 50% 50%, var(--secondary), transparent 40%);
+  --background-image-gradient-primary: var(--gradient-primary);
+  --background-image-ink-text: linear-gradient(120deg, var(--text) 0%, var(--primary) 38%, var(--secondary) 68%, var(--accent) 100%);
+  --background-image-gradient-ink-text: linear-gradient(120deg, var(--text) 0%, var(--primary) 38%, var(--secondary) 68%, var(--accent) 100%);
 }

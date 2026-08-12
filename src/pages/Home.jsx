@@ -1,29 +1,31 @@
-import HomeHero from "../components/home/HomeHero"
-import Franja from "../components/home/Franja"
-import ViajeConsulta from "../components/home/ViajeConsulta"
-import SelectorIndustrias from "../components/home/SelectorIndustrias"
-import Transformacion from "../components/home/Transformacion"
-import Proceso from "../components/home/Proceso"
-import DemoSeccion from "../components/home/DemoSeccion"
-import Confianza from "../components/home/Confianza"
-import PrecioIntro from "../components/home/PrecioIntro"
-import FaqBreve from "../components/home/FaqBreve"
-import CtaFinal from "../components/home/CtaFinal"
+import HeroSection from "../components/home/HeroSection"
+import CapabilitiesMarquee from "../components/home/CapabilitiesMarquee"
+import ManifestoSection from "../components/home/ManifestoSection"
+import CapabilitiesSection from "../components/home/CapabilitiesSection"
+import LabSection from "../components/home/LabSection"
+import PlaygroundSection from "../components/home/PlaygroundSection"
+import ProcessSection from "../components/home/ProcessSection"
+import IndustriesSection from "../components/home/IndustriesSection"
+import TransformationSection from "../components/home/TransformationSection"
+import ProjectsSection from "../components/home/ProjectsSection"
+import WhySection from "../components/home/WhySection"
+import FinalCtaSection from "../components/home/FinalCtaSection"
 
 export default function Home() {
   return (
-    <main className="bg-gradient-page text-ink-primary">
-      <HomeHero />
-      <Franja />
-      <ViajeConsulta />
-      <SelectorIndustrias />
-      <Transformacion />
-      <Proceso />
-      <DemoSeccion />
-      <Confianza />
-      <PrecioIntro />
-      <FaqBreve />
-      <CtaFinal />
+    <main className="text-text-1">
+      <HeroSection />
+      <CapabilitiesMarquee />
+      <ManifestoSection />
+      <CapabilitiesSection />
+      <LabSection />
+      <PlaygroundSection />
+      <ProcessSection />
+      <IndustriesSection />
+      <TransformationSection />
+      <ProjectsSection />
+      <WhySection />
+      <FinalCtaSection />
     </main>
   )
 }

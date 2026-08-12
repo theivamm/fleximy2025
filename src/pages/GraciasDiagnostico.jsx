@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import { Check, MessageCircle, Play, ArrowRight, Building2 } from "lucide-react"
-import Button from "../components/ui/Button"
+import OutlineCTA from "../components/ui/OutlineCTA"
 import { CONTACT } from "../data/navigation"
 import { track } from "../lib/analytics"
 
@@ -48,13 +48,13 @@ export default function GraciasDiagnostico() {
     : { initial: "hidden", animate: "show" }
 
   return (
-    <main className="bg-paper text-text">
+    <main>
       <section className="container-site flex min-h-[70vh] items-center py-24 lg:py-32">
         <div className="mx-auto w-full max-w-2xl text-center">
           <motion.div {...animProps} variants={container}>
             <motion.span
               variants={item}
-              className="mx-auto grid size-16 place-items-center rounded-2xl bg-accent text-on-accent"
+              className="mx-auto grid size-16 place-items-center rounded-2xl bg-accent text-accent-on"
             >
               <motion.span
                 initial={reduce ? false : { scale: 0.6, opacity: 0 }}
@@ -65,23 +65,23 @@ export default function GraciasDiagnostico() {
               </motion.span>
             </motion.span>
 
-            <motion.p variants={item} className="mt-8 kicker justify-center">
+            <motion.p variants={item} className="kicker mt-8 justify-center">
               Solicitud recibida
             </motion.p>
 
-            <motion.h1 variants={item} className="mt-4 text-h1">
+            <motion.h1 variants={item} className="text-h1 mt-4 text-text-1">
               Recibimos tu solicitud
             </motion.h1>
 
-            <motion.p variants={item} className="mx-auto mt-5 max-w-[52ch] text-lead text-muted">
+            <motion.p variants={item} className="lead-text mx-auto mt-5 max-w-[52ch] text-text-2">
               Gracias por contarnos sobre tu negocio. Vamos a revisar la información y contactarte
-              dentro de <span className="font-mono text-text">[PLAZO VALIDADO]</span> días hábiles.
+              dentro de <span className="font-mono text-text-1">[PLAZO VALIDADO]</span> días hábiles.
             </motion.p>
           </motion.div>
         </div>
       </section>
 
-      <section className="border-y border-line bg-paper-bright py-20 lg:py-24">
+      <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-24">
         <div className="container-narrow">
           <motion.p
             {...animProps}
@@ -94,68 +94,68 @@ export default function GraciasDiagnostico() {
           <motion.div {...animProps} variants={container} className="mt-10 grid gap-4 lg:grid-cols-3">
             <motion.article
               variants={item}
-              className="flex flex-col justify-between rounded-[var(--radius-card)] border border-line bg-paper p-6 lg:p-8"
+              className="flex flex-col justify-between rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6 lg:p-8"
             >
               <div>
-                <span className="grid size-11 place-items-center rounded-xl bg-accent text-on-accent">
+                <span className="grid size-11 place-items-center rounded-xl bg-accent text-accent-on">
                   <Play className="size-5" />
                 </span>
-                <h2 className="mt-5 text-h3">Mirá Fleximy en acción</h2>
-                <p className="mt-3 text-small text-muted">
+                <h2 className="text-h3 mt-5 text-text-1">Mirá Fleximy en acción</h2>
+                <p className="mt-3 text-small text-text-2">
                   Explorá las experiencias de clientes y paneles de gestión.
                 </p>
               </div>
               <div className="mt-6">
-                <Button to="/demos" variant="secondary" data-track="gracias_click_demo">
+                <OutlineCTA to="/demos" data-track="gracias_click_demo">
                   Probar demos
                   <ArrowRight className="size-4" />
-                </Button>
+                </OutlineCTA>
               </div>
             </motion.article>
 
             <motion.article
               variants={item}
-              className="flex flex-col justify-between rounded-[var(--radius-card)] border border-line bg-paper p-6 lg:p-8"
+              className="flex flex-col justify-between rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6 lg:p-8"
             >
               <div>
-                <span className="grid size-11 place-items-center rounded-xl bg-cyan/15 text-cyan-deep">
+                <span className="grid size-11 place-items-center rounded-xl bg-cyan/15 text-cyan">
                   <Building2 className="size-5" />
                 </span>
-                <h2 className="mt-5 text-h3">Conocé la solución de tu rubro</h2>
-                <p className="mt-3 text-small text-muted">
+                <h2 className="text-h3 mt-5 text-text-1">Conocé la solución de tu rubro</h2>
+                <p className="mt-3 text-small text-text-2">
                   {solucion
                     ? "Mientras esperás nuestra respuesta, mirá cómo se aplica a tu rubro."
                     : "Mientras esperás nuestra respuesta, conocé las soluciones por rubro."}
                 </p>
               </div>
               <div className="mt-6">
-                <Button to={solucion ? solucion.to : "/soluciones"} variant="secondary">
+                <OutlineCTA to={solucion ? solucion.to : "/soluciones"}>
                   {solucion ? solucion.label : "Ver soluciones"}
                   <ArrowRight className="size-4" />
-                </Button>
+                </OutlineCTA>
               </div>
             </motion.article>
 
             <motion.article
               variants={item}
-              className="flex flex-col justify-between rounded-[var(--radius-card)] border border-line bg-paper p-6 lg:p-8"
+              className="flex flex-col justify-between rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6 lg:p-8"
             >
               <div>
-                <span className="grid size-11 place-items-center rounded-xl bg-dark-surface text-text-invert">
+                <span className="grid size-11 place-items-center rounded-xl bg-text-1 text-bg-0">
                   <MessageCircle className="size-5" />
                 </span>
-                <h2 className="mt-5 text-h3">¿Tu consulta es urgente?</h2>
-                <p className="mt-3 text-small text-muted">
+                <h2 className="text-h3 mt-5 text-text-1">¿Tu consulta es urgente?</h2>
+                <p className="mt-3 text-small text-text-2">
                   Escribinos por WhatsApp dentro de{" "}
-                  <span className="font-mono text-text">[HORARIO REAL]</span> e indicá que ya
+                  <span className="font-mono text-text-1">[HORARIO REAL]</span> e indicá que ya
                   completaste el diagnóstico.
                 </p>
               </div>
               <div className="mt-6">
-                <Button href={CONTACT.whatsapp} variant="dark">
+                <OutlineCTA href={CONTACT.whatsapp}>
                   Hablar por WhatsApp
                   <ArrowRight className="size-4" />
-                </Button>
+                </OutlineCTA>
               </div>
             </motion.article>
           </motion.div>

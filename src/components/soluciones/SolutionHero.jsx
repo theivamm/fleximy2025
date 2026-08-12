@@ -1,80 +1,66 @@
-import { useLayoutEffect, useRef } from "react"
-import gsap from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import Button from "../ui/Button"
-
-gsap.registerPlugin(ScrollTrigger)
+import { motion } from "framer-motion"
+import PrimaryCTA from "../ui/PrimaryCTA"
+import OutlineCTA from "../ui/OutlineCTA"
 
 export default function SolutionHero({ data, lines, children }) {
-  const root = useRef(null)
-
-  useLayoutEffect(() => {
-    const mm = gsap.matchMedia()
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
-      tl.fromTo(
-        ".sol-line-inner",
-        { yPercent: 110 },
-        { yPercent: 0, duration: 1, stagger: 0.13, ease: "power4.out" }
-      )
-        .fromTo(
-          ".sol-fade",
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 },
-          "-=0.45"
-        )
-        .fromTo(
-          ".sol-scene",
-          { opacity: 0, y: 34 },
-          { opacity: 1, y: 0, duration: 0.9 },
-          "-=0.5"
-        )
-
-      gsap.to(".sol-scene", {
-        yPercent: 4,
-        ease: "none",
-        scrollTrigger: {
-          trigger: root.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.6,
-        },
-      })
-    })
-    return () => mm.revert()
-  }, [])
-
   return (
-    <section
-      ref={root}
-      className="relative overflow-hidden pb-16 pt-28 lg:pb-24 lg:pt-36"
-    >
-      <div className="container-site">
+    <section className="relative overflow-hidden pb-16 pt-32 lg:pb-24 lg:pt-40">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 grid-pattern opacity-50 [mask-image:linear-gradient(180deg,black,transparent_72%)]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: `radial-gradient(52% 44% at 12% 8%, color-mix(in srgb, ${data.accent} 14%, transparent), transparent 62%), radial-gradient(42% 40% at 90% 14%, var(--cyan-soft), transparent 60%)`,
+        }}
+      />
+
+      <div className="container-site relative">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-center">
-          <div>
-            <p className="sol-fade kicker">{data.eyebrow}</p>
-            <h1 className="mt-6 text-hero text-text">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="kicker">{data.eyebrow}</span>
+            <h1 className="font-display text-h1 mt-6 max-w-[18ch] text-text-1">
               {(lines || [data.h1]).map((line, i) => (
-                <span key={i} className="block overflow-hidden pb-[0.08em]">
-                  <span className="sol-line-inner block">{line}</span>
+                <span key={i} className="block">
+                  {i === 0 ? line : <span className="text-gradient">{line}</span>}
                 </span>
               ))}
             </h1>
-            <p className="sol-fade mt-6 max-w-[46ch] text-lead text-muted">{data.hero}</p>
-            <div className="sol-fade mt-8 flex flex-wrap gap-3">
-              <Button to={data.ctaPrimary.to} size="lg">
+            <p className="lead-text mt-6 max-w-[46ch] text-text-2">{data.hero}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <PrimaryCTA to={data.ctaPrimary.to} large>
                 {data.ctaPrimary.label}
-              </Button>
-              <Button to={data.ctaSecondary.to} variant="secondary" size="lg">
+              </PrimaryCTA>
+              <OutlineCTA to={data.ctaSecondary.to} large>
                 {data.ctaSecondary.label}
-              </Button>
+              </OutlineCTA>
             </div>
-            <p className="sol-fade mt-4 font-mono text-micro text-muted">
+            <p className="mt-5 font-mono text-micro text-text-3">
               {data.label} · diagnóstico gratuito
             </p>
-          </div>
+          </motion.div>
 
-          <div className="sol-scene">{children}</div>
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="relative"
+          >
+            <div
+              aria-hidden="true"
+              className="absolute -inset-6 -z-10 rounded-[calc(var(--radius-card)+2rem)] opacity-60 blur-2xl"
+              style={{ background: `radial-gradient(60% 60% at 50% 40%, color-mix(in srgb, ${data.accent} 28%, transparent), transparent 70%)` }}
+            />
+            <div className="overflow-hidden rounded-[var(--radius-card)] border border-outline bg-surface-1/70 shadow-[var(--shadow-lg)] backdrop-blur">
+              {children}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

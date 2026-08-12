@@ -1,18 +1,10 @@
-import { useLayoutEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
-import gsap from "gsap"
 import { motion, AnimatePresence } from "framer-motion"
-import {
-  ArrowUpRight,
-  Utensils,
-  CalendarClock,
-  LayoutDashboard,
-  ShoppingCart,
-  Building2,
-  GraduationCap,
-  Wrench,
-} from "lucide-react"
-import Button from "../components/ui/Button"
+import { ArrowUpRight, Utensils, CalendarClock, LayoutDashboard, ShoppingCart, Building2, GraduationCap, Wrench } from "lucide-react"
+import PageHero from "../components/ui/PageHero"
+import PrimaryCTA from "../components/ui/PrimaryCTA"
+import OutlineCTA from "../components/ui/OutlineCTA"
 import { INDUSTRIES } from "../data/industries"
 
 const ICONS = {
@@ -109,29 +101,8 @@ const COTIZA = [
 ]
 
 export default function Soluciones() {
-  const root = useRef(null)
   const [activo, setActivo] = useState(0)
   const ind = INDUSTRIES[activo]
-
-  useLayoutEffect(() => {
-    const mm = gsap.matchMedia()
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap
-        .timeline({ defaults: { ease: "power3.out" } })
-        .fromTo(
-          ".hub-line-inner",
-          { yPercent: 110 },
-          { yPercent: 0, duration: 1, stagger: 0.13, ease: "power4.out" }
-        )
-        .fromTo(
-          ".hub-fade",
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 },
-          "-=0.45"
-        )
-    })
-    return () => mm.revert()
-  }, [])
 
   const elegirNecesidad = (slug) => {
     const i = INDUSTRIES.findIndex((x) => x.slug === slug)
@@ -140,42 +111,36 @@ export default function Soluciones() {
   }
 
   return (
-    <main className="bg-paper text-text">
-      <section ref={root} className="relative overflow-hidden pb-16 pt-28 lg:pt-36">
-        <div className="container-site">
-          <p className="hub-fade kicker">Soluciones Fleximy</p>
-          <h1 className="mt-6 max-w-[18ch] text-hero text-text">
-            <span className="block overflow-hidden pb-[0.08em]">
-              <span className="hub-line-inner block">Una base para cada negocio.</span>
-            </span>
-            <span className="block overflow-hidden pb-[0.08em]">
-              <span className="hub-line-inner block">Una solución adaptada a tu operación.</span>
-            </span>
-          </h1>
-          <p className="hub-fade mt-6 max-w-[52ch] text-lead text-muted">
-            Elegí el punto de partida más parecido a tu empresa. Configuramos los módulos, la
-            identidad y los flujos según tu forma real de trabajar.
-          </p>
-          <div className="hub-fade mt-8">
-            <Button to="/contacto" size="lg">
-              Ayudarme a elegir una solución
-            </Button>
-          </div>
-        </div>
-      </section>
+    <main>
+      <PageHero
+        kicker="Soluciones Fleximy"
+        title={
+          <>
+            Una base para cada negocio.{" "}
+            <span className="text-gradient">Una solución adaptada a tu operación.</span>
+          </>
+        }
+        lead="Elegí el punto de partida más parecido a tu empresa. Configuramos los módulos, la identidad y los flujos según tu forma real de trabajar."
+        actions={
+          <PrimaryCTA to="/contacto" large>
+            Ayudarme a elegir una solución
+          </PrimaryCTA>
+        }
+        meta={`${INDUSTRIES.length} bases listas para adaptar · diagnóstico gratuito`}
+      />
 
-      <section className="border-y border-line bg-paper-bright py-16 lg:py-20">
+      <section className="border-y border-outline bg-surface-2/40 py-16 lg:py-20">
         <div className="container-site">
-          <p className="kicker">¿Qué necesitás ordenar primero?</p>
+          <span className="kicker">¿Qué necesitás ordenar primero?</span>
           <div className="mt-8 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {NECESIDADES.map((n) => (
               <button
                 key={n.label}
                 onClick={() => elegirNecesidad(n.slug)}
-                className="group flex items-center justify-between gap-3 rounded-xl border border-line bg-paper px-4 py-3.5 text-left transition-colors hover:border-ink/40"
+                className="group flex items-center justify-between gap-3 rounded-xl border border-outline bg-surface-1/60 px-4 py-3.5 text-left transition-colors hover:border-primary/60"
               >
-                <span className="text-small text-text">{n.label}</span>
-                <ArrowUpRight className="size-4 shrink-0 text-muted transition-colors group-hover:text-ink" />
+                <span className="text-small text-text-1">{n.label}</span>
+                <ArrowUpRight className="size-4 shrink-0 text-text-3 transition-colors group-hover:text-primary" />
               </button>
             ))}
           </div>
@@ -185,15 +150,17 @@ export default function Soluciones() {
       <section id="catalogo" className="container-site py-20 lg:py-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
-            <p className="kicker">Catálogo de soluciones</p>
-            <h2 className="mt-4 text-h1">Un índice de sistemas, no una grilla de cards</h2>
+            <span className="kicker">Catálogo de soluciones</span>
+            <h2 className="font-display text-h2 mt-4 text-text-1">
+              Un índice de sistemas, no una grilla de cards
+            </h2>
           </div>
-          <span className="font-mono text-micro text-muted">
+          <span className="font-mono text-micro text-text-3">
             solución {String(activo + 1).padStart(2, "0")} / {String(INDUSTRIES.length).padStart(2, "0")}
           </span>
         </div>
 
-        <div className="mt-4 h-1 overflow-hidden rounded-full bg-dark-surface/10">
+        <div className="mt-4 h-1 overflow-hidden rounded-full bg-surface-3/60">
           <motion.div
             animate={{ width: `${((activo + 1) / INDUSTRIES.length) * 100}%` }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -210,13 +177,13 @@ export default function Soluciones() {
                 aria-pressed={activo === i}
                 onClick={() => setActivo(i)}
                 className={`group flex items-start gap-4 rounded-xl border px-4 py-3.5 text-left transition-colors ${
-                  activo === i ? "border-ink bg-paper-bright" : "border-transparent hover:bg-paper-bright"
+                  activo === i ? "border-primary/70 bg-surface-2/60" : "border-transparent hover:bg-surface-2/40"
                 }`}
               >
-                <span className="font-mono text-micro text-muted">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-mono text-micro text-text-3">{String(i + 1).padStart(2, "0")}</span>
                 <span className="flex-1">
-                  <span className="block text-h3 text-text">{item.label}</span>
-                  <span className="mt-1 block text-small text-muted">{item.tagline}</span>
+                  <span className="font-display block text-h3 text-text-1">{item.label}</span>
+                  <span className="mt-1 block text-small text-text-3">{item.tagline}</span>
                 </span>
                 {activo === i && (
                   <span className="mt-2 size-2 shrink-0 rounded-full" style={{ backgroundColor: item.accent }} />
@@ -225,7 +192,7 @@ export default function Soluciones() {
             ))}
           </div>
 
-          <div className="lg:sticky lg:top-24">
+          <div>
             <AnimatePresence mode="wait">
               <motion.div
                 key={ind.slug}
@@ -241,14 +208,14 @@ export default function Soluciones() {
         </div>
       </section>
 
-      <section className="bg-dark-surface py-20 text-text-invert lg:py-28">
+      <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
         <div className="container-site">
           <div className="max-w-2xl">
-            <p className="kicker" style={{ color: "rgba(245,246,255,0.55)" }}>
-              Arquitectura modular
-            </p>
-            <h2 className="mt-4 text-h1">Tu solución no queda encerrada en una categoría</h2>
-            <p className="mt-5 text-lead text-text-invert/65">
+            <span className="kicker">Arquitectura modular</span>
+            <h2 className="font-display text-h2 mt-4 text-text-1">
+              Tu solución no queda encerrada en una categoría
+            </h2>
+            <p className="lead-text mt-5 text-text-2">
               Un comercio puede necesitar turnos. Una inmobiliaria puede necesitar proyectos. Una
               academia puede vender productos. Fleximy permite combinar módulos cuando existe una
               necesidad real.
@@ -259,11 +226,11 @@ export default function Soluciones() {
             {TRANSVERSALES.map((m, i) => (
               <li
                 key={m}
-                className="flex items-center gap-3 rounded-full border border-line-dark bg-ink-soft px-4 py-2 text-small text-text-invert/85"
+                className="flex items-center gap-3 rounded-full border border-outline bg-surface-1/60 px-4 py-2 text-small text-text-2"
               >
                 <span className="size-1.5 rounded-full bg-accent" />
                 {m}
-                <span className="font-mono text-micro text-text-invert/35">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-mono text-micro text-text-4">{String(i + 1).padStart(2, "0")}</span>
               </li>
             ))}
           </ul>
@@ -273,11 +240,11 @@ export default function Soluciones() {
       <section className="container-site py-20 lg:py-28">
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
-            <p className="kicker">Qué significa "adaptado"</p>
-            <h2 className="mt-4 text-h1">Incluye normalmente</h2>
+            <span className="kicker">Qué significa "adaptado"</span>
+            <h2 className="font-display text-h2 mt-4 text-text-1">Incluye normalmente</h2>
             <ul className="mt-8 grid gap-2.5">
               {INCLUYE.map((item) => (
-                <li key={item} className="flex items-start gap-3 rounded-xl border border-line bg-paper-bright px-4 py-3 text-small">
+                <li key={item} className="flex items-start gap-3 rounded-xl border border-outline bg-surface-1/60 px-4 py-3 text-small text-text-2">
                   <span className="mt-1 size-2 shrink-0 rounded-full bg-accent" />
                   {item}
                 </li>
@@ -285,11 +252,11 @@ export default function Soluciones() {
             </ul>
           </div>
           <div>
-            <p className="font-mono text-micro text-muted">se cotiza por separado cuando corresponde</p>
+            <p className="font-mono text-micro text-text-3">se cotiza por separado cuando corresponde</p>
             <ul className="mt-4 grid gap-2.5">
               {COTIZA.map((item) => (
-                <li key={item} className="flex items-start gap-3 rounded-xl border border-line bg-paper-bright px-4 py-3 text-small text-muted">
-                  <span className="mt-1 size-2 shrink-0 rounded-full bg-dark-surface/20" />
+                <li key={item} className="flex items-start gap-3 rounded-xl border border-outline bg-surface-1/40 px-4 py-3 text-small text-text-3">
+                  <span className="mt-1 size-2 shrink-0 rounded-full bg-surface-3" />
                   {item}
                 </li>
               ))}
@@ -298,25 +265,23 @@ export default function Soluciones() {
         </div>
       </section>
 
-      <section className="bg-dark-surface text-text-invert">
-        <div className="container-site py-24 text-center lg:py-32">
-          <p className="kicker justify-center" style={{ color: "rgba(245,246,255,0.55)" }}>
-            ¿Dudás?
-          </p>
-          <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">
+      <section className="container-site pb-20 lg:pb-28">
+        <div className="relative overflow-hidden rounded-3xl border border-outline p-10 text-center sm:p-16" style={{ backgroundImage: "var(--background-image-primary)" }}>
+          <span className="kicker justify-center">¿Dudás?</span>
+          <h2 className="font-display h2-title mx-auto mt-4 max-w-[18ch] text-text-1">
             ¿No sabés qué solución elegir?
           </h2>
-          <p className="mx-auto mt-5 max-w-[52ch] text-lead text-text-invert/70">
+          <p className="lead-text mx-auto mt-5 max-w-[52ch] text-text-2">
             Contanos cómo trabajás hoy y te proponemos una primera versión concreta, sin sumar
             funciones que no necesitás.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Button to="/contacto" size="lg">
+            <PrimaryCTA to="/contacto" large>
               Solicitar diagnóstico gratuito
-            </Button>
-            <Button to="/demos" variant="secondary" size="lg">
+            </PrimaryCTA>
+            <OutlineCTA to="/demos" large>
               Probar las demos
-            </Button>
+            </OutlineCTA>
           </div>
         </div>
       </section>
@@ -330,31 +295,34 @@ function Workbench({ ind }) {
   const rows = ROWS[ind.slug]
 
   return (
-    <div className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper-bright shadow-lift">
-      <div className="flex items-center gap-1.5 border-b border-line px-4 py-2.5">
-        <span className="size-2.5 rounded-full bg-dark-surface/15" />
-        <span className="size-2.5 rounded-full bg-dark-surface/15" />
-        <span className="size-2.5 rounded-full bg-dark-surface/15" />
-        <span className="ml-2 flex-1 truncate rounded-md bg-paper px-2 py-1 font-mono text-micro text-muted">
+    <div className="overflow-hidden rounded-[var(--radius-card)] border border-outline bg-surface-1/80 shadow-[var(--shadow-lg)] backdrop-blur">
+      <div className="flex items-center gap-1.5 border-b border-outline px-4 py-2.5">
+        <span className="size-2.5 rounded-full bg-surface-3" />
+        <span className="size-2.5 rounded-full bg-surface-3" />
+        <span className="size-2.5 rounded-full bg-surface-3" />
+        <span className="ml-2 flex-1 truncate rounded-md bg-surface-2/70 px-2 py-1 font-mono text-micro text-text-3">
           fleximy.app/{ind.slug}
         </span>
-        <span className="font-mono text-micro text-muted">panel interno</span>
+        <span className="font-mono text-micro text-text-3">panel interno</span>
       </div>
 
       <div className="p-6">
         <div className="flex items-center gap-3">
-          <span className="grid size-12 place-items-center rounded-xl" style={{ backgroundColor: ind.accent, color: "var(--color-ink)" }}>
+          <span
+            className="grid size-12 place-items-center rounded-xl"
+            style={{ backgroundColor: `color-mix(in srgb, ${ind.accent} 22%, transparent)`, color: ind.accent }}
+          >
             <Icon className="size-6" />
           </span>
           <div>
-            <p className="font-mono text-micro text-muted">solución {ind.label}</p>
-            <h3 className="text-h3 text-text">{ind.label}</h3>
+            <p className="font-mono text-micro text-text-3">solución {ind.label}</p>
+            <h3 className="font-display text-h3 text-text-1">{ind.label}</h3>
           </div>
         </div>
 
         <div className="mt-5 flex flex-wrap gap-2">
           {modulos.map((m) => (
-            <span key={m} className="rounded-full border border-line bg-paper px-3 py-1.5 text-small text-text">
+            <span key={m} className="rounded-full border border-outline bg-surface-2/60 px-3 py-1.5 text-small text-text-2">
               {m}
             </span>
           ))}
@@ -362,14 +330,14 @@ function Workbench({ ind }) {
 
         <ul className="mt-5 grid gap-2">
           {rows.map((r) => (
-            <li key={r.t} className="flex items-center justify-between gap-3 rounded-xl border border-line bg-paper px-3 py-2.5">
+            <li key={r.t} className="flex items-center justify-between gap-3 rounded-xl border border-outline bg-surface-2/40 px-3 py-2.5">
               <div className="min-w-0">
-                <p className="truncate text-sm font-medium text-text">{r.t}</p>
-                <p className="truncate font-mono text-micro text-muted">{r.meta}</p>
+                <p className="truncate text-sm font-medium text-text-1">{r.t}</p>
+                <p className="truncate font-mono text-micro text-text-3">{r.meta}</p>
               </div>
               <span
                 className={`shrink-0 rounded-full px-2.5 py-1 font-mono text-micro ${
-                  r.est === "nueva" ? "bg-accent text-on-accent" : "bg-cyan/15 text-cyan-deep"
+                  r.est === "nueva" ? "bg-accent text-accent-on" : "bg-cyan/15 text-cyan"
                 }`}
               >
                 {r.est === "nueva" ? "Nuevo" : "Activo"}
@@ -380,10 +348,10 @@ function Workbench({ ind }) {
 
         <Link
           to={ind.to}
-          className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold text-text hover:underline underline-offset-4"
+          className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold text-text-1 hover:text-primary"
         >
           Explorar {ind.label}
-          <ArrowUpRight className="size-4 transition-transform duration-[var(--motion-base)] ease-[var(--ease-out)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          <ArrowUpRight className="size-4 transition-transform duration-[var(--motion-base)] ease-[var(--motion-ease)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </Link>
       </div>
     </div>

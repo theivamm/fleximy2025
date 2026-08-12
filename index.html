@@ -3,17 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
     <title>Fleximy — Tu web también puede operar tu negocio</title>
     <meta
       name="description"
       content="Sitio web, turnos, gestión y atención integrados para tu PyME. Fleximy une tu presencia digital con la operación diaria de tu negocio."
     />
-    <meta name="theme-color" content="#f5f7fb" />
+    <meta name="theme-color" content="#090b17" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
 
@@ -61,6 +62,19 @@
           }
         ]
       }
+    </script>
+
+    <!-- Tema inicial sin parpadeo (respeta prefers-color-scheme + localStorage) -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme")
+          var dark = t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches)
+          document.documentElement.setAttribute("data-theme", dark ? "dark" : "light")
+          var mt = document.querySelector('meta[name="theme-color"]')
+          if (mt) mt.setAttribute("content", dark ? "#090b17" : "#f7f7fc")
+        } catch (e) {}
+      })()
     </script>
   </head>
   <body>

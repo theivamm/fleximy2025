@@ -1,29 +1,33 @@
 export const CONTACT = {
   whatsapp: "https://wa.me/541111111111",
   whatsappMessage:
-    "Hola, llegué desde el sitio de Fleximy. Quiero conocer cómo se adaptaría a mi negocio.",
+    "Hola, llegué desde el sitio de Fleximy. Quiero contarte mi idea y conocer cómo trabajan.",
   whatsappText: "Hablar por WhatsApp",
-  ctaPrimary: "Solicitar diagnóstico gratuito",
-  ctaSecondary: "Probar una demo",
+  ctaPrimary: "Contanos tu idea",
+  ctaSecondary: "Explorar lo que hacemos",
 }
 
 export const NAV = {
   main: [
+    { label: "Servicios", to: "/servicios" },
+    { label: "Demos", to: "/demos", hasMega: false },
+    { label: "Cómo trabajamos", to: "/como-funciona" },
     { label: "Soluciones", to: "/soluciones", hasMega: true },
-    { label: "Demos", to: "/demos" },
-    { label: "Cómo funciona", to: "/como-funciona" },
-    { label: "Precios", to: "/precios" },
-    { label: "Recursos", to: "/recursos" },
     { label: "Nosotros", to: "/nosotros" },
   ],
-  secondary: [
-    { label: "Preguntas frecuentes", to: "/preguntas-frecuentes" },
-    { label: "Seguridad y continuidad", to: "/seguridad" },
-    { label: "Política de privacidad", to: "/privacidad" },
-    { label: "Términos del servicio", to: "/terminos" },
+  footer: [
+    { label: "Servicios", to: "/servicios" },
+    { label: "Soluciones", to: "/soluciones" },
+    { label: "Demos", to: "/demos" },
+    { label: "Cómo trabajamos", to: "/como-funciona" },
+    { label: "Nosotros", to: "/nosotros" },
+    { label: "Recursos", to: "/recursos" },
+    { label: "Contacto", to: "/contacto" },
+    { label: "Privacidad", to: "/privacidad" },
+    { label: "Términos", to: "/terminos" },
   ],
   legal: [
-    { label: "Política de privacidad", to: "/privacidad" },
-    { label: "Términos del servicio", to: "/terminos" },
+    { label: "Privacidad", to: "/privacidad" },
+    { label: "Términos", to: "/terminos" },
   ],
 }

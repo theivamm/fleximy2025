@@ -1,8 +1,9 @@
-import { useLayoutEffect, useRef, useState } from "react"
-import gsap from "gsap"
+import { useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { ArrowUpRight, FileText, ListChecks, Scale, ArrowRight } from "lucide-react"
-import Button from "../components/ui/Button"
+import PageHero from "../components/ui/PageHero"
+import PrimaryCTA from "../components/ui/PrimaryCTA"
+import OutlineCTA from "../components/ui/OutlineCTA"
 import { RECURSOS_CATEGORIAS, RECURSOS, DESCARGABLES, NEWSLETTER } from "../data/confianza"
 
 const FORMATO = {
@@ -12,28 +13,7 @@ const FORMATO = {
 }
 
 export default function Recursos() {
-  const root = useRef(null)
   const [filtro, setFiltro] = useState("todas")
-
-  useLayoutEffect(() => {
-    const mm = gsap.matchMedia()
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap
-        .timeline({ defaults: { ease: "power3.out" } })
-        .fromTo(
-          ".rc-line-inner",
-          { yPercent: 110 },
-          { yPercent: 0, duration: 1, stagger: 0.13, ease: "power4.out" }
-        )
-        .fromTo(
-          ".rc-fade",
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 },
-          "-=0.45"
-        )
-    })
-    return () => mm.revert()
-  }, [])
 
   const destacado = RECURSOS.find((r) => r.destacado)
   const resto = RECURSOS.filter((r) => !r.destacado).filter(
@@ -42,46 +22,42 @@ export default function Recursos() {
   const FormatoDestacado = FORMATO[destacado.formato].icon
 
   return (
-    <main ref={root} className="bg-paper text-text">
-      <section className="relative overflow-hidden pb-16 pt-28 lg:pt-36">
-        <div className="container-site">
-          <p className="rc-fade kicker">Recursos para PyMEs</p>
-          <h1 className="mt-6 max-w-[18ch] text-hero text-text">
-            <span className="block overflow-hidden pb-[0.08em]">
-              <span className="rc-line-inner block">Ideas prácticas para digitalizar</span>
-            </span>
-            <span className="block overflow-hidden pb-[0.08em]">
-              <span className="rc-line-inner block">tu negocio con criterio.</span>
-            </span>
-          </h1>
-          <p className="rc-fade mt-6 max-w-[52ch] text-lead text-muted">
-            Contenido para tomar mejores decisiones sobre sitios web, gestión, automatización y
-            experiencia del cliente.
-          </p>
-        </div>
-      </section>
+    <main>
+      <PageHero
+        kicker="Recursos para PyMEs"
+        title={
+          <>
+            Ideas prácticas para digitalizar tu negocio{" "}
+            <span className="text-gradient">con criterio.</span>
+          </>
+        }
+        lead="Contenido para tomar mejores decisiones sobre sitios web, gestión, automatización y experiencia del cliente."
+      />
 
       <section className="container-site pb-16 lg:pb-20">
-        <article className="grid overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper-bright lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
+        <article className="grid overflow-hidden rounded-[var(--radius-card)] border border-outline bg-surface-1/60 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
           <div className="flex flex-col justify-center gap-4 p-8 lg:p-14">
             <div className="flex items-center gap-2">
-              <span className="grid size-8 place-items-center rounded-lg bg-accent text-on-accent">
+              <span className="grid size-8 place-items-center rounded-lg bg-accent text-accent-on">
                 <FormatoDestacado className="size-4" />
               </span>
-              <span className="font-mono text-micro text-muted">recurso destacado · {destacado.categoria}</span>
+              <span className="font-mono text-micro text-text-3">recurso destacado · {destacado.categoria}</span>
             </div>
-            <h2 className="max-w-[22ch] text-h1">{destacado.titulo}</h2>
-            <p className="max-w-[48ch] text-lead text-muted">{destacado.descripcion}</p>
-            <div className="mt-2 flex items-center gap-3 font-mono text-micro text-muted">
+            <h2 className="text-h2 max-w-[22ch] text-text-1">{destacado.titulo}</h2>
+            <p className="lead-text max-w-[48ch] text-text-2">{destacado.descripcion}</p>
+            <div className="mt-2 flex items-center gap-3 font-mono text-micro text-text-3">
               <span>lectura {destacado.lectura}</span>
-              <span className="size-1 rounded-full bg-dark-surface/20" />
+              <span className="size-1 rounded-full bg-surface-3/70" />
               <span>en preparación</span>
             </div>
           </div>
-          <div className="grid place-items-center border-t border-line bg-dark-surface p-8 text-text-invert lg:border-l lg:border-t-0">
+          <div
+            className="grid place-items-center border-t border-outline p-8 text-white lg:border-l lg:border-t-0"
+            style={{ backgroundImage: "var(--gradient-primary)" }}
+          >
             <div className="text-center">
-              <p className="font-mono text-micro text-text-invert/60">próximamente</p>
-              <p className="mt-3 max-w-[24ch] text-h4">
+              <p className="font-mono text-micro text-white/70">próximamente</p>
+              <p className="text-h4 mt-3 max-w-[24ch]">
                 Los materiales se publican a medida que se completan y se validan.
               </p>
             </div>
@@ -89,15 +65,17 @@ export default function Recursos() {
         </article>
       </section>
 
-      <section className="border-y border-line bg-paper-bright py-16 lg:py-20">
+      <section className="border-y border-outline bg-surface-2/40 py-16 lg:py-20">
         <div className="container-site">
           <p className="kicker">Biblioteca</p>
-          <h2 className="mt-4 text-h1">Guías, checklists y comparativas</h2>
+          <h2 className="text-h2 mt-4 text-text-1">Guías, checklists y comparativas</h2>
           <div className="mt-6 flex flex-wrap gap-2">
             <button
               onClick={() => setFiltro("todas")}
               className={`rounded-full px-4 py-2 text-small transition-colors ${
-                filtro === "todas" ? "bg-dark-surface text-text-invert" : "border border-line bg-paper text-muted hover:text-text"
+                filtro === "todas"
+                  ? "bg-text-1 text-bg-0"
+                  : "border border-outline bg-surface-1/60 text-text-2 hover:border-ink/30 hover:text-text-1"
               }`}
             >
               Todas
@@ -107,7 +85,9 @@ export default function Recursos() {
                 key={cat}
                 onClick={() => setFiltro(cat)}
                 className={`rounded-full px-4 py-2 text-small transition-colors ${
-                  filtro === cat ? "bg-dark-surface text-text-invert" : "border border-line bg-paper text-muted hover:text-text"
+                  filtro === cat
+                    ? "bg-text-1 text-bg-0"
+                    : "border border-outline bg-surface-1/60 text-text-2 hover:border-ink/30 hover:text-text-1"
                 }`}
               >
                 {cat}
@@ -130,20 +110,20 @@ export default function Recursos() {
                   return (
                     <article
                       key={r.titulo}
-                      className="group flex flex-col rounded-[var(--radius-card)] border border-line bg-paper p-6 transition-colors hover:border-ink/30"
+                      className="group flex flex-col rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6 transition-colors hover:border-ink/30"
                     >
                       <div className="flex items-center justify-between gap-3">
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-paper-bright px-3 py-1 font-mono text-micro text-muted">
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-outline bg-surface-2/40 px-3 py-1 font-mono text-micro text-text-3">
                           <Meta className="size-3.5" />
                           {r.formato}
                         </span>
-                        <span className="font-mono text-micro text-muted">{r.categoria}</span>
+                        <span className="font-mono text-micro text-text-3">{r.categoria}</span>
                       </div>
-                      <h3 className="mt-4 text-h4">{r.titulo}</h3>
-                      <p className="mt-2 flex-1 text-small text-muted">{r.descripcion}</p>
-                      <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
-                        <span className="font-mono text-micro text-muted">lectura {r.lectura}</span>
-                        <span className="inline-flex items-center gap-1.5 font-mono text-micro text-cyan-deep">
+                      <h3 className="text-h4 mt-4 text-text-1">{r.titulo}</h3>
+                      <p className="mt-2 flex-1 text-small text-text-2">{r.descripcion}</p>
+                      <div className="mt-5 flex items-center justify-between border-t border-outline pt-4">
+                        <span className="font-mono text-micro text-text-3">lectura {r.lectura}</span>
+                        <span className="inline-flex items-center gap-1.5 font-mono text-micro text-cyan">
                           <span className="size-1.5 rounded-full bg-cyan" />
                           en preparación
                         </span>
@@ -152,7 +132,7 @@ export default function Recursos() {
                   )
                 })}
                 {resto.length === 0 && (
-                  <p className="col-span-full rounded-[var(--radius-card)] border border-line bg-paper p-8 text-center text-small text-muted">
+                  <p className="col-span-full rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-8 text-center text-small text-text-2">
                     Todavía no hay materiales publicados en esta categoría.
                   </p>
                 )}
@@ -162,88 +142,87 @@ export default function Recursos() {
         </div>
       </section>
 
-      <section className="bg-dark-surface py-20 text-text-invert lg:py-28">
-        <div className="container-site grid items-center gap-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)]">
+      <section className="container-site py-20 lg:py-28">
+        <div className="grid items-center gap-10 rounded-[var(--radius-card)] border border-outline bg-surface-2/40 p-8 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:p-12">
           <div>
-            <p className="kicker" style={{ color: "rgba(245,246,255,0.55)" }}>
-              Casos de uso
-            </p>
-            <h2 className="mt-4 max-w-[16ch] text-h1">La teoría puesta en una operación concreta</h2>
-            <p className="mt-5 max-w-[48ch] text-lead text-text-invert/70">
+            <p className="kicker">Casos de uso</p>
+            <h2 className="text-h2 mt-4 max-w-[16ch] text-text-1">La teoría puesta en una operación concreta</h2>
+            <p className="lead-text mt-5 max-w-[48ch] text-text-2">
               Escenarios ilustrativos que muestran cómo se combinan módulos según el rubro y el
               problema a resolver.
             </p>
             <div className="mt-8">
-              <Button to="/casos-de-uso" size="lg">
+              <PrimaryCTA to="/casos-de-uso" large>
                 Ver casos de uso
                 <ArrowUpRight className="size-4" />
-              </Button>
+              </PrimaryCTA>
             </div>
           </div>
-          <div className="grid place-items-center rounded-[var(--radius-card)] border border-line-dark bg-ink-soft p-8 text-center">
-            <p className="font-mono text-micro text-text-invert/60">escenarios ilustrativos</p>
-            <p className="mt-3 text-h4 text-accent-on-dark">no representan clientes reales</p>
-            <p className="mt-3 font-mono text-micro text-text-invert/60">salvo identificación expresa</p>
+          <div className="grid place-items-center rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-8 text-center">
+            <p className="font-mono text-micro text-text-3">escenarios ilustrativos</p>
+            <p className="text-h4 mt-3 text-primary">no representan clientes reales</p>
+            <p className="mt-3 font-mono text-micro text-text-3">salvo identificación expresa</p>
           </div>
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-site pb-20 lg:pb-28">
         <p className="kicker">Descargables</p>
-        <h2 className="mt-4 max-w-[16ch] text-h1">Plantillas listas para usar</h2>
+        <h2 className="text-h2 mt-4 max-w-[16ch] text-text-1">Plantillas listas para usar</h2>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {DESCARGABLES.map((d) => (
-            <article key={d.titulo} className="flex flex-col rounded-[var(--radius-card)] border border-line bg-paper-bright p-6">
-              <span className="font-mono text-micro text-muted">{d.formato}</span>
-              <h3 className="mt-3 flex-1 text-h4">{d.titulo}</h3>
-              <span className="mt-5 inline-flex w-fit items-center gap-1.5 font-mono text-micro text-cyan-deep">
+            <article key={d.titulo} className="flex flex-col rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6">
+              <span className="font-mono text-micro text-text-3">{d.formato}</span>
+              <h3 className="text-h4 mt-3 flex-1 text-text-1">{d.titulo}</h3>
+              <span className="mt-5 inline-flex w-fit items-center gap-1.5 font-mono text-micro text-cyan">
                 <span className="size-1.5 rounded-full bg-cyan" />
                 en preparación
               </span>
             </article>
           ))}
         </div>
-        <p className="mt-5 max-w-[56ch] font-mono text-micro text-muted">
+        <p className="mt-5 max-w-[56ch] font-mono text-micro text-text-3">
           los descargables pueden solicitar email solo cuando aportan valor real; acceso inmediato y
           consentimiento incluido
         </p>
       </section>
 
-      <section className="border-y border-line bg-paper-bright py-20 lg:py-28">
+      <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
         <div className="container-site grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="kicker">Newsletter</p>
-            <h2 className="mt-4 text-h1">{NEWSLETTER.titulo}</h2>
-            <p className="mt-5 max-w-[48ch] text-lead text-muted">{NEWSLETTER.promesa}</p>
+            <h2 className="text-h2 mt-4 text-text-1">{NEWSLETTER.titulo}</h2>
+            <p className="lead-text mt-5 max-w-[48ch] text-text-2">{NEWSLETTER.promesa}</p>
           </div>
-          <div className="flex items-center justify-between gap-4 rounded-[var(--radius-card)] border border-line bg-paper p-6">
-            <p className="text-small text-muted">Suscribite cuando esté disponible</p>
-            <span className="rounded-full bg-dark-surface px-4 py-2 font-mono text-micro text-text-invert">
+          <div className="flex items-center justify-between gap-4 rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6">
+            <p className="text-small text-text-2">Suscribite cuando esté disponible</p>
+            <span className="rounded-full bg-text-1 px-4 py-2 font-mono text-micro text-bg-0">
               próximo lanzamiento
             </span>
           </div>
         </div>
       </section>
 
-      <section className="bg-dark-surface text-text-invert">
-        <div className="container-site py-24 text-center lg:py-32">
-          <p className="kicker justify-center" style={{ color: "rgba(245,246,255,0.55)" }}>
-            Aplicar una idea
-          </p>
-          <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">
+      <section className="container-site py-20 lg:py-28">
+        <div
+          className="relative overflow-hidden rounded-3xl border border-outline p-10 text-center sm:p-16"
+          style={{ backgroundImage: "var(--background-image-primary)" }}
+        >
+          <p className="kicker justify-center">Aplicar una idea</p>
+          <h2 className="font-display h2-title mx-auto mt-4 max-w-[18ch] text-text-1">
             ¿Querés llevar una de estas ideas a tu negocio?
           </h2>
-          <p className="mx-auto mt-5 max-w-[52ch] text-lead text-text-invert/70">
+          <p className="lead-text mx-auto mt-5 max-w-[52ch] text-text-2">
             Contanos qué parte de tu operación querés ordenar y definimos un primer paso concreto.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Button to="/contacto" size="lg">
+            <PrimaryCTA to="/contacto" large>
               Solicitar diagnóstico
               <ArrowRight className="size-4" />
-            </Button>
-            <Button to="/soluciones" variant="secondary" size="lg">
+            </PrimaryCTA>
+            <OutlineCTA to="/soluciones" large>
               Ver soluciones
-            </Button>
+            </OutlineCTA>
           </div>
         </div>
       </section>

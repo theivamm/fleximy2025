@@ -66,7 +66,7 @@ export function Bullet({ accent = "var(--color-accent)" }) {
 export function Avatar({ label, accent = "var(--color-ink)" }) {
   return (
     <span
-      className="grid size-7 shrink-0 place-items-center rounded-full font-mono text-micro font-semibold text-text-invert"
+      className="grid size-7 shrink-0 place-items-center rounded-full font-mono text-micro font-semibold text-white"
       style={{ backgroundColor: accent }}
     >
       {label}

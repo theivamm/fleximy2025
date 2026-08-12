@@ -27,8 +27,8 @@ export default function NotFound() {
       <p className="kicker mb-6">
         <span className="text-accent">404</span> Ruta inexistente
       </p>
-      <h1 className="max-w-[16ch] text-h1 text-text">Esta página no está disponible</h1>
-      <p className="mt-5 max-w-[60ch] text-lead text-muted">
+      <h1 className="text-h1 max-w-[16ch] text-text-1">Esta página no está disponible</h1>
+      <p className="lead-text mt-5 max-w-[60ch] text-text-2">
         Puede que el enlace haya cambiado o que la dirección esté incompleta. Volvé al inicio o
         elegí una de nuestras soluciones.
       </p>
@@ -44,8 +44,8 @@ export default function NotFound() {
           role="img"
           aria-label="Conexión entre el sitio y el panel interrumpida en el nodo 404"
         >
-          <rect x="8" y="42" width="100" height="38" rx="10" fill="var(--color-paper-bright)" stroke="var(--color-line)" />
-          <rect x="412" y="42" width="100" height="38" rx="10" fill="var(--color-paper-bright)" stroke="var(--color-line)" />
+          <rect x="8" y="42" width="100" height="38" rx="10" fill="var(--color-bg-2)" stroke="var(--color-outline)" />
+          <rect x="412" y="42" width="100" height="38" rx="10" fill="var(--color-bg-2)" stroke="var(--color-outline)" />
           <rect
             x="230"
             y="26"
@@ -53,7 +53,7 @@ export default function NotFound() {
             height="58"
             rx="12"
             fill={reconectado ? "var(--color-accent)" : "var(--color-accent-soft)"}
-            stroke={reconectado ? "var(--color-accent)" : "var(--color-line)"}
+            stroke={reconectado ? "var(--color-accent)" : "var(--color-outline)"}
             style={{ transition: "fill 300ms ease, stroke 300ms ease" }}
           />
 
@@ -62,7 +62,7 @@ export default function NotFound() {
             y1="61"
             x2="230"
             y2="55"
-            stroke="var(--color-muted)"
+            stroke="var(--color-text-3)"
             strokeWidth="2"
             strokeDasharray="6 5"
           />
@@ -72,17 +72,17 @@ export default function NotFound() {
             y1="55"
             x2="412"
             y2="61"
-            stroke={reconectado ? "var(--color-accent)" : "var(--color-line)"}
+            stroke={reconectado ? "var(--color-accent)" : "var(--color-outline)"}
             strokeWidth="2.5"
             strokeDasharray="8 4"
             opacity={reconectado ? 1 : 0.45}
             style={{ transition: "stroke 300ms ease, opacity 300ms ease" }}
           />
 
-          <text x="58" y="66" textAnchor="middle" className="font-mono" fontSize="13" fill="var(--color-text)">
+          <text x="58" y="66" textAnchor="middle" className="font-mono" fontSize="13" fill="var(--color-text-1)">
             Sitio
           </text>
-          <text x="462" y="66" textAnchor="middle" className="font-mono" fontSize="13" fill="var(--color-text)">
+          <text x="462" y="66" textAnchor="middle" className="font-mono" fontSize="13" fill="var(--color-text-1)">
             Panel
           </text>
 
@@ -102,11 +102,11 @@ export default function NotFound() {
               role="button"
               aria-label="Recomponer la conexión y ver los accesos"
             />
-            <text x="260" y="55" textAnchor="middle" className="font-mono" fontSize="16" fontWeight="700" fill="var(--color-text)">
+            <text x="260" y="55" textAnchor="middle" className="font-mono" fontSize="16" fontWeight="700" fill="var(--color-text-1)">
               404
             </text>
             {reconectado && (
-              <text x="260" y="76" textAnchor="middle" className="font-mono" fontSize="9" fill="var(--color-text)">
+              <text x="260" y="76" textAnchor="middle" className="font-mono" fontSize="9" fill="var(--color-text-1)">
                 reconectado
               </text>
             )}
@@ -119,8 +119,8 @@ export default function NotFound() {
           to="/"
           data-track="404_cta"
           data-track-props='{"cta":"volver_al_inicio"}'
-          className={`inline-flex h-12 items-center gap-2 rounded-[var(--radius-btn)] px-6 text-sm font-semibold transition-all ${
-            reconectado ? "bg-accent text-on-accent shadow-lift" : "bg-accent text-on-accent"
+          className={`inline-flex h-12 items-center gap-2 rounded-[var(--radius-btn)] px-6 text-sm font-semibold text-accent-on transition-all ${
+            reconectado ? "bg-accent shadow-lift" : "bg-accent"
           }`}
         >
           <ArrowLeft size={16} />
@@ -130,7 +130,7 @@ export default function NotFound() {
           to="/soluciones"
           data-track="404_cta"
           data-track-props='{"cta":"ver_soluciones"}'
-          className="inline-flex h-12 items-center gap-2 rounded-[var(--radius-btn)] border border-line bg-paper-bright px-6 text-sm font-semibold text-text transition-colors hover:border-ink/30"
+          className="inline-flex h-12 items-center gap-2 rounded-[var(--radius-btn)] border border-outline bg-surface-1/60 px-6 text-sm font-semibold text-text-1 transition-colors hover:border-ink/30"
         >
           Ver soluciones
           <ArrowRight size={16} />
@@ -144,14 +144,14 @@ export default function NotFound() {
             to={item.to}
             data-track="404_cta"
             data-track-props={`{"cta":"${item.label}"}`}
-            className="text-small text-muted hover:text-text"
+            className="text-small text-text-2 hover:text-text-1"
           >
             {item.label}
           </Link>
         ))}
       </nav>
 
-      <p className="mt-10 flex items-center gap-2 font-mono text-micro text-muted">
+      <p className="mt-10 flex items-center gap-2 font-mono text-micro text-text-3">
         <PlugZap className="size-3.5" />
         Sin salida brusca: tenés caminos claros para continuar.
       </p>

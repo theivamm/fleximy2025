@@ -1,84 +1,59 @@
-import { useLayoutEffect, useRef } from "react"
-import gsap from "gsap"
 import { ArrowUpRight } from "lucide-react"
 import Button from "../components/ui/Button"
+import PageHero from "../components/ui/PageHero"
+import PrimaryCTA from "../components/ui/PrimaryCTA"
+import OutlineCTA from "../components/ui/OutlineCTA"
 import { PRINCIPIOS, COMO_TRABAJAMOS } from "../data/comercial"
 
 export default function Nosotros() {
-  const root = useRef(null)
-
-  useLayoutEffect(() => {
-    const mm = gsap.matchMedia()
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap
-        .timeline({ defaults: { ease: "power3.out" } })
-        .fromTo(
-          ".no-line-inner",
-          { yPercent: 110 },
-          { yPercent: 0, duration: 1, stagger: 0.13, ease: "power4.out" }
-        )
-        .fromTo(
-          ".no-fade",
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 },
-          "-=0.45"
-        )
-    })
-    return () => mm.revert()
-  }, [])
-
   return (
-    <main ref={root} className="bg-paper text-text">
-      <section className="relative overflow-hidden pb-16 pt-28 lg:pt-36">
-        <div className="container-site">
-          <p className="no-fade kicker">Sobre Fleximy</p>
-          <h1 className="mt-6 max-w-[18ch] text-hero text-text">
-            <span className="block overflow-hidden pb-[0.08em]">
-              <span className="no-line-inner block">Creamos Fleximy para que la</span>
-            </span>
-            <span className="block overflow-hidden pb-[0.08em]">
-              <span className="no-line-inner block">tecnología se adapte a la PyME.</span>
-            </span>
-          </h1>
-          <p className="no-fade mt-6 max-w-[52ch] text-lead text-muted">
-            Muchas empresas no necesitan un sistema enorme. Necesitan ordenar lo que ya hacen,
-            reducir tareas manuales y contar con una herramienta que su equipo realmente pueda usar.
-          </p>
-          <div className="no-fade mt-8">
-            <Button href="#como-trabajamos" size="lg">
-              Conocer nuestra forma de trabajo
-              <ArrowUpRight className="size-4" />
-            </Button>
-          </div>
-        </div>
-      </section>
+    <main>
+      <PageHero
+        kicker="Sobre Fleximy"
+        title={
+          <>
+            Creamos Fleximy para que la tecnología{" "}
+            <span className="text-gradient">se adapte a la PyME.</span>
+          </>
+        }
+        lead="Muchas empresas no necesitan un sistema enorme. Necesitan ordenar lo que ya hacen, reducir tareas manuales y contar con una herramienta que su equipo realmente pueda usar."
+        actions={
+          <Button href="#como-trabajamos" size="lg">
+            Conocer nuestra forma de trabajo
+            <ArrowUpRight className="size-4" />
+          </Button>
+        }
+      />
 
-      <section className="border-y border-line bg-paper-bright py-20 lg:py-28">
+      <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
         <div className="container-site">
           <p className="kicker">Nuestra razón de ser</p>
-          <h2 className="mt-4 max-w-[20ch] text-h1">
+          <h2 className="text-h2 mt-4 max-w-[20ch] text-text-1">
             Entre una web estática y un sistema complejo había un espacio sin resolver
           </h2>
 
           <div className="mt-12 grid gap-8 lg:grid-cols-3">
-            <div className="rounded-[var(--radius-card)] border border-line bg-paper p-6 lg:p-8">
-              <p className="font-mono text-micro text-muted">por un lado</p>
-              <p className="mt-3 text-h3">Webs que muestran</p>
-              <p className="mt-3 text-small text-muted">
+            <div className="rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6 lg:p-8">
+              <p className="font-mono text-micro text-text-3">por un lado</p>
+              <p className="text-h3 mt-3 text-text-1">Webs que muestran</p>
+              <p className="mt-3 text-small text-text-2">
                 Las PyMEs invertían en sitios que mostraban información pero no ayudaban a operar.
               </p>
             </div>
-            <div className="rounded-[var(--radius-card)] border border-line bg-paper p-6 lg:p-8">
-              <p className="font-mono text-micro text-muted">por el otro</p>
-              <p className="mt-3 text-h3">Sistemas que complican</p>
-              <p className="mt-3 text-small text-muted">
+            <div className="rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6 lg:p-8">
+              <p className="font-mono text-micro text-text-3">por el otro</p>
+              <p className="text-h3 mt-3 text-text-1">Sistemas que complican</p>
+              <p className="mt-3 text-small text-text-2">
                 Encontraban sistemas rígidos, costosos o sobredimensionados para su realidad.
               </p>
             </div>
-            <div className="rounded-[var(--radius-card)] border border-line bg-dark-surface p-6 text-text-invert lg:p-8">
-              <p className="font-mono text-micro text-text-invert/60">en el medio</p>
-              <p className="mt-3 text-h3 text-accent-on-dark">Fleximy conecta ambos mundos</p>
-              <p className="mt-3 text-small text-text-invert/80">
+            <div
+              className="rounded-[var(--radius-card)] border border-outline p-6 lg:p-8"
+              style={{ backgroundImage: "var(--gradient-primary)" }}
+            >
+              <p className="font-mono text-micro text-white/70">en el medio</p>
+              <p className="text-h3 mt-3 text-white">Fleximy conecta ambos mundos</p>
+              <p className="mt-3 text-small text-white/85">
                 Una experiencia profesional para el cliente y herramientas simples para el equipo
                 que gestiona el negocio.
               </p>
@@ -86,16 +61,16 @@ export default function Nosotros() {
           </div>
 
           <div className="mt-12 grid gap-10 lg:grid-cols-2">
-            <div className="border-t border-line pt-6">
-              <p className="font-mono text-micro text-muted">misión</p>
-              <p className="mt-3 text-lead">
+            <div className="border-t border-outline pt-6">
+              <p className="font-mono text-micro text-text-3">misión</p>
+              <p className="lead-text mt-3 text-text-1">
                 Ayudar a las PyMEs a trabajar con mayor claridad mediante herramientas digitales
                 accesibles, conectadas y adaptadas a su operación.
               </p>
             </div>
-            <div className="border-t border-line pt-6">
-              <p className="font-mono text-micro text-muted">visión</p>
-              <p className="mt-3 text-lead">
+            <div className="border-t border-outline pt-6">
+              <p className="font-mono text-micro text-text-3">visión</p>
+              <p className="lead-text mt-3 text-text-1">
                 Que una empresa pequeña o mediana pueda acceder a una plataforma profesional sin
                 depender de múltiples herramientas, procesos técnicos innecesarios o desarrollos
                 imposibles de sostener.
@@ -107,18 +82,21 @@ export default function Nosotros() {
 
       <section className="container-site py-20 lg:py-28">
         <p className="kicker">Principios</p>
-        <h2 className="mt-4 max-w-[16ch] text-h1">Cómo decidimos</h2>
-        <div className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+        <h2 className="text-h2 mt-4 max-w-[16ch] text-text-1">Cómo decidimos</h2>
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {PRINCIPIOS.map((p, i) => (
-            <div key={p.titulo} className="bg-paper-bright p-6 lg:p-8">
-              <p className="font-mono text-micro text-muted">{String(i + 1).padStart(2, "0")}</p>
-              <h3 className="mt-3 text-h3">{p.titulo}</h3>
-              <p className="mt-3 text-small text-muted">{p.texto}</p>
+            <div key={p.titulo} className="rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6 lg:p-8">
+              <p className="font-mono text-micro text-text-3">{String(i + 1).padStart(2, "0")}</p>
+              <h3 className="text-h3 mt-3 text-text-1">{p.titulo}</h3>
+              <p className="mt-3 text-small text-text-2">{p.texto}</p>
             </div>
           ))}
-          <div className="flex flex-col justify-between gap-4 bg-dark-surface p-6 text-text-invert lg:p-8">
-            <p className="text-h4 text-accent-on-dark">¿Cómo se nota en la práctica?</p>
-            <p className="text-small text-text-invert/75">
+          <div
+            className="flex flex-col justify-between gap-4 rounded-[var(--radius-card)] border border-outline p-6 lg:p-8"
+            style={{ backgroundImage: "var(--gradient-primary)" }}
+          >
+            <p className="text-h4 text-white">¿Cómo se nota en la práctica?</p>
+            <p className="text-small text-white/85">
               En cada proyecto hay un alcance documentado, una persona que valida y una primera
               versión que se puede medir.
             </p>
@@ -126,22 +104,22 @@ export default function Nosotros() {
         </div>
       </section>
 
-      <section className="border-y border-line bg-paper-bright py-20 lg:py-28">
+      <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
         <div className="container-site grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
           <div>
             <p className="kicker">El equipo</p>
-            <h2 className="mt-4 text-h1">Gente responsable detrás de la plataforma</h2>
+            <h2 className="text-h2 mt-4 text-text-1">Gente responsable detrás de la plataforma</h2>
           </div>
-          <div className="rounded-[var(--radius-card)] border border-dashed border-ink/30 bg-paper p-6 lg:p-8">
-            <p className="font-mono text-micro text-muted">sección en preparación</p>
-            <p className="mt-4 text-lead">
+          <div className="rounded-[var(--radius-card)] border border-dashed border-ink/30 bg-surface-1/60 p-6 lg:p-8">
+            <p className="font-mono text-micro text-text-3">sección en preparación</p>
+            <p className="lead-text mt-4 text-text-1">
               Las biografías y fotografías reales del equipo se incorporan antes de la publicación.
               No reemplazamos esa información con perfiles ficticios.
             </p>
             <div className="mt-6">
-              <Button to="/contacto" variant="secondary">
+              <OutlineCTA to="/contacto">
                 Conocer al equipo en una reunión
-              </Button>
+              </OutlineCTA>
             </div>
           </div>
         </div>
@@ -151,18 +129,18 @@ export default function Nosotros() {
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
           <div>
             <p className="kicker">Experiencia y respaldo</p>
-            <h2 className="mt-4 text-h1">Datos verificables, sin cifras de relleno</h2>
+            <h2 className="text-h2 mt-4 text-text-1">Datos verificables, sin cifras de relleno</h2>
           </div>
-          <div className="rounded-[var(--radius-card)] border border-line bg-paper-bright p-6 lg:p-8">
-            <p className="font-mono text-micro text-muted">pendiente de validación</p>
-            <p className="mt-4 text-lead text-muted">
+          <div className="rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6 lg:p-8">
+            <p className="font-mono text-micro text-text-3">pendiente de validación</p>
+            <p className="lead-text mt-4 text-text-2">
               Años de experiencia, proyectos implementados, industrias atendidas y certificaciones
               se incorporan únicamente cuando pueden respaldarse con fuentes reales.
             </p>
             <ul className="mt-6 grid gap-2.5">
               {["Años de experiencia combinada.", "Proyectos implementados.", "Industrias atendidas.", "Partners y tecnologías relevantes."].map((t) => (
-                <li key={t} className="flex items-start gap-3 text-small text-muted">
-                  <span className="mt-1 size-2 shrink-0 rounded-full bg-dark-surface/20" />
+                <li key={t} className="flex items-start gap-3 text-small text-text-2">
+                  <span className="mt-1 size-2 shrink-0 rounded-full bg-surface-3/70" />
                   {t}
                 </li>
               ))}
@@ -171,46 +149,48 @@ export default function Nosotros() {
         </div>
       </section>
 
-      <section id="como-trabajamos" className="bg-dark-surface py-20 text-text-invert lg:py-28">
-        <div className="container-site">
+      <section id="como-trabajamos" className="container-site py-20 lg:py-28">
+        <div
+          className="relative overflow-hidden rounded-3xl border border-outline p-8 lg:p-12"
+          style={{ backgroundImage: "var(--background-image-primary)" }}
+        >
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div className="max-w-2xl">
-              <p className="kicker" style={{ color: "rgba(245,246,255,0.55)" }}>
-                Cómo trabajamos
-              </p>
-              <h2 className="mt-4 text-h1">Un orden simple que se cumple</h2>
+              <p className="kicker">Cómo trabajamos</p>
+              <h2 className="font-display h2-title mt-4 text-text-1">Un orden simple que se cumple</h2>
             </div>
-            <Button to="/como-funciona" variant="dark" size="lg">
+            <PrimaryCTA to="/como-funciona" large>
               Ver cómo funciona la implementación
               <ArrowUpRight className="size-4" />
-            </Button>
+            </PrimaryCTA>
           </div>
-          <ol className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-line-dark sm:grid-cols-2 lg:grid-cols-3">
+          <ol className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {COMO_TRABAJAMOS.map((paso, i) => (
-              <li key={paso} className="flex items-start gap-4 bg-ink-soft p-6">
-                <span className="font-mono text-micro text-accent-on-dark">{String(i + 1).padStart(2, "0")}</span>
-                <span className="text-small text-text-invert/85">{paso}</span>
+              <li key={paso} className="flex items-start gap-4 rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-5">
+                <span className="font-mono text-micro text-primary">{String(i + 1).padStart(2, "0")}</span>
+                <span className="text-small text-text-1">{paso}</span>
               </li>
             ))}
           </ol>
         </div>
       </section>
 
-      <section className="bg-dark-surface text-text-invert">
-        <div className="container-site py-24 text-center lg:py-32">
-          <p className="kicker justify-center" style={{ color: "rgba(245,246,255,0.55)" }}>
-            Conversemos
-          </p>
-          <h2 className="mx-auto mt-4 max-w-[18ch] text-h1">
+      <section className="container-site pb-20 lg:pb-28">
+        <div
+          className="relative overflow-hidden rounded-3xl border border-outline p-10 text-center sm:p-16"
+          style={{ backgroundImage: "var(--background-image-primary)" }}
+        >
+          <p className="kicker justify-center">Conversemos</p>
+          <h2 className="font-display h2-title mx-auto mt-4 max-w-[18ch] text-text-1">
             Hablemos sobre la operación que querés mejorar
           </h2>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Button to="/contacto" size="lg">
+            <PrimaryCTA to="/contacto" large>
               Conocer al equipo en una reunión
-            </Button>
-            <Button to="/soluciones" variant="secondary" size="lg">
+            </PrimaryCTA>
+            <OutlineCTA to="/soluciones" large>
               Ver soluciones
-            </Button>
+            </OutlineCTA>
           </div>
         </div>
       </section>

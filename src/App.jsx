@@ -11,6 +11,7 @@ import DashboardLayout from "./components/DashboardLayout"
 import Seo from "./components/seo/Seo"
 
 const Home = lazy(() => import("./pages/Home"))
+const Servicios = lazy(() => import("./pages/Servicios"))
 const Soluciones = lazy(() => import("./pages/Soluciones"))
 const SolucionGastronomia = lazy(() => import("./pages/soluciones/Gastronomia"))
 const SolucionTurnos = lazy(() => import("./pages/soluciones/ServiciosTurnos"))
@@ -54,7 +55,7 @@ function PageTransition({ children }) {
 
 function PublicShell({ children }) {
   return (
-    <div className="min-h-screen bg-paper text-text flex flex-col">
+    <div className="min-h-screen bg-bg-0 text-text-1 flex flex-col">
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
@@ -97,6 +98,7 @@ function renderShell(location, isDashboard) {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+          <Route path="/servicios" element={<PageTransition><Servicios /></PageTransition>} />
           <Route path="/soluciones" element={<PageTransition><Soluciones /></PageTransition>} />
           <Route path="/soluciones/gastronomia" element={<PageTransition><SolucionGastronomia /></PageTransition>} />
           <Route path="/soluciones/servicios-turnos" element={<PageTransition><SolucionTurnos /></PageTransition>} />
