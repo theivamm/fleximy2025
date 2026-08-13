@@ -68,7 +68,7 @@ export default function CasosDeUso() {
         </p>
       </PageHero>
 
-      <section className="container-site pb-20 lg:pb-28">
+      <section className="container-wide pb-20 lg:pb-28">
         <div className="flex flex-col gap-16">
           {CASOS.map((caso, ci) => (
             <article key={caso.id} className="scroll-mt-28">
@@ -125,7 +125,7 @@ export default function CasosDeUso() {
       </section>
 
       <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
-        <div className="container-site grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
+        <div className="container-wide grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
           <div>
             <span className="kicker">Casos reales</span>
             <h2 className="font-display text-h2 mt-4 text-text-1">Cuando haya clientes autorizados</h2>
@@ -145,7 +145,7 @@ export default function CasosDeUso() {
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-20 lg:py-28">
         <div className="relative overflow-hidden rounded-3xl border border-outline p-10 text-center sm:p-16" style={{ backgroundImage: "var(--background-image-primary)" }}>
           <span className="kicker justify-center">Tu caso</span>
           <h2 className="font-display h2-title mx-auto mt-4 max-w-[18ch] text-text-1">

@@ -18,7 +18,7 @@ export default function ProcessSection() {
         lead="Un proceso claro, con etapas cortas y resultados visibles en cada paso."
       />
 
-      <div className="container-site mt-14">
+      <div className="container-wide mt-14">
         <ol className="relative grid gap-8 sm:grid-cols-2 lg:grid-cols-6 lg:gap-4">
           {/* Línea viva */}
           <div aria-hidden="true" className="absolute left-0 right-0 top-5 hidden h-px lg:block" style={{ backgroundImage: "var(--gradient-primary)" }}>

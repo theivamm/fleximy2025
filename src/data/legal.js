@@ -1,13 +1,12 @@
-export const LEGAL_NOTA =
-  "Borrador estructural. Requiere revisión legal y datos reales de la empresa antes de publicación."
+import { COMPANY } from "./config"
 
 export const PRIVACIDAD = {
   id: "privacidad",
   kicker: "Privacidad",
   h1: "Política de privacidad",
   intro:
-    "Esta política explica cómo Fleximy recopila, utiliza, conserva y protege los datos personales. Está redactada como borrador estructural y requiere validación legal antes de publicación.",
-  actualizacion: "[FECHA DE ACTUALIZACIÓN]",
+    "Esta política explica cómo Fleximy recopila, utiliza, conserva y protege los datos personales obtenidos mediante el sitio y la prestación del servicio.",
+  actualizacion: COMPANY.fechaActualizacion || "[FECHA DE ACTUALIZACIÓN]",
   secciones: [
     {
       n: "1",
@@ -15,8 +14,7 @@ export const PRIVACIDAD = {
       bloques: [
         {
           tipo: "p",
-          texto:
-            "El responsable del tratamiento es [RAZÓN SOCIAL], CUIT [CUIT], con domicilio en [DOMICILIO] y correo de privacidad [EMAIL].",
+          texto: `El responsable del tratamiento es ${COMPANY.razonSocial}, CUIT ${COMPANY.cuit}, con domicilio en ${COMPANY.domicilio} y correo de privacidad ${COMPANY.emailPrivacidad}.`,
         },
       ],
     },
@@ -166,7 +164,7 @@ export const PRIVACIDAD = {
       n: "13",
       titulo: "Contacto",
       bloques: [
-        { tipo: "p", texto: "Consultas de privacidad: [EMAIL DE PRIVACIDAD]." },
+        { tipo: "p", texto: `Consultas de privacidad: ${COMPANY.emailPrivacidad}.` },
       ],
     },
   ],
@@ -177,8 +175,8 @@ export const TERMINOS = {
   kicker: "Legales",
   h1: "Términos del servicio",
   intro:
-    "Condiciones de acceso y uso de la plataforma Fleximy. Borrador estructural que requiere redacción o revisión profesional antes de publicación y contratación.",
-  actualizacion: "[FECHA DE ACTUALIZACIÓN]",
+    "Condiciones de acceso y uso de los servicios de diseño y desarrollo de Fleximy.",
+  actualizacion: COMPANY.fechaActualizacion || "[FECHA DE ACTUALIZACIÓN]",
   secciones: [
     {
       n: "1",
@@ -186,8 +184,7 @@ export const TERMINOS = {
       bloques: [
         {
           tipo: "p",
-          texto:
-            "Identificar a [RAZÓN SOCIAL], CUIT, domicilio, contacto y nombre comercial Fleximy.",
+          texto: `Identificar a ${COMPANY.razonSocial}, CUIT, domicilio, contacto y nombre comercial Fleximy.`,
         },
       ],
     },
@@ -414,7 +411,7 @@ export const TERMINOS = {
     {
       n: "18",
       titulo: "Contacto",
-      bloques: [{ tipo: "p", texto: "[EMAIL LEGAL] y domicilio informado." }],
+      bloques: [{ tipo: "p", texto: `${COMPANY.emailLegal} y domicilio informado.` }],
     },
   ],
 }

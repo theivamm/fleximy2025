@@ -17,7 +17,7 @@ export default function SolutionHero({ data, lines, children }) {
         }}
       />
 
-      <div className="container-site relative">
+      <div className="container-wide relative">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

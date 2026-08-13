@@ -1,6 +1,6 @@
 import { Check } from "lucide-react"
 
-export function Chrome({ url, dark = false, right }) {
+export function Chrome({ url, dark = false, right, demo = false }) {
   return (
     <div
       className={`flex items-center gap-1.5 border-b px-4 py-2.5 ${
@@ -17,6 +17,15 @@ export function Chrome({ url, dark = false, right }) {
       >
         {url}
       </span>
+      {demo && (
+        <span
+          className={`shrink-0 font-mono text-micro ${
+            dark ? "text-text-invert/50" : "text-muted"
+          }`}
+        >
+          demo · datos ilustrativos
+        </span>
+      )}
       {right}
     </div>
   )

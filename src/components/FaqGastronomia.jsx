@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { WHATSAPP_PLAIN_URL } from "../data/config"
 
 const faqs = [
   {
@@ -141,7 +142,7 @@ export default function FaqGastronomia() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/541111111111"
+              href={WHATSAPP_PLAIN_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl text-sm font-bold tracking-wide text-white bg-[#25D366] hover:brightness-110 shadow-lg shadow-[#25D366]/30 hover:shadow-[#25D366]/50 transition-all duration-300 active:scale-[0.98]"

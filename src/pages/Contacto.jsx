@@ -1,11 +1,11 @@
-import { useRef, useState } from "react"
+import { cloneElement, isValidElement, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import { ArrowRight, ArrowLeft, MessageCircle, CalendarDays, Mail, Check } from "lucide-react"
 import Button from "../components/ui/Button"
 import PageHero from "../components/ui/PageHero"
 import PrimaryCTA from "../components/ui/PrimaryCTA"
-import { CONTACT } from "../data/navigation"
+import { CONTACT, COMPANY } from "../data/config"
 import { track } from "../lib/analytics"
 import {
   RUBROS,
@@ -31,16 +31,25 @@ const MODULOS_POR_RUBRO = {
 const TOTAL_STEPS = 3
 
 function Campo({ label, id, required, error, children, hint }) {
+  const describedBy =
+    [hint ? `${id}-hint` : "", error ? `${id}-error` : ""].filter(Boolean).join(" ") || undefined
+  const field =
+    isValidElement(children)
+      ? cloneElement(children, {
+          "aria-invalid": error ? "true" : undefined,
+          "aria-describedby": describedBy,
+        })
+      : children
   return (
     <div>
       <label htmlFor={id} className="flex items-baseline gap-1.5 text-small font-semibold text-text-1">
         {label}
         {required && <span className="text-text-3" aria-hidden="true">*</span>}
       </label>
-      <div className="mt-2">{children}</div>
-      {hint && <p className="mt-1.5 font-mono text-micro text-text-3">{hint}</p>}
+      <div className="mt-2">{field}</div>
+      {hint && <p id={`${id}-hint`} className="mt-1.5 font-mono text-micro text-text-3">{hint}</p>}
       {error && (
-        <p role="alert" className="mt-1.5 text-small font-medium text-error">
+        <p id={`${id}-error`} role="alert" className="mt-1.5 text-small font-medium text-error">
           {error}
         </p>
       )}
@@ -49,7 +58,7 @@ function Campo({ label, id, required, error, children, hint }) {
 }
 
 const inputCls =
-  "w-full rounded-[var(--radius-field)] border border-outline bg-surface-1/60 px-4 py-3 text-sm text-text-1 placeholder:text-text-3/60 transition-colors focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/10"
+  "w-full rounded-[var(--radius-field)] border border-outline bg-surface-1/60 px-4 py-3 text-sm text-text-1 placeholder:text-text-3/60 transition-colors focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/60"
 
 function ChipGroup({ options, value, onChange, name }) {
   return (
@@ -171,13 +180,13 @@ export default function Contacto() {
         kicker="Diagnóstico inicial"
         title={
           <>
-            Contanos qué parte de tu <span className="text-gradient">negocio querés ordenar.</span>
+            Contanos qué querés <span className="text-gradient">crear, mejorar o automatizar.</span>
           </>
         }
         lead="No necesitás preparar un documento técnico. Con algunas preguntas podemos entender tu situación y recomendarte un primer paso."
       />
 
-      <section className="container-site pb-20 lg:pb-28">
+      <section className="container-wide pb-20 lg:pb-28">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:items-start">
           <div>
             <div className="flex items-center justify-between gap-4">
@@ -299,6 +308,7 @@ export default function Contacto() {
                             className={inputCls}
                             value={form.sitio}
                             onChange={set("sitio")}
+                            autoComplete="url"
                             placeholder="https://… o no tengo"
                           />
                         </Campo>
@@ -343,6 +353,8 @@ export default function Contacto() {
                             type="checkbox"
                             checked={form.consentimiento}
                             onChange={set("consentimiento")}
+                            aria-invalid={errores.consentimiento ? "true" : undefined}
+                            aria-describedby={errores.consentimiento ? "error-consentimiento" : undefined}
                             className="mt-0.5 size-4 shrink-0 accent-[var(--color-accent)]"
                           />
                           <span className="text-small text-text-1">
@@ -352,7 +364,7 @@ export default function Contacto() {
                           </span>
                         </label>
                         {errores.consentimiento && (
-                          <p role="alert" className="mt-1.5 text-small font-medium text-error">
+                          <p id="error-consentimiento" role="alert" className="mt-1.5 text-small font-medium text-error">
                             {errores.consentimiento}
                           </p>
                         )}
@@ -449,7 +461,7 @@ export default function Contacto() {
       </section>
 
       <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
-        <div className="container-site">
+        <div className="container-wide">
           <p className="kicker">Qué sucede después</p>
           <h2 className="text-h2 mt-4 max-w-[16ch] text-text-1">De la solicitud a una primera versión</h2>
           <ol className="mt-12 grid gap-4 md:grid-cols-3">
@@ -487,7 +499,7 @@ export default function Contacto() {
               </span>
             </div>
             <a
-              href="mailto:[EMAIL COMERCIAL REAL]"
+              href={`mailto:${COMPANY.emailComercial}`}
               className="group flex items-center gap-4 rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6 transition-colors hover:border-primary/40"
             >
               <span className="grid size-11 place-items-center rounded-xl bg-surface-3/60 text-text-1">
@@ -495,7 +507,7 @@ export default function Contacto() {
               </span>
               <span>
                 <span className="block text-small font-semibold text-text-1">Email</span>
-                <span className="block text-small text-text-2">[EMAIL COMERCIAL REAL]</span>
+                <span className="block text-small text-text-2">{COMPANY.emailComercial}</span>
               </span>
             </a>
           </div>

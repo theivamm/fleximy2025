@@ -130,7 +130,7 @@ export default function Soluciones() {
       />
 
       <section className="border-y border-outline bg-surface-2/40 py-16 lg:py-20">
-        <div className="container-site">
+        <div className="container-wide">
           <span className="kicker">¿Qué necesitás ordenar primero?</span>
           <div className="mt-8 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {NECESIDADES.map((n) => (
@@ -147,12 +147,12 @@ export default function Soluciones() {
         </div>
       </section>
 
-      <section id="catalogo" className="container-site py-20 lg:py-28">
+      <section id="catalogo" className="container-wide py-20 lg:py-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
             <span className="kicker">Catálogo de soluciones</span>
             <h2 className="font-display text-h2 mt-4 text-text-1">
-              Un índice de sistemas, no una grilla de cards
+              Elegí un punto de partida para tu operación
             </h2>
           </div>
           <span className="font-mono text-micro text-text-3">
@@ -209,7 +209,7 @@ export default function Soluciones() {
       </section>
 
       <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
-        <div className="container-site">
+        <div className="container-wide">
           <div className="max-w-2xl">
             <span className="kicker">Arquitectura modular</span>
             <h2 className="font-display text-h2 mt-4 text-text-1">
@@ -237,7 +237,7 @@ export default function Soluciones() {
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-20 lg:py-28">
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
             <span className="kicker">Qué significa "adaptado"</span>
@@ -265,7 +265,7 @@ export default function Soluciones() {
         </div>
       </section>
 
-      <section className="container-site pb-20 lg:pb-28">
+      <section className="container-wide pb-20 lg:pb-28">
         <div className="relative overflow-hidden rounded-3xl border border-outline p-10 text-center sm:p-16" style={{ backgroundImage: "var(--background-image-primary)" }}>
           <span className="kicker justify-center">¿Dudás?</span>
           <h2 className="font-display h2-title mx-auto mt-4 max-w-[18ch] text-text-1">
@@ -303,7 +303,7 @@ function Workbench({ ind }) {
         <span className="ml-2 flex-1 truncate rounded-md bg-surface-2/70 px-2 py-1 font-mono text-micro text-text-3">
           fleximy.app/{ind.slug}
         </span>
-        <span className="font-mono text-micro text-text-3">panel interno</span>
+        <span className="font-mono text-micro text-text-3">panel interno · datos ilustrativos</span>
       </div>
 
       <div className="p-6">

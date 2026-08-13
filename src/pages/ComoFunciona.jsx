@@ -212,7 +212,7 @@ export default function ComoFunciona() {
       />
 
       <section className="border-y border-outline bg-surface-2/40 py-16 lg:py-20">
-        <div className="container-site grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-center">
+        <div className="container-wide grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-center">
           <div>
             <span className="kicker">Principio de trabajo</span>
             <h2 className="font-display text-h2 mt-4 text-text-1">
@@ -226,10 +226,10 @@ export default function ComoFunciona() {
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-16 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:items-start">
           <div className="order-2 lg:order-1">
-            <div className="flex flex-col gap-16">
+            <div className="flex flex-col gap-12">
               {ETAPAS.map((etapa, i) => (
                 <article key={etapa.n} ref={(el) => (stageRefs.current[i] = el)} data-index={i} className="scroll-mt-32">
                   <div className="flex items-center gap-3">
@@ -282,7 +282,7 @@ export default function ComoFunciona() {
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-16 lg:py-20">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
           <div>
             <span className="kicker">Tiempos</span>
@@ -308,8 +308,8 @@ export default function ComoFunciona() {
         </div>
       </section>
 
-      <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
-        <div className="container-site">
+      <section className="border-y border-outline bg-surface-2/40 py-16 lg:py-20">
+        <div className="container-wide">
           <span className="kicker">Responsabilidades</span>
           <h2 className="font-display text-h2 mt-4 max-w-[18ch] text-text-1">
             Cada parte sabe qué le toca
@@ -341,7 +341,7 @@ export default function ComoFunciona() {
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-16 lg:py-20">
         <div className="relative overflow-hidden rounded-3xl border border-outline p-10 text-center sm:p-16" style={{ backgroundImage: "var(--background-image-primary)" }}>
           <span className="kicker justify-center">Empecemos</span>
           <h2 className="font-display h2-title mx-auto mt-4 max-w-[18ch] text-text-1">

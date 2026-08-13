@@ -1,12 +1,29 @@
 import { Link } from "react-router-dom"
 import ThemeToggle from "./ui/ThemeToggle"
+import { useTheme } from "../context/ThemeContext"
+import { Mail, MessageCircle } from "lucide-react"
 import { NAV, CONTACT } from "../data/navigation"
-import logoSvg from "../assets/logo-fleximy.svg?raw"
+import { COMPANY } from "../data/config"
+import logoSvgBlanco from "../assets/logosvgblanco.svg"
+import logoSvgColor from "../assets/logosvgcolor.svg"
 
 const COLUMNS = [
-  { title: "Explorar", links: NAV.footer.slice(0, 5) },
-  { title: "Empresa", links: NAV.footer.slice(5) },
+  { title: "Explorar", links: NAV.footer.slice(0, 4) },
+  { title: "Empresa", links: NAV.footer.slice(4, 6) },
 ]
+
+function FooterLogo() {
+  const { theme } = useTheme()
+  return (
+    <img
+      src={theme === "dark" ? logoSvgBlanco : logoSvgColor}
+      alt="Fleximy"
+      width={476.65}
+      height={685.32}
+      className="block w-auto h-10"
+    />
+  )
+}
 
 function MiniUi() {
   return (
@@ -37,7 +54,7 @@ function MiniUi() {
 export default function Footer() {
   return (
     <footer className="relative mt-10 overflow-hidden border-t border-outline" style={{ backgroundImage: "var(--background-image-page)" }}>
-      <div className="container-site pb-10 pt-16 sm:pt-20">
+      <div className="container-wide pb-10 pt-16 sm:pt-20">
         {/* Bloque superior */}
         <div className="relative flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-center">
           <div className="max-w-2xl">
@@ -67,13 +84,9 @@ export default function Footer() {
         </div>
 
         {/* Navegación */}
-        <div className="mt-14 grid gap-10 border-t border-outline pt-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="mt-14 grid gap-10 border-t border-outline pt-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr]">
           <div>
-            <span
-              aria-hidden="true"
-              dangerouslySetInnerHTML={{ __html: logoSvg }}
-              className="block h-8 w-auto [&>svg]:block [&>svg]:h-full [&>svg]:w-auto"
-            />
+            <FooterLogo />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-text-secondary">
               Agencia y product studio. Diseñamos y desarrollamos apps, sitios, dashboards y productos digitales.
             </p>
@@ -93,14 +106,46 @@ export default function Footer() {
             </nav>
           ))}
           <div>
-            <p className="mb-3 text-sm font-bold text-text-1">Estado</p>
-            <div className="inline-flex items-center gap-2 rounded-full border border-outline bg-surface-1/60 px-3 py-1.5 text-sm text-text-2">
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-success opacity-60" />
-                <span className="relative inline-flex size-2 rounded-full bg-success" />
-              </span>
-              Disponible para nuevos proyectos
-            </div>
+            <p className="mb-3 text-sm font-bold text-text-1">Contacto</p>
+            <ul className="flex flex-col gap-2.5">
+              <li>
+                <a
+                  href={CONTACT.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2.5 text-sm text-text-secondary transition-colors hover:text-text-1"
+                >
+                  <MessageCircle className="size-4 shrink-0" aria-hidden="true" />
+                  WhatsApp
+                </a>
+              </li>
+              {!COMPANY.emailComercial.startsWith("[") && (
+                <li>
+                  <a
+                    href={`mailto:${COMPANY.emailComercial}`}
+                    className="inline-flex items-center gap-2.5 text-sm text-text-secondary transition-colors hover:text-text-1"
+                  >
+                    <Mail className="size-4 shrink-0" aria-hidden="true" />
+                    {COMPANY.emailComercial}
+                  </a>
+                </li>
+              )}
+              {!COMPANY.cuit.startsWith("[") && (
+                <li className="text-sm text-text-secondary">CUIT {COMPANY.cuit}</li>
+              )}
+            </ul>
+          </div>
+          <div>
+            <p className="mb-3 text-sm font-bold text-text-1">Legal</p>
+            <ul className="flex flex-col gap-2">
+              {NAV.footer.slice(6).map((l) => (
+                <li key={l.to}>
+                  <Link to={l.to} className="text-sm text-text-secondary transition-colors hover:text-text-1">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
@@ -122,7 +167,10 @@ export default function Footer() {
 
         {/* Barra inferior */}
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-outline pt-6 sm:flex-row">
-          <p className="text-sm text-text-3">© {new Date().getFullYear()} Fleximy. Todos los derechos reservados.</p>
+          <p className="text-sm text-text-3">
+            © {new Date().getFullYear()} {COMPANY.nombre}
+            {!COMPANY.razonSocial.startsWith("[") ? ` (${COMPANY.razonSocial})` : ""}. Todos los derechos reservados.
+          </p>
           <div className="flex items-center gap-2">
             <span className="font-mono text-[11px] uppercase tracking-wider text-text-3">Tema</span>
             <ThemeToggle />

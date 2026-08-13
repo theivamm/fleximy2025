@@ -30,7 +30,7 @@ function Card({ children, className = "" }) {
 
 export function Problem({ data, accent }) {
   return (
-    <section className="container-site py-20 lg:py-28">
+    <section className="container-wide py-20 lg:py-28">
       <SectionHead kicker="El problema" title={data.problema.titulo} />
       <ul className="mt-10 grid gap-3 md:grid-cols-2">
         {data.problema.items.map((item, i) => (
@@ -51,7 +51,7 @@ export function Problem({ data, accent }) {
 export function Duo({ data, accent }) {
   return (
     <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
-      <div className="container-site">
+      <div className="container-wide">
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
             <span className="kicker">Para el cliente</span>
@@ -99,7 +99,7 @@ export function Duo({ data, accent }) {
 export function FeatureList({ title, lead, items, accent, dark = false, nota }) {
   return (
     <div className={dark ? "border-y border-outline bg-surface-2/40" : ""}>
-      <div className="container-site py-20 lg:py-28">
+      <div className="container-wide py-20 lg:py-28">
         <SectionHead kicker="El sistema" title={title} lead={lead} />
         <ul className="mt-10 grid gap-3 sm:grid-cols-2">
           {items.map((item) => (
@@ -120,7 +120,7 @@ export function FeatureList({ title, lead, items, accent, dark = false, nota }) 
 
 export function Groups({ data, accent }) {
   return (
-    <section className="container-site py-20 lg:py-28">
+    <section className="container-wide py-20 lg:py-28">
       <SectionHead kicker="El sistema" title={data.experiencia.titulo} lead={data.experiencia.lead} />
       <div className="mt-12 grid gap-6 lg:grid-cols-3">
         {data.experiencia.grupos.map((g, i) => (
@@ -145,8 +145,8 @@ export function Groups({ data, accent }) {
 export function ModuleChips({ data, accent }) {
   return (
     <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-24">
-      <div className="container-site">
-        <SectionHead kicker={data.modulos.titulo} title={data.modulos.titulo} />
+      <div className="container-wide">
+        <SectionHead kicker="Módulos" title={data.modulos.titulo} />
         <div className="mt-8 flex flex-wrap gap-2.5">
           {data.modulos.items.map((item) => (
             <span
@@ -164,7 +164,7 @@ export function ModuleChips({ data, accent }) {
 
 export function Automations({ data, accent }) {
   return (
-    <section className="container-site py-20 lg:py-28">
+    <section className="container-wide py-20 lg:py-28">
       <SectionHead kicker="Comunicación" title={data.automatizaciones.titulo} />
       <div className="mt-12 grid gap-0">
         {data.automatizaciones.items.map((item, i) => (
@@ -188,7 +188,7 @@ export function Automations({ data, accent }) {
 
 export function Reports({ data, accent }) {
   return (
-    <section className="container-site py-20 lg:py-28">
+    <section className="container-wide py-20 lg:py-28">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
         <SectionHead kicker="Visibilidad" title={data.reportes.titulo} lead={data.reportes.nota} />
         <div className="grid gap-2.5 sm:grid-cols-2">
@@ -213,7 +213,7 @@ export function Reports({ data, accent }) {
 export function Modalidades({ data, accent }) {
   return (
     <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
-      <div className="container-site">
+      <div className="container-wide">
         <SectionHead kicker="Modalidades" title={data.modalidades.titulo} lead={data.modalidades.nota} />
         <div className="mt-12 grid gap-4 md:grid-cols-3">
           {data.modalidades.items.map((m, i) => (
@@ -233,7 +233,7 @@ export function Modalidades({ data, accent }) {
 
 export function Integraciones({ data, accent }) {
   return (
-    <section className="container-site py-20 lg:py-28">
+    <section className="container-wide py-20 lg:py-28">
       <SectionHead kicker="Integraciones" title={data.integraciones.titulo} />
       <div className="mt-10 flex flex-wrap gap-2.5">
         {data.integraciones.items.map((item) => (
@@ -251,7 +251,7 @@ export function Integraciones({ data, accent }) {
 
 export function Recorrido({ data, accent }) {
   return (
-    <section className="container-site py-20 lg:py-28">
+    <section className="container-wide py-20 lg:py-28">
       <SectionHead kicker="Recorrido" title={data.recorrido.titulo} />
       <ol className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-outline bg-outline md:grid-cols-2 lg:grid-cols-3">
         {data.recorrido.steps.map((step, i) => (
@@ -268,7 +268,7 @@ export function Recorrido({ data, accent }) {
 export function Audience({ data, accent }) {
   return (
     <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-24">
-      <div className="container-site grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:items-center">
+      <div className="container-wide grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:items-center">
         <SectionHead kicker="Para quién" title={data.audiencia.titulo} />
         <ul className="flex flex-wrap gap-2.5">
           {data.audiencia.items.map((item) => (
@@ -285,8 +285,8 @@ export function Audience({ data, accent }) {
 export function FaqBlock({ data }) {
   const [abierta, setAbierta] = useState(0)
   return (
-    <section className="container-site py-20 lg:py-28">
-      <div className="mx-auto max-w-3xl">
+    <section className="container-narrow py-20 lg:py-28">
+      <div>
         <SectionHead kicker="Preguntas frecuentes" title="Lo que suelen preguntar" center />
         <div className="mt-10 flex flex-col divide-y divide-outline border-y border-outline">
           {data.faq.map((f, i) => {
@@ -332,7 +332,7 @@ export function FaqBlock({ data }) {
 export function CtaBlock({ data }) {
   const otras = INDUSTRIES.filter((i) => i.slug !== data.slug)
   return (
-    <section className="container-site py-20 lg:py-28">
+    <section className="container-wide py-20 lg:py-28">
       <div className="relative overflow-hidden rounded-3xl border border-outline p-10 sm:p-16" style={{ backgroundImage: "var(--background-image-primary)" }}>
         <div className="mx-auto max-w-3xl text-center">
           <span className="kicker justify-center">Empecemos</span>
@@ -370,7 +370,7 @@ export function CtaBlock({ data }) {
 
 export function CrossLink({ data, accent }) {
   return (
-    <section className="container-site pb-20 lg:pb-28">
+    <section className="container-wide pb-20 lg:pb-28">
       <a
         href={data.to}
         className="group flex items-center justify-between rounded-[var(--radius-card)] border border-outline bg-surface-1/60 px-7 py-6 transition-colors hover:border-outline-strong"

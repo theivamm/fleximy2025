@@ -1,4 +1,5 @@
 import { motion } from "framer-motion"
+import { WHATSAPP_PLAIN_URL } from "../data/config"
 
 const benefits = [
   "Menú Digital QR ilimitado",
@@ -64,7 +65,7 @@ export default function PlanGastronomico() {
 
           {/* CTA */}
           <a
-            href="https://wa.me/541111111111"
+            href={WHATSAPP_PLAIN_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="group relative inline-flex items-center justify-center gap-2.5 px-10 py-4 rounded-xl text-base font-bold tracking-wide text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 shadow-lg shadow-amber-500/30 hover:shadow-amber-500/50 transition-all duration-300 active:scale-[0.98]"

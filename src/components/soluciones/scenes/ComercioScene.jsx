@@ -99,6 +99,7 @@ function PanelEdicion({ precio, setPrecio, stock, setStock, agotado, setAgotado,
       <Chrome
         dark
         url="panel · editar producto"
+        demo
         right={
           guardado ? (
             <motion.span
@@ -130,7 +131,7 @@ function PanelEdicion({ precio, setPrecio, stock, setStock, agotado, setAgotado,
               aria-label="Precio del producto"
             />
           </div>
-          <p className="font-mono text-[10px] text-text-invert/40">se actualiza en la web al instante</p>
+          <p className="font-mono text-[10px] text-text-invert/40">se actualiza en la web de la demo</p>
         </label>
 
         <div className="grid gap-1.5">

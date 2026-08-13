@@ -1,6 +1,7 @@
+import { WHATSAPP_PLAIN_URL } from "../data/config"
+
 const features = [
-  "Calendario online con disponibilidad en tiempo real",
-  "Recordatorios automáticos por WhatsApp a tus clientes",
+  "Calendario online con disponibilidad en tiempo real",  "Recordatorios automáticos por WhatsApp a tus clientes",
   "Fichas de cliente con historial completo de visitas",
   "Múltiples profesionales y sucursales",
   "Pagos online con seña o pago completo",
@@ -65,7 +66,7 @@ export default function PlanTurnos() {
 
             {/* CTA */}
             <a
-              href="https://wa.me/541111111111"
+              href={WHATSAPP_PLAIN_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative flex items-center justify-center gap-3 w-full py-4 rounded-xl text-sm font-bold tracking-wide text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 active:scale-[0.98]"

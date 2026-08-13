@@ -1,3 +1,5 @@
+import { WHATSAPP_PLAIN_URL } from "../data/config"
+
 const features = [
   "Sitio web corporativo con panel de gestión incluido",
   "Gestor de proyectos tipo ClickUp Lite (tareas, kanban, cronogramas)",
@@ -65,7 +67,7 @@ export default function PlanGestionPymes() {
 
             {/* CTA */}
             <a
-              href="https://wa.me/541111111111"
+              href={WHATSAPP_PLAIN_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative flex items-center justify-center gap-3 w-full py-4 rounded-xl text-sm font-bold tracking-wide text-white bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 active:scale-[0.98]"

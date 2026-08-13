@@ -1,11 +1,6 @@
-export const CONTACT = {
-  whatsapp: "https://wa.me/541111111111",
-  whatsappMessage:
-    "Hola, llegué desde el sitio de Fleximy. Quiero contarte mi idea y conocer cómo trabajan.",
-  whatsappText: "Hablar por WhatsApp",
-  ctaPrimary: "Contanos tu idea",
-  ctaSecondary: "Explorar lo que hacemos",
-}
+import { CONTACT } from "./config"
+
+export { CONTACT }
 
 export const NAV = {
   main: [

@@ -3,7 +3,7 @@ export const DEMOS = [
     id: "gastronomia",
     rubro: "Gastronomía",
     descripcion:
-      "Un menú digital que actualiza la web al instante y una cocina que recibe comandas reales.",
+      "Un menú digital que actualiza la web y una cocina que recibe comandas en pantalla.",
     estado: "disponible",
     modal: true,
     guiado: true,
@@ -37,7 +37,7 @@ export const DEMOS = [
     id: "turnos",
     rubro: "Servicios y Turnos",
     descripcion:
-      "Reservá online y mirá cómo el horario se bloquea al instante en la agenda del profesional.",
+      "Reservá online y mirá cómo el horario se bloquea en la agenda del profesional.",
     estado: "disponible",
     modal: true,
     guiado: true,
@@ -106,7 +106,7 @@ export const DEMOS = [
     id: "comercio",
     rubro: "Comercio y Retail",
     descripcion:
-      "Una ficha pública de producto y un panel donde precio y stock se reflejan al instante.",
+      "Una ficha pública de producto y un panel donde precio y stock se reflejan en la demo.",
     estado: "disponible",
     modal: false,
     guiado: false,

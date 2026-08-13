@@ -15,7 +15,7 @@ const POINTS = [
 export default function WhySection() {
   return (
     <section className="py-20 sm:py-28">
-      <ReactiveBackground className="container-site">
+      <ReactiveBackground className="container-wide">
         <div className="overflow-hidden rounded-3xl border border-outline" style={{ backgroundImage: "var(--background-image-surface)" }}>
           <div className="p-8 sm:p-12">
             <SectionIntro

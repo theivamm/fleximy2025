@@ -178,7 +178,7 @@ function Pipeline({ lead, avanzar, nuevaConsulta, actividad }) {
 function Tablero({ lead, tareas, moverTarea, asignar, cambiarFecha, controles }) {
   return (
     <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-dark-surface text-text-invert shadow-lift">
-      <Chrome dark url="panel · proyectos" />
+      <Chrome dark url="panel · proyectos" demo />
       <div className="flex-1 p-4">
         <p className="text-sm font-semibold">Proyecto en curso</p>
 
@@ -279,6 +279,7 @@ function PortalCliente({ lead, tareas, actividad, notificar }) {
     <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper-bright shadow-lift">
       <Chrome
         url={`portal · ${lead.nombre}`}
+        demo
         right={<span className="font-mono text-micro text-muted">vista cliente</span>}
       />
       <div className="flex-1 p-4">

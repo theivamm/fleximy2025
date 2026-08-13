@@ -46,6 +46,7 @@ function OrdenTrabajo({ actual, avanzar, reiniciar }) {
       <Chrome
         dark
         url="panel · orden de trabajo #1042"
+        demo
         right={<span className="font-mono text-micro text-cyan">OT #1042</span>}
       />
       <div className="flex-1 p-4">
@@ -135,7 +136,7 @@ function OrdenTrabajo({ actual, avanzar, reiniciar }) {
 function ConsultaCliente({ actual }) {
   return (
     <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper-bright shadow-lift">
-      <Chrome url="tu-taller.com.ar/estado" right={<span className="font-mono text-micro text-muted">cliente</span>} />
+      <Chrome url="tu-taller.com.ar/estado" demo right={<span className="font-mono text-micro text-muted">cliente</span>} />
       <div className="flex flex-1 flex-col p-4">
         <p className="text-sm font-semibold text-text">Seguimiento de tu trabajo</p>
         <p className="mt-1 font-mono text-micro text-muted">OT #1042 · Peugeot 208</p>

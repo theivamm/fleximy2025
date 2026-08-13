@@ -6,7 +6,7 @@ import { CONTACT } from "../../data/navigation"
 export default function FinalCtaSection() {
   return (
     <section className="relative py-24 sm:py-36">
-      <ReactiveBackground className="container-site">
+      <ReactiveBackground className="container-wide">
         <div className="relative overflow-hidden rounded-3xl border border-outline p-10 sm:p-16" style={{ backgroundImage: "var(--background-image-primary)" }}>
           {/* Interfaz parcial decorativa */}
           <div aria-hidden="true" className="pointer-events-none absolute -right-10 top-10 hidden rotate-6 rounded-xl border border-outline bg-surface-1/70 p-4 opacity-60 backdrop-blur lg:block">

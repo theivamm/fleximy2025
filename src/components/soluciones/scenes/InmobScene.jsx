@@ -86,7 +86,7 @@ export default function InmobScene({ onAction }) {
       </div>
 
       <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line-dark bg-dark-surface text-text-invert shadow-lift">
-        <Chrome dark url="panel · crm" />
+        <Chrome dark url="panel · crm" demo />
         <div className="flex-1 p-4">
           <p className="text-sm font-semibold">Mapa de la zona</p>
           <div className="mt-3 relative aspect-[4/3] overflow-hidden rounded-xl bg-ink-soft">

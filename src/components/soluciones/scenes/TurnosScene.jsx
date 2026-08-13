@@ -111,6 +111,7 @@ function ReservaCliente({
     <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper-bright shadow-lift">
       <Chrome
         url="fleximy.app/tu-estudio/reservar"
+        demo
         right={<span className="font-mono text-micro text-muted">reserva online</span>}
       />
       <div className="flex-1 p-4">
@@ -347,7 +348,7 @@ function AgendaProfesional({ reservados, bloqueados, controles, bloquear, reprog
             <p className="text-small text-text-invert/50">
               El horario que reserve el cliente
               <br />
-              <span className="font-mono text-micro text-text-invert/35">se bloquea acá al instante</span>
+              <span className="font-mono text-micro text-text-invert/35">se bloquea acá en la demo</span>
             </p>
           </div>
         )}

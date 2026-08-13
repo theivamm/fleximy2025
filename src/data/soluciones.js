@@ -1,11 +1,10 @@
 import { INDUSTRIES } from "./industries"
-
-const WA = "541111111111"
+import { whatsappUrl } from "./config"
 
 const whatsappSolution = (label) =>
-  `https://wa.me/${WA}?text=${encodeURIComponent(
+  whatsappUrl(
     `Hola, llegué desde la solución de ${label} de Fleximy. Quiero conocer cómo se adaptaría a mi negocio.`
-  )}`
+  )
 
 const solution = (slug, extra) => {
   const ind = INDUSTRIES.find((i) => i.slug === slug)
@@ -55,7 +54,7 @@ export const SOLUCIONES = {
         {
           titulo: "Reservas y pedidos",
           items: [
-            "El cliente puede consultar disponibilidad, reservar o armar un pedido según los módulos contratados.",
+            "El cliente puede consultar disponibilidad, reservar o armar un pedido según las funciones incluidas en el alcance.",
           ],
         },
       ],
@@ -119,7 +118,7 @@ export const SOLUCIONES = {
         a: "No necesariamente. Se evalúa si Fleximy debe complementarlo, integrarse o cubrir otra parte del proceso.",
       },
       {
-        q: "¿Puedo desactivar un producto al instante?",
+        q: "¿Puedo desactivar un producto del menú cuando se agota?",
         a: "Sí, cuando el módulo de catálogo y disponibilidad está incluido.",
       },
       {
@@ -246,7 +245,7 @@ export const SOLUCIONES = {
   gestion: solution("pymes", {
     eyebrow: "Fleximy para gestión",
     h1: "Tu equipo necesita un lugar común para saber qué sigue",
-    hero: "Reuní clientes, proyectos, tareas, responsables, archivos y vencimientos en una plataforma configurada alrededor de tu forma de trabajar.",
+    hero: "Reuní clientes, proyectos, tareas, responsables, archivos y vencimientos en un panel configurado alrededor de tu forma de trabajar.",
     ctaPrimary: { label: "Probar gestor de proyectos", to: "/demos" },
     ctaSecondary: { label: "Analizar mi operación", to: "/contacto" },
     problema: {
@@ -335,7 +334,7 @@ export const SOLUCIONES = {
     },
     faq: [
       {
-        q: "¿Fleximy reemplaza ClickUp, Trello o un CRM?",
+        q: "¿La solución reemplaza ClickUp, Trello o un CRM?",
         a: "Puede reemplazar una parte o integrarse al proceso. El diagnóstico determina qué conviene mantener.",
       },
       {
@@ -457,7 +456,7 @@ export const SOLUCIONES = {
         a: "Sí, siempre que el panel y el permiso del usuario lo permitan.",
       },
       {
-        q: "¿Fleximy controla el stock físico?",
+        q: "¿La solución controla el stock físico?",
         a: "Puede gestionar stock simple. Operaciones complejas o sincronización con otros sistemas requieren evaluación.",
       },
       {
@@ -585,7 +584,7 @@ export const SOLUCIONES = {
   educacion: solution("educacion", {
     eyebrow: "Fleximy para educación",
     h1: "Tu propuesta educativa y la gestión de alumnos, conectadas",
-    hero: "Publicá cursos, recibí inscripciones y organizá la experiencia de estudiantes y equipo desde una sola plataforma.",
+    hero: "Publicá cursos, recibí inscripciones y organizá la experiencia de estudiantes y equipo desde un solo panel.",
     ctaPrimary: { label: "Solicitar demo educativa", to: "/demos" },
     ctaSecondary: { label: "Analizar mi proyecto", to: "/contacto" },
     problema: {
@@ -665,7 +664,7 @@ export const SOLUCIONES = {
     },
     faq: [
       {
-        q: "¿Fleximy es un campus virtual completo?",
+        q: "¿Es un campus virtual completo?",
         a: "Puede configurarse como portal educativo modular. El alcance depende de las funciones realmente necesarias.",
       },
       {

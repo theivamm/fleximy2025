@@ -95,7 +95,7 @@ function MenuPhone({ pedido, agregar, precioDe, disponibleDe, notificar }) {
 
   return (
     <div className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper-bright shadow-lift">
-      <Chrome url="fleximy.app/la-espiga/menu" right={<span className="font-mono text-micro text-muted">QR</span>} />
+      <Chrome url="fleximy.app/la-espiga/menu" demo right={<span className="font-mono text-micro text-muted">QR</span>} />
       <div className="flex-1 p-4">
         <p className="text-sm font-semibold text-text">Menú · La Espiga</p>
         <div className="mt-3 flex gap-1.5" data-guiado="filtrar_categoria">

@@ -12,8 +12,8 @@ export default function Nosotros() {
         kicker="Sobre Fleximy"
         title={
           <>
-            Creamos Fleximy para que la tecnología{" "}
-            <span className="text-gradient">se adapte a la PyME.</span>
+            Diseñamos tecnología para que las ideas{" "}
+            <span className="text-gradient">se conviertan en productos reales.</span>
           </>
         }
         lead="Muchas empresas no necesitan un sistema enorme. Necesitan ordenar lo que ya hacen, reducir tareas manuales y contar con una herramienta que su equipo realmente pueda usar."
@@ -26,7 +26,7 @@ export default function Nosotros() {
       />
 
       <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
-        <div className="container-site">
+        <div className="container-wide">
           <p className="kicker">Nuestra razón de ser</p>
           <h2 className="text-h2 mt-4 max-w-[20ch] text-text-1">
             Entre una web estática y un sistema complejo había un espacio sin resolver
@@ -71,8 +71,8 @@ export default function Nosotros() {
             <div className="border-t border-outline pt-6">
               <p className="font-mono text-micro text-text-3">visión</p>
               <p className="lead-text mt-3 text-text-1">
-                Que una empresa pequeña o mediana pueda acceder a una plataforma profesional sin
-                depender de múltiples herramientas, procesos técnicos innecesarios o desarrollos
+                Que una empresa pequeña o mediana pueda acceder a una herramienta profesional sin
+                depender de múltiples servicios, procesos técnicos innecesarios o desarrollos
                 imposibles de sostener.
               </p>
             </div>
@@ -80,7 +80,7 @@ export default function Nosotros() {
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-20 lg:py-28">
         <p className="kicker">Principios</p>
         <h2 className="text-h2 mt-4 max-w-[16ch] text-text-1">Cómo decidimos</h2>
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -105,10 +105,10 @@ export default function Nosotros() {
       </section>
 
       <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
-        <div className="container-site grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
+        <div className="container-wide grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
           <div>
             <p className="kicker">El equipo</p>
-            <h2 className="text-h2 mt-4 text-text-1">Gente responsable detrás de la plataforma</h2>
+            <h2 className="text-h2 mt-4 text-text-1">Gente responsable detrás de cada proyecto</h2>
           </div>
           <div className="rounded-[var(--radius-card)] border border-dashed border-ink/30 bg-surface-1/60 p-6 lg:p-8">
             <p className="font-mono text-micro text-text-3">sección en preparación</p>
@@ -125,11 +125,11 @@ export default function Nosotros() {
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-20 lg:py-28">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
           <div>
             <p className="kicker">Experiencia y respaldo</p>
-            <h2 className="text-h2 mt-4 text-text-1">Datos verificables, sin cifras de relleno</h2>
+            <h2 className="text-h2 mt-4 text-text-1">Alcances que podemos respaldar</h2>
           </div>
           <div className="rounded-[var(--radius-card)] border border-outline bg-surface-1/60 p-6 lg:p-8">
             <p className="font-mono text-micro text-text-3">pendiente de validación</p>
@@ -149,7 +149,7 @@ export default function Nosotros() {
         </div>
       </section>
 
-      <section id="como-trabajamos" className="container-site py-20 lg:py-28">
+      <section id="como-trabajamos" className="container-wide py-20 lg:py-28">
         <div
           className="relative overflow-hidden rounded-3xl border border-outline p-8 lg:p-12"
           style={{ backgroundImage: "var(--background-image-primary)" }}
@@ -175,7 +175,7 @@ export default function Nosotros() {
         </div>
       </section>
 
-      <section className="container-site pb-20 lg:pb-28">
+      <section className="container-wide pb-20 lg:pb-28">
         <div
           className="relative overflow-hidden rounded-3xl border border-outline p-10 text-center sm:p-16"
           style={{ backgroundImage: "var(--background-image-primary)" }}

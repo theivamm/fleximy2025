@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { useLang } from "../context/LangContext"
 import { translations } from "../content/translations"
+import { WHATSAPP_PLAIN_URL } from "../data/config"
 
 const costItems = [
   { icon: "💻", labelEn: "Full-stack developer", labelEs: "Programador Backend + Frontend", cost: "$400.000" },
@@ -251,7 +252,7 @@ export default function PlanAllInOne() {
                 </ul>
 
                 <a
-                  href="https://wa.me/541111111111"
+                  href={WHATSAPP_PLAIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group/btn relative inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-xl text-sm font-bold tracking-wide text-white bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all duration-300 active:scale-[0.98]"

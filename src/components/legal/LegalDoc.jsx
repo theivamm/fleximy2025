@@ -1,5 +1,4 @@
 import { Printer } from "lucide-react"
-import { LEGAL_NOTA } from "../../data/legal"
 
 function renderBloque(bloque, index) {
   if (bloque.tipo === "p") {
@@ -67,10 +66,6 @@ export default function LegalDoc({ doc }) {
               Imprimir o guardar como PDF
             </button>
           </div>
-
-          <p className="mt-6 max-w-[60ch] rounded-xl border border-outline bg-accent-soft px-4 py-3 text-small text-accent-on-soft">
-            {LEGAL_NOTA}
-          </p>
         </div>
       </section>
 

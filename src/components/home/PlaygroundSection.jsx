@@ -154,7 +154,7 @@ export default function PlaygroundSection() {
         lead="Cuatro vistas del mismo sistema de gestión. Cambiá de vista y mirá cómo se reorganizan los datos, los gráficos y las tablas."
       />
 
-      <div className="container-site mt-12">
+      <div className="container-wide mt-12">
         <div role="tablist" aria-label="Vistas del playground" className="mb-5 flex flex-wrap gap-2">
           {VIEWS.map((v) => (
             <button

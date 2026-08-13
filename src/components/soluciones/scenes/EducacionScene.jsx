@@ -37,7 +37,7 @@ export default function EducacionScene({ onAction }) {
 
   return (
     <div className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper-bright shadow-lift">
-      <Chrome url="fleximy.app/tu-academia" />
+      <Chrome url="fleximy.app/tu-academia" demo />
       <div className="p-4">
         <AnimatePresence mode="wait">
           {vista === "curso" ? (

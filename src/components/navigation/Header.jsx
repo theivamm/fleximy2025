@@ -3,18 +3,24 @@ import { Link, useLocation } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react"
 import ThemeToggle from "../ui/ThemeToggle"
+import { useTheme } from "../../context/ThemeContext"
 import { NAV, CONTACT } from "../../data/navigation"
 import { INDUSTRIES } from "../../data/industries"
-import logoSvg from "../../assets/logo-fleximy.svg?raw"
+import logoSvgBlanco from "../../assets/logosvgblanco.svg"
+import logoSvgColor from "../../assets/logosvgcolor.svg"
 
 function Logo({ compact = false }) {
+  const { theme } = useTheme()
+  const logoSrc = theme === "dark" ? logoSvgBlanco : logoSvgColor
   return (
     <Link to="/" aria-label="Fleximy — Inicio" className="flex shrink-0 items-center">
-      <span
-        aria-hidden="true"
-        dangerouslySetInnerHTML={{ __html: logoSvg }}
-        className={`block shrink-0 transition-all duration-300 [&>svg]:block [&>svg]:h-full [&>svg]:w-auto ${
-          compact ? "h-6" : "h-8"
+      <img
+        src={logoSrc}
+        alt=""
+        width={476.65}
+        height={685.32}
+        className={`block shrink-0 w-auto transition-all duration-300 ${
+          compact ? "h-9" : "h-10"
         }`}
       />
     </Link>
@@ -28,7 +34,7 @@ function MegaMenu({ onClose }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 8 }}
       transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-      className="absolute left-0 top-full mt-3 hidden w-[min(640px,90vw)] rounded-2xl border border-outline bg-surface-elevated/95 p-2 shadow-[var(--shadow-lg)] backdrop-blur-xl lg:block"
+      className="absolute left-0 top-full mt-3 hidden w-[min(640px,90vw)] rounded-2xl border border-outline bg-surface-elevated/95 p-2 shadow-[var(--shadow-lg)] backdrop-blur-xl nav:block"
     >
       <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
         {INDUSTRIES.map((ind) => (
@@ -165,7 +171,7 @@ export default function Header() {
           : "border-transparent bg-transparent"
       }`}
     >
-      <div className="container-site">
+      <div className="container-wide">
         <div
           className={`flex items-center justify-between gap-3 transition-all duration-300 ${
             scrolled ? "h-16" : "h-20"
@@ -173,7 +179,7 @@ export default function Header() {
         >
           <Logo compact={scrolled} />
 
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Principal">
+          <nav className="hidden items-center gap-1 nav:flex" aria-label="Principal">
             {baseLink(NAV.main[0])}
             {NAV.main.slice(1).map((item) =>
               item.hasMega ? (
@@ -209,7 +215,7 @@ export default function Header() {
             <Link
               to="/contacto"
               data-track="cta_contanos_idea"
-              className="hidden h-10 items-center rounded-[var(--radius-btn)] px-5 text-sm font-semibold text-white shadow-[var(--shadow-sm)] transition-transform duration-200 hover:-translate-y-0.5 lg:inline-flex"
+              className="hidden h-10 items-center rounded-[var(--radius-btn)] px-5 text-sm font-semibold text-white shadow-[var(--shadow-sm)] transition-transform duration-200 hover:-translate-y-0.5 nav:inline-flex"
               style={{ backgroundImage: "var(--gradient-primary)" }}
             >
               {CONTACT.ctaPrimary}
@@ -220,7 +226,7 @@ export default function Header() {
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
               aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
-              className="grid size-11 place-items-center rounded-xl border border-outline bg-surface-1/60 text-text-1 lg:hidden"
+              className="grid size-11 place-items-center rounded-xl border border-outline bg-surface-1/60 text-text-1 nav:hidden"
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -238,9 +244,9 @@ export default function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-outline bg-bg-1 lg:hidden"
+            className="overflow-hidden border-t border-outline bg-bg-1 nav:hidden"
           >
-            <div className="container-site flex max-h-[calc(100dvh-4rem)] flex-col gap-1 overflow-y-auto py-4">
+            <div className="container-wide flex max-h-[calc(100dvh-4rem)] flex-col gap-1 overflow-y-auto py-4">
               <span className="kicker px-4">Menú</span>
 
               {NAV.main.map((item) =>

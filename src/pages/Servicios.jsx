@@ -40,7 +40,7 @@ export default function Servicios() {
   return (
     <main className="pt-28 text-text-1 sm:pt-36">
       {/* Hero */}
-      <section className="container-site">
+      <section className="container-wide">
         <div className="flex max-w-3xl flex-col items-start">
           <span className="kicker">Servicios</span>
           <h1 className="display-title mt-6 font-display">
@@ -63,7 +63,7 @@ export default function Servicios() {
       </section>
 
       {/* Servicios detallados */}
-      <section className="container-site mt-20 flex flex-col gap-16 sm:mt-28">
+      <section className="container-wide mt-20 flex flex-col gap-16 sm:mt-28">
         {SERVICES.map((s, i) => (
           <article
             key={s.n}
@@ -105,7 +105,7 @@ export default function Servicios() {
       </section>
 
       {/* CTA final */}
-      <section className="container-site py-24 sm:py-32">
+      <section className="container-wide py-24 sm:py-32">
         <div className="rounded-3xl border border-outline p-10 text-center sm:p-16" style={{ backgroundImage: "var(--background-image-primary)" }}>
           <SectionIntro
             kicker="¿No sabés por dónde empezar?"

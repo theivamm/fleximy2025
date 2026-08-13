@@ -11,14 +11,14 @@ export default function CapabilitiesSection() {
         lead="Cuatro especialidades, cuatro interfaces distintas. Cada una construida en HTML y CSS, como si fuera un producto terminado."
       />
 
-      <div className="container-site mt-14 grid gap-5 lg:grid-cols-6">
+      <div className="container-wide mt-14 grid gap-5 lg:grid-cols-6">
         {/* Aplicaciones y plataformas */}
         <div className="flex flex-col justify-between gap-6 overflow-hidden rounded-3xl border border-outline bg-surface-1 p-8 shadow-[var(--shadow-sm)] lg:col-span-4">
           <div>
             <span className="font-mono text-xs uppercase tracking-wider text-primary">01 · Aplicaciones y plataformas</span>
             <h3 className="h3-title mt-3 font-display text-text-1">Productos que operan tu negocio</h3>
             <p className="mt-3 max-w-md text-sm leading-relaxed text-text-secondary">
-              Portales, plataformas y apps web con lógica real: datos, usuarios, roles y procesos que funcionan solos.
+              Portales, plataformas y apps web con lógica real: datos, usuarios, roles y procesos conectados entre sí.
             </p>
             <ul className="mt-5 flex flex-wrap gap-2">
               {["Portales", "SaaS", "Apps web", "Automatizaciones"].map((f) => (

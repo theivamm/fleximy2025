@@ -21,7 +21,7 @@ export default function InterfaceLab() {
   const mode = MODES.find((m) => m.id === active)
 
   return (
-    <div className="container-site flex flex-col gap-6">
+    <div className="container-wide flex flex-col gap-6">
       {/* Controles junto a la escena */}
       <div
         role="tablist"

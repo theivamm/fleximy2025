@@ -32,7 +32,7 @@ const CONTENT = {
   },
   educacion: {
     problema: "Inscripciones por formulario y seguimiento de estudiantes manual.",
-    producto: "Plataforma con oferta académica e inscripciones digitales.",
+    producto: "Portal con oferta académica e inscripciones digitales.",
     features: ["Oferta académica", "Inscripciones", "Seguimiento", "Comunicación"],
   },
   talleres: {
@@ -171,7 +171,7 @@ export default function IndustryPreview() {
   const content = CONTENT[open]
 
   return (
-    <div className="container-site grid gap-6 lg:grid-cols-[1fr_1.3fr] lg:gap-10">
+    <div className="container-wide grid gap-6 lg:grid-cols-[1fr_1.3fr] lg:gap-10">
       {/* Selector tipo acordeón */}
       <ul role="tablist" aria-label="Industrias" aria-orientation="vertical" className="flex flex-col gap-1">
         {INDUSTRIES.map((ind, idx) => {
@@ -252,7 +252,7 @@ export default function IndustryPreview() {
               <span className="size-2 rounded-full bg-[#ff747f]" />
               <span className="size-2 rounded-full bg-[#ffb45e]" />
               <span className="size-2 rounded-full bg-[#42d392]" />
-              <span className="ml-2 font-mono text-[10px] text-text-4">vista CSS</span>
+              <span className="ml-2 font-mono text-[10px] text-text-4">vista CSS · datos ilustrativos</span>
             </div>
             <MiniView slug={industry.slug} />
           </div>

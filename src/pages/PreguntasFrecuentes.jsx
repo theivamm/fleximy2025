@@ -97,7 +97,7 @@ export default function PreguntasFrecuentes() {
                 setAbierta({})
               }}
               placeholder="Buscar en las preguntas…"
-              className="w-full rounded-[var(--radius-field)] border border-outline bg-surface-1/60 py-3 pl-11 pr-4 text-sm text-text-1 placeholder:text-text-3/60 transition-colors focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/10"
+              className="w-full rounded-[var(--radius-field)] border border-outline bg-surface-1/60 py-3 pl-11 pr-4 text-sm text-text-1 placeholder:text-text-3/60 transition-colors focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/60"
             />
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function PreguntasFrecuentes() {
         </div>
       </PageHero>
 
-      <section className="container-site py-16 lg:py-20">
+      <section className="container-wide py-16 lg:py-20">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:items-start">
           <aside className="hidden lg:block">
             <p className="font-mono text-micro text-text-3">índice</p>
@@ -227,7 +227,7 @@ export default function PreguntasFrecuentes() {
         </div>
       </section>
 
-      <section className="container-site pb-20 lg:pb-28">
+      <section className="container-wide pb-20 lg:pb-28">
         <div
           className="relative overflow-hidden rounded-3xl border border-outline p-10 text-center sm:p-16"
           style={{ backgroundImage: "var(--background-image-primary)" }}

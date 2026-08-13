@@ -1,4 +1,4 @@
-export default function PageHero({
+﻿export default function PageHero({
   kicker,
   title,
   lead,
@@ -23,7 +23,7 @@ export default function PageHero({
         }}
       />
       <div
-        className={`container-site relative flex flex-col gap-6 ${
+        className={`container-wide relative flex flex-col gap-6 ${
           center ? "items-center text-center" : "items-start"
         }`}
       >

@@ -34,7 +34,7 @@ export default function Seguridad() {
       />
 
       <section className="border-y border-outline bg-surface-2/40 py-16 lg:py-20">
-        <div className="container-site">
+        <div className="container-wide">
           <p className="kicker">Cómo circula la información</p>
           <h2 className="text-h2 mt-4 max-w-[16ch] text-text-1">Del navegador del negocio al respaldo</h2>
           <div className="mt-12 grid gap-3 lg:grid-cols-4">
@@ -71,7 +71,7 @@ export default function Seguridad() {
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-20 lg:py-28">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
           <div>
             <p className="kicker">Accesos</p>
@@ -94,7 +94,7 @@ export default function Seguridad() {
       </section>
 
       <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
-        <div className="container-site grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
+        <div className="container-wide grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
           <div>
             <p className="kicker">Protección de datos</p>
             <h2 className="text-h2 mt-4 text-text-1">Cifrado y control de la información</h2>
@@ -116,7 +116,7 @@ export default function Seguridad() {
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-20 lg:py-28">
         <p className="kicker">Respaldos</p>
         <h2 className="text-h2 mt-4 max-w-[16ch] text-text-1">Copias de información</h2>
         <div className="mt-10 overflow-x-auto rounded-[var(--radius-card)] border border-outline">
@@ -144,7 +144,7 @@ export default function Seguridad() {
       </section>
 
       <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
-        <div className="container-site grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
+        <div className="container-wide grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
           <div>
             <p className="kicker">Disponibilidad</p>
             <h2 className="text-h2 mt-4 text-text-1">Compromisos reales, sin humo</h2>
@@ -165,7 +165,7 @@ export default function Seguridad() {
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-20 lg:py-28">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
           <div>
             <p className="kicker">Servicios de terceros</p>
@@ -188,7 +188,7 @@ export default function Seguridad() {
       </section>
 
       <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
-        <div className="container-site grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
+        <div className="container-wide grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
           <div>
             <p className="kicker">Privacidad</p>
             <h2 className="text-h2 mt-4 text-text-1">Tu información y tus derechos</h2>
@@ -214,7 +214,7 @@ export default function Seguridad() {
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-20 lg:py-28">
         <div
           className="relative overflow-hidden rounded-3xl border border-outline p-10 text-center sm:p-16"
           style={{ backgroundImage: "var(--background-image-primary)" }}

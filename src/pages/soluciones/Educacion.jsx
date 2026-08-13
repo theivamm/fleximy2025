@@ -44,7 +44,7 @@ export default function Educacion() {
         items={data.panel.items}
       />
       <section className="bg-dark-surface py-20 text-text-invert lg:py-28">
-        <div className="container-site">
+        <div className="container-wide">
           <SectionHead
             kicker="Modalidades"
             title={data.modalidades.titulo}

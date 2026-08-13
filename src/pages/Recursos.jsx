@@ -34,7 +34,7 @@ export default function Recursos() {
         lead="Contenido para tomar mejores decisiones sobre sitios web, gestión, automatización y experiencia del cliente."
       />
 
-      <section className="container-site pb-16 lg:pb-20">
+      <section className="container-wide pb-16 lg:pb-20">
         <article className="grid overflow-hidden rounded-[var(--radius-card)] border border-outline bg-surface-1/60 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
           <div className="flex flex-col justify-center gap-4 p-8 lg:p-14">
             <div className="flex items-center gap-2">
@@ -66,7 +66,7 @@ export default function Recursos() {
       </section>
 
       <section className="border-y border-outline bg-surface-2/40 py-16 lg:py-20">
-        <div className="container-site">
+        <div className="container-wide">
           <p className="kicker">Biblioteca</p>
           <h2 className="text-h2 mt-4 text-text-1">Guías, checklists y comparativas</h2>
           <div className="mt-6 flex flex-wrap gap-2">
@@ -142,7 +142,7 @@ export default function Recursos() {
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-20 lg:py-28">
         <div className="grid items-center gap-10 rounded-[var(--radius-card)] border border-outline bg-surface-2/40 p-8 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:p-12">
           <div>
             <p className="kicker">Casos de uso</p>
@@ -166,7 +166,7 @@ export default function Recursos() {
         </div>
       </section>
 
-      <section className="container-site pb-20 lg:pb-28">
+      <section className="container-wide pb-20 lg:pb-28">
         <p className="kicker">Descargables</p>
         <h2 className="text-h2 mt-4 max-w-[16ch] text-text-1">Plantillas listas para usar</h2>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -188,7 +188,7 @@ export default function Recursos() {
       </section>
 
       <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
-        <div className="container-site grid gap-10 lg:grid-cols-2 lg:items-center">
+        <div className="container-wide grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="kicker">Newsletter</p>
             <h2 className="text-h2 mt-4 text-text-1">{NEWSLETTER.titulo}</h2>
@@ -203,7 +203,7 @@ export default function Recursos() {
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-20 lg:py-28">
         <div
           className="relative overflow-hidden rounded-3xl border border-outline p-10 text-center sm:p-16"
           style={{ backgroundImage: "var(--background-image-primary)" }}

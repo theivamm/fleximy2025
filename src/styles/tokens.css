@@ -25,6 +25,16 @@
   --micro: 0.75rem;
 
   /* Layout */
+  --page-gutter: clamp(20px, 4vw, 64px);
+  --container-wide: 1280px;
+  --container-main: 1180px;
+  --container-narrow: 760px;
+  --measure-copy: 68ch;
+  --section-sm: clamp(64px, 7vw, 96px);
+  --section-md: clamp(80px, 9vw, 132px);
+  --section-lg: clamp(104px, 11vw, 168px);
+
+  /* Legacy layout (migrando) */
   --container-pad: clamp(1.25rem, 4vw, 2.5rem);
   --content-max: 82rem;
   --content-narrow: 50rem;
@@ -89,6 +99,7 @@
 
 /* Dark: utilities Tailwind */
 @theme {
+  --breakpoint-nav: 1200px;
   --color-bg-0: #090b17;
   --color-bg-1: #101326;
   --color-bg-2: #0c0e1d;
@@ -156,6 +167,7 @@
   --color-acc-inmob: #4d8dff;
   --color-acc-educacion: #7c6cff;
   --color-acc-talleres: #ff8d6c;
+  --color-acc-logistica: #4cc9f0;
 
   /* Aliases compatibles (componentes internos) */
   --color-text-accent: var(--text);
@@ -309,6 +321,7 @@
   --color-acc-inmob: #3175dc;
   --color-acc-educacion: #6555e8;
   --color-acc-talleres: #e2574a;
+  --color-acc-logistica: #0e93b0;
 
   --background-image-page: var(--background-atmosphere);
   --background-image-surface: radial-gradient(ellipse 60% 45% at 12% 0%, rgba(101, 85, 232, 0.1), transparent 55%), radial-gradient(ellipse 50% 40% at 88% 10%, rgba(0, 159, 149, 0.08), transparent 55%), linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 55%, var(--bg) 100%);

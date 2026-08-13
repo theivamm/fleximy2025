@@ -11,7 +11,7 @@ export default function ProjectsSection() {
         lead="Estas son demos interactivas y conceptos de producto, no casos de clientes reales. Probalas y mirá cómo cambia cada estado."
       />
 
-      <div className="container-site mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="container-wide mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {DEMOS.map((d, i) => (
           <Link
             key={d.id}

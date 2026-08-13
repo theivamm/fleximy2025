@@ -1,16 +1,16 @@
 import SectionIntro from "../ui/SectionIntro"
-import InterfaceLab from "../ui/InterfaceLab"
+import IndustryLab from "./lab/IndustryLab"
 
 export default function LabSection() {
   return (
-    <section className="py-20 sm:py-28">
+    <section className="py-16 sm:py-20">
       <SectionIntro
         kicker="Laboratorio Fleximy"
-        title={<>Una idea, seis productos distintos</>}
-        lead="Elegí una muestra y mirá cómo cambia el producto completo: layout, colores, datos y acciones. Los controles están junto a la interfaz que modifican."
+        title={<>Ocho industrias. Ocho productos diseñados desde cero.</>}
+        lead="Café Nómada, Distrito, Habitat, Áurea, Nexo, MotorLab, Ruta y Pulso: la misma idea de producto aplicada a rubros reales. Elegí una muestra, mirá el recorrido automático o entrá en modo demo para navegarla con tu cursor."
       />
-      <div className="mt-12">
-        <InterfaceLab />
+      <div className="mt-10">
+        <IndustryLab />
       </div>
     </section>
   )

@@ -23,7 +23,7 @@ export default function NotFound() {
   const atender = (activo) => () => setReconectado(activo)
 
   return (
-    <div className="container-site flex min-h-screen flex-col justify-center pt-24 pb-16">
+    <div className="container-wide flex min-h-screen flex-col justify-center pt-24 pb-16">
       <p className="kicker mb-6">
         <span className="text-accent">404</span> Ruta inexistente
       </p>

@@ -6,48 +6,52 @@ function seo(title, description, robots = "index,follow") {
 
 export const SEO_META = {
   "/": seo(
-    "Fleximy — Tu web también puede operar tu negocio",
-    "Sitio web, turnos, gestión y atención integrados para tu PyME. Fleximy une tu presencia digital con la operación diaria de tu negocio."
+    "Fleximy — Diseño y desarrollo de aplicaciones digitales",
+    "Diseñamos y desarrollamos aplicaciones, plataformas y experiencias digitales para transformar ideas y procesos en productos que funcionan."
+  ),
+  "/servicios": seo(
+    "Servicios de diseño y desarrollo digital | Fleximy",
+    "Diseñamos productos digitales, aplicaciones web, plataformas, automatizaciones y experiencias interactivas a medida."
   ),
   "/soluciones": seo(
     "Soluciones por rubro | Fleximy",
-    "Soluciones para gastronomía, turnos, gestión de PyMEs, comercio, inmobiliarias, educación y talleres. Una base para tu rubro, adaptada a tu equipo."
+    "Soluciones digitales para gastronomía, turnos, gestión de PyMEs, comercio, inmobiliarias, educación y talleres. Ejemplos adaptables, pensados para cada operación."
   ),
   "/soluciones/gastronomia": seo(
-    "Software para restaurantes y gastronomía | Fleximy",
-    "Menú QR, comandas, reservas y control de mesa. Una web que opera tu negocio gastronómico de punta a punta."
+    "Soluciones digitales para gastronomía | Fleximy",
+    "Menú digital, reservas, pedidos y control de mesa. Diseñamos y desarrollamos la experiencia y el panel de gestión para tu negocio gastronómico."
   ),
   "/soluciones/servicios-turnos": seo(
-    "Gestión de turnos y reservas online | Fleximy",
+    "Soluciones digitales para turnos y reservas | Fleximy",
     "Reservas online, agenda por profesional, recordatorios e historial de clientes. Ordená tu agenda sin intercambios de mensajes."
   ),
   "/soluciones/gestion-pymes": seo(
-    "Gestión para PyMEs | Fleximy",
+    "Soluciones digitales para PyMEs | Fleximy",
     "CRM, proyectos, tareas y seguimiento conectados. Convertí las consultas de tu web en trabajo ordenado para tu equipo."
   ),
   "/soluciones/comercio-retail": seo(
-    "Software para comercio y retail | Fleximy",
+    "Soluciones digitales para comercio y retail | Fleximy",
     "Catálogo, stock y pedidos conectados entre tu web y tu panel. Publicá productos y gestioná disponibilidad en un solo lugar."
   ),
   "/soluciones/inmobiliarias": seo(
-    "Software para inmobiliarias | Fleximy",
+    "Soluciones digitales para inmobiliarias | Fleximy",
     "Portal de propiedades, consultas asociadas, CRM y agenda de visitas. Cada lead con responsable y próximo paso."
   ),
   "/soluciones/educacion": seo(
-    "Software para educación | Fleximy",
+    "Soluciones digitales para educación | Fleximy",
     "Cursos, inscripciones y seguimiento de alumnos. Conectá la información de tus cursos con la operación de tu institución."
   ),
   "/soluciones/talleres-reparaciones": seo(
-    "Software para talleres y reparaciones | Fleximy",
+    "Soluciones digitales para talleres y reparaciones | Fleximy",
     "Órdenes de trabajo, presupuestos, repuestos y estados. El cliente sigue su reparación y tu equipo deja de perseguir tareas."
   ),
   "/demos": seo(
     "Demos interactivas | Fleximy",
-    "Probá Fleximy antes de imaginarlo: siete demos reales con datos ficticios, sin registro. Cliente y equipo en la misma experiencia."
+    "Probá Fleximy antes de imaginarlo: demos interactivas basadas en escenarios de negocio, con datos ilustrativos y sin registro."
   ),
   "/como-funciona": seo(
-    "Cómo funciona | Fleximy",
-    "Del diagnóstico inicial a la activación: etapas, plazos y responsabilidades para implementar Fleximy en tu negocio."
+    "Cómo trabajamos | Fleximy",
+    "De una idea a un producto digital listo para crecer: descubrimiento, definición, diseño, desarrollo, validación y evolución."
   ),
   "/precios": seo(
     "Precios | Fleximy",
@@ -55,11 +59,11 @@ export const SEO_META = {
   ),
   "/nosotros": seo(
     "Nosotros | Fleximy",
-    "Fleximy existe para cerrar la brecha entre una web estática y un sistema complejo. Principios, enfoque y forma de trabajo."
+    "Diseñamos tecnología para que las ideas se conviertan en productos reales. Especialidades, forma de trabajo y criterio de diseño."
   ),
   "/contacto": seo(
-    "Diagnóstico inicial | Fleximy",
-    "Contanos qué parte de tu negocio querés ordenar. Un diagnóstico breve para recomendar el primer paso correcto."
+    "Contanos tu idea | Fleximy",
+    "Contanos qué querés crear, mejorar o automatizar. Un diagnóstico breve para recomendar el primer paso correcto."
   ),
   "/preguntas-frecuentes": seo(
     "Preguntas frecuentes | Fleximy",
@@ -71,11 +75,11 @@ export const SEO_META = {
   ),
   "/recursos": seo(
     "Recursos | Fleximy",
-    "Guías, checklists y comparativas para mejorar la operación de tu PyME. Contenido práctico para dejar de depender de tareas manuales."
+    "Guías, checklists y análisis sobre diseño de producto, automatización, desarrollo y decisiones digitales para tu negocio."
   ),
   "/casos-de-uso": seo(
     "Casos de uso | Fleximy",
-    "Escenarios ilustrativos por rubro: de la información dispersa a un flujo conectado. Cómo se aplica Fleximy a cada operación."
+    "Escenarios ilustrativos por rubro: de la información dispersa a un flujo conectado. Cómo se aplica cada solución a una operación."
   ),
   "/privacidad": seo(
     "Política de privacidad | Fleximy",
@@ -83,7 +87,7 @@ export const SEO_META = {
   ),
   "/terminos": seo(
     "Términos del servicio | Fleximy",
-    "Condiciones de acceso y uso de la plataforma Fleximy: implementación, hosting, mantenimiento, soporte y módulos contratados."
+    "Condiciones de acceso y uso de los servicios de diseño y desarrollo de Fleximy."
   ),
   "/gracias-diagnostico": seo(
     "Recibimos tu solicitud | Fleximy",

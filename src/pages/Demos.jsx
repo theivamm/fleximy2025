@@ -18,7 +18,7 @@ const ACCENTS = {
 }
 
 const ESTADO_BADGE = {
-  disponible: { label: "Disponible", cls: "bg-accent text-accent-on" },
+  disponible: { label: "Interactiva", cls: "bg-accent text-accent-on" },
   guiado: { label: "Recorrido guiado", cls: "bg-cyan/15 text-cyan" },
   proximamente: { label: "Próximamente", cls: "bg-surface-3/60 text-text-3" },
 }
@@ -42,11 +42,11 @@ export default function Demos() {
             Probá Fleximy <span className="text-gradient">antes de imaginarlo.</span>
           </>
         }
-        lead="Recorré una experiencia realista desde la mirada de un cliente y desde el panel de quien gestiona el negocio."
+        lead="Recorré una experiencia interactiva desde la mirada de un cliente y desde el panel de quien gestiona el negocio."
         meta="las demos usan información ficticia y muestran configuraciones de ejemplo · la solución final se adapta al alcance de cada proyecto"      />
 
       <section className="border-y border-outline bg-surface-2/40 py-12 lg:py-14">
-        <div className="container-site">
+        <div className="container-wide">
           <p className="kicker">Elegí una demo</p>
           <div className="mt-6 flex flex-wrap gap-2">
             <button
@@ -76,16 +76,16 @@ export default function Demos() {
         </div>
       </section>
 
-      <section ref={labRef} className="container-site scroll-mt-28 py-16 lg:py-20">
+      <section ref={labRef} className="container-wide scroll-mt-28 py-16 lg:py-20">
         {filtro === "todas" ? (
           <>
             <div className="flex items-end justify-between gap-6">
               <div className="max-w-2xl">
                 <p className="kicker">Catálogo</p>
-                <h2 className="text-h2 mt-4 text-text-1">Siete demos funcionando, sin registro</h2>
+                <h2 className="text-h2 mt-4 text-text-1">Demos interactivas basadas en escenarios de negocio</h2>
               </div>
               <span className="hidden font-mono text-micro text-text-3 sm:block">
-                cada botón abre una interacción real
+                cada botón abre una interacción con datos ilustrativos
               </span>
             </div>
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -118,7 +118,7 @@ export default function Demos() {
             </div>
           </>
         ) : (
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto w-full">
             <p className="kicker">Laboratorio Fleximy</p>
             <h2 className="text-h2 mt-4 text-text-1">{demoById(filtro).rubro}</h2>
             <div className="mt-8">
@@ -128,7 +128,7 @@ export default function Demos() {
         )}
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-20 lg:py-28">
         <div className="grid items-center gap-10 rounded-[var(--radius-card)] border border-outline bg-surface-2/40 p-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:p-12">
           <div className="max-w-2xl">
             <p className="kicker">Recorrido guiado</p>
@@ -154,7 +154,7 @@ export default function Demos() {
         </div>
       </section>
 
-      <section className="container-site pb-20 lg:pb-28">
+      <section className="container-wide pb-20 lg:pb-28">
         <div
           className="relative overflow-hidden rounded-3xl border border-outline p-10 text-center sm:p-16"
           style={{ backgroundImage: "var(--background-image-primary)" }}

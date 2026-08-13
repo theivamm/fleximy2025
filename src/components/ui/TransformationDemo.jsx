@@ -41,7 +41,7 @@ const TRANSFORMATIONS = [
  */
 export default function TransformationDemo() {
   return (
-    <ul className="container-site flex flex-col divide-y divide-outline">
+    <ul className="container-wide flex flex-col divide-y divide-outline">
       {TRANSFORMATIONS.map((t) => (
         <li
           key={t.from}

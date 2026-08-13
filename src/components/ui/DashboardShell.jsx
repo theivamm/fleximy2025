@@ -65,6 +65,12 @@ export default function DashboardShell({
           </span>
         </div>
         <div className="p-3 sm:p-4">{children}</div>
+        <div className="mt-auto flex items-center justify-between gap-3 border-t border-outline px-3 py-2 sm:px-4">
+          <span className="font-mono text-[10px] uppercase tracking-wider text-text-4">
+            Demo · datos ilustrativos
+          </span>
+          <span className="hidden font-mono text-[10px] text-text-4 sm:block">interfaz conceptual</span>
+        </div>
       </div>
     </div>
   )

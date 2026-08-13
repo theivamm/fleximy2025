@@ -15,7 +15,7 @@ export default function CTABand({
 }) {
   return (
     <section className="relative py-20 lg:py-28">
-      <div className="container-site">
+      <div className="container-wide">
         <div
           className="relative overflow-hidden rounded-3xl border border-outline p-10 sm:p-16"
           style={{ backgroundImage: "var(--background-image-primary)" }}

@@ -49,7 +49,7 @@ export default function GraciasDiagnostico() {
 
   return (
     <main>
-      <section className="container-site flex min-h-[70vh] items-center py-24 lg:py-32">
+      <section className="container-wide flex min-h-[70vh] items-center py-24 lg:py-32">
         <div className="mx-auto w-full max-w-2xl text-center">
           <motion.div {...animProps} variants={container}>
             <motion.span
@@ -82,7 +82,7 @@ export default function GraciasDiagnostico() {
       </section>
 
       <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-24">
-        <div className="container-narrow">
+        <div className="container-main">
           <motion.p
             {...animProps}
             variants={container}

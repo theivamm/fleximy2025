@@ -33,7 +33,7 @@ export default function Precios() {
         }
       />
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-20 lg:py-28">
         <p className="kicker">Tres niveles de la misma plataforma</p>
         <h2 className="text-h2 mt-4 max-w-[16ch] text-text-1">Empezá por lo que necesitás hoy</h2>
         <div className="mt-12 grid gap-4 lg:grid-cols-3">
@@ -79,7 +79,7 @@ export default function Precios() {
       </section>
 
       <section className="border-y border-outline bg-surface-2/40 py-20 lg:py-28">
-        <div className="container-site grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
+        <div className="container-wide grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start">
           <div>
             <p className="kicker">Incluido</p>
             <h2 className="text-h2 mt-4 text-text-1">Toda suscripción incluye</h2>
@@ -106,7 +106,7 @@ export default function Precios() {
         </div>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
+      <section className="container-wide py-20 lg:py-28">
         <p className="kicker">Comparación realista</p>
         <h2 className="text-h2 mt-4 max-w-[16ch] text-text-1">Contra la forma habitual de operar</h2>
         <div className="mt-12 overflow-x-auto rounded-[var(--radius-card)] border border-outline">
@@ -134,17 +134,15 @@ export default function Precios() {
         </blockquote>
       </section>
 
-      <section className="container-site py-20 lg:py-28">
-        <div className="mx-auto max-w-3xl">
-          <p className="kicker">Preguntas de precio</p>
-          <h2 className="text-h2 mt-4 text-text-1">Dudas frecuentes sobre costos</h2>
-          <div className="mt-10">
-            <Accordion items={PRECIO_FAQ} idPrefix="precio-faq" />
-          </div>
+      <section className="container-narrow py-20 lg:py-28">
+        <p className="kicker">Preguntas de precio</p>
+        <h2 className="text-h2 mt-4 text-text-1">Dudas frecuentes sobre costos</h2>
+        <div className="mt-10">
+          <Accordion items={PRECIO_FAQ} idPrefix="precio-faq" />
         </div>
       </section>
 
-      <section className="container-site pb-20 lg:pb-28">
+      <section className="container-wide pb-20 lg:pb-28">
         <div
           className="relative overflow-hidden rounded-3xl border border-outline p-10 text-center sm:p-16"
           style={{ backgroundImage: "var(--background-image-primary)" }}

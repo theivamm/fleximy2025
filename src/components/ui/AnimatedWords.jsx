@@ -34,7 +34,7 @@ export default function AnimatedWords({
         {words.map((w, i) => (
           <span
             key={w}
-            className={`word-item ${reduced.current ? "is-in" : i === index ? "is-in" : "is-out"}`}
+            className={`word-item ${reduced.current ? (i === 0 ? "is-in" : "is-out") : i === index ? "is-in" : "is-out"}`}
           >
             {w}
           </span>

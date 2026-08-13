@@ -1,9 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#151714"/>
-  <rect x="60" y="60" width="1080" height="510" rx="24" fill="none" stroke="#2a2d27" stroke-width="2"/>
-  <circle cx="1060" cy="140" r="90" fill="#c8ff3d"/>
-  <circle cx="1060" cy="140" r="46" fill="#151714"/>
-  <rect x="80" y="470" width="120" height="6" rx="3" fill="#c8ff3d"/>
-  <text x="90" y="430" font-family="Inter, Arial, sans-serif" font-size="96" font-weight="700" fill="#f4f3ee">Fleximy</text>
-  <text x="90" y="470" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="500" fill="#6b6f64">Tu web también puede operar tu negocio</text>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#090b17"/>
+      <stop offset="1" stop-color="#0c0e1d"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7c6cff"/>
+      <stop offset="1" stop-color="#20d5c7"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7c6cff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#7c6cff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="40" y="40" width="1120" height="550" rx="28" fill="none" stroke="#252d50" stroke-width="2"/>
+  <circle cx="1030" cy="150" r="120" fill="url(#glow)"/>
+  <path d="M4 28L16 4L28 28" transform="translate(994 122)" stroke="#7c6cff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M10 20H22" transform="translate(994 122)" stroke="#20d5c7" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="90" y="360" font-family="Inter, Arial, sans-serif" font-size="96" font-weight="700" fill="#f8f8ff">Fleximy</text>
+  <text x="90" y="416" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="500" fill="#b5bdd4">Diseño y desarrollo de aplicaciones digitales</text>
+  <rect x="90" y="456" width="140" height="6" rx="3" fill="url(#brand)"/>
 </svg>

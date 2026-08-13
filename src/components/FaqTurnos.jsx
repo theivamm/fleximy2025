@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { WHATSAPP_PLAIN_URL } from "../data/config"
 
 const faqs = [
   {
@@ -102,7 +103,7 @@ export default function FaqTurnos() {
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a
-                  href="https://wa.me/541111111111"
+                  href={WHATSAPP_PLAIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group relative inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold tracking-wide text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 active:scale-[0.98]"
