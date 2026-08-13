@@ -1,6 +1,10 @@
 [build]
   command = "npm run build"
   publish = "dist"
+  # BYPASS TEMPORAL del check de datos pendientes (config.js con placeholders).
+  # Quitar esta variable cuando se carguen los datos reales de contacto/empresa.
+  [build.environment]
+    ALLOW_PENDING_CONTACT = "1"
 
 # Rutas del SPA → sirven index.html con HTTP 200 (carga directa de URLs)
 [[redirects]]
