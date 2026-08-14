@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { Pause, Play, Presentation, Repeat, RotateCcw, X } from "lucide-react"
+import { ChevronLeft, ChevronRight, Pause, Play, Presentation, Repeat, RotateCcw, X } from "lucide-react"
 import BrowserFrame from "./BrowserFrame"
 import LabCursor from "./LabCursor"
+import { Pill } from "./primitives"
 import { INDUSTRIES, toneSoft, toneVar } from "./industries"
 import { useVisibility } from "../hero/hooks"
 import CafeNomada from "./views/CafeNomada"
@@ -21,15 +22,25 @@ const CONTROL =
 export default function IndustryLab() {
   const [index, setIndex] = useState(0)
   const [cycle, setCycle] = useState(1)
-  const [playing, setPlaying] = useState(true)
+  const [playing, setPlaying] = useState(() => {
+    if (typeof window === "undefined") return true
+    return !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  })
   const [auto, setAuto] = useState(true)
   const [immersive, setImmersive] = useState(false)
+  const [canPrev, setCanPrev] = useState(false)
+  const [canNext, setCanNext] = useState(false)
 
   const sectionRef = useRef(null)
   const listRef = useRef(null)
   const stackRef = useRef(null)
   const immersiveStackRef = useRef(null)
   const cursorRef = useRef(null)
+
+  const motionOk = useMemo(
+    () => typeof window !== "undefined" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    []
+  )
   const [cursorAllowed] = useState(
     () =>
       typeof window !== "undefined" &&
@@ -45,10 +56,16 @@ export default function IndustryLab() {
     setCycle((c) => c + 1)
   }, [])
 
+  const pause = useCallback(() => setPlaying(false), [])
+  const resetDemo = useCallback(() => {
+    setCycle((c) => c + 1)
+    setPlaying(true)
+  }, [])
+
   const bump = useCallback(() => {
-    if (!auto) return
+    if (!auto || !motionOk) return
     advance()
-  }, [auto, advance])
+  }, [auto, motionOk, advance])
 
   const select = (i) => {
     if (i === index) return
@@ -57,10 +74,37 @@ export default function IndustryLab() {
     setPlaying(true)
   }
 
-  const reset = () => {
-    setCycle((c) => c + 1)
-    setPlaying(true)
+  const scrollTabs = (dir) => {
+    const el = listRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const pill = [...el.querySelectorAll('[role="tab"]')].find(
+      (p) => p.getBoundingClientRect().right > rect.left + 8
+    )
+    const step = pill ? pill.offsetWidth + 8 : el.clientWidth * 0.6
+    el.scrollBy({ left: dir * step, behavior: motionOk ? "smooth" : "auto" })
   }
+
+  const updateArrows = useCallback(() => {
+    const el = listRef.current
+    if (!el) return
+    const fits = el.scrollWidth <= el.clientWidth + 2
+    setCanPrev(!fits && el.scrollLeft > 2)
+    setCanNext(!fits && el.scrollLeft + el.clientWidth < el.scrollWidth - 2)
+  }, [])
+
+  useEffect(() => {
+    const el = listRef.current
+    if (!el) return
+    const t = setTimeout(updateArrows, 150)
+    el.addEventListener("scroll", updateArrows, { passive: true })
+    window.addEventListener("resize", updateArrows)
+    return () => {
+      clearTimeout(t)
+      el.removeEventListener("scroll", updateArrows)
+      window.removeEventListener("resize", updateArrows)
+    }
+  }, [updateArrows])
 
   const bindController = useCallback((c) => {
     cursorRef.current = c
@@ -75,6 +119,20 @@ export default function IndustryLab() {
     return () => window.removeEventListener("keydown", onKey)
   }, [immersive])
 
+  // Interacción real dentro del frame: pausa el recorrido automático,
+  // mantiene el estado actual y no cambia de industria.
+  useEffect(() => {
+    const handler = () => pause()
+    const a = stackRef.current
+    const b = immersiveStackRef.current
+    a?.addEventListener("pointerdown", handler)
+    b?.addEventListener("pointerdown", handler)
+    return () => {
+      a?.removeEventListener("pointerdown", handler)
+      b?.removeEventListener("pointerdown", handler)
+    }
+  }, [pause])
+
   useEffect(() => {
     const btn = listRef.current?.querySelector(`[data-index="${index}"]`)
     if (btn) btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" })
@@ -86,12 +144,18 @@ export default function IndustryLab() {
       cycle,
       tone: industry.tone,
       bump,
+      pause,
+      reset: resetDemo,
+      next: advance,
       getCursor: () => cursorRef.current,
     }),
-    [playing, visible, immersive, cycle, industry.tone, bump]
+    [playing, visible, immersive, cycle, industry.tone, bump, pause, resetDemo, advance]
   )
   const idleDemo = useMemo(() => ({ ...demo, playing: false }), [demo])
 
+  const isMini = industry.kind === "mini"
+  const ctaLabel = isMini ? "Abrir mini app" : "Explorar recorrido"
+  const tagLabel = isMini ? "Mini app interactiva" : "Concepto interactivo"
   const url = `app.fleximy.dev/${industry.product.toLowerCase().replace(/\s+/g, "-")}`
 
   const renderStack = (stack, withCursor) => (
@@ -127,13 +191,13 @@ export default function IndustryLab() {
 
   return (
     <div ref={sectionRef} className="container-wide flex flex-col gap-4">
-      {/* Selector + controles */}
+      {/* Selector de industria */}
       <div className="flex items-center gap-3">
         <div
           ref={listRef}
           role="tablist"
           aria-label="Industrias del Laboratorio Fleximy"
-          className="flex min-w-0 flex-1 snap-x snap-mandatory gap-2 overflow-x-auto pb-1"
+          className="no-scrollbar flex min-w-0 flex-1 snap-x snap-mandatory gap-2 overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)]"
         >
           {INDUSTRIES.map((ind, i) => {
             const active = i === index
@@ -163,6 +227,34 @@ export default function IndustryLab() {
           })}
         </div>
 
+        {(canPrev || canNext) && (
+          <div className="flex shrink-0 items-center gap-1.5">
+            <button
+              type="button"
+              className={`${CONTROL} ${canPrev ? "" : "pointer-events-none opacity-35"}`}
+              onClick={() => scrollTabs(-1)}
+              disabled={!canPrev}
+              aria-label="Deslizar a industrias anteriores"
+              title="Deslizar a industrias anteriores"
+            >
+              <ChevronLeft size={17} />
+            </button>
+            <button
+              type="button"
+              className={`${CONTROL} ${canNext ? "" : "pointer-events-none opacity-35"}`}
+              onClick={() => scrollTabs(1)}
+              disabled={!canNext}
+              aria-label="Deslizar a siguientes industrias"
+              title="Deslizar a siguientes industrias"
+            >
+              <ChevronRight size={17} />
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Controles de la demo */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex shrink-0 items-center gap-1.5" aria-label="Controles de la demo">
           <button
             type="button"
@@ -173,7 +265,7 @@ export default function IndustryLab() {
           >
             {playing ? <Pause size={15} /> : <Play size={15} />}
           </button>
-          <button type="button" className={CONTROL} onClick={reset} aria-label="Reiniciar vista" title="Reiniciar vista">
+          <button type="button" className={CONTROL} onClick={resetDemo} aria-label="Reiniciar vista" title="Reiniciar vista">
             <RotateCcw size={15} />
           </button>
           <button
@@ -186,16 +278,16 @@ export default function IndustryLab() {
           >
             <Repeat size={15} style={{ color: auto ? toneVar(industry.tone) : undefined }} />
           </button>
-          <button
-            type="button"
-            onClick={() => setImmersive(true)}
-            className="inline-flex h-9 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold text-white transition-transform active:scale-[0.97]"
-            style={{ backgroundColor: toneVar(industry.tone) }}
-          >
-            <Presentation size={15} />
-            <span className="hidden sm:inline">Abrir demo</span>
-          </button>
         </div>
+        <button
+          type="button"
+          onClick={() => setImmersive(true)}
+          className="inline-flex h-9 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold text-white transition-transform active:scale-[0.97]"
+          style={{ backgroundColor: toneVar(industry.tone) }}
+        >
+          <Presentation size={15} />
+          <span className="hidden sm:inline">{ctaLabel}</span>
+        </button>
       </div>
 
       {/* Marco 16:9 con las ocho vistas */}
@@ -204,12 +296,16 @@ export default function IndustryLab() {
           {renderStack(stackRef, true)}
         </BrowserFrame>
         <div className="pointer-events-none relative z-10 mt-3 flex flex-wrap items-center justify-between gap-2">
-          <p className="font-mono text-[11px] text-text-3">
-            recorrido automático {String(index + 1).padStart(2, "0")} / {String(INDUSTRIES.length).padStart(2, "0")} · cada
-            industria reusa el dato, cambia el producto
+          <p className="flex items-center gap-2 font-mono text-[11px] text-text-3">
+            <Pill tone={industry.tone} dot>
+              {tagLabel}
+            </Pill>
+            <span>
+              {String(index + 1).padStart(2, "0")} / {String(INDUSTRIES.length).padStart(2, "0")}
+            </span>
           </p>
           <p className="font-mono text-[11px] text-text-4">
-            clic en tarjetas y botones para avanzar · cursor de la demo incluido
+            Elegí una industria y probá las acciones destacadas dentro de cada producto.
           </p>
         </div>
       </div>
@@ -228,14 +324,14 @@ export default function IndustryLab() {
               <div className="min-w-0">
                 <p className="truncate text-sm font-bold text-text-1">{industry.product}</p>
                 <p className="font-mono text-[11px] text-text-3">
-                  demo inmersiva · {industry.label}
+                  {tagLabel} · {industry.label}
                 </p>
               </div>
             </div>
             <div className="flex shrink-0 items-center gap-2">
               <button
                 type="button"
-                onClick={reset}
+                onClick={resetDemo}
                 className="inline-flex h-9 items-center gap-1.5 rounded-full border border-outline bg-surface-1 px-3.5 text-xs font-semibold text-text-2 transition-colors hover:text-text-1"
               >
                 <RotateCcw size={14} />

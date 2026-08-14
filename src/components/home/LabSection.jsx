@@ -6,8 +6,8 @@ export default function LabSection() {
     <section className="py-16 sm:py-20">
       <SectionIntro
         kicker="Laboratorio Fleximy"
-        title={<>Ocho industrias. Ocho productos diseñados desde cero.</>}
-        lead="Café Nómada, Distrito, Habitat, Áurea, Nexo, MotorLab, Ruta y Pulso: la misma idea de producto aplicada a rubros reales. Elegí una muestra, mirá el recorrido automático o entrá en modo demo para navegarla con tu cursor."
+        title={<>Ocho industrias. Ocho formas de convertir una idea en producto.</>}
+        lead="Explorá conceptos creados para distintos negocios. Probá sus recorridos principales y descubrí cómo una aplicación puede conectar clientes, equipos y operaciones."
       />
       <div className="mt-10">
         <IndustryLab />

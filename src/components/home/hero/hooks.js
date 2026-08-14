@@ -42,14 +42,18 @@ export function useTimeline({ active, cycle, steps, hold = 3000, onComplete }) {
 
   useEffect(() => {
     stepsRef.current = steps
+  }, [steps])
+
+  useEffect(() => {
     doneRef.current = new Set()
     elapsedRef.current = 0
     lastRef.current = performance.now()
-  }, [cycle, steps])
+  }, [cycle])
 
   useEffect(() => {
     if (!active) return
     lastRef.current = performance.now()
+    const holdRef = { current: null }
     const id = window.setInterval(() => {
       if (!activeRef.current) return
       const now = performance.now()
@@ -64,11 +68,14 @@ export function useTimeline({ active, cycle, steps, hold = 3000, onComplete }) {
       }
       if (current.every((s) => doneRef.current.has(s.at))) {
         window.clearInterval(id)
-        window.setTimeout(() => {
+        holdRef.current = window.setTimeout(() => {
           if (activeRef.current) onCompleteRef.current()
         }, hold)
       }
     }, 80)
-    return () => window.clearInterval(id)
-  }, [active, cycle])
+    return () => {
+      window.clearInterval(id)
+      if (holdRef.current) window.clearTimeout(holdRef.current)
+    }
+  }, [active, cycle, hold])
 }

@@ -1,4 +1,5 @@
 import { createContext, useContext, useRef } from "react"
+import { Sparkles } from "lucide-react"
 import { emScale, useContainerWidth } from "./labHooks"
 import { toneVar } from "./industries"
 
@@ -30,7 +31,7 @@ export default function BrowserFrame({
     <FrameContext.Provider value={{ compact, em, immersive }}>
       <div
         ref={ref}
-        className={`relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-outline bg-surface-1 shadow-[var(--shadow-md)] ${className}`}
+        className={`relative flex aspect-[16/9] w-full flex-col overflow-hidden rounded-2xl border border-outline bg-surface-1 shadow-[var(--shadow-md)] ${className}`}
         style={{ fontSize: `${em}px` }}
       >
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -65,8 +66,19 @@ export default function BrowserFrame({
           </span>
         </div>
 
+        {/* Aviso de muestra conceptual */}
+        <div className="relative flex shrink-0 items-center justify-center gap-[0.5em] border-b border-outline bg-surface-2/50 px-[1em] py-[0.38em]">
+          <Sparkles size="0.75em" className="shrink-0" style={{ color: toneVar(tone) }} />
+          <p className="min-w-0 truncate text-center text-[0.62em] font-medium leading-none text-text-3">
+            <span className="font-bold uppercase tracking-[0.08em]" style={{ color: toneVar(tone) }}>
+              Muestras simples
+            </span>
+            <span className="hidden sm:inline"> · cada app refleja la necesidad real de tu negocio</span>
+          </p>
+        </div>
+
         {/* Contenido de la app */}
-        <div className="absolute inset-x-0 bottom-0 top-[2.5em] overflow-hidden">
+        <div className="min-h-0 flex-1 overflow-hidden">
           {children}
         </div>
 

@@ -3,7 +3,6 @@ import CapabilitiesMarquee from "../components/home/CapabilitiesMarquee"
 import ManifestoSection from "../components/home/ManifestoSection"
 import CapabilitiesSection from "../components/home/CapabilitiesSection"
 import LabSection from "../components/home/LabSection"
-import PlaygroundSection from "../components/home/PlaygroundSection"
 import ProcessSection from "../components/home/ProcessSection"
 import IndustriesSection from "../components/home/IndustriesSection"
 import TransformationSection from "../components/home/TransformationSection"
@@ -19,7 +18,6 @@ export default function Home() {
       <ManifestoSection />
       <CapabilitiesSection />
       <LabSection />
-      <PlaygroundSection />
       <ProcessSection />
       <IndustriesSection />
       <TransformationSection />

@@ -153,6 +153,10 @@ body {
   to { transform: translateX(-50%); }
 }
 
+/* ===== Scrollbar oculta (carruseles) ===== */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
 /* ===== Fondo reactivo al puntero ===== */
 .reactive-bg {
   --mouse-x: 50%;
