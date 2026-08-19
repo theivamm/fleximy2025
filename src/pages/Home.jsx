@@ -1,4 +1,4 @@
-import Hero from "../components/home/Hero"
+import Hero from "../components/hero/Hero"
 import Servicios from "../components/home/Servicios"
 import QuienesSomos from "../components/home/QuienesSomos"
 import PorQue from "../components/home/PorQue"
