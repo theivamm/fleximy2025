@@ -1,7 +1,6 @@
 /* ==========================================================================
-   FLEXIMY — TOKENS (BRIEF MAESTRO)
-   Dark + Light diseñados, gradientes de marca, escala tipográfica.
-   La convención `--color-*` expone utilities en Tailwind v4.
+   FLEXIMY — TOKENS
+   Dark + Light, gradientes de marca, escala tipográfica.
    ========================================================================== */
 
 /* ===== Dark (default) ===== */
@@ -14,37 +13,26 @@
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
 
   /* Escala tipográfica */
-  --hero-title: clamp(4rem, 8vw, 9rem);
-  --display: clamp(3rem, 6vw, 6.5rem);
-  --h2: clamp(2.4rem, 4.5vw, 4.8rem);
-  --h3: clamp(1.4rem, 2.4vw, 2.2rem);
-  --h4: clamp(1.1rem, 1.6vw, 1.35rem);
-  --lead: clamp(1.15rem, 1.7vw, 1.5rem);
+  --hero-title: clamp(3.25rem, 5vw, 5.125rem);
+  --h2: clamp(2rem, 3.5vw, 3.2rem);
+  --h3: clamp(1.3rem, 2vw, 1.75rem);
+  --h4: clamp(1.05rem, 1.4vw, 1.25rem);
+  --lead: clamp(1.05rem, 1.4vw, 1.25rem);
   --body: 1rem;
   --small: 0.875rem;
   --micro: 0.75rem;
 
   /* Layout */
   --page-gutter: clamp(20px, 4vw, 64px);
-  --container-wide: 1280px;
-  --container-main: 1180px;
-  --container-narrow: 760px;
-  --measure-copy: 68ch;
-  --section-sm: clamp(64px, 7vw, 96px);
-  --section-md: clamp(80px, 9vw, 132px);
-  --section-lg: clamp(104px, 11vw, 168px);
-
-  /* Legacy layout (migrando) */
-  --container-pad: clamp(1.25rem, 4vw, 2.5rem);
-  --content-max: 82rem;
-  --content-narrow: 50rem;
-  --radius-card: 1.5rem;
-  --radius-field: 0.875rem;
-  --radius-btn: 0.875rem;
+  --container: 1280px;
+  --container-copy: 720px;
+  --section-space: clamp(80px, 10vw, 144px);
+  --radius-card: 1.25rem;
+  --radius-field: 0.75rem;
+  --radius-btn: 0.75rem;
   --radius-pill: 9999px;
   --motion-fast: 0.18s;
   --motion-base: 0.28s;
-  --motion-slow: 0.6s;
   --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Superficies */
@@ -67,8 +55,6 @@
   --secondary-strong: #45e2d5;
   --accent: #ff6fae;
   --accent-strong: #ff8fc1;
-  --warm: #ffb45e;
-  --blue: #4d8dff;
 
   /* Estados */
   --success: #42d392;
@@ -84,22 +70,14 @@
   --shadow-md: 0 20px 60px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 35px 100px rgba(0, 0, 0, 0.44);
 
-  /* Gradientes y atmósferas */
+  /* Gradientes */
   --gradient-primary: linear-gradient(120deg, #7c6cff 0%, #4d8dff 32%, #20d5c7 65%, #ff6fae 100%);
-  --gradient-warm: linear-gradient(135deg, #ff6fae 0%, #ff8d6c 48%, #ffb45e 100%);
-  --background-atmosphere:
-    radial-gradient(circle at 15% 10%, rgba(124, 108, 255, 0.22), transparent 30%),
-    radial-gradient(circle at 85% 20%, rgba(32, 213, 199, 0.14), transparent 28%),
-    radial-gradient(circle at 55% 75%, rgba(255, 111, 174, 0.1), transparent 30%),
-    linear-gradient(180deg, #090b17 0%, #101326 48%, #090b17 100%);
-
-  /* ===== Exposición para utilities Tailwind (--color-*) ===== */
-  /* @theme expone cada --color-* como utility (bg-paper, text-ink, etc.) */
 }
 
-/* Dark: utilities Tailwind */
+/* Dark: Tailwind v4 @theme */
 @theme {
   --breakpoint-nav: 1200px;
+
   --color-bg-0: #090b17;
   --color-bg-1: #101326;
   --color-bg-2: #0c0e1d;
@@ -115,8 +93,6 @@
   --color-text-2: #b5bdd4;
   --color-text-3: #7d87a3;
   --color-text-4: #5b6484;
-  --color-text-5: #454e6b;
-  --color-text-inverse: #090b17;
   --color-text-muted: #7d87a3;
 
   --color-primary: #7c6cff;
@@ -127,95 +103,33 @@
   --color-cyan: #20d5c7;
   --color-cyan-strong: #45e2d5;
   --color-cyan-soft: rgba(32, 213, 199, 0.14);
-  --color-cyan-on: #03201c;
-
-  --color-secondary: var(--cyan);
-  --color-secondary-strong: var(--cyan-strong);
-  --color-secondary-soft: var(--cyan-soft);
 
   --color-accent: #ff6fae;
   --color-accent-strong: #ff8fc1;
   --color-accent-soft: rgba(255, 111, 174, 0.14);
   --color-accent-on: #2b0718;
 
-  --color-warm: #ffb45e;
-  --color-warm-soft: rgba(255, 180, 94, 0.14);
-  --color-warm-on: #2b1a04;
-
-  --color-blue: #4d8dff;
-  --color-blue-soft: rgba(77, 141, 255, 0.14);
-  --color-blue-on: #04142b;
-
   --color-success: #42d392;
   --color-success-soft: rgba(66, 211, 146, 0.14);
-  --color-success-on: #04170e;
   --color-warning: #ffb45e;
   --color-warning-soft: rgba(255, 180, 94, 0.14);
-  --color-warning-on: #2b1a04;
   --color-error: #ff747f;
   --color-error-soft: rgba(255, 116, 127, 0.14);
-  --color-error-on: #2b070a;
 
   --color-outline: rgba(220, 225, 255, 0.14);
   --color-outline-strong: rgba(220, 225, 255, 0.25);
 
-  /* Acents por industria */
-  --color-acc-gastro: #ff6fae;
-  --color-acc-turnos: #20d5c7;
-  --color-acc-gestion: #42d392;
-  --color-acc-comercio: #ffb45e;
-  --color-acc-inmob: #4d8dff;
-  --color-acc-educacion: #7c6cff;
-  --color-acc-talleres: #ff8d6c;
-  --color-acc-logistica: #4cc9f0;
-
-  /* Aliases compatibles (componentes internos) */
-  --color-text-accent: var(--text);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-tertiary: var(--text-muted);
-  --color-border: var(--outline);
-  --color-border-strong: var(--outline-strong);
-  --color-background: var(--bg);
-  --color-surface: var(--surface);
-
-  /* Legacy API de páginas internas (CasosDeUso, ComoFunciona, dashboards, etc.) */
-  --color-paper: var(--bg);
-  --color-paper-bright: var(--surface);
-  --color-dark-surface: var(--surface-highlight);
-  --color-text-invert: var(--text);
-  --color-muted: var(--text-muted);
-  --color-ink: var(--text);
-  --color-ink-primary: var(--text);
-  --color-ink-secondary: var(--text-secondary);
-  --color-ink-muted: var(--surface-highlight);
-  --color-ink-soft: var(--surface-elevated);
-  --color-line: var(--outline);
-  --color-line-dark: var(--outline-strong);
-  --color-outline-night: var(--outline-strong);
-  --color-surface-soft: var(--surface);
-  --color-accent-on-dark: var(--accent);
-  --color-on-accent: var(--primary-on);
-  --color-on-accent-soft: var(--accent);
-  --color-primary-deep: var(--primary-strong);
-  --color-primary-hover: var(--primary-strong);
-  --color-bg-secondary: var(--bg-1);
-  --color-night: var(--surface-2);
-  --color-night-elevated: var(--surface-3);
-  --color-on-night: var(--text);
+  --color-text-inverse: #090b17;
 }
 
-/* ===== Dark: atmósferas (fuera de @theme para no generar utilities bg-*) ===== */
+/* Dark: atmósferas */
 :root,
 :root[data-theme="dark"] {
-  --background-image-page: var(--background-atmosphere);
-  --background-image-surface: radial-gradient(ellipse 60% 45% at 12% 0%, rgba(124, 108, 255, 0.12), transparent 55%), radial-gradient(ellipse 50% 40% at 88% 10%, rgba(32, 213, 199, 0.08), transparent 55%), linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 55%, var(--bg) 100%);
-  --background-image-surface-elevated: radial-gradient(ellipse 60% 45% at 12% 0%, rgba(124, 108, 255, 0.14), transparent 55%), radial-gradient(ellipse 50% 40% at 88% 10%, rgba(32, 213, 199, 0.1), transparent 55%), linear-gradient(180deg, var(--surface-elevated) 0%, var(--surface) 100%);
-  --background-image-primary: radial-gradient(ellipse 55% 50% at 15% 0%, rgba(124, 108, 255, 0.28), transparent 55%), radial-gradient(ellipse 50% 45% at 85% 10%, rgba(32, 213, 199, 0.2), transparent 55%), linear-gradient(180deg, #17143a 0%, #0f1228 60%, var(--bg) 100%);
-  --background-image-accent: var(--gradient-primary);
-  --background-image-hilo: conic-gradient(from 180deg at 50% 50%, var(--primary), transparent 40%), conic-gradient(from 40deg at 50% 50%, var(--secondary), transparent 40%);
-  --background-image-gradient-primary: var(--gradient-primary);
-  --background-image-ink-text: linear-gradient(120deg, var(--text) 0%, var(--primary) 38%, var(--secondary) 68%, var(--accent) 100%);
-  --background-image-gradient-ink-text: linear-gradient(120deg, var(--text) 0%, var(--primary) 38%, var(--secondary) 68%, var(--accent) 100%);
+  --background-image-page:
+    radial-gradient(circle at 15% 10%, rgba(124, 108, 255, 0.18), transparent 30%),
+    radial-gradient(circle at 85% 20%, rgba(32, 213, 199, 0.1), transparent 28%),
+    radial-gradient(circle at 55% 75%, rgba(255, 111, 174, 0.07), transparent 30%),
+    linear-gradient(180deg, #090b17 0%, #101326 48%, #090b17 100%);
 }
 
 /* ===== Light ===== */
@@ -239,8 +153,6 @@
   --secondary-strong: #007f78;
   --accent: #d94687;
   --accent-strong: #b52e6e;
-  --warm: #d97706;
-  --blue: #3175dc;
 
   --success: #16855b;
   --warning: #a86000;
@@ -252,12 +164,6 @@
   --shadow-sm: 0 8px 24px rgba(39, 47, 91, 0.08);
   --shadow-md: 0 20px 60px rgba(39, 47, 91, 0.13);
   --shadow-lg: 0 35px 100px rgba(39, 47, 91, 0.18);
-
-  --background-atmosphere:
-    radial-gradient(circle at 15% 10%, rgba(101, 85, 232, 0.14), transparent 30%),
-    radial-gradient(circle at 85% 20%, rgba(0, 159, 149, 0.1), transparent 28%),
-    radial-gradient(circle at 55% 75%, rgba(217, 70, 135, 0.07), transparent 30%),
-    linear-gradient(180deg, #fafaff 0%, #f0f2fa 100%);
 
   --color-bg-0: #f7f7fc;
   --color-bg-1: #eef0f8;
@@ -274,8 +180,6 @@
   --color-text-2: #535a70;
   --color-text-3: #7d8497;
   --color-text-4: #9aa1b4;
-  --color-text-5: #b3b9c9;
-  --color-text-inverse: #ffffff;
   --color-text-muted: #7d8497;
 
   --color-primary: #6555e8;
@@ -286,50 +190,27 @@
   --color-cyan: #009f95;
   --color-cyan-strong: #007f78;
   --color-cyan-soft: rgba(0, 159, 149, 0.12);
-  --color-cyan-on: #ffffff;
 
   --color-accent: #d94687;
   --color-accent-strong: #b52e6e;
   --color-accent-soft: rgba(217, 70, 135, 0.12);
   --color-accent-on: #ffffff;
 
-  --color-warm: #d97706;
-  --color-warm-soft: rgba(217, 119, 6, 0.12);
-  --color-warm-on: #ffffff;
-
-  --color-blue: #3175dc;
-  --color-blue-soft: rgba(49, 117, 220, 0.12);
-  --color-blue-on: #ffffff;
-
   --color-success: #16855b;
   --color-success-soft: rgba(22, 133, 91, 0.12);
-  --color-success-on: #ffffff;
   --color-warning: #a86000;
   --color-warning-soft: rgba(168, 96, 0, 0.12);
-  --color-warning-on: #ffffff;
   --color-error: #ba1a1a;
   --color-error-soft: rgba(186, 26, 26, 0.12);
-  --color-error-on: #ffffff;
 
   --color-outline: rgba(35, 40, 74, 0.13);
   --color-outline-strong: rgba(35, 40, 74, 0.24);
 
-  --color-acc-gastro: #d94687;
-  --color-acc-turnos: #009f95;
-  --color-acc-gestion: #16855b;
-  --color-acc-comercio: #d97706;
-  --color-acc-inmob: #3175dc;
-  --color-acc-educacion: #6555e8;
-  --color-acc-talleres: #e2574a;
-  --color-acc-logistica: #0e93b0;
+  --color-text-inverse: #ffffff;
 
-  --background-image-page: var(--background-atmosphere);
-  --background-image-surface: radial-gradient(ellipse 60% 45% at 12% 0%, rgba(101, 85, 232, 0.1), transparent 55%), radial-gradient(ellipse 50% 40% at 88% 10%, rgba(0, 159, 149, 0.08), transparent 55%), linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 55%, var(--bg) 100%);
-  --background-image-surface-elevated: radial-gradient(ellipse 60% 45% at 12% 0%, rgba(101, 85, 232, 0.12), transparent 55%), radial-gradient(ellipse 50% 40% at 88% 10%, rgba(0, 159, 149, 0.1), transparent 55%), linear-gradient(180deg, var(--surface-elevated) 0%, var(--surface) 100%);
-  --background-image-primary: radial-gradient(ellipse 55% 50% at 15% 0%, rgba(101, 85, 232, 0.2), transparent 55%), radial-gradient(ellipse 50% 45% at 85% 10%, rgba(0, 159, 149, 0.16), transparent 55%), linear-gradient(180deg, #e4defb 0%, #eef0f8 60%, var(--bg) 100%);
-  --background-image-accent: var(--gradient-primary);
-  --background-image-hilo: conic-gradient(from 180deg at 50% 50%, var(--primary), transparent 40%), conic-gradient(from 40deg at 50% 50%, var(--secondary), transparent 40%);
-  --background-image-gradient-primary: var(--gradient-primary);
-  --background-image-ink-text: linear-gradient(120deg, var(--text) 0%, var(--primary) 38%, var(--secondary) 68%, var(--accent) 100%);
-  --background-image-gradient-ink-text: linear-gradient(120deg, var(--text) 0%, var(--primary) 38%, var(--secondary) 68%, var(--accent) 100%);
+  --background-image-page:
+    radial-gradient(circle at 15% 10%, rgba(101, 85, 232, 0.1), transparent 30%),
+    radial-gradient(circle at 85% 20%, rgba(0, 159, 149, 0.07), transparent 28%),
+    radial-gradient(circle at 55% 75%, rgba(217, 70, 135, 0.05), transparent 30%),
+    linear-gradient(180deg, #fafaff 0%, #f0f2fa 100%);
 }

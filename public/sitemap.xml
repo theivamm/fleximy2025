@@ -2,110 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://fleximy2025.netlify.app/</loc>
-    <lastmod>2026-08-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://fleximy2025.netlify.app/soluciones</loc>
-    <lastmod>2026-08-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/servicios</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/soluciones/gastronomia</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/soluciones/servicios-turnos</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/soluciones/gestion-pymes</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/soluciones/comercio-retail</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/soluciones/inmobiliarias</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/soluciones/educacion</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/soluciones/talleres-reparaciones</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/demos</loc>
-    <lastmod>2026-08-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/como-funciona</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/precios</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/nosotros</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://fleximy2025.netlify.app/contacto</loc>
-    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/preguntas-frecuentes</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/seguridad</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/recursos</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://fleximy2025.netlify.app/casos-de-uso</loc>
-    <lastmod>2026-08-08</lastmod>
-    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://fleximy2025.netlify.app/privacidad</loc>
-    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://fleximy2025.netlify.app/terminos</loc>
-    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
 </urlset>

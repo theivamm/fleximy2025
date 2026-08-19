@@ -26,8 +26,8 @@ export function ThemeProvider({ children }) {
     }
     try {
       localStorage.setItem(THEME_KEY, theme)
-    } catch (e) {
-      /* almacenamiento no disponible */
+    } catch (_) {
+      /* storage not available */
     }
   }, [theme])
 

@@ -1,5 +1,3 @@
-import { motion } from "framer-motion"
-
 export default function RouteFallback() {
   return (
     <div className="grid place-items-center min-h-[50vh]" role="status" aria-live="polite">
