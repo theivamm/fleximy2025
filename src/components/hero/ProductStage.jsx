@@ -13,10 +13,18 @@ export default function ProductStage({ activeView, onSelectView, isAutoplay }) {
   const current = VIEWS.find((v) => v.key === activeView) || VIEWS[0]
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full" style={{ maxWidth: "920px" }}>
+      {/* Violet halo behind frame */}
+      <div
+        className="absolute -inset-16 -z-20 opacity-50 blur-[100px] pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at 50% 50%, rgba(121,87,255,0.2), transparent 65%)",
+        }}
+      />
+
       {/* Ambient glow */}
       <div
-        className="absolute -inset-12 -z-10 opacity-40 blur-[80px] transition-colors duration-1000"
+        className="absolute -inset-12 -z-10 opacity-40 blur-[80px] transition-colors duration-1000 pointer-events-none"
         style={{
           background:
             activeView === "web"
@@ -28,18 +36,32 @@ export default function ProductStage({ activeView, onSelectView, isAutoplay }) {
       />
 
       {/* Browser frame */}
-      <div className="rounded-xl border border-white/[0.08] bg-[#0a0c16] shadow-[0_30px_100px_rgba(0,0,0,0.5)] overflow-hidden">
-        {/* Tabs */}
-        <div className="flex items-center gap-0 border-b border-white/[0.06] bg-[#0d0f1a] px-2">
-          <div className="flex gap-1.5 py-2 mr-3">
+      <div
+        className="product-stage-frame rounded-xl overflow-hidden flex flex-col"
+        style={{
+          border: "1px solid rgba(255,255,255,0.08)",
+          background: "#0a0c16",
+          boxShadow:
+            "0 0 0 1px rgba(255,255,255,0.04), 0 30px 100px rgba(0,0,0,0.5), 0 0 60px rgba(121,87,255,0.08)",
+        }}
+      >
+        {/* Tabs bar */}
+        <div
+          className="flex items-center gap-0 border-b px-3"
+          style={{ borderColor: "rgba(255,255,255,0.06)", background: "#0d0f1a" }}
+        >
+          {/* Window controls */}
+          <div className="flex gap-1.5 py-2.5 mr-4">
             <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]/70" />
             <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]/70" />
             <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]/70" />
           </div>
+
+          {/* Tab list */}
           <div
             role="tablist"
             aria-label="Vistas del producto"
-            className="flex gap-0.5"
+            className="flex gap-1"
           >
             {VIEWS.map((v) => (
               <button
@@ -58,15 +80,17 @@ export default function ProductStage({ activeView, onSelectView, isAutoplay }) {
                     onSelectView(VIEWS[(idx - 1 + VIEWS.length) % VIEWS.length].key)
                   }
                 }}
-                className={`relative px-4 py-2 text-[10px] font-semibold tracking-wider transition-colors ${
-                  activeView === v.key ? "text-white" : "text-[#5a5a5a] hover:text-[#8a8a8a]"
-                }`}
+                className="relative px-5 py-2.5 text-[11px] font-semibold tracking-wider transition-colors"
+                style={{
+                  color: activeView === v.key ? "#fff" : "#5a5a5a",
+                  cursor: "pointer",
+                }}
               >
                 {v.label}
                 {activeView === v.key && (
                   <motion.span
                     layoutId="activeTab"
-                    className="absolute inset-x-1 -bottom-px h-[2px] rounded-full"
+                    className="absolute inset-x-2 -bottom-px h-[2px] rounded-full"
                     style={{ background: "linear-gradient(90deg, #7957ff, #45e2d5)" }}
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
@@ -81,7 +105,7 @@ export default function ProductStage({ activeView, onSelectView, isAutoplay }) {
           id={`panel-${current.key}`}
           role="tabpanel"
           aria-label={current.label}
-          className="relative h-[340px] sm:h-[420px] md:h-[480px] overflow-hidden"
+          className="relative overflow-hidden product-stage-content"
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -107,11 +131,30 @@ export default function ProductStage({ activeView, onSelectView, isAutoplay }) {
         <span className="w-1 h-1 rounded-full bg-[#45e2d5]" />
       </div>
 
+      {/* Cyan reflection bottom-right */}
+      <div
+        className="absolute -bottom-6 right-[5%] w-48 h-12 -z-10 opacity-[0.06] blur-xl rounded-full pointer-events-none"
+        style={{ background: "linear-gradient(90deg, transparent, #45e2d5)" }}
+      />
       {/* Bottom reflection */}
       <div
-        className="absolute -bottom-8 left-[10%] right-[10%] h-16 -z-10 opacity-[0.04] blur-xl rounded-full"
+        className="absolute -bottom-8 left-[10%] right-[10%] h-16 -z-10 opacity-[0.04] blur-xl rounded-full pointer-events-none"
         style={{ background: "linear-gradient(90deg, #7957ff, #45e2d5, #ff6fae)" }}
       />
+
+      <style>{`
+        .product-stage-frame {
+          aspect-ratio: 16 / 10;
+        }
+        .product-stage-content {
+          flex: 1;
+        }
+        @media (max-width: 640px) {
+          .product-stage-frame {
+            aspect-ratio: 4 / 5;
+          }
+        }
+      `}</style>
     </div>
   )
 }

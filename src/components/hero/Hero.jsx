@@ -23,32 +23,49 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden"
+      className="hero relative overflow-hidden"
       style={{
-        minHeight: "calc(100svh - 72px)",
+        minHeight: "calc(100svh - var(--header-height, 72px))",
         display: "grid",
         alignItems: "center",
+        paddingBlock: "clamp(56px, 6vh, 88px)",
       }}
     >
       {/* Background layers */}
-      <div className="absolute inset-0 -z-20 bg-[#070914]" />
+      <div className="absolute inset-0 -z-30 bg-[#070914]" />
       <div
-        className="absolute inset-0 -z-10 opacity-[0.03]"
+        className="absolute inset-0 -z-20 opacity-[0.03]"
         style={{
           backgroundImage:
             "linear-gradient(rgba(220,225,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(220,225,255,0.08) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
         }}
       />
-      {/* Reactive glow */}
+
+      {/* Shared radial glow between columns */}
+      <div
+        className="absolute -z-10 pointer-events-none"
+        style={{
+          width: "900px",
+          height: "700px",
+          left: "48%",
+          top: "45%",
+          transform: "translate(-50%, -50%)",
+          background:
+            "radial-gradient(circle, rgba(104,83,255,0.16), rgba(24,204,224,0.06) 42%, transparent 70%)",
+        }}
+      />
+
+      {/* Pointer-reactive glow */}
       <div
         className="absolute inset-0 -z-10 opacity-30 pointer-events-none transition-transform duration-[2000ms] ease-out"
         style={{
           transform: `translate(${offset.x}px, ${offset.y}px)`,
           background:
-            "radial-gradient(ellipse 600px 500px at 65% 45%, rgba(121,87,255,0.15), transparent 70%)",
+            "radial-gradient(ellipse 600px 500px at 65% 45%, rgba(121,87,255,0.12), transparent 70%)",
         }}
       />
+
       {/* F-line decoration */}
       <div
         className="absolute -z-10 opacity-[0.03] pointer-events-none select-none font-display font-bold text-white"
@@ -63,14 +80,14 @@ export default function Hero() {
         F
       </div>
 
-      {/* Content */}
+      {/* Content grid */}
       <div
         className="w-full mx-auto px-[var(--page-gutter)]"
         style={{
-          maxWidth: "1440px",
+          maxWidth: "1480px",
           display: "grid",
-          gridTemplateColumns: "minmax(0, 0.78fr) minmax(0, 1.22fr)",
-          gap: "clamp(32px, 5vw, 92px)",
+          gridTemplateColumns: "minmax(0, 0.88fr) minmax(0, 1.32fr)",
+          gap: "clamp(48px, 3.75vw, 72px)",
           alignItems: "center",
         }}
       >
@@ -90,8 +107,13 @@ export default function Hero() {
 
       <style>{`
         @media (max-width: 1024px) {
-          section > div:last-of-type {
+          .hero > div:last-of-type {
             grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .hero {
+            padding-block: clamp(32px, 4vh, 48px) !important;
           }
         }
       `}</style>
