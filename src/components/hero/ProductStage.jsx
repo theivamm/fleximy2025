@@ -31,7 +31,7 @@ export default function ProductStage({ prefersReduced }) {
         }}
       />
 
-      {/* Product Stage frame */}
+      {/* Product Stage frame — must be flex column so children can fill aspect-ratio height */}
       <div
         className="product-stage-frame relative"
         style={{
@@ -42,96 +42,94 @@ export default function ProductStage({ prefersReduced }) {
             "0 35px 90px rgba(0,0,0,0.35), 0 0 90px rgba(79,70,229,0.12), 0 0 120px rgba(20,184,166,0.08)",
           overflow: "visible",
           isolation: "isolate",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
-        {/* Inner content with overflow hidden */}
-        <div className="overflow-hidden rounded-[21px]">
-          {/* Tabs bar */}
-          <div
-            className="flex items-center gap-0 px-3"
-            style={{
-              borderBottom: "1px solid rgba(255,255,255,0.06)",
-              background: "#0d0f1a",
-            }}
-          >
-            {/* Window controls */}
-            <div className="flex gap-1.5 py-2.5 mr-4">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]/70" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]/70" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]/70" />
-            </div>
-
-            {/* Tab list */}
-            <div role="tablist" aria-label="Vistas del producto" className="flex gap-1">
-              {VIEWS.map((v) => (
-                <button
-                  key={v.key}
-                  role="tab"
-                  aria-selected={state.view === v.key}
-                  aria-controls={`panel-${v.key}`}
-                  onClick={() => goTo(v.key)}
-                  onKeyDown={(e) => {
-                    const idx = VIEWS.findIndex((x) => x.key === state.view)
-                    if (e.key === "ArrowRight") {
-                      e.preventDefault()
-                      goTo(VIEWS[(idx + 1) % VIEWS.length].key)
-                    } else if (e.key === "ArrowLeft") {
-                      e.preventDefault()
-                      goTo(VIEWS[(idx - 1 + VIEWS.length) % VIEWS.length].key)
-                    }
-                  }}
-                  className="relative px-5 py-2.5 text-[11px] font-semibold tracking-wider transition-colors"
-                  style={{
-                    color: state.view === v.key ? "#fff" : "#5a5a5a",
-                    cursor: "pointer",
-                  }}
-                >
-                  {v.label}
-                  {state.view === v.key && (
-                    <motion.span
-                      layoutId="activeTab"
-                      className="absolute inset-x-2 -bottom-px h-[2px] rounded-full"
-                      style={{ background: "linear-gradient(90deg, #7957ff, #45e2d5)" }}
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                    />
-                  )}
-                </button>
-              ))}
-            </div>
-
-            {/* Right side — BRUMA badge */}
-            <div className="ml-auto flex items-center gap-2">
-              <span className="text-[9px] font-mono tracking-[0.1em] text-[#4a4a5a] uppercase">
-                Demo · Bruma
-              </span>
-            </div>
+        {/* Tabs bar */}
+        <div
+          className="flex items-center gap-0 px-3 shrink-0"
+          style={{
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
+            background: "#0d0f1a",
+            borderRadius: "21px 21px 0 0",
+          }}
+        >
+          <div className="flex gap-1.5 py-2.5 mr-4">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]/70" />
           </div>
 
-          {/* View content */}
-          <div
-            id={`panel-${current.key}`}
-            role="tabpanel"
-            aria-label={current.label}
-            className="relative overflow-hidden product-stage-content"
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current.key}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute inset-0"
+          <div role="tablist" aria-label="Vistas del producto" className="flex gap-1">
+            {VIEWS.map((v) => (
+              <button
+                key={v.key}
+                role="tab"
+                aria-selected={state.view === v.key}
+                aria-controls={`panel-${v.key}`}
+                onClick={() => goTo(v.key)}
+                onKeyDown={(e) => {
+                  const idx = VIEWS.findIndex((x) => x.key === state.view)
+                  if (e.key === "ArrowRight") {
+                    e.preventDefault()
+                    goTo(VIEWS[(idx + 1) % VIEWS.length].key)
+                  } else if (e.key === "ArrowLeft") {
+                    e.preventDefault()
+                    goTo(VIEWS[(idx - 1 + VIEWS.length) % VIEWS.length].key)
+                  }
+                }}
+                className="relative px-5 py-2.5 text-[11px] font-semibold tracking-wider transition-colors"
+                style={{
+                  color: state.view === v.key ? "#fff" : "#5a5a5a",
+                  cursor: "pointer",
+                }}
               >
-                <current.Component isInteractive={!isAutoplay} story={story} />
-              </motion.div>
-            </AnimatePresence>
+                {v.label}
+                {state.view === v.key && (
+                  <motion.span
+                    layoutId="activeTab"
+                    className="absolute inset-x-2 -bottom-px h-[2px] rounded-full"
+                    style={{ background: "linear-gradient(90deg, #7957ff, #45e2d5)" }}
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+
+          <div className="ml-auto flex items-center gap-2">
+            <span className="text-[9px] font-mono tracking-[0.1em] text-[#4a4a5a] uppercase">
+              Demo · Bruma
+            </span>
           </div>
         </div>
 
-        {/* DemoCursor — on top of everything */}
-        <DemoCursor active={isAutoplay} visible={!prefersReduced} />
+        {/* View content — flex:1 so it fills remaining aspect-ratio height */}
+        <div
+          id={`panel-${current.key}`}
+          role="tabpanel"
+          aria-label={current.label}
+          className="relative overflow-hidden"
+          style={{ flex: 1, minHeight: 0 }}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current.key}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute inset-0"
+            >
+              <current.Component isInteractive={!isAutoplay} story={story} />
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
+
+      {/* DemoCursor */}
+      <DemoCursor active={isAutoplay} visible={!prefersReduced} />
 
       {/* Bottom label */}
       <div className="flex items-center justify-center gap-2 mt-3">
@@ -142,12 +140,11 @@ export default function ProductStage({ prefersReduced }) {
         <span className="w-1 h-1 rounded-full bg-[#45e2d5]" />
       </div>
 
-      {/* Cyan reflection bottom-right */}
+      {/* Reflections */}
       <div
         className="absolute -bottom-6 right-[5%] w-48 h-12 -z-10 opacity-[0.06] blur-xl rounded-full pointer-events-none"
         style={{ background: "linear-gradient(90deg, transparent, #45e2d5)" }}
       />
-      {/* Bottom reflection */}
       <div
         className="absolute -bottom-8 left-[10%] right-[10%] h-16 -z-10 opacity-[0.04] blur-xl rounded-full pointer-events-none"
         style={{ background: "linear-gradient(90deg, #7957ff, #45e2d5, #ff6fae)" }}
@@ -156,9 +153,6 @@ export default function ProductStage({ prefersReduced }) {
       <style>{`
         .product-stage-frame {
           aspect-ratio: 16 / 10;
-        }
-        .product-stage-content {
-          flex: 1;
         }
         @media (max-width: 640px) {
           .product-stage-frame {
