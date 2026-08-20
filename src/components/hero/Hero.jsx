@@ -2,10 +2,10 @@ import { useRef, useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import HeroCopy from "./HeroCopy"
 import ProductStage from "./ProductStage"
-import { useHeroAutoplay } from "./hooks/useHeroAutoplay"
-import { usePointerGlow } from "./hooks/usePointerGlow"
+import { StoryProvider } from "./hooks/useProductStory.jsx"
 
-export default function Hero() {
+
+function HeroInner() {
   const sectionRef = useRef(null)
   const [prefersReduced, setPrefersReduced] = useState(false)
 
@@ -16,9 +16,6 @@ export default function Hero() {
     mq.addEventListener("change", handler)
     return () => mq.removeEventListener("change", handler)
   }, [])
-
-  const { activeView, goTo, isAutoplay } = useHeroAutoplay(prefersReduced)
-  const { offset } = usePointerGlow(sectionRef, { enabled: !prefersReduced })
 
   return (
     <section
@@ -57,14 +54,7 @@ export default function Hero() {
       />
 
       {/* Pointer-reactive glow */}
-      <div
-        className="absolute inset-0 -z-10 opacity-30 pointer-events-none transition-transform duration-[2000ms] ease-out"
-        style={{
-          transform: `translate(${offset.x}px, ${offset.y}px)`,
-          background:
-            "radial-gradient(ellipse 600px 500px at 65% 45%, rgba(121,87,255,0.12), transparent 70%)",
-        }}
-      />
+      <HeroGlow sectionRef={sectionRef} />
 
       {/* F-line decoration */}
       <div
@@ -86,8 +76,8 @@ export default function Hero() {
         style={{
           maxWidth: "1480px",
           display: "grid",
-          gridTemplateColumns: "minmax(0, 0.88fr) minmax(0, 1.32fr)",
-          gap: "clamp(48px, 3.75vw, 72px)",
+          gridTemplateColumns: "minmax(0, 0.82fr) minmax(0, 1.38fr)",
+          gap: "clamp(52px, 4vw, 84px)",
           alignItems: "center",
         }}
       >
@@ -97,17 +87,13 @@ export default function Hero() {
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
-          <ProductStage
-            activeView={activeView}
-            onSelectView={goTo}
-            isAutoplay={isAutoplay}
-          />
+          <ProductStage prefersReduced={prefersReduced} />
         </motion.div>
       </div>
 
       <style>{`
         @media (max-width: 1024px) {
-          .hero > div:last-of-type {
+          .hero > div:nth-child(6) {
             grid-template-columns: 1fr !important;
           }
         }
@@ -118,5 +104,51 @@ export default function Hero() {
         }
       `}</style>
     </section>
+  )
+}
+
+function HeroGlow({ sectionRef }) {
+  const [offset, setOffset] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (mq.matches) return
+
+    let raf
+    const handleMove = (e) => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const rect = el.getBoundingClientRect()
+        const x = ((e.clientX - rect.left) / rect.width - 0.5) * 30
+        const y = ((e.clientY - rect.top) / rect.height - 0.5) * 30
+        setOffset({ x, y })
+      })
+    }
+    el.addEventListener("mousemove", handleMove, { passive: true })
+    return () => {
+      el.removeEventListener("mousemove", handleMove)
+      cancelAnimationFrame(raf)
+    }
+  }, [sectionRef])
+
+  return (
+    <div
+      className="absolute inset-0 -z-10 opacity-30 pointer-events-none transition-transform duration-[2000ms] ease-out"
+      style={{
+        transform: `translate(${offset.x}px, ${offset.y}px)`,
+        background:
+          "radial-gradient(ellipse 600px 500px at 65% 45%, rgba(121,87,255,0.12), transparent 70%)",
+      }}
+    />
+  )
+}
+
+export default function Hero() {
+  return (
+    <StoryProvider>
+      <HeroInner />
+    </StoryProvider>
   )
 }

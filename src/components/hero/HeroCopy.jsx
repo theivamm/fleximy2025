@@ -14,7 +14,7 @@ const fadeUp = {
 
 export default function HeroCopy() {
   return (
-    <motion.div variants={stagger} initial="hidden" animate="show" className="max-w-[590px]">
+    <motion.div variants={stagger} initial="hidden" animate="show" className="max-w-[560px]">
       <motion.span
         variants={fadeUp}
         className="inline-block"
@@ -34,9 +34,9 @@ export default function HeroCopy() {
         variants={fadeUp}
         className="mt-6 font-display font-bold text-text-1"
         style={{
-          fontSize: "clamp(42px, 4.5vw, 74px)",
-          maxInlineSize: "13.5ch",
-          lineHeight: 0.98,
+          fontSize: "clamp(42px, 3.65vw, 72px)",
+          maxInlineSize: "12.5ch",
+          lineHeight: 0.97,
           letterSpacing: "-0.052em",
           textWrap: "balance",
         }}
@@ -52,7 +52,7 @@ export default function HeroCopy() {
         >
           productos digitales
         </span>{" "}
-        para hacer avanzar negocios.
+        que hacen crecer negocios.
       </motion.h1>
 
       <motion.p
@@ -60,12 +60,12 @@ export default function HeroCopy() {
         className="mt-6 text-text-2"
         style={{
           maxWidth: "560px",
-          fontSize: "clamp(18px, 1.1vw, 20px)",
+          fontSize: "clamp(17px, 1.1vw, 20px)",
           lineHeight: 1.5,
         }}
       >
-        Creamos webs, aplicaciones y dashboards a medida para vender, ordenar procesos
-        y conectar cada parte de tu negocio.
+        Creamos webs, aplicaciones y dashboards conectados para vender mas, ordenar procesos
+        y hacer avanzar tu negocio.
       </motion.p>
 
       <motion.div variants={fadeUp} className="mt-7 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3">
@@ -86,7 +86,7 @@ export default function HeroCopy() {
           }}
           className="inline-flex h-[52px] items-center justify-center gap-2 rounded-xl border border-white/20 bg-transparent px-7 text-sm font-semibold text-text-1 transition-colors hover:bg-white/[0.05]"
         >
-          Ver lo que hacemos
+          Ver nuestros servicios
         </a>
       </motion.div>
 
