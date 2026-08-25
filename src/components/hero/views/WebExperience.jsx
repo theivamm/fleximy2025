@@ -54,7 +54,6 @@ export default function WebExperience({ isInteractive, story }) {
   const c = theme === "light" ? LIGHT : DARK
   const [selectedIdx, setSelectedIdx] = useState(0)
   const [toast, setToast] = useState(null)
-  const carouselRef = useRef(null)
   const timerRef = useRef(null)
 
   const selectedProduct = BRUMA_PRODUCTS[selectedIdx]
@@ -69,15 +68,6 @@ export default function WebExperience({ isInteractive, story }) {
     }, 3000)
     return () => clearInterval(timerRef.current)
   }, [isInteractive])
-
-  useEffect(() => {
-    const el = carouselRef.current
-    if (!el) return
-    const btn = el.children[selectedIdx]
-    if (!btn) return
-    const left = btn.offsetLeft - el.offsetLeft - (el.clientWidth - btn.clientWidth) / 2
-    el.scrollTo({ left: Math.max(0, left), behavior: "smooth" })
-  }, [selectedIdx])
 
   useEffect(() => {
     if (!isInteractive) return
@@ -211,9 +201,45 @@ export default function WebExperience({ isInteractive, story }) {
         </div>
       </div>
 
-      {/* Bottom product carousel */}
+      {/* Bottom product grid — desktop: 4-col grid, mobile: scroll-snap flex */}
+      <style>{`
+        .hero-products-grid {
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 8px;
+          width: 100%;
+          min-width: 0;
+        }
+        .hero-product-item {
+          min-width: 0;
+          width: 100%;
+        }
+        @media (max-width: 1023px) {
+          .hero-products-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+        @media (max-width: 640px) {
+          .hero-products-grid {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            overscroll-behavior-inline: contain;
+            scroll-snap-type: inline mandatory;
+            scrollbar-width: none;
+            padding-bottom: 2px;
+          }
+          .hero-products-grid::-webkit-scrollbar {
+            display: none;
+          }
+          .hero-product-item {
+            flex: 0 0 78%;
+            scroll-snap-align: start;
+          }
+        }
+      `}</style>
       <div className="shrink-0" style={{ padding: "12px 20px 14px", borderTop: `1px solid ${c.border}` }}>
-        <div ref={carouselRef} className="flex gap-2 overflow-x-auto" style={{ scrollSnapType: "x mandatory" }}>
+        <div className="hero-products-grid">
           {BRUMA_PRODUCTS.map((p, i) => (
             <button
               key={p.id}
@@ -221,11 +247,10 @@ export default function WebExperience({ isInteractive, story }) {
                 setSelectedIdx(i)
                 clearInterval(timerRef.current)
               }}
-              className="shrink-0 rounded-lg flex items-center gap-2.5 text-left transition-all"
+              className="hero-product-item rounded-lg flex items-center gap-2.5 text-left transition-all"
               style={{
                 padding: "8px 12px",
-                minWidth: "150px",
-                scrollSnapAlign: "center",
+                minWidth: 0,
                 background: selectedIdx === i ? c.primarySoft : c.surface,
                 color: selectedIdx === i ? c.white : c.textSecondary,
                 border: `1px solid ${selectedIdx === i ? c.borderStrong : c.border}`,

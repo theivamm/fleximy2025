@@ -1,49 +1,54 @@
-const MSGS = [
-  { ini: "LM", name: "Laura M.", src: "WhatsApp", live: false },
-  { ini: "JP", name: "Juan P.", src: "Formulario web", live: true },
-  { ini: "CS", name: "Carina S.", src: "Reserva online", live: false },
-]
-
 export default function ClientsPanel({ active }) {
   return (
-    <>
-      <div className="pg-copy">
-        <p className="pg-kicker">02 · Tus clientes</p>
-        <h3>Cada consulta se convierte en una oportunidad.</h3>
-        <p>
-          WhatsApp, formularios, reservas y pedidos llegan al mismo lugar, con el
-          historial completo de cada cliente.
-        </p>
-        <p className="pg-punch">Ninguna consulta olvidada. Ninguna oportunidad perdida.</p>
-      </div>
-
-      <div className="pg-scene" aria-hidden="true">
-        <div className="pg-inbox">
-          {MSGS.map((m) => (
-            <div key={m.name} className={`pg-msg ${m.live && active ? "is-live" : ""}`}>
-              <span className="pg-ava">{m.ini}</span>
-              <div className="pg-msg__meta">
-                <div className="pg-msg__name">{m.name}</div>
-                <div className="pg-msg__src">vía {m.src}</div>
-              </div>
-              <span className={`pg-chipst ${m.live ? (active ? "seg" : "nueva") : ""}`}>
-                {!m.live ? "En seguimiento" : active ? "En seguimiento" : "Nueva"}
-              </span>
+    <div className="pg-card__scene" aria-hidden="true">
+      <div className="sc-inbox">
+        {/* Contact list */}
+        <div className="sc-inbox__list">
+          <div className="sc-inbox__list-head">Bandeja</div>
+          <div className={`sc-inbox__contact${active ? " active" : ""}`}>
+            <span className="sc-inbox__ava">LM</span>
+            <div className="sc-inbox__contact-info">
+              <div className="sc-inbox__contact-name">Laura M.</div>
+              <div className="sc-inbox__contact-src">WhatsApp</div>
             </div>
-          ))}
-
-          <p className="pg-quote">&ldquo;¿Tienen turno para hoy?&rdquo;</p>
-
-          <div className="pg-cal">
-            <div className="pg-cal__grid">
-              {[...Array(10)].map((_, i) => (
-                <i key={i} className={active && i === 7 ? "hit" : ""} />
-              ))}
+          </div>
+          <div className="sc-inbox__contact">
+            <span className="sc-inbox__ava" style={{ background: "linear-gradient(135deg, #20d5c7, #4d8dff)" }}>JP</span>
+            <div className="sc-inbox__contact-info">
+              <div className="sc-inbox__contact-name">Juan P.</div>
+              <div className="sc-inbox__contact-src">Formulario web</div>
             </div>
-            <span className="pg-cal__time">16:30 ✓</span>
+          </div>
+          <div className="sc-inbox__contact">
+            <span className="sc-inbox__ava" style={{ background: "linear-gradient(135deg, #ff6fae, #ffb45e)" }}>CS</span>
+            <div className="sc-inbox__contact-info">
+              <div className="sc-inbox__contact-name">Carina S.</div>
+              <div className="sc-inbox__contact-src">Reserva online</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Conversation */}
+        <div className="sc-inbox__chat">
+          <div className="sc-inbox__chat-head">
+            <span className="sc-inbox__chat-name">Juan P.</span>
+            <span className="sc-inbox__chat-channel">vía formulario web</span>
+          </div>
+
+          <div className="sc-inbox__msg incoming">
+            <span className="sc-inbox__bubble">Hola, ¿tienen disponibilidad para el sábado?</span>
+          </div>
+
+          <div className="sc-inbox__msg outgoing">
+            <span className="sc-inbox__bubble">¡Sí! Tenemos turno a las 10:00 y a las 11:30.</span>
+          </div>
+
+          <div className="sc-inbox__actions">
+            <span className="sc-inbox__btn">Agendar turno</span>
+            <span className="sc-inbox__status">En seguimiento</span>
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }

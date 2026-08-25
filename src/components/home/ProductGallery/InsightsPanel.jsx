@@ -1,74 +1,54 @@
-export default function InsightsPanel({ active }) {
-  return (
-    <>
-      <div className="pg-copy">
-        <p className="pg-kicker">04 · Tus números</p>
-        <h3>Mirá cómo funciona tu negocio, sin armar reportes.</h3>
-        <p>
-          Ventas, clientes, productos y tareas importantes reunidos en un dashboard
-          claro para decidir mejor.
-        </p>
-        <p className="pg-punch">La información importante, lista para usar.</p>
-      </div>
+export default function InsightsPanel() {
+  const chartW = 300
+  const chartH = 120
+  const data = [180, 210, 195, 240, 225, 280, 265, 310, 295, 340, 325, 365, 350, 380]
+  const max = Math.max(...data) * 1.1
+  const points = data
+    .map((v, i) => `${(i / (data.length - 1)) * chartW},${chartH - (v / max) * chartH}`)
+    .join(" ")
+  const areaPoints = `0,${chartH} ${points} ${chartW},${chartH}`
 
-      <div className="pg-scene pg-ins" aria-hidden="true">
-        <div className="pg-kpis">
-          <div className="pg-kpi">
-            <span className="pg-kpi__l">Ventas</span>
-            <span className="pg-kpi__s up">Subiendo</span>
-          </div>
-          <div className="pg-kpi">
-            <span className="pg-kpi__l">Clientes</span>
-            <span className="pg-kpi__s flat">Estable</span>
-          </div>
-          <div className="pg-kpi">
-            <span className="pg-kpi__l">Operación</span>
-            <span className="pg-kpi__s warn">Requiere atención</span>
-          </div>
+  return (
+    <div className="pg-card__scene" aria-hidden="true">
+      <div className="sc-dash">
+        <div className="sc-dash__hero">
+          <span className="sc-dash__number">$1.284.600</span>
+          <span className="sc-dash__change">+18% vs mes anterior</span>
         </div>
 
-        <div className="pg-area">
-          <svg viewBox="0 0 300 96" preserveAspectRatio="none">
+        <div className="sc-dash__chart">
+          <svg viewBox={`0 0 ${chartW} ${chartH}`} preserveAspectRatio="xMidYMid meet">
             <defs>
-              <linearGradient id="pgAreaGrad" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#7957ff" />
-                <stop offset="100%" stopColor="#15cbea" />
+              <linearGradient id="dashLineGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#7c6cff" />
+                <stop offset="100%" stopColor="#20d5c7" />
               </linearGradient>
-              <linearGradient id="pgAreaFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#7957ff" />
-                <stop offset="100%" stopColor="#15cbea" stopOpacity="0" />
+              <linearGradient id="dashAreaFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#7c6cff" />
+                <stop offset="100%" stopColor="#20d5c7" stopOpacity="0" />
               </linearGradient>
             </defs>
-            {active && (
-              <>
-                <path
-                  className="ar"
-                  d="M4 78 C 40 70, 60 44, 100 52 S 160 30, 200 38 S 262 16, 296 22 L296 92 L4 92 Z"
-                />
-                <path
-                  className="ln"
-                  d="M4 78 C 40 70, 60 44, 100 52 S 160 30, 200 38 S 262 16, 296 22"
-                />
-              </>
-            )}
+            <polygon className="ar" points={areaPoints} />
+            <polyline className="ln" points={points} />
           </svg>
         </div>
 
-        <div className="pg-insrow">
-          <div className="pg-rec">
-            <b>→</b>
-            Los pedidos de la tarde se concentran entre 17:00 y 19:00.
+        <div className="sc-dash__kpis">
+          <div className="sc-dash__kpi">
+            <span className="sc-dash__kpi-label">Clientes activos</span>
+            <span className="sc-dash__kpi-value">342</span>
           </div>
-          <div className="pg-donut">
-            <svg viewBox="0 0 64 64" width="74" height="74">
-              <circle className="bg" cx="32" cy="32" r="28" />
-              <circle className="fg" cx="32" cy="32" r="28" />
-            </svg>
+          <div className="sc-dash__kpi">
+            <span className="sc-dash__kpi-label">Pedidos completados</span>
+            <span className="sc-dash__kpi-value">85</span>
           </div>
         </div>
 
-        <span className="pg-timeline">{active && <i />}</span>
+        <div className="sc-dash__rec">
+          <b>→</b>
+          El horario con más pedidos es de 17 a 19 h.
+        </div>
       </div>
-    </>
+    </div>
   )
 }
