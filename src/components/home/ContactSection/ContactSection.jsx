@@ -209,7 +209,7 @@ export default function ContactSection() {
                 )}
               </fieldset>
 
-              <label className="cs-field">
+              <label className="cs-field" style={{ marginTop: "16px" }}>
                 <span className="cs-label">Contanos brevemente cómo trabajás hoy</span>
                 <textarea
                   value={form.descripcion}
