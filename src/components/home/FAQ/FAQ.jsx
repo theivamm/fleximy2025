@@ -25,7 +25,7 @@ const QA = [
 ]
 
 export default function FAQ() {
-  const [open, setOpen] = useState(null)
+  const [open, setOpen] = useState(0)
 
   const toggle = (i) => setOpen((prev) => (prev === i ? null : i))
 

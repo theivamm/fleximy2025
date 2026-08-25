@@ -24,9 +24,10 @@
 
   /* Layout */
   --page-gutter: clamp(20px, 4vw, 64px);
-  --container: 1480px;
+  --container: 1280px;
   --container-copy: 720px;
   --section-space: clamp(80px, 10vw, 144px);
+  --section-space-compact: clamp(64px, 6vw, 104px);
   --header-height: 72px;
   --radius-card: 1.25rem;
   --radius-field: 0.75rem;

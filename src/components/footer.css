@@ -17,3 +17,6 @@
   -webkit-text-stroke: 1.5px var(--line);
   transform: translateY(28%);
 }
+[data-theme="light"] .ft-word span {
+  -webkit-text-stroke-color: rgba(35, 40, 74, 0.12);
+}

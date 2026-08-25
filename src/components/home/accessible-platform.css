@@ -131,3 +131,6 @@
 @media (max-width: 860px) {
   .ap-inner { grid-template-columns: 1fr; }
 }
+
+/* Light mode: reduce bg glows */
+[data-theme="light"] .ap::before { opacity: .5; }

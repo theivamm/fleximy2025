@@ -7,7 +7,6 @@ import { COMPANY } from "../data/config"
 import logoSvgBlanco from "../assets/logosvgblanco.svg"
 import logoSvgColor from "../assets/logosvgcolor.svg"
 import "./footer.css"
-import "./footer.css"
 
 function FooterLogo() {
   const { theme } = useTheme()

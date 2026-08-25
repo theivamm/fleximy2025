@@ -59,6 +59,11 @@ body {
 /* Ritmo vertical */
 .section-space { padding-block: var(--section-space); }
 
+/* Scroll margin for anchored sections */
+section[id] {
+  scroll-margin-top: 88px;
+}
+
 /* ===== Gradientes de texto ===== */
 .text-gradient {
   background-image: var(--gradient-primary);

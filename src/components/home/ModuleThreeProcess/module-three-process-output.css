@@ -208,3 +208,9 @@
   transition: opacity .6s ease;
 }
 .m3p-outlabel.on { opacity: .95; }
+
+/* Light mode contrast */
+[data-theme="light"] .m3p-block { background: rgba(255,255,255,.85); }
+[data-theme="light"] .m3p-block__title { color: #101329; }
+[data-theme="light"] .m3p-app__list em { color: #4c5470; }
+[data-theme="light"] .m3p-blocks__rail { opacity: .65; }

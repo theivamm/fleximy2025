@@ -57,9 +57,9 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
+      className={`sticky inset-x-0 top-0 z-50 border-b transition-all duration-300 isolation-isolate ${
         scrolled
-          ? "border-outline bg-bg-0/80 backdrop-blur-xl"
+          ? "border-outline bg-bg-0/82 backdrop-blur-xl"
           : "border-transparent bg-transparent"
       }`}
     >

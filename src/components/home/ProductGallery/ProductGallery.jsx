@@ -46,16 +46,16 @@ export default function ProductGallery() {
       </header>
 
       <div className="pg-grid container">
-        <div className="pg-panel pg-panel--01 pg-shift-a">
+        <div className="pg-panel pg-panel--01">
           <WebsitePanel active={inView} />
         </div>
-        <div className="pg-panel pg-panel--02 pg-shift-b">
+        <div className="pg-panel pg-panel--02">
           <ClientsPanel active={inView} />
         </div>
-        <div className="pg-panel pg-panel--03 pg-shift-b">
+        <div className="pg-panel pg-panel--03">
           <OperationsPanel active={inView} />
         </div>
-        <div className="pg-panel pg-panel--04 pg-shift-a">
+        <div className="pg-panel pg-panel--04">
           <InsightsPanel active={inView} />
         </div>
       </div>

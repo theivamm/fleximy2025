@@ -20,7 +20,7 @@ function HeroInner() {
   return (
     <section
       ref={sectionRef}
-      className="hero relative overflow-hidden"
+      className="hero relative overflow-clip"
       style={{
         minHeight: "calc(100svh - var(--header-height, 72px))",
         display: "grid",
@@ -74,7 +74,7 @@ function HeroInner() {
       <div
         className="w-full mx-auto px-[var(--page-gutter)]"
         style={{
-          maxWidth: "1480px",
+          maxWidth: "1280px",
           display: "grid",
           gridTemplateColumns: "minmax(0, 0.82fr) minmax(0, 1.38fr)",
           gap: "clamp(52px, 4vw, 84px)",
@@ -83,9 +83,9 @@ function HeroInner() {
       >
         <HeroCopy />
         <motion.div
-          initial={{ opacity: 0, scale: 0.985, filter: "blur(4px)" }}
+          initial={{ opacity: 0.88, scale: 0.99, filter: "blur(3px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <ProductStage prefersReduced={prefersReduced} />
         </motion.div>

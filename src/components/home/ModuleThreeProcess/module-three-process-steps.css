@@ -5,7 +5,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(18px, 3vw, 40px);
-  margin-top: clamp(64px, 7vw, 96px);
+  margin-top: clamp(48px, 5vw, 72px);
 }
 .m3p-steps__line {
   position: absolute;
@@ -75,7 +75,7 @@
 /* Cierre */
 .m3p-closing {
   text-align: center;
-  margin-top: clamp(80px, 10vw, 140px);
+  margin-top: clamp(56px, 7vw, 96px);
 }
 .m3p-closing h3 {
   max-width: 900px;
@@ -112,7 +112,7 @@
 @media (max-width: 1080px) {
   .m3p-machine {
     grid-template-columns: 1fr;
-    min-height: auto;
+    height: auto;
     gap: 56px;
   }
   .m3p-corezone { order: -1; }
@@ -139,6 +139,12 @@
   .m3p-block::before { left: -21px; width: 8px; }
   .m3p-outlabel { margin-left: 20px; }
 }
+
+/* Light mode: reduce techgrid, boost contrast */
+[data-theme="light"] .m3p-techgrid { opacity: .06; }
+[data-theme="light"] .m3p-step h3 { color: #101329; }
+[data-theme="light"] .m3p-step__desc { color: #4c5470; }
+[data-theme="light"] .m3p-step__punch { color: #009f95; }
 
 /* Reduced motion: estado final visible sin animaciones */
 @media (prefers-reduced-motion: reduce) {
