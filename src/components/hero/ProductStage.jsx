@@ -34,12 +34,13 @@ export default function ProductStage({ prefersReduced }) {
       {/* Product Stage frame — must be flex column so children can fill aspect-ratio height */}
       <div
         className="product-stage-frame relative"
+        data-reduced={prefersReduced}
         style={{
           borderRadius: "22px",
           border: "1px solid rgba(220,225,255,0.1)",
           background: "#0e0f1a",
           boxShadow:
-            "0 35px 90px rgba(0,0,0,0.35), 0 0 90px rgba(79,70,229,0.12), 0 0 120px rgba(20,184,166,0.08)",
+            "0 40px 100px rgba(0,0,0,0.4), 0 0 80px rgba(79,70,229,0.15), 0 0 120px rgba(20,184,166,0.1)",
           overflow: "visible",
           isolation: "isolate",
           display: "flex",
@@ -100,7 +101,7 @@ export default function ProductStage({ prefersReduced }) {
 
           <div className="ml-auto flex items-center gap-2">
             <span className="text-[9px] font-mono tracking-[0.1em] text-[#4a4a5a] uppercase">
-              Demo · Bruma
+              Demo · Tu negocio
             </span>
           </div>
         </div>
@@ -147,17 +148,28 @@ export default function ProductStage({ prefersReduced }) {
       />
       <div
         className="absolute -bottom-8 left-[10%] right-[10%] h-16 -z-10 opacity-[0.04] blur-xl rounded-full pointer-events-none"
-        style={{ background: "linear-gradient(90deg, #7957ff, #45e2d5, #ff6fae)" }}
+        style={{ background: "linear-gradient(90deg, #7957ff, #45e2d5)" }}
       />
 
       <style>{`
         .product-stage-frame {
           aspect-ratio: 16 / 10;
+          animation: productFloat 6s ease-in-out infinite;
+        }
+        .product-stage-frame[data-reduced="true"] {
+          animation: none;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .product-stage-frame { animation: none; }
         }
         @media (max-width: 640px) {
           .product-stage-frame {
             aspect-ratio: 4 / 5;
           }
+        }
+        @keyframes productFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
         }
       `}</style>
     </div>

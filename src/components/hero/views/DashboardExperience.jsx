@@ -22,32 +22,42 @@ const TOP_PRODUCTS = [
 ]
 
 const DASH_DARK = {
-  bg: "#0b0e1d",
-  surface: "rgba(255,255,255,0.03)",
-  surfaceHover: "rgba(255,255,255,0.05)",
-  border: "rgba(255,255,255,0.07)",
-  borderStrong: "rgba(255,255,255,0.12)",
-  text: "#e8e6e1",
-  textSecondary: "#8a8a9a",
-  textMuted: "#5a5a6a",
-  accent: "#E47B62",
-  salvia: "#A8B89A",
-  pistacho: "#C7D86D",
+  bg: "#090b17",
+  sidebar: "#0d1025",
+  surface: "#151a30",
+  surfaceHover: "#1d2340",
+  border: "rgba(124,108,255,0.12)",
+  borderStrong: "rgba(124,108,255,0.22)",
+  text: "#f8f8ff",
+  textSecondary: "#b5bdd4",
+  textMuted: "#7d87a3",
+  primary: "#7c6cff",
+  primarySoft: "rgba(124,108,255,0.14)",
+  cyan: "#20d5c7",
+  cyanSoft: "rgba(32,213,199,0.14)",
+  accent: "#ff6fae",
+  success: "#42d392",
+  warning: "#ffb45e",
   white: "#ffffff",
 }
 
 const DASH_LIGHT = {
-  bg: "#f2f4fb",
+  bg: "#f7f7fc",
+  sidebar: "#eef0f8",
   surface: "#ffffff",
-  surfaceHover: "#f8f9fd",
-  border: "rgba(35,40,74,0.1)",
-  borderStrong: "rgba(35,40,74,0.18)",
+  surfaceHover: "#f5f6fb",
+  border: "rgba(101,85,232,0.13)",
+  borderStrong: "rgba(101,85,232,0.24)",
   text: "#16182a",
   textSecondary: "#535a70",
-  textMuted: "#9aa1b4",
+  textMuted: "#7d8497",
+  primary: "#6555e8",
+  primarySoft: "rgba(101,85,232,0.10)",
+  cyan: "#009f95",
+  cyanSoft: "rgba(0,159,149,0.10)",
   accent: "#d94687",
-  salvia: "#16855b",
-  pistacho: "#8aab2e",
+  success: "#16855b",
+  warning: "#a86000",
   white: "#16182a",
 }
 
@@ -102,29 +112,41 @@ export default function DashboardExperience({ isInteractive, story }) {
   return (
     <div
       className="w-full h-full flex overflow-hidden"
-      style={{ fontFamily: "'Inter', sans-serif", background: c.bg, color: c.text }}
+      style={{ fontFamily: "'Inter', sans-serif", background: c.bg, color: c.text, borderRadius: "0 0 22px 22px" }}
     >
       {/* Sidebar */}
       <aside
-        className="shrink-0 border-r hidden md:flex flex-col"
-        style={{ width: "130px", borderColor: c.border, padding: "12px" }}
+        className="shrink-0 hidden md:flex flex-col"
+        style={{
+          width: "130px",
+          background: c.sidebar,
+          borderRight: `1px solid ${c.border}`,
+          padding: "12px",
+        }}
       >
         <div className="flex items-center gap-2 mb-5 px-1">
-          <div className="w-6 h-6 rounded flex items-center justify-center" style={{ background: `${c.accent}20` }}>
-            <span style={{ fontSize: "9px", fontWeight: 700, color: c.accent, fontFamily: "'Space Grotesk'" }}>B</span>
+          <div
+            className="w-6 h-6 rounded flex items-center justify-center"
+            style={{
+              background: isDark
+                ? "linear-gradient(135deg, #7c6cff, #20d5c7)"
+                : "linear-gradient(135deg, #6555e8, #009f95)",
+            }}
+          >
+            <span style={{ fontSize: "9px", fontWeight: 700, color: "#fff", fontFamily: "'Space Grotesk'" }}>T</span>
           </div>
-          <span style={{ fontSize: "11px", fontWeight: 700, color: c.white, fontFamily: "'Space Grotesk'" }}>Bruma</span>
+          <span style={{ fontSize: "11px", fontWeight: 700, color: c.white, fontFamily: "'Space Grotesk'" }}>Tu negocio</span>
         </div>
         {["Resumen", "Pedidos", "Menú", "Inventario", "Clientes", "Reportes"].map((item, i) => (
           <div
             key={item}
-            className="rounded-md"
+            className="rounded-md transition-colors"
             style={{
               padding: "7px 10px",
               fontSize: "12px",
-              background: i === 0 ? (isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)") : "transparent",
-              color: i === 0 ? c.white : c.textMuted,
-              fontWeight: i === 0 ? 500 : 400,
+              background: i === 0 ? c.primarySoft : "transparent",
+              color: i === 0 ? c.primary : c.textMuted,
+              fontWeight: i === 0 ? 600 : 400,
             }}
           >
             {item}
@@ -139,7 +161,7 @@ export default function DashboardExperience({ isInteractive, story }) {
           <div>
             <h2 style={{ fontSize: "14px", fontWeight: 600, color: c.white }}>Resumen</h2>
             <div className="flex items-center gap-1.5" style={{ marginTop: "2px" }}>
-              <span className="w-1.5 h-1.5 rounded-full" style={{ background: c.salvia }} />
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: c.success }} />
               <span style={{ fontSize: "10px", color: c.textMuted }}>Operando · Palermo</span>
             </div>
           </div>
@@ -152,15 +174,20 @@ export default function DashboardExperience({ isInteractive, story }) {
         {/* Metrics */}
         <div className="grid grid-cols-4 gap-2 shrink-0" style={{ marginBottom: "12px" }}>
           {[
-            { label: "Ventas hoy", value: `$${(metrics.ventas / 1000).toFixed(0)},${String(metrics.ventas).slice(-3, -1)}00` },
-            { label: "Pedidos", value: String(metrics.pedidos) },
-            { label: "Ticket prom.", value: `$${Math.round(metrics.ventas / metrics.pedidos).toLocaleString("es-AR")}` },
-            { label: "Tiempo medio", value: "14 min" },
-          ].map((kpi) => (
+            { label: "Ventas hoy", value: `$${(metrics.ventas / 1000).toFixed(0)},${String(metrics.ventas).slice(-3, -1)}00`, accent: false },
+            { label: "Pedidos", value: String(metrics.pedidos), accent: false },
+            { label: "Ticket prom.", value: `$${Math.round(metrics.ventas / metrics.pedidos).toLocaleString("es-AR")}`, accent: false },
+            { label: "Tiempo medio", value: "14 min", accent: false },
+          ].map((kpi, i) => (
             <div
               key={kpi.label}
               className="rounded-lg"
-              style={{ padding: "10px 12px", background: c.surface, border: `1px solid ${c.border}` }}
+              style={{
+                padding: "10px 12px",
+                background: c.surface,
+                border: `1px solid ${c.border}`,
+                borderTop: i === 0 ? `2px solid ${c.primary}` : undefined,
+              }}
             >
               <span style={{ fontSize: "9px", color: c.textMuted, textTransform: "uppercase", letterSpacing: "0.08em" }}>{kpi.label}</span>
               <span className="block" style={{ fontSize: "16px", fontWeight: 700, color: c.white, marginTop: "2px" }}>{kpi.value}</span>
@@ -180,7 +207,7 @@ export default function DashboardExperience({ isInteractive, story }) {
             </div>
             <div className="flex-1 overflow-y-auto p-2 space-y-1.5">
               {orders.map((o) => {
-                const statusColor = o.status === "nuevo" ? c.accent : o.status === "preparando" ? "#ffb45e" : c.salvia
+                const statusColor = o.status === "nuevo" ? c.primary : o.status === "preparando" ? c.warning : c.success
                 const statusLabel = o.status === "nuevo" ? "Nuevo" : o.status === "preparando" ? "Preparando" : "Listo"
                 const isSelected = selectedOrder === o.id
                 return (
@@ -189,8 +216,8 @@ export default function DashboardExperience({ isInteractive, story }) {
                     className="rounded-lg transition-all"
                     style={{
                       padding: "8px 10px",
-                      background: isSelected ? (isDark ? "rgba(121,87,255,0.08)" : "rgba(101,85,232,0.06)") : "transparent",
-                      border: isSelected ? `1px solid ${isDark ? "rgba(121,87,255,0.2)" : "rgba(101,85,232,0.18)"}` : "1px solid transparent",
+                      background: isSelected ? c.primarySoft : "transparent",
+                      border: isSelected ? `1px solid ${c.borderStrong}` : "1px solid transparent",
                       cursor: isInteractive ? "pointer" : "default",
                     }}
                     onClick={() => isInteractive && setSelectedOrder(o.id)}
@@ -222,18 +249,24 @@ export default function DashboardExperience({ isInteractive, story }) {
           >
             <div className="flex items-center justify-between shrink-0" style={{ marginBottom: "8px" }}>
               <span style={{ fontSize: "10px", color: c.textSecondary }}>Ventas por hora</span>
-              <span style={{ fontSize: "10px", color: c.salvia, fontWeight: 500 }}>+18% vs ayer</span>
+              <span style={{ fontSize: "10px", color: c.cyan, fontWeight: 500 }}>+18% vs ayer</span>
             </div>
             <div className="flex-1 min-h-0">
               <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full h-full" preserveAspectRatio="xMidYMid meet">
                 <defs>
-                  <linearGradient id="dashGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor={c.accent} stopOpacity="0.3" />
-                    <stop offset="100%" stopColor={c.accent} stopOpacity="0.02" />
+                  <linearGradient id="dashGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor={isDark ? "#7c6cff" : "#6555e8"} stopOpacity="0.35" />
+                    <stop offset="100%" stopColor={isDark ? "#20d5c7" : "#009f95"} stopOpacity="0.15" />
                   </linearGradient>
                 </defs>
                 <polygon points={areaPoints} fill="url(#dashGrad)" />
-                <polyline points={points} fill="none" stroke={c.accent} strokeWidth="1.5" strokeLinejoin="round" />
+                <polyline
+                  points={points}
+                  fill="none"
+                  stroke={isDark ? "#7c6cff" : "#6555e8"}
+                  strokeWidth="1.5"
+                  strokeLinejoin="round"
+                />
               </svg>
             </div>
             <div className="flex justify-between shrink-0" style={{ fontSize: "7px", color: c.textMuted, marginTop: "4px" }}>
@@ -265,8 +298,8 @@ export default function DashboardExperience({ isInteractive, story }) {
                       <span className="truncate" style={{ fontSize: "10px", color: c.text }}>{p.name}</span>
                       <span style={{ fontSize: "10px", fontWeight: 600, color: c.white, marginLeft: "4px" }}>{p.sold}</span>
                     </div>
-                    <div className="w-full rounded-full overflow-hidden" style={{ height: "3px", background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.08)", marginTop: "3px" }}>
-                      <div className="h-full rounded-full" style={{ width: `${(p.sold / 24) * 100}%`, background: c.accent }} />
+                    <div className="w-full rounded-full overflow-hidden" style={{ height: "3px", background: isDark ? "rgba(124,108,255,0.10)" : "rgba(101,85,232,0.10)", marginTop: "3px" }}>
+                      <div className="h-full rounded-full" style={{ width: `${(p.sold / 24) * 100}%`, background: `linear-gradient(90deg, ${c.primary}, ${c.cyan})` }} />
                     </div>
                   </div>
                 </div>
@@ -278,8 +311,8 @@ export default function DashboardExperience({ isInteractive, story }) {
               className="rounded-lg"
               style={{
                 padding: "10px",
-                background: isDark ? `${c.accent}10` : `${c.accent}08`,
-                border: `1px solid ${c.accent}30`,
+                background: isDark ? "rgba(255,111,174,0.08)" : "rgba(217,70,135,0.06)",
+                border: `1px solid ${isDark ? "rgba(255,111,174,0.2)" : "rgba(217,70,135,0.18)"}`,
               }}
             >
               <span style={{ fontSize: "9px", color: c.accent, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600 }}>
@@ -311,14 +344,14 @@ export default function DashboardExperience({ isInteractive, story }) {
         <div
           className="absolute top-4 right-4 px-4 py-2.5 rounded-lg shadow-lg flex items-center gap-2"
           style={{
-            background: isDark ? "#12152a" : "#ffffff",
-            border: `1px solid ${c.salvia}40`,
+            background: isDark ? c.surface : "#ffffff",
+            border: `1px solid ${c.primary}40`,
             fontSize: "11px",
             color: c.white,
             animation: "fade-up 0.3s ease",
           }}
         >
-          <span className="w-2 h-2 rounded-full" style={{ background: c.salvia }} />
+          <span className="w-2 h-2 rounded-full" style={{ background: c.primary }} />
           {notification}
         </div>
       )}

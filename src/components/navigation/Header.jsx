@@ -22,9 +22,6 @@ function Logo({ compact = false }) {
           compact ? "h-8" : "h-9"
         }`}
       />
-      <span className="font-display text-lg font-bold text-text-1 tracking-tight hidden sm:block">
-        Fleximy
-      </span>
     </Link>
   )
 }

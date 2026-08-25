@@ -98,6 +98,23 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ===== Módulo 2 — imágenes animadas ===== */
+.mod2-entrance {
+  animation: mod2FadeSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.mod2-float {
+  transform: translateY(-50%) translateX(10%);
+  animation: mod2FloatDrift 6s ease-in-out infinite;
+}
+@keyframes mod2FadeSlideIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes mod2FloatDrift {
+  0%, 100% { transform: translateY(-50%) translateX(10%) translateY(0); }
+  50%      { transform: translateY(-50%) translateX(10%) translateY(-6px); }
+}
+
 /* ===== Reduced motion ===== */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
