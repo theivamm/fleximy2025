@@ -21,9 +21,9 @@ const DARK = {
 const LIGHT = {
   bg: "#f4f6ff",
   surface: "rgba(255,255,255,.70)",
-  line: "rgba(34,44,86,.13)",
+  line: "rgba(34,44,86,.18)",
   text: "#101329",
-  muted: "#59617a",
+  muted: "#4c5470",
   stroke: "rgba(16,19,41,.08)",
   glow: ".09",
 }

@@ -62,8 +62,17 @@ style={{
           lineHeight: 1.5,
         }}
       >
-        Web, aplicación y dashboard funcionando como una única plataforma
-        para tu negocio, a un costo único + soporte y updates de por vida.
+        Creamos el website de tu negocio y una aplicación de gestión a medida
+        para administrar ventas, clientes y operaciones desde un solo lugar.
+      </motion.p>
+
+      <motion.p
+        variants={fadeUp}
+        className="mt-3 text-sm font-medium text-text-3"
+        style={{ maxWidth: "520px" }}
+      >
+        Website, aplicación y dashboard creados como una única plataforma,
+        con una inversión inicial clara y acompañamiento continuo.
       </motion.p>
 
       <motion.div variants={fadeUp} className="mt-7 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3">
@@ -73,14 +82,14 @@ style={{
           className="inline-flex h-[52px] items-center justify-center gap-2.5 rounded-xl px-7 text-sm font-semibold text-white shadow-[0_8px_32px_rgba(121,87,255,0.3)] transition-all duration-200 hover:shadow-[0_8px_40px_rgba(121,87,255,0.45)] hover:-translate-y-0.5"
           style={{ background: "linear-gradient(135deg, #7957ff 0%, #5268ff 44%, #15cbea 100%)" }}
         >
-          Contanos tu negocio
+          Contanos sobre tu negocio
           <ArrowRight size={16} />
         </a>
         <a
-          href="#servicios"
+          href="#que-hacemos"
           onClick={(e) => {
             e.preventDefault()
-            document.querySelector("#servicios")?.scrollIntoView({ behavior: "smooth" })
+            document.querySelector("#que-hacemos")?.scrollIntoView({ behavior: "smooth" })
           }}
           className="inline-flex h-[52px] items-center justify-center gap-2 rounded-xl border border-white/20 bg-transparent px-7 text-sm font-semibold text-text-1 transition-colors hover:bg-white/[0.05]"
         >
@@ -93,7 +102,7 @@ style={{
         className="mt-5 font-mono text-[11px] tracking-[0.12em]"
         style={{ color: "var(--text-muted)" }}
       >
-        Web · App · Dashboard · Todo conectado
+        Website · App de gestión · Dashboard
       </motion.p>
     </motion.div>
   )

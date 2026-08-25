@@ -11,7 +11,12 @@ export default function FleximyCore({ active, reducedMotion, finePointer }) {
     let interval = null
     const start = setTimeout(() => {
       interval = setInterval(() => {
-        i = (i + 1) % STAGES.length
+        i++
+        if (i >= STAGES.length) {
+          clearInterval(interval)
+          setIdx(STAGES.length - 1)
+          return
+        }
         setIdx(i)
       }, 2600)
     }, 1400)

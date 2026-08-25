@@ -5,7 +5,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(18px, 3vw, 40px);
-  margin-top: clamp(80px, 9vw, 120px);
+  margin-top: clamp(64px, 7vw, 96px);
 }
 .m3p-steps__line {
   position: absolute;
@@ -75,7 +75,7 @@
 /* Cierre */
 .m3p-closing {
   text-align: center;
-  margin-top: clamp(110px, 13vw, 180px);
+  margin-top: clamp(80px, 10vw, 140px);
 }
 .m3p-closing h3 {
   max-width: 900px;
@@ -152,5 +152,5 @@
   .m3p-phrase.on { opacity: .92; }
   .m3p-outlabel.on { opacity: .95; }
   .m3p-stage.swap { opacity: 1; filter: none; }
-  .m3p-bgwords--fill { opacity: .85; }
+  .m3p-bgwords--fill { opacity: .45; }
 }

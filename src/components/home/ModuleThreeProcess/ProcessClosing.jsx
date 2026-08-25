@@ -14,10 +14,6 @@ export default function ProcessClosing() {
           Nosotros, de convertirlo en tecnología.
         </span>
       </h3>
-      <a href="/contacto" className="m3p-cta">
-        Contanos cómo funciona tu negocio →
-      </a>
-      <p className="m3p-microcopy">Una primera conversación. Sin compromiso y sin tecnicismos.</p>
     </div>
   )
 }

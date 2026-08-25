@@ -23,7 +23,7 @@
   z-index: 1;
   width: min(1380px, calc(100vw - 96px));
   margin-inline: auto;
-  padding-block: clamp(120px, 11vw, 190px);
+  padding-block: clamp(88px, 9vw, 140px);
 }
 
 /* Apertura */
@@ -68,7 +68,7 @@
   gap: clamp(20px,3vw,44px);
   align-items: center;
   min-height: 520px;
-  margin-top: clamp(80px,10vh,130px);
+  margin-top: clamp(64px,8vh,100px);
 }
 
 /* Fondo monumental HECHO PARA VOS */
@@ -98,7 +98,7 @@
   .m3p-bgwords--fill { animation: m3p-drift 80s linear infinite alternate, m3p-print 9s ease-in-out infinite; opacity: 0; }
   @keyframes m3p-print {
     0%, 18%, 82%, 100% { opacity: 0; }
-    42%, 58%           { opacity: .85; }
+    42%, 58%           { opacity: .45; }
   }
 }
 

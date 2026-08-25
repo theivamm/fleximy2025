@@ -1,0 +1,19 @@
+.ft-word {
+  position: relative;
+  overflow: hidden;
+  height: clamp(80px, 8vw, 130px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+}
+.ft-word span {
+  font-size: clamp(80px, 14vw, 200px);
+  font-weight: 800;
+  letter-spacing: -.06em;
+  line-height: 0.78;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--line);
+  transform: translateY(28%);
+}

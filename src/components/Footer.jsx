@@ -6,6 +6,8 @@ import { NAV, CONTACT } from "../data/navigation"
 import { COMPANY } from "../data/config"
 import logoSvgBlanco from "../assets/logosvgblanco.svg"
 import logoSvgColor from "../assets/logosvgcolor.svg"
+import "./footer.css"
+import "./footer.css"
 
 function FooterLogo() {
   const { theme } = useTheme()
@@ -22,7 +24,7 @@ function FooterLogo() {
 
 export default function Footer() {
   const handleAnchor = (e, href) => {
-    if (href.startsWith("#")) {
+    if (href?.startsWith("#")) {
       e.preventDefault()
       const el = document.querySelector(href)
       if (el) el.scrollIntoView({ behavior: "smooth" })
@@ -30,16 +32,22 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative overflow-hidden border-t border-outline">
+    <footer className="ft relative overflow-hidden border-t border-outline">
       <div className="container py-16 sm:py-20">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          {/* Marca */}
           <div>
             <FooterLogo />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-text-secondary">
-              Diseñamos y desarrollamos productos digitales para negocios.
+              Creamos websites y aplicaciones de gestión a medida para negocios.
             </p>
+            <div className="mt-5 flex items-center gap-2">
+              <span className="font-mono text-[11px] uppercase tracking-wider text-text-3">Tema</span>
+              <ThemeToggle />
+            </div>
           </div>
 
+          {/* Navegación */}
           <nav aria-label="Navegación">
             <p className="mb-3 text-sm font-bold text-text-1">Navegación</p>
             <ul className="flex flex-col gap-2">
@@ -57,6 +65,7 @@ export default function Footer() {
             </ul>
           </nav>
 
+          {/* Contacto */}
           <div>
             <p className="mb-3 text-sm font-bold text-text-1">Contacto</p>
             <ul className="flex flex-col gap-2.5">
@@ -85,6 +94,7 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Legal */}
           <div>
             <p className="mb-3 text-sm font-bold text-text-1">Legal</p>
             <ul className="flex flex-col gap-2">
@@ -99,15 +109,17 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Cierre */}
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-outline pt-6 sm:flex-row">
           <p className="text-sm text-text-3">
-            © {new Date().getFullYear()} {COMPANY.nombre}. Todos los derechos reservados.
+            &copy; {new Date().getFullYear()} {COMPANY.nombre}. Todos los derechos reservados.
           </p>
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-[11px] uppercase tracking-wider text-text-3">Tema</span>
-            <ThemeToggle />
-          </div>
         </div>
+      </div>
+
+      {/* Gran palabra outline */}
+      <div className="ft-word" aria-hidden="true">
+        <span>FLEXIMY</span>
       </div>
     </footer>
   )
