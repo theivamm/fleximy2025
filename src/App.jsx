@@ -8,6 +8,7 @@ import Seo from "./components/seo/Seo"
 
 const Home = lazy(() => import("./pages/Home"))
 const Contacto = lazy(() => import("./pages/Contacto"))
+const NfcService = lazy(() => import("./pages/NfcService"))
 const Privacidad = lazy(() => import("./pages/Privacidad"))
 const Terminos = lazy(() => import("./pages/Terminos"))
 const NotFound = lazy(() => import("./pages/NotFound"))
@@ -45,6 +46,7 @@ function AppContent() {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageTransition><Home /></PageTransition>} />
             <Route path="/contacto" element={<PageTransition><Contacto /></PageTransition>} />
+            <Route path="/nfc-service" element={<PageTransition><NfcService /></PageTransition>} />
             <Route path="/privacidad" element={<PageTransition><Privacidad /></PageTransition>} />
             <Route path="/terminos" element={<PageTransition><Terminos /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />

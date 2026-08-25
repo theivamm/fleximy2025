@@ -13,6 +13,11 @@ export const SEO_META = {
       "Contanos tu idea. Diseñamos y desarrollamos webs, apps, dashboards y automatizaciones a medida.",
     robots: "index, follow",
   },
+  "/nfc-service": {
+    title: "NFC Service — Fleximy",
+    description: "Muy pronto: tarjetas y soluciones NFC de Fleximy.",
+    robots: "index, follow",
+  },
   "/privacidad": {
     title: "Política de Privacidad — Fleximy",
     description:
