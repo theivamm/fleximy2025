@@ -12,10 +12,6 @@ export default function WebsitePanel({ active }) {
       </div>
 
       <div className="pg-scene" aria-hidden="true">
-        <span className="pg-tag pg-tag--props"><b>+120</b> propiedades</span>
-        <span className="pg-tag pg-tag--query">Nueva consulta</span>
-        <span className="pg-tag pg-tag--visit">Visita agendada</span>
-
         <svg className="pg-wire" viewBox="0 0 600 300" preserveAspectRatio="none">
           <defs>
             <linearGradient id="pgWireGrad" x1="0" y1="0" x2="1" y2="0">

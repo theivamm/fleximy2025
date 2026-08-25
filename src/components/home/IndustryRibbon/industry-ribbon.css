@@ -1,8 +1,16 @@
 .rib {
-  padding-block: var(--section-space-compact, clamp(72px,7vw,120px));
+  padding-block: var(--section-space-compact);
   overflow: hidden;
 }
-.rib-header { text-align: center; max-width: 860px; }
+.rib-header {
+  width: min(100%, 920px);
+  margin-inline: auto;
+  padding-inline: 20px;
+  text-align: center;
+}
+.rib-header > * {
+  margin-inline: auto;
+}
 .rib-eyebrow {
   font-family: var(--font-mono);
   font-size: 11px; font-weight: 600;
@@ -14,12 +22,14 @@
   font-size: clamp(32px, 3.4vw, 52px);
   font-weight: 700; line-height: 1.08; letter-spacing: -.04em;
   margin: 0 auto 20px; text-wrap: balance;
+  max-width: 18ch;
 }
 .rib-bajada {
   font-size: clamp(16px,1.1vw,18px);
   line-height: 1.55;
   color: var(--text-muted);
-  max-width: 60ch; margin: 0;
+  max-width: 62ch; margin: 0 auto;
+  text-wrap: pretty;
 }
 
 /* Ribbons */

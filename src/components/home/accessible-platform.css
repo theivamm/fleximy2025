@@ -1,5 +1,5 @@
 .ap {
-  padding-block: var(--section-space, clamp(96px, 10vw, 176px));
+  padding-block: var(--section-space);
   position: relative;
   overflow: hidden;
 }

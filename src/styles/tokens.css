@@ -13,7 +13,7 @@
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
 
   /* Escala tipográfica */
-  --hero-title: clamp(58px, 3.85vw, 74px);
+  --hero-title: clamp(52px, 4.65vw, 82px);
   --h2: clamp(2rem, 3.5vw, 3.2rem);
   --h3: clamp(1.3rem, 2vw, 1.75rem);
   --h4: clamp(1.05rem, 1.4vw, 1.25rem);
@@ -23,11 +23,14 @@
   --micro: 0.75rem;
 
   /* Layout */
-  --page-gutter: clamp(20px, 4vw, 64px);
+  --page-gutter: clamp(20px, 4vw, 72px);
+  --container-wide: 1480px;
+  --container-main: 1280px;
   --container: 1280px;
-  --container-copy: 720px;
-  --section-space: clamp(80px, 10vw, 144px);
-  --section-space-compact: clamp(64px, 6vw, 104px);
+  --container-copy: 760px;
+  --section-space: clamp(88px, 9vw, 152px);
+  --section-space-compact: clamp(64px, 7vw, 112px);
+  --grid-gap: clamp(28px, 4vw, 72px);
   --header-height: 72px;
   --radius-card: 1.25rem;
   --radius-field: 0.75rem;
@@ -74,6 +77,18 @@
 
   /* Gradientes */
   --gradient-primary: linear-gradient(120deg, #7c6cff 0%, #4d8dff 38%, #20d5c7 100%);
+
+  /* UI semánticos */
+  --ui-canvas: #090b18;
+  --ui-surface-1: #111526;
+  --ui-surface-2: #171c31;
+  --ui-surface-3: #202640;
+  --ui-border: rgba(170, 180, 225, 0.14);
+  --ui-border-strong: rgba(170, 180, 225, 0.24);
+  --ui-text: #f5f6ff;
+  --ui-muted: #a6aec8;
+  --ui-shadow: 0 28px 90px rgba(0, 0, 0, 0.38);
+  --ui-glow: rgba(115, 96, 255, 0.25);
 }
 
 /* Dark: Tailwind v4 @theme */
@@ -213,4 +228,16 @@
     radial-gradient(circle at 15% 10%, rgba(101, 85, 232, 0.1), transparent 30%),
     radial-gradient(circle at 85% 20%, rgba(0, 159, 149, 0.07), transparent 28%),
     linear-gradient(180deg, #fafaff 0%, #f0f2fa 100%);
+
+  /* UI semánticos */
+  --ui-canvas: #f6f7fb;
+  --ui-surface-1: #ffffff;
+  --ui-surface-2: #eef1f8;
+  --ui-surface-3: #e6eaf4;
+  --ui-border: rgba(26, 31, 54, 0.12);
+  --ui-border-strong: rgba(26, 31, 54, 0.2);
+  --ui-text: #121527;
+  --ui-muted: #687088;
+  --ui-shadow: 0 24px 70px rgba(33, 40, 78, 0.14);
+  --ui-glow: rgba(105, 89, 255, 0.18);
 }

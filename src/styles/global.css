@@ -51,9 +51,17 @@ body {
 
 /* ===== Layout ===== */
 .container {
-  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container-main));
   margin-inline: auto;
 }
+.container-wide,
+.container-main {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+.container-wide { max-width: calc(var(--container-wide) + 2 * var(--page-gutter)); }
+.container-main { max-width: calc(var(--container-main) + 2 * var(--page-gutter)); }
 .measure { max-width: var(--container-copy); }
 
 /* Ritmo vertical */
@@ -127,5 +135,6 @@ section[id] {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

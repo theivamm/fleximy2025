@@ -17,9 +17,13 @@
 .cs-inner {
   position: relative;
   display: grid;
-  grid-template-columns: 5fr 7fr;
-  gap: clamp(40px,4vw,80px);
+  grid-template-columns: minmax(360px, 0.78fr) minmax(580px, 1.22fr);
+  gap: clamp(56px, 7vw, 112px);
   align-items: start;
+}
+.cs-left {
+  position: sticky;
+  top: calc(var(--header-height) + 40px);
 }
 .cs-eyebrow {
   font-family: var(--font-mono);
@@ -29,12 +33,13 @@
   margin: 0 0 20px;
 }
 .cs-title {
-  font-size: clamp(28px, 3vw, 52px);
-  font-weight: 700; line-height: 1.04;
+  font-size: clamp(42px, 4vw, 64px);
+  font-weight: 700; line-height: 1.02;
   letter-spacing: -.04em;
   margin: 0 0 22px;
   color: #f2f4ff;
-  max-width: 12ch;
+  max-width: 13ch;
+  text-wrap: balance;
 }
 .cs-bajada {
   font-size: 16px; line-height: 1.55;
@@ -61,7 +66,13 @@
 .cs-wa--inline { margin-top: 22px; }
 
 /* Formulario */
-.cs-right { position: relative; }
+.cs-right {
+  position: relative;
+  padding: clamp(28px, 4vw, 56px);
+  border-radius: 28px;
+  border: 1px solid rgba(150,165,220,.12);
+  background: rgba(255,255,255,.03);
+}
 .cs-progress {
   height: 2px;
   background: rgba(150,165,220,.15);
@@ -95,7 +106,7 @@
 }
 .cs-field input, .cs-field textarea {
   width: 100%;
-  height: 52px;
+  height: 54px;
   background: rgba(255,255,255,.05);
   border: 1px solid rgba(150,165,220,.18);
   border-radius: 14px;
@@ -107,7 +118,7 @@
 }
 .cs-field textarea {
   height: auto;
-  min-height: 112px;
+  min-height: 140px;
   padding: 14px 16px;
 }
 .cs-field input::placeholder, .cs-field textarea::placeholder { color: #6b7694; }
@@ -137,7 +148,7 @@
 .cs-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   margin-top: 10px;
 }
 .cs-chip {
@@ -169,11 +180,13 @@
 }
 .cs-consent a { color: #18d6d2; text-decoration: underline; }
 .cs-submit {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   margin-top: 16px;
-  height: 50px;
+  height: 54px;
+  width: 100%;
   padding: 0 28px;
   border: none;
   border-radius: 999px;
@@ -211,7 +224,11 @@
   margin: 0;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1024px) {
   .cs-inner { grid-template-columns: 1fr; }
+  .cs-left { position: static; }
+}
+@media (max-width: 640px) {
   .cs-grid { grid-template-columns: 1fr; }
+  .cs-right { padding: 22px; }
 }

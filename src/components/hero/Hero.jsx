@@ -72,12 +72,12 @@ function HeroInner() {
 
       {/* Content grid */}
       <div
-        className="w-full mx-auto px-[var(--page-gutter)]"
+        className="hero__inner w-full mx-auto px-[var(--page-gutter)]"
         style={{
-          maxWidth: "1280px",
+          maxWidth: "1480px",
           display: "grid",
-          gridTemplateColumns: "minmax(0, 0.82fr) minmax(0, 1.38fr)",
-          gap: "clamp(52px, 4vw, 84px)",
+          gridTemplateColumns: "minmax(500px, 0.88fr) minmax(650px, 1.12fr)",
+          gap: "clamp(48px, 5vw, 96px)",
           alignItems: "center",
         }}
       >
@@ -92,14 +92,28 @@ function HeroInner() {
       </div>
 
       <style>{`
+        @media (max-width: 1280px) {
+          .hero__inner {
+            grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr) !important;
+          }
+        }
         @media (max-width: 1024px) {
-          .hero > div:nth-child(6) {
+          .hero__inner {
             grid-template-columns: 1fr !important;
+            gap: clamp(36px, 4vw, 64px) !important;
           }
         }
         @media (max-width: 768px) {
           .hero {
             padding-block: clamp(32px, 4vh, 48px) !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .hero__actions {
+            flex-wrap: wrap !important;
+          }
+          .hero__actions > * {
+            width: 100% !important;
           }
         }
       `}</style>
