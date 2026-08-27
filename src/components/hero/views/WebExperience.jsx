@@ -116,7 +116,7 @@ export default function WebExperience({ isInteractive, story }) {
       </header>
 
       {/* Hero section — two columns */}
-      <div className="flex-1 flex flex-col sm:flex-row overflow-hidden">
+      <div className="flex-1 flex flex-col sm:flex-row overflow-hidden" style={{ minWidth: 0 }}>
         {/* Left: copy */}
         <div
           className="flex flex-col justify-center min-w-0 shrink-0"
@@ -158,7 +158,7 @@ export default function WebExperience({ isInteractive, story }) {
         </div>
 
         {/* Right: product display */}
-        <div className="flex-1 flex flex-col items-center justify-center relative overflow-hidden">
+        <div className="flex-1 flex flex-col items-center justify-center relative overflow-hidden" style={{ minWidth: 0 }}>
           <div
             className="relative flex items-center justify-center"
             style={{

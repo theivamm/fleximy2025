@@ -19,7 +19,7 @@ export default function ProductStage({ prefersReduced }) {
   const current = VIEWS.find((v) => v.key === state.view) || VIEWS[0]
 
   return (
-    <div className="relative w-full" style={{ maxWidth: "940px" }}>
+    <div className="relative w-full" style={{ maxWidth: "760px", minWidth: 0 }}>
       {/* Violet halo behind frame */}
       <div
         className="absolute -z-20 pointer-events-none"

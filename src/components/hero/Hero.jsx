@@ -20,12 +20,13 @@ function HeroInner() {
   return (
     <section
       ref={sectionRef}
-      className="hero relative overflow-clip"
+      className="hero relative"
       style={{
         minHeight: "calc(100svh - var(--header-height, 72px))",
         display: "grid",
         alignItems: "center",
         paddingBlock: "clamp(56px, 6vh, 88px)",
+        overflow: "hidden",
       }}
     >
       {/* Background layers */}
@@ -76,7 +77,7 @@ function HeroInner() {
         style={{
           maxWidth: "1480px",
           display: "grid",
-          gridTemplateColumns: "minmax(500px, 0.88fr) minmax(650px, 1.12fr)",
+          gridTemplateColumns: "minmax(0, 0.88fr) minmax(0, 1.12fr)",
           gap: "clamp(48px, 5vw, 96px)",
           alignItems: "center",
         }}
@@ -86,16 +87,16 @@ function HeroInner() {
           initial={{ opacity: 0.88, scale: 0.99, filter: "blur(3px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          style={{ minWidth: 0 }}
         >
           <ProductStage prefersReduced={prefersReduced} />
         </motion.div>
       </div>
 
       <style>{`
-        @media (max-width: 1280px) {
-          .hero__inner {
-            grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr) !important;
-          }
+        .hero__inner,
+        .hero__inner > * {
+          min-width: 0;
         }
         @media (max-width: 1024px) {
           .hero__inner {

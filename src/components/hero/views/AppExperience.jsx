@@ -81,7 +81,7 @@ export default function AppExperience({ isInteractive, story }) {
   return (
     <div
       className="w-full h-full flex overflow-hidden"
-      style={{ fontFamily: "'Inter', sans-serif", background: c.bg, color: c.text, borderRadius: "0 0 22px 22px" }}
+      style={{ fontFamily: "'Inter', sans-serif", background: c.bg, color: c.text, borderRadius: "0 0 22px 22px", minWidth: 0 }}
     >
       {/* Left panel — context */}
       <div
@@ -149,7 +149,7 @@ export default function AppExperience({ isInteractive, story }) {
       </div>
 
       {/* Right — phone mockup */}
-      <div className="flex-1 flex items-center justify-center relative overflow-hidden">
+      <div className="flex-1 flex items-center justify-center relative overflow-hidden" style={{ minWidth: 0 }}>
         {/* Phone frame */}
         <div
           className="relative flex flex-col"

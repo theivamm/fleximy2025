@@ -112,13 +112,14 @@ export default function DashboardExperience({ isInteractive, story }) {
   return (
     <div
       className="w-full h-full flex overflow-hidden"
-      style={{ fontFamily: "'Inter', sans-serif", background: c.bg, color: c.text, borderRadius: "0 0 22px 22px" }}
+      style={{ fontFamily: "'Inter', sans-serif", background: c.bg, color: c.text, borderRadius: "0 0 22px 22px", minWidth: 0 }}
     >
       {/* Sidebar */}
       <aside
         className="shrink-0 hidden md:flex flex-col"
         style={{
           width: "130px",
+          minWidth: 0,
           background: c.sidebar,
           borderRight: `1px solid ${c.border}`,
           padding: "12px",
@@ -155,7 +156,7 @@ export default function DashboardExperience({ isInteractive, story }) {
       </aside>
 
       {/* Main */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden" style={{ padding: "14px" }}>
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden" style={{ padding: "14px", minWidth: 0 }}>
         {/* Top bar */}
         <header className="flex items-center justify-between shrink-0" style={{ marginBottom: "12px" }}>
           <div>
@@ -196,7 +197,7 @@ export default function DashboardExperience({ isInteractive, story }) {
         </div>
 
         {/* Main content — 3 columns */}
-        <div className="flex gap-2 flex-1 min-h-0">
+        <div className="flex gap-2 flex-1 min-h-0" style={{ minWidth: 0 }}>
           {/* Col 1: Orders */}
           <div
             className="flex flex-col rounded-lg overflow-hidden"
