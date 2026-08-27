@@ -241,3 +241,31 @@
   .cs-grid { grid-template-columns: 1fr; }
   .cs-right { padding: 22px; }
 }
+
+/* Light mode */
+[data-theme="light"] .cs { background: #f4f6ff; color: #121527; }
+[data-theme="light"] .cs-glow--a { background: #a78bff; opacity: .1; }
+[data-theme="light"] .cs-glow--b { background: #5ee2d5; opacity: .1; }
+[data-theme="light"] .cs-eyebrow { color: #009f95; }
+[data-theme="light"] .cs-title { color: #121527; }
+[data-theme="light"] .cs-subtitle { color: #535a70; }
+[data-theme="light"] .cs-bajada { color: #697188; }
+[data-theme="light"] .cs-confianza { color: #8891a8; }
+[data-theme="light"] .cs-wa { color: #009f95; }
+[data-theme="light"] .cs-right { border-color: rgba(24,30,54,0.10); background: #ffffff; }
+[data-theme="light"] .cs-label { color: #535a70; }
+[data-theme="light"] .cs-field input, [data-theme="light"] .cs-field textarea {
+  background: #f1f3f9; border-color: rgba(24,30,54,0.12); color: #121527;
+}
+[data-theme="light"] .cs-field input::placeholder, [data-theme="light"] .cs-field textarea::placeholder { color: #8891a8; }
+[data-theme="light"] .cs-field input:focus, [data-theme="light"] .cs-field textarea:focus { border-color: rgba(101,85,232,0.5); }
+[data-theme="light"] .cs-chip { border-color: rgba(24,30,54,0.15); color: #535a70; }
+[data-theme="light"] .cs-chip.on { border-color: rgba(101,85,232,0.5); background: rgba(101,85,232,0.08); color: #121527; }
+[data-theme="light"] .cs-chip:hover { border-color: rgba(101,85,232,0.35); }
+[data-theme="light"] .cs-consent { color: #8891a8; }
+[data-theme="light"] .cs-consent a { color: #009f95; }
+[data-theme="light"] .cs-count { color: #8891a8; }
+[data-theme="light"] .cs-micro { color: #8891a8; }
+[data-theme="light"] .cs-success { border-color: rgba(24,30,54,0.10); background: #ffffff; }
+[data-theme="light"] .cs-success h3 { color: #121527; }
+[data-theme="light"] .cs-success p { color: #697188; }

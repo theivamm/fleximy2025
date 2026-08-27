@@ -397,6 +397,9 @@
   color: #fff;
   background: var(--primary, #7c6cff);
   border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .sc-inbox__status {
   font-family: var(--font-mono);
@@ -628,6 +631,18 @@
 [data-theme="light"] .pg-card__copy h3 { color: #121527; }
 [data-theme="light"] .pg-card__description { color: #697188; }
 [data-theme="light"] .pg-card__benefit { color: #121527; border-color: rgba(24,30,54,0.15); }
+
+[data-theme="light"] .sc-web { background: #f7f7fc; border-color: rgba(24,30,54,0.12); box-shadow: 0 28px 70px rgba(33,40,78,0.16); }
+[data-theme="light"] .sc-web__bar { background: #eef0f8; border-color: rgba(24,30,54,0.08); }
+[data-theme="light"] .sc-web__dots i { background: rgba(24,30,54,0.2); }
+[data-theme="light"] .sc-web__url { color: rgba(50,55,80,0.6); background: rgba(24,30,54,0.06); }
+[data-theme="light"] .sc-web__h { background: rgba(24,30,54,0.25); }
+[data-theme="light"] .sc-web__h--sub { background: rgba(24,30,54,0.12); }
+[data-theme="light"] .sc-web__rows i { background: rgba(24,30,54,0.08); }
+[data-theme="light"] .sc-web__price { color: #16182a; background: rgba(255,255,255,0.85); border-color: rgba(24,30,54,0.15); }
+[data-theme="light"] .sc-web__photo { background: linear-gradient(160deg, rgba(101,85,232,0.15), rgba(0,159,149,0.10)), #e8ecf5; }
+[data-theme="light"] .sc-web__notif { color: #16182a; background: rgba(255,255,255,0.9); border-color: rgba(24,30,54,0.12); }
+[data-theme="light"] .sc-web__notif b { color: #009f95; }
 
 [data-theme="light"] .sc-inbox { border-color: rgba(24,30,54,0.10); background: #ffffff; }
 [data-theme="light"] .sc-inbox__list { border-color: rgba(24,30,54,0.10); }

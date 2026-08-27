@@ -23,7 +23,6 @@ function getUTMs() {
   }
 }
 
-const ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT || ""
 
 export default function ContactSection() {
   const [form, setForm] = useState({
@@ -38,9 +37,7 @@ export default function ContactSection() {
   })
   const [errs, setErrs] = useState({})
   const [touched, setTouched] = useState({})
-  const [sending, setSending] = useState(false)
   const [success, setSuccess] = useState(false)
-  const [error, setError] = useState(false)
 
   const utms = useMemo(getUTMs, [])
 
@@ -88,7 +85,7 @@ export default function ContactSection() {
     return ""
   }
 
-  const submit = async (e) => {
+  const submit = (e) => {
     e.preventDefault()
     if (form._hp) return
 
@@ -104,24 +101,28 @@ export default function ContactSection() {
     })
     if (Object.values(allErrs).some(Boolean)) return
 
-    setSending(true)
-    setError(false)
-    try {
-      if (ENDPOINT) {
-        const res = await fetch(ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...form, necesidades: form.necesidades.join(", "), ...utms, submittedAt: new Date().toISOString() }),
-        })
-        if (!res.ok) throw new Error("fail")
-      } else {
-        await new Promise((r) => setTimeout(r, 900))
-      }
-      setSuccess(true)
-    } catch {
-      setError(true)
-      setSending(false)
-    }
+    const to = "mauroivanmedel@gmail.com"
+    const subject = `Consulta desde Fleximy — ${form.negocio}`
+    const body = [
+      `Nombre: ${form.nombre}`,
+      `Negocio: ${form.negocio}`,
+      `WhatsApp: ${form.whatsapp}`,
+      `Email: ${form.email}`,
+      `Dedicación: ${form.dedicacion}`,
+      ``,
+      `Necesidades: ${form.necesidades.join(", ")}`,
+      ``,
+      `Descripción:`,
+      form.descripcion,
+      ``,
+      utms.utm_source ? `UTM Source: ${utms.utm_source}` : "",
+      utms.utm_medium ? `UTM Medium: ${utms.utm_medium}` : "",
+      utms.utm_campaign ? `UTM Campaign: ${utms.utm_campaign}` : "",
+    ].filter(Boolean).join("\n")
+
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    window.open(gmailUrl, "_blank", "noopener,noreferrer")
+    setSuccess(true)
   }
 
   const field = (k, label, type = "text", attrs = {}) => (
@@ -239,11 +240,10 @@ export default function ContactSection() {
                 <Link to="/privacidad">Política de Privacidad</Link>.
               </p>
 
-              <button type="submit" disabled={sending} className="cs-submit">
-                {sending ? "Enviando…" : "Quiero conversar sobre mi proyecto"}
-                {!sending && <ArrowRight size={16} />}
+              <button type="submit" className="cs-submit">
+                Quiero conversar sobre mi proyecto
+                <ArrowRight size={16} />
               </button>
-              {error && <p className="cs-error cs-error--block">Hubo un problema al enviar. Intentá nuevamente o escribinos por WhatsApp.</p>}
               <p className="cs-micro">Te respondemos personalmente. Sin compromiso y sin tecnicismos.</p>
             </form>
           )}
