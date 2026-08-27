@@ -1,5 +1,5 @@
 import Hero from "../components/hero/Hero"
-import ProductGallery from "../components/home/ProductGallery/ProductGallery"
+import Module02 from "../components/home/Module02/Module02"
 import AccessiblePlatform from "../components/home/AccessiblePlatform"
 import ModuleThreeProcess from "../components/home/ModuleThreeProcess/ModuleThreeProcess"
 import IndustryRibbon from "../components/home/IndustryRibbon/IndustryRibbon"
@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <main className="text-text-1">
       <Hero />
-      <ProductGallery />
+      <Module02 />
       <AccessiblePlatform />
       <ModuleThreeProcess />
       <IndustryRibbon />
