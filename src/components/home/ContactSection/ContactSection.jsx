@@ -150,7 +150,10 @@ export default function ContactSection() {
         <div className="cs-left">
           <p className="cs-eyebrow">Empecemos por tu negocio</p>
           <h2 className="cs-title font-display">
-            Contanos qué necesitás mejorar. Nosotros pensamos cómo convertirlo en tecnología.
+            Contanos qué necesitás mejorar.
+          </h2>
+          <h2 className="cs-subtitle font-display">
+            Nosotros pensamos cómo convertirlo en tecnología.
           </h2>
           <p className="cs-bajada">
             No necesitás saber qué aplicación crear ni preparar una lista de funciones.
