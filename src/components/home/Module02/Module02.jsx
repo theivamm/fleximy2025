@@ -1,4 +1,5 @@
 import { useTheme } from "../../../context/ThemeContext"
+import croissantImg from "../../../assets/croissant-pistacho.png"
 
 export default function Module02() {
   const { theme } = useTheme()
@@ -107,30 +108,40 @@ function WebsitePanel({ dark }) {
         <div className="web-hero">
           <div className="web-hero__copy">
             <h4 className="web-hero__title">Algo bueno está por pasar.</h4>
-            <p className="web-hero__sub">Café de especialidad y cocinasimple.</p>
+            <p className="web-hero__sub">Café de especialidad y cocina simple.</p>
             <span className="web-hero__cta">Ver el menú</span>
           </div>
           <div className="web-hero__product">
             <div className="web-hero__img">
-              <div className="web-hero__img-glow" />
+              <img
+                src={croissantImg}
+                alt="Croissant de pistacho"
+                width="210"
+                height="210"
+                className="web-hero__photo"
+              />
+              <div className="web-hero__img-halo" />
             </div>
-            <span className="web-hero__price">$4.200</span>
+            <div className="web-hero__tag">
+              <span className="web-hero__tag-name">Croissant Pistacho</span>
+              <span className="web-hero__tag-price">$4.200</span>
+            </div>
           </div>
         </div>
 
         <div className="web-products">
           <div className="web-product">
-            <div className="web-product__swatch" style={{background: dark ? "linear-gradient(135deg, #3a2a1a, #5a3a20)" : "linear-gradient(135deg, #c8a87a, #e0c8a0)"}} />
-            <div>
-              <span className="web-product__name">Croissant Pistacho</span>
-              <span className="web-product__price">$3.800</span>
-            </div>
-          </div>
-          <div className="web-product">
             <div className="web-product__swatch" style={{background: dark ? "linear-gradient(135deg, #1a3a2a, #2a5a3a)" : "linear-gradient(135deg, #a0d0b0, #c0e8c8)"}} />
             <div>
               <span className="web-product__name">Iced Matcha</span>
               <span className="web-product__price">$3.500</span>
+            </div>
+          </div>
+          <div className="web-product">
+            <div className="web-product__swatch" style={{background: dark ? "linear-gradient(135deg, #3a2a1a, #5a3a20)" : "linear-gradient(135deg, #c8a87a, #e0c8a0)"}} />
+            <div>
+              <span className="web-product__name">Roll de Canela</span>
+              <span className="web-product__price">$3.800</span>
             </div>
           </div>
         </div>
@@ -212,11 +223,11 @@ function ManagementPanel({ dark }) {
         <div className="app-actions">
           <span className="app-actions__label">Próximas acciones</span>
           <div className="app-action">
-            <span className="app-action__icon">☐</span>
+            <span className="app-action__check" />
             Preparar mesa 04
           </div>
           <div className="app-action">
-            <span className="app-action__icon">☐</span>
+            <span className="app-action__check" />
             Enviar confirmación
           </div>
         </div>
@@ -236,14 +247,18 @@ function ManagementPanel({ dark }) {
 /* ------------------------------------------------------------------ */
 
 function DashboardPanel({ dark }) {
-  const chartW = 240
-  const chartH = 80
+  const chartW = 260
+  const chartH = 90
   const data = [40, 55, 48, 70, 65, 82, 78]
-  const max = Math.max(...data) * 1.15
+  const max = Math.max(...data) * 1.18
+  const days = ["L", "M", "X", "J", "V", "S", "D"]
   const pts = data
     .map((v, i) => `${(i / (data.length - 1)) * chartW},${chartH - (v / max) * chartH}`)
     .join(" ")
   const area = `0,${chartH} ${pts} ${chartW},${chartH}`
+  const peakIdx = data.indexOf(Math.max(...data))
+  const peakX = (peakIdx / (data.length - 1)) * chartW
+  const peakY = chartH - (data[peakIdx] / max) * chartH
   const last = data[data.length - 1]
   const lx = chartW
   const ly = chartH - (last / max) * chartH
@@ -260,52 +275,104 @@ function DashboardPanel({ dark }) {
       <div className="dash">
         {/* KPIs */}
         <div className="dash-kpis">
-          <div className="dash-kpi">
+          <div className="dash-kpi dash-kpi--wide">
             <span className="dash-kpi__label">Ventas hoy</span>
-            <span className="dash-kpi__value">$184.500</span>
-            <span className="dash-kpi__change">+18%</span>
+            <div className="dash-kpi__row">
+              <span className="dash-kpi__value">$184.500</span>
+              <span className="dash-kpi__change">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2L8.5 6.5H1.5L5 2Z" fill="currentColor"/></svg>
+                +18%
+              </span>
+            </div>
+            <div className="dash-kpi__bar">
+              <div className="dash-kpi__bar-fill" style={{width: "72%"}} />
+            </div>
           </div>
           <div className="dash-kpi">
             <span className="dash-kpi__label">Reservas</span>
-            <span className="dash-kpi__value">12</span>
-            <span className="dash-kpi__change">+3</span>
+            <div className="dash-kpi__row">
+              <span className="dash-kpi__value">12</span>
+              <span className="dash-kpi__change">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2L8.5 6.5H1.5L5 2Z" fill="currentColor"/></svg>
+                +3
+              </span>
+            </div>
+            <div className="dash-kpi__bar">
+              <div className="dash-kpi__bar-fill" style={{width: "60%"}} />
+            </div>
           </div>
           <div className="dash-kpi">
             <span className="dash-kpi__label">Clientes nuevos</span>
-            <span className="dash-kpi__value">8</span>
-            <span className="dash-kpi__change">+12%</span>
+            <div className="dash-kpi__row">
+              <span className="dash-kpi__value">8</span>
+              <span className="dash-kpi__change">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2L8.5 6.5H1.5L5 2Z" fill="currentColor"/></svg>
+                +12%
+              </span>
+            </div>
+            <div className="dash-kpi__bar">
+              <div className="dash-kpi__bar-fill" style={{width: "48%"}} />
+            </div>
           </div>
         </div>
 
         {/* Chart */}
         <div className="dash-chart">
-          <svg viewBox={`0 0 ${chartW} ${chartH}`} preserveAspectRatio="xMidYMid meet">
+          <svg viewBox={`0 0 ${chartW} ${chartH + 18}`} preserveAspectRatio="xMidYMid meet">
             <defs>
               <linearGradient id="m02lg" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stopColor={dark ? "#7c6cff" : "#6555e8"} />
                 <stop offset="100%" stopColor={dark ? "#20d5c7" : "#009f95"} />
               </linearGradient>
               <linearGradient id="m02af" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={dark ? "#7c6cff" : "#6555e8"} stopOpacity="0.25" />
+                <stop offset="0%" stopColor={dark ? "#7c6cff" : "#6555e8"} stopOpacity="0.22" />
                 <stop offset="100%" stopColor={dark ? "#20d5c7" : "#009f95"} stopOpacity="0" />
               </linearGradient>
             </defs>
+            {/* horizontal guide */}
+            <line x1="0" y1={chartH * 0.5} x2={chartW} y2={chartH * 0.5} stroke={dark ? "rgba(155,170,220,0.08)" : "rgba(31,38,70,0.06)"} strokeWidth="1" />
             <polygon points={area} fill="url(#m02af)" />
-            <polyline points={pts} fill="none" stroke="url(#m02lg)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <polyline points={pts} fill="none" stroke="url(#m02lg)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+            {/* peak tooltip */}
+            <rect x={peakX - 22} y={peakY - 22} width="44" height="16" rx="4" fill={dark ? "#1a1f38" : "#ffffff"} stroke={dark ? "rgba(155,170,220,0.18)" : "rgba(31,38,70,0.10)"} strokeWidth="1" />
+            <text x={peakX} y={peakY - 11} textAnchor="middle" fill={dark ? "#f3f5ff" : "#111426"} fontSize="8" fontWeight="700" fontFamily="var(--font-mono)">$38.400</text>
+            {/* last point */}
             <circle cx={lx} cy={ly} r="3.5" fill={dark ? "#f3f5ff" : "#111426"} className="dash-chart__dot" />
+            {/* day labels */}
+            {data.map((_, i) => (
+              <text
+                key={i}
+                x={(i / (data.length - 1)) * chartW}
+                y={chartH + 14}
+                textAnchor="middle"
+                fill={dark ? "#7a84a4" : "#8c94a8"}
+                fontSize="8"
+                fontFamily="var(--font-mono)"
+              >
+                {days[i]}
+              </text>
+            ))}
           </svg>
         </div>
 
         {/* Insight */}
         <div className="dash-insight">
-          <span className="dash-insight__icon">→</span>
-          Tu horario con más actividad es de 19 a 21 h.
+          <div className="dash-insight__accent" />
+          <div className="dash-insight__body">
+            <span className="dash-insight__label">INSIGHT</span>
+            <p className="dash-insight__text">Tu horario con más actividad es de 19 a 21 h.</p>
+          </div>
         </div>
 
         {/* Alert */}
         <div className="dash-alert">
-          <span className="dash-alert__dot" />
-          Stock bajo · Café Brasil
+          <span className="dash-alert__icon">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.5"/><path d="M7 4v3.5M7 9.5v.01" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+          </span>
+          <div className="dash-alert__body">
+            <span className="dash-alert__text">Stock bajo · Café Brasil</span>
+            <span className="dash-alert__action">Revisar hoy</span>
+          </div>
         </div>
       </div>
     </div>
@@ -322,11 +389,11 @@ function vars(dark) {
     "--m02-scene": dark ? "#0d1224" : "#ffffff",
     "--m02-scene-raised": dark ? "#10162b" : "#f8f9fd",
     "--m02-scene-surface": dark ? "#0b1020" : "#f0f2f7",
-    "--m02-border": dark ? "rgba(155,170,220,0.14)" : "rgba(31,38,70,0.10)",
-    "--m02-border-strong": dark ? "rgba(155,170,220,0.24)" : "rgba(31,38,70,0.18)",
-    "--m02-text": dark ? "#f3f5ff" : "#111426",
-    "--m02-text-2": dark ? "#aeb7cf" : "#5a6478",
-    "--m02-text-3": dark ? "#7a84a4" : "#8c94a8",
+    "--m02-border": dark ? "rgba(155,170,220,0.14)" : "rgba(40,50,90,0.10)",
+    "--m02-border-strong": dark ? "rgba(155,170,220,0.24)" : "rgba(40,50,90,0.16)",
+    "--m02-text": dark ? "#f3f5ff" : "#11162a",
+    "--m02-text-2": dark ? "#b8c2dc" : "#525b72",
+    "--m02-text-3": dark ? "#8e98b8" : "#7a839a",
     "--m02-violet": dark ? "#7c6cff" : "#6555e8",
     "--m02-cyan": dark ? "#20d5c7" : "#009f95",
     "--m02-green": dark ? "#42d392" : "#16855b",
@@ -408,7 +475,7 @@ function css(dark) {
       display: flex;
       align-items: center;
       gap: 12px;
-      height: 54px;
+      height: 48px;
       padding: 0 20px;
       border-bottom: 1px solid var(--m02-border);
       background: var(--m02-scene-raised);
@@ -418,8 +485,8 @@ function css(dark) {
       gap: 6px;
     }
     .pj-topbar__dots i {
-      width: 9px;
-      height: 9px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: ${dark ? "rgba(155,170,220,0.18)" : "rgba(31,38,70,0.12)"};
     }
@@ -434,7 +501,7 @@ function css(dark) {
     .pj-topbar__status {
       margin-left: auto;
       font-family: var(--font-mono);
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.14em;
       color: var(--m02-green);
@@ -450,17 +517,17 @@ function css(dark) {
       background: var(--m02-green);
     }
 
-    /* 3-column grid */
+    /* 3-column grid — content-driven height */
     .pj-grid {
       display: grid;
       grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.16fr) minmax(0, 0.9fr);
-      height: clamp(500px, 32vw, 610px);
-      min-height: 500px;
+      min-height: clamp(240px, 15vw, 340px);
+      height: auto;
     }
     .pj-col {
       display: flex;
       flex-direction: column;
-      padding: clamp(16px, 1.8vw, 24px);
+      padding: clamp(20px, 2vw, 30px) clamp(20px, 2vw, 28px) clamp(24px, 2.2vw, 32px);
       border-right: 1px solid var(--m02-border);
       min-width: 0;
       position: relative;
@@ -474,7 +541,7 @@ function css(dark) {
 
     /* Column headers */
     .pj-col__head {
-      margin-bottom: clamp(12px, 1.4vw, 18px);
+      margin-bottom: clamp(14px, 1.6vw, 22px);
     }
     .pj-col__num {
       font-family: var(--font-mono);
@@ -541,6 +608,7 @@ function css(dark) {
       border-radius: 12px;
       border: 1px solid var(--m02-border);
       background: ${dark ? "#0e1128" : "#ffffff"};
+      box-shadow: ${dark ? "none" : "0 2px 8px rgba(45,53,90,0.06)"};
       overflow: hidden;
       min-height: 0;
     }
@@ -595,9 +663,10 @@ function css(dark) {
     .web-hero {
       flex: 1;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      padding: 12px;
+      grid-template-columns: minmax(0, 0.55fr) minmax(120px, 0.45fr);
+      align-items: center;
+      gap: 12px;
+      padding: 14px 14px 10px;
       min-height: 0;
     }
     .web-hero__copy {
@@ -633,35 +702,54 @@ function css(dark) {
     }
     .web-hero__product {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
     }
     .web-hero__img {
-      width: 80%;
-      aspect-ratio: 1;
-      border-radius: 16px;
-      background: radial-gradient(circle, ${dark ? "rgba(124,108,255,0.2)" : "rgba(101,85,232,0.12)"}, ${dark ? "rgba(32,213,199,0.1)" : "rgba(0,159,149,0.08)"} 60%, transparent 80%);
       position: relative;
+      width: min(100%, 180px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
     }
-    .web-hero__img-glow {
+    .web-hero__photo {
+      width: 72%;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 24px rgba(16, 12, 30, ${dark ? "0.32" : "0.18"}));
+      position: relative;
+      z-index: 1;
+    }
+    .web-hero__img-halo {
       position: absolute;
-      inset: 15%;
+      inset: 10%;
       border-radius: 50%;
-      background: radial-gradient(circle, ${dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)"}, transparent 70%);
+      background: radial-gradient(circle, ${dark ? "rgba(124,108,255,0.16)" : "rgba(101,85,232,0.10)"}, transparent 70%);
+      z-index: 0;
     }
-    .web-hero__price {
-      position: absolute;
-      bottom: 4px;
-      right: 4px;
-      font-family: var(--font-mono);
-      font-size: 10px;
+    .web-hero__tag {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+      margin-top: 6px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: ${dark ? "rgba(14,17,40,0.85)" : "rgba(245,246,251,0.95)"};
+      border: 1px solid var(--m02-border);
+    }
+    .web-hero__tag-name {
+      font-size: 9px;
       font-weight: 600;
       color: var(--m02-text);
-      background: ${dark ? "rgba(14,17,40,0.85)" : "rgba(255,255,255,0.9)"};
-      padding: 3px 7px;
-      border-radius: 6px;
-      border: 1px solid var(--m02-border);
+    }
+    .web-hero__tag-price {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--m02-text-2);
     }
 
     .web-products {
@@ -709,6 +797,7 @@ function css(dark) {
       border-radius: 12px;
       border: 1px solid var(--m02-border);
       background: ${dark ? "#0e1128" : "#ffffff"};
+      box-shadow: ${dark ? "none" : "0 2px 8px rgba(45,53,90,0.06)"};
       overflow: hidden;
       min-height: 0;
     }
@@ -728,7 +817,7 @@ function css(dark) {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 7px 12px;
+      padding: 6px 12px;
       border-bottom: 1px solid var(--m02-border);
     }
     .app-entry:last-child {
@@ -738,8 +827,8 @@ function css(dark) {
       background: ${dark ? "rgba(124,108,255,0.08)" : "rgba(101,85,232,0.05)"};
     }
     .app-entry__ava {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       display: grid;
       place-items: center;
@@ -834,11 +923,11 @@ function css(dark) {
     }
 
     .app-actions {
-      padding: 10px 12px;
+      padding: 10px 12px 14px;
       border-top: 1px solid var(--m02-border);
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
     }
     .app-actions__label {
       font-size: 9px;
@@ -855,9 +944,12 @@ function css(dark) {
       font-size: 11px;
       color: var(--m02-text-2);
     }
-    .app-action__icon {
-      color: var(--m02-text-3);
-      font-size: 10px;
+    .app-action__check {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      border: 1.5px solid var(--m02-border-strong);
+      flex-shrink: 0;
     }
 
     /* ===== DASHBOARD PANEL ===== */
@@ -869,13 +961,14 @@ function css(dark) {
       border-radius: 12px;
       border: 1px solid var(--m02-border);
       background: ${dark ? "#0e1128" : "#ffffff"};
+      box-shadow: ${dark ? "none" : "0 2px 8px rgba(45,53,90,0.06)"};
       padding: 12px;
       overflow: hidden;
       min-height: 0;
     }
     .dash-kpis {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1.25fr 0.85fr 0.9fr;
       gap: 8px;
     }
     .dash-kpi {
@@ -893,20 +986,37 @@ function css(dark) {
       color: var(--m02-text-3);
       margin-bottom: 4px;
     }
+    .dash-kpi__row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
     .dash-kpi__value {
-      display: block;
       font-size: clamp(14px, 1.1vw, 18px);
       font-weight: 700;
       color: var(--m02-text);
       line-height: 1.1;
     }
     .dash-kpi__change {
-      display: block;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
       font-family: var(--font-mono);
       font-size: 9px;
       font-weight: 600;
       color: var(--m02-green);
-      margin-top: 2px;
+    }
+    .dash-kpi__bar {
+      height: 3px;
+      border-radius: 2px;
+      background: ${dark ? "rgba(155,170,220,0.10)" : "rgba(31,38,70,0.06)"};
+      margin-top: 6px;
+      overflow: hidden;
+    }
+    .dash-kpi__bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, ${dark ? "#7c6cff" : "#6555e8"}, ${dark ? "#20d5c7" : "#009f95"});
     }
 
     .dash-chart {
@@ -928,18 +1038,36 @@ function css(dark) {
 
     .dash-insight {
       display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      color: var(--m02-text-2);
-      padding: 8px 10px;
+      align-items: stretch;
+      gap: 0;
       border-radius: 8px;
       border: 1px solid var(--m02-border);
       background: ${dark ? "rgba(124,108,255,0.06)" : "rgba(101,85,232,0.04)"};
+      overflow: hidden;
     }
-    .dash-insight__icon {
-      color: var(--m02-violet);
+    .dash-insight__accent {
+      width: 3px;
+      flex-shrink: 0;
+      background: linear-gradient(180deg, ${dark ? "#7c6cff" : "#6555e8"}, ${dark ? "#20d5c7" : "#009f95"});
+    }
+    .dash-insight__body {
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .dash-insight__label {
+      font-family: var(--font-mono);
+      font-size: 8px;
       font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--m02-violet);
+    }
+    .dash-insight__text {
+      font-size: 11px;
+      line-height: 1.4;
+      color: var(--m02-text-2);
+      margin: 0;
     }
 
     .dash-alert {
@@ -951,49 +1079,68 @@ function css(dark) {
       color: var(--m02-amber);
       padding: 7px 10px;
       border-radius: 8px;
-      border: 1px solid ${dark ? "rgba(255,180,94,0.3)" : "rgba(168,96,0,0.2)"};
-      background: ${dark ? "rgba(255,180,94,0.08)" : "rgba(168,96,0,0.06)"};
+      border: 1px solid ${dark ? "rgba(255,180,94,0.28)" : "rgba(168,96,0,0.18)"};
+      background: ${dark ? "rgba(255,180,94,0.07)" : "rgba(168,96,0,0.05)"};
     }
-    .dash-alert__dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--m02-amber);
+    .dash-alert__icon {
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+    .dash-alert__body {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+    .dash-alert__text {
+      flex: 1;
+    }
+    .dash-alert__action {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--m02-amber);
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: ${dark ? "rgba(255,180,94,0.12)" : "rgba(168,96,0,0.08)"};
+      white-space: nowrap;
     }
 
-    /* ===== CONNECTION LINE ===== */
+    /* ===== CONNECTION LINE — dedicated strip ===== */
     .pj-line {
-      position: absolute;
-      top: 68%;
-      left: 0;
-      right: 0;
-      height: 2px;
+      position: relative;
+      height: 50px;
+      margin: 0;
       pointer-events: none;
     }
     .pj-line__track {
       position: absolute;
-      inset: 0;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      transform: translateY(-50%);
       background: linear-gradient(90deg,
         var(--m02-violet) 0%,
         ${dark ? "#4d8dff" : "#4d8dff"} 50%,
         var(--m02-cyan) 100%);
-      opacity: 0.25;
+      opacity: 0.28;
     }
     .pj-line__pulse {
       position: absolute;
-      top: -4px;
+      top: calc(50% - 5px);
       left: 0;
       width: 60px;
       height: 10px;
       border-radius: 50%;
-      background: radial-gradient(ellipse, ${dark ? "rgba(124,108,255,0.6)" : "rgba(101,85,232,0.4)"}, transparent 70%);
+      background: radial-gradient(ellipse, ${dark ? "rgba(124,108,255,0.55)" : "rgba(101,85,232,0.35)"}, transparent 70%);
       animation: m02pulse 9s ease-in-out infinite;
     }
     .pj-line__node {
       position: absolute;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translate(-50%, -50%);
       width: 10px;
       height: 10px;
       border-radius: 50%;
@@ -1016,13 +1163,14 @@ function css(dark) {
     /* ===== CLOSING ===== */
     .m02-closing {
       text-align: center;
-      margin: clamp(40px, 4vw, 52px) auto 0;
+      margin: clamp(56px, 5vw, 76px) auto 0;
       font-size: clamp(20px, 1.8vw, 28px);
       font-weight: 600;
       line-height: 1.35;
-      max-width: 780px;
+      max-width: 820px;
       width: min(1480px, calc(100% - 64px));
       margin-inline: auto;
+      padding-inline: 20px;
       color: var(--m02-text);
     }
     .m02-closing strong {
@@ -1050,12 +1198,10 @@ function css(dark) {
       }
     }
 
-    @media (max-width: 1023px) {
+    @media (max-width: 1279px) and (min-width: 1024px) {
       .pj-grid {
         grid-template-columns: 2fr 3fr;
         grid-template-rows: auto auto;
-        height: auto;
-        min-height: auto;
       }
       .pj-col--web {
         grid-row: 1;
@@ -1094,6 +1240,7 @@ function css(dark) {
       .pj-col--app {
         background: transparent;
       }
+      .pj-line { display: none; }
     }
 
     /* Mobile */
@@ -1138,14 +1285,22 @@ function css(dark) {
         gap: 8px;
       }
       .web-hero__product {
-        display: none;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+      }
+      .web-hero__img {
+        width: 80px;
+      }
+      .web-hero__photo {
+        width: 100%;
       }
       .web-products {
         display: none;
       }
 
-      .app-inbox {
-        display: none;
+      .app-entry {
+        padding: 5px 10px;
       }
 
       .dash-kpis {
