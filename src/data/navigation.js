@@ -4,9 +4,9 @@ export { CONTACT }
 
 export const NAV = {
   main: [
-    { label: "Qué hacemos", href: "#que-hacemos" },
-    { label: "Cómo trabajamos", href: "#como-trabajamos" },
-    { label: "Contacto", href: "#contacto" },
+    { label: "Home", to: "/" },
+    { label: "Soluciones NFC", to: "/soluciones/nfc" },
+    { label: "Contacto", to: "/contacto" },
   ],
   footer: [
     { label: "Qué hacemos", href: "#que-hacemos" },

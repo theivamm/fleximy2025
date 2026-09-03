@@ -46,15 +46,6 @@ export default function Header() {
     return () => { document.body.style.overflow = "" }
   }, [mobileOpen])
 
-  const handleAnchor = (e, href) => {
-    if (href.startsWith("#")) {
-      e.preventDefault()
-      setMobileOpen(false)
-      const el = document.querySelector(href)
-      if (el) el.scrollIntoView({ behavior: "smooth" })
-    }
-  }
-
   return (
     <header
       className={`sticky inset-x-0 top-0 z-50 border-b transition-all duration-300 isolation-isolate ${
@@ -73,14 +64,14 @@ export default function Header() {
 
           <nav className="hidden items-center gap-1 nav:flex" aria-label="Principal">
             {NAV.main.map((item) => (
-              <a
+              <Link
                 key={item.label}
-                href={item.href}
-                onClick={(e) => handleAnchor(e, item.href)}
+                to={item.to}
+                onClick={() => setMobileOpen(false)}
                 className="rounded-lg px-3.5 py-2 text-sm font-medium text-text-2 transition-colors hover:text-text-1"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -117,22 +108,15 @@ export default function Header() {
           >
             <div className="container flex flex-col gap-1 py-4">
               {NAV.main.map((item) => (
-                <a
+                <Link
                   key={item.label}
-                  href={item.href}
-                  onClick={(e) => handleAnchor(e, item.href)}
+                  to={item.to}
+                  onClick={() => setMobileOpen(false)}
                   className="rounded-xl px-4 py-3 text-[15px] font-semibold text-text-2 hover:bg-surface-2 hover:text-text-1"
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
-              <Link
-                to="/contacto"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-xl px-4 py-3 text-[15px] font-semibold text-text-1 hover:bg-surface-2"
-              >
-                Contacto
-              </Link>
               <div className="mt-3 flex items-center justify-between border-t border-outline px-4 pt-4">
                 <ThemeToggle />
                 <Link

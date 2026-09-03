@@ -13,9 +13,10 @@ export const SEO_META = {
       "Contanos tu idea. Diseñamos y desarrollamos webs, apps, dashboards y automatizaciones a medida.",
     robots: "index, follow",
   },
-  "/nfc-service": {
-    title: "NFC Service — Fleximy",
-    description: "Muy pronto: tarjetas y soluciones NFC de Fleximy.",
+  "/soluciones/nfc": {
+    title: "Soluciones NFC para negocios | Fleximy",
+    description:
+      "Facilitá reseñas, consultas, menús, reservas, pagos y más con soluciones NFC configurables para tu negocio. Sin apps y listas para usar.",
     robots: "index, follow",
   },
   "/privacidad": {
