@@ -3,7 +3,7 @@ import ThemeToggle from "./ui/ThemeToggle"
 import { useTheme } from "../context/ThemeContext"
 import { Mail, MessageCircle } from "lucide-react"
 import { NAV, CONTACT } from "../data/navigation"
-import { COMPANY } from "../data/config"
+import { COMPANY, whatsappUrl } from "../data/config"
 import logoSvgBlanco from "../assets/logosvgblanco.svg"
 import logoSvgColor from "../assets/logosvgcolor.svg"
 import "./footer.css"
@@ -22,14 +22,6 @@ function FooterLogo() {
 }
 
 export default function Footer() {
-  const handleAnchor = (e, href) => {
-    if (href?.startsWith("#")) {
-      e.preventDefault()
-      const el = document.querySelector(href)
-      if (el) el.scrollIntoView({ behavior: "smooth" })
-    }
-  }
-
   return (
     <footer className="ft relative overflow-hidden border-t border-outline">
       <div className="container py-16 sm:py-20">
@@ -50,15 +42,11 @@ export default function Footer() {
           <nav aria-label="Navegación">
             <p className="mb-3 text-sm font-bold text-text-1">Navegación</p>
             <ul className="flex flex-col gap-2">
-              {NAV.footer.map((l) => (
+              {NAV.main.map((l) => (
                 <li key={l.label}>
-                  <a
-                    href={l.href}
-                    onClick={(e) => handleAnchor(e, l.href)}
-                    className="text-sm text-text-secondary transition-colors hover:text-text-1"
-                  >
+                  <Link to={l.to} className="text-sm text-text-secondary transition-colors hover:text-text-1">
                     {l.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -67,6 +55,16 @@ export default function Footer() {
           {/* Contacto */}
           <div>
             <p className="mb-3 text-sm font-bold text-text-1">Contacto</p>
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mb-4 inline-flex h-11 items-center gap-2 rounded-[var(--radius-btn)] px-5 text-sm font-semibold text-white shadow-[var(--shadow-sm)] transition-transform duration-200 hover:-translate-y-0.5"
+              style={{ background: "linear-gradient(135deg,#25d366 0%,#128c7e 100%)" }}
+            >
+              <MessageCircle className="size-4 shrink-0" aria-hidden="true" />
+              Escribinos por WhatsApp
+            </a>
             <ul className="flex flex-col gap-2.5">
               <li>
                 <a

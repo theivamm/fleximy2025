@@ -6,6 +6,7 @@ import Header from "./components/navigation/Header"
 import Footer from "./components/Footer"
 import Seo from "./components/seo/Seo"
 import WhatsAppContact from "./components/WhatsAppContact"
+import SocialProofWidget from "./components/SocialProofWidget"
 
 const Home = lazy(() => import("./pages/Home"))
 const NfcSolution = lazy(() => import("./pages/NfcSolution"))
@@ -33,6 +34,7 @@ function PublicShell({ children }) {
       <main className="flex-1">{children}</main>
       <WhatsAppContact />
       <Footer />
+      <SocialProofWidget />
     </div>
   )
 }
