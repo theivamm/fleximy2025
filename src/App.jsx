@@ -5,9 +5,9 @@ import { ThemeProvider } from "./context/ThemeContext"
 import Header from "./components/navigation/Header"
 import Footer from "./components/Footer"
 import Seo from "./components/seo/Seo"
+import WhatsAppContact from "./components/WhatsAppContact"
 
 const Home = lazy(() => import("./pages/Home"))
-const Contacto = lazy(() => import("./pages/Contacto"))
 const NfcSolution = lazy(() => import("./pages/NfcSolution"))
 const Privacidad = lazy(() => import("./pages/Privacidad"))
 const Terminos = lazy(() => import("./pages/Terminos"))
@@ -31,6 +31,7 @@ function PublicShell({ children }) {
     <div className="min-h-screen bg-bg-0 text-text-1 flex flex-col">
       <Header />
       <main className="flex-1">{children}</main>
+      <WhatsAppContact />
       <Footer />
     </div>
   )
@@ -45,7 +46,6 @@ function AppContent() {
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageTransition><Home /></PageTransition>} />
-            <Route path="/contacto" element={<PageTransition><Contacto /></PageTransition>} />
             <Route path="/soluciones/nfc" element={<PageTransition><NfcSolution /></PageTransition>} />
             <Route path="/nfc-service" element={<Navigate to="/soluciones/nfc" replace />} />
             <Route path="/privacidad" element={<PageTransition><Privacidad /></PageTransition>} />

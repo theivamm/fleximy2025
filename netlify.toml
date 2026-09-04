@@ -8,11 +8,6 @@
   status = 200
 
 [[redirects]]
-  from = "/contacto"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
   from = "/privacidad"
   to = "/index.html"
   status = 200

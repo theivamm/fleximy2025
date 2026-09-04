@@ -24,8 +24,8 @@ export default function Terminos() {
           </p>
           <h2 className="h3-title text-text-1">Contacto</h2>
           <p>
-            Para consultas sobre estos terminos, escribinos a traves de
-            nuestro formulario de contacto o por WhatsApp.
+            Para consultas sobre estos terminos, escribinos por WhatsApp o usa
+            los formularios de contacto de nuestros servicios.
           </p>
         </div>
       </div>

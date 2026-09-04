@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import ThemeToggle from "../ui/ThemeToggle"
 import { NAV, CONTACT } from "../../data/navigation"
+import { whatsappUrl } from "../../data/config"
 import logoSvgBlanco from "../../assets/logosvgblanco.svg"
 import logoSvgColor from "../../assets/logosvgcolor.svg"
 import { useTheme } from "../../context/ThemeContext"
@@ -77,13 +78,15 @@ export default function Header() {
 
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <Link
-              to="/contacto"
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
               className="hidden h-10 items-center rounded-[var(--radius-btn)] px-5 text-sm font-semibold text-white shadow-[var(--shadow-sm)] transition-transform duration-200 hover:-translate-y-0.5 nav:inline-flex"
               style={{ backgroundImage: "var(--gradient-primary)" }}
             >
               {CONTACT.ctaPrimary}
-            </Link>
+            </a>
             <button
               type="button"
               onClick={() => setMobileOpen((o) => !o)}
@@ -119,14 +122,15 @@ export default function Header() {
               ))}
               <div className="mt-3 flex items-center justify-between border-t border-outline px-4 pt-4">
                 <ThemeToggle />
-                <Link
-                  to="/contacto"
-                  onClick={() => setMobileOpen(false)}
+                <a
+                  href={whatsappUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex h-11 items-center rounded-[var(--radius-btn)] px-5 text-sm font-semibold text-white"
                   style={{ backgroundImage: "var(--gradient-primary)" }}
                 >
                   {CONTACT.ctaPrimary}
-                </Link>
+                </a>
               </div>
             </div>
           </motion.div>

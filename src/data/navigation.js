@@ -6,7 +6,6 @@ export const NAV = {
   main: [
     { label: "Home", to: "/" },
     { label: "Soluciones NFC", to: "/soluciones/nfc" },
-    { label: "Contacto", to: "/contacto" },
   ],
   footer: [
     { label: "Qué hacemos", href: "#que-hacemos" },

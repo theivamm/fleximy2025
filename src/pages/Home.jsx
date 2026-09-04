@@ -3,7 +3,6 @@ import Module02 from "../components/home/Module02/Module02"
 import AccessiblePlatform from "../components/home/AccessiblePlatform"
 import ModuleThreeProcess from "../components/home/ModuleThreeProcess/ModuleThreeProcess"
 import IndustryRibbon from "../components/home/IndustryRibbon/IndustryRibbon"
-import ContactSection from "../components/home/ContactSection/ContactSection"
 import FAQ from "../components/home/FAQ/FAQ"
 
 export default function Home() {
@@ -14,7 +13,6 @@ export default function Home() {
       <AccessiblePlatform />
       <ModuleThreeProcess />
       <IndustryRibbon />
-      <ContactSection />
       <FAQ />
     </main>
   )

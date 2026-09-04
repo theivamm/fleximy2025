@@ -1,5 +1,6 @@
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
+import { whatsappUrl } from "../../data/config"
 
 const stagger = {
   hidden: {},
@@ -77,7 +78,9 @@ style={{
 
       <motion.div variants={fadeUp} className="hero__actions mt-7 flex flex-row flex-nowrap items-center gap-3">
         <a
-          href="/contacto"
+          href={whatsappUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
           data-track="hero_cta_principal"
           className="inline-flex h-[52px] min-w-max items-center justify-center gap-2.5 rounded-xl px-7 text-sm font-semibold text-white shadow-[0_8px_32px_rgba(121,87,255,0.3)] transition-all duration-200 hover:shadow-[0_8px_40px_rgba(121,87,255,0.45)] hover:-translate-y-0.5"
           style={{ background: "linear-gradient(135deg, #7957ff 0%, #5268ff 44%, #15cbea 100%)" }}

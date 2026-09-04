@@ -7,12 +7,6 @@ export const SEO_META = {
       "Creamos el website y la aplicación de gestión que tu negocio necesita para vender, administrar clientes y ordenar toda la operación.",
     robots: "index, follow",
   },
-  "/contacto": {
-    title: "Contacto — Fleximy",
-    description:
-      "Contanos tu idea. Diseñamos y desarrollamos webs, apps, dashboards y automatizaciones a medida.",
-    robots: "index, follow",
-  },
   "/soluciones/nfc": {
     title: "Soluciones NFC para negocios | Fleximy",
     description:

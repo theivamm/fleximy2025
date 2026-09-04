@@ -13,8 +13,9 @@ export default function Privacidad() {
           <h2 className="h3-title text-text-1">Informacion que recopilamos</h2>
           <p>
             Recopilamos unica y exclusivamente la informacion que nos proporcionas
-            de forma voluntaria a traves del formulario de contacto: nombre,
-            empresa, email y descripcion de tu consulta.
+            de forma voluntaria cuando nos contactas por WhatsApp o a traves de
+            los formularios de nuestros servicios: nombre, empresa, email y
+            descripcion de tu consulta.
           </p>
           <h2 className="h3-title text-text-1">Uso de la informacion</h2>
           <p>
@@ -24,8 +25,8 @@ export default function Privacidad() {
           </p>
           <h2 className="h3-title text-text-1">Contacto</h2>
           <p>
-            Si tenes preguntas sobre esta politica, escribinos a traves de
-            nuestro formulario de contacto o por WhatsApp.
+            Si tenes preguntas sobre esta politica, escribinos por WhatsApp
+            o usa los formularios de contacto de nuestros servicios.
           </p>
         </div>
       </div>

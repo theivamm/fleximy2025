@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react"
-import { Link } from "react-router-dom"
 import { ArrowRight } from "lucide-react"
 import { CONTACT } from "../../data/navigation"
+import { whatsappUrl } from "../../data/config"
 
 const TABS = ["Web", "App", "Dashboard"]
 
@@ -149,15 +149,17 @@ export default function Hero() {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link
-                to="/contacto"
+              <a
+                href={whatsappUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
                 data-track="hero_cta_principal"
                 className="inline-flex h-12 items-center gap-2 rounded-[var(--radius-btn)] px-7 text-sm font-semibold text-white shadow-[var(--shadow-md)] transition-transform duration-200 hover:-translate-y-0.5"
                 style={{ backgroundImage: "var(--gradient-primary)" }}
               >
                 {CONTACT.ctaPrimary}
                 <ArrowRight size={16} />
-              </Link>
+              </a>
               <a
                 href="#servicios"
                 onClick={(e) => {
