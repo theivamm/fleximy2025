@@ -9,16 +9,19 @@ import {
 } from "lucide-react"
 import { useTheme } from "../context/ThemeContext"
 import { whatsappUrl } from "../data/config"
-import { NFC_CONFIG, NFC_FORMATS, NFC_BUSINESS_CASES } from "../data/nfcConfig"
+import { NFC_CONFIG, NFC_BUSINESS_CASES } from "../data/nfcConfig"
 import { track } from "../lib/analytics"
 
 /* ==========================================================================
    FLEXIMY NFC — LANDING DE SOLUCIONES NFC (ruta /soluciones/nfc)
+   Rework visual y técnico definitivo.
    ========================================================================== */
 
 export default function NfcSolution() {
   const { theme } = useTheme()
   const dark = theme !== "light"
+  const [dest, setDest] = useState("review")
+  const configRef = useRef(null)
 
   useEffect(() => {
     track("view_nfc_page")
@@ -46,37 +49,35 @@ export default function NfcSolution() {
     return () => { if (el) el.remove() }
   }, [])
 
-  const trackPrimary = (label) => () => {
-    track("click_nfc_primary_cta", { cta: label })
+  const pickDestination = (id) => {
+    setDest(id)
+    track("select_nfc_use_case", { use_case: id })
+    configRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
   }
 
   return (
     <div className="nfc" style={vars(dark)}>
       <style>{css(dark)}</style>
 
-      <Hero onPrimary={trackPrimary("hero")} />
+      <Hero onPrimary={() => track("click_nfc_primary_cta", { cta: "hero" })} />
 
-      <FrictionComparison />
+      <Friction />
 
-      <MoreThanReviews />
-
-      <ActionBento />
+      <Possibilities onPick={pickDestination} />
 
       <HowItWorks />
 
-      <ConfigurableDestination />
+      <ConfigurableDestination activeDest={dest} setDest={setDest} sectionRef={configRef} />
 
-      <BusinessCases />
+      <Applications />
 
-      <PhysicalFormats />
+      <Scale />
 
-      <CommercialOptions />
-
-      <TrustBenefits />
+      <Trust />
 
       <LeadForm />
 
-      <NfcFaq />
+      <Faq />
     </div>
   )
 }
@@ -86,49 +87,19 @@ export default function NfcSolution() {
    ========================================================================== */
 
 const HERO_DESTINATIONS = [
-  {
-    id: "review",
-    label: "Reseña de Google",
-    verb: "RESEÑAS",
-    tag: "Tu negocio",
-    icon: <Star size={14} fill="currentColor" />,
-    screen: <ReviewScreen />,
-  },
-  {
-    id: "whatsapp",
-    label: "WhatsApp",
-    verb: "PEDIDOS",
-    tag: "Conversación",
-    icon: <MessageCircle size={14} />,
-    screen: <WhatsappScreen />,
-  },
-  {
-    id: "menu",
-    label: "Menú digital",
-    verb: "MENÚ",
-    tag: "Tu menú",
-    icon: <Menu size={22} />,
-    screen: <MenuScreen />,
-  },
-  {
-    id: "booking",
-    label: "Reservar turno",
-    verb: "RESERVAS",
-    tag: "Tu calendario",
-    icon: <Calendar size={22} />,
-    screen: <BookingScreen />,
-  },
+  { id: "review", label: "Reseña de Google", verb: "RESEÑAS", icon: <Star size={14} fill="currentColor" />, screen: <ReviewScreen /> },
+  { id: "whatsapp", label: "WhatsApp", verb: "PEDIDOS", icon: <MessageCircle size={14} />, screen: <WhatsappScreen /> },
+  { id: "menu", label: "Menú digital", verb: "MENÚ", icon: <Menu size={20} />, screen: <MenuScreen /> },
+  { id: "booking", label: "Reservar turno", verb: "RESERVAS", icon: <Calendar size={20} />, screen: <BookingScreen /> },
 ]
 
 function Hero({ onPrimary }) {
   const [destIdx, setDestIdx] = useState(0)
-  const [phase, setPhase] = useState("approach") // approach -> tap -> opened
+  const [phase, setPhase] = useState("approach")
   const [moved, setMoved] = useState({ x: 0, y: 0 })
   const visualRef = useRef(null)
-
   const dest = HERO_DESTINATIONS[destIdx]
 
-  // Loop de destinos: cada 3.2s cambia el caso de uso.
   useEffect(() => {
     const id = setInterval(() => {
       setDestIdx((i) => (i + 1) % HERO_DESTINATIONS.length)
@@ -137,17 +108,12 @@ function Hero({ onPrimary }) {
     return () => clearInterval(id)
   }, [])
 
-  // Fases del toque dentro de cada destino.
   useEffect(() => {
     const t1 = setTimeout(() => setPhase("tap"), 700)
     const t2 = setTimeout(() => setPhase("opened"), 1500)
-    return () => {
-      clearTimeout(t1)
-      clearTimeout(t2)
-    }
+    return () => { clearTimeout(t1); clearTimeout(t2) }
   }, [destIdx])
 
-  // Glow reactivo al mouse (no táctil, no reduced-motion).
   useEffect(() => {
     const el = visualRef.current
     if (!el) return
@@ -155,38 +121,34 @@ function Hero({ onPrimary }) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
     const onMove = (e) => {
       const r = el.getBoundingClientRect()
-      const x = (e.clientX - r.left) / r.width
-      const y = (e.clientY - r.top) / r.height
-      setMoved({ x, y })
+      setMoved({ x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height })
     }
     el.addEventListener("mousemove", onMove)
     return () => el.removeEventListener("mousemove", onMove)
   }, [])
 
+  const scrollToForm = (e) => {
+    e.preventDefault()
+    document.querySelector("#nfc-form")?.scrollIntoView({ behavior: "smooth" })
+    onPrimary()
+  }
+
   return (
     <section className="nfc-hero">
-      <div className="nfc-hero__grid container-wide">
+      <div className="nfc-container--wide nfc-hero__grid">
         <div className="nfc-hero__copy">
           <p className="kicker">FLEXIMY NFC · DEL MUNDO FÍSICO AL DIGITAL</p>
-          <h1 className="nfc-hero__title font-display">
-            Un toque. <br />
-            <span className="text-gradient">La acción que tu negocio necesita.</span>
+          <h1 className="nfc-display nfc-hero__title font-display">
+            Un toque. <span className="text-gradient">La acción que tu negocio necesita.</span>
           </h1>
-          <p className="nfc-hero__desc">
+          <p className="nfc-lead-para nfc-hero__desc">
             Tus clientes acercan el celular y llegan directo a tu reseña de Google,
             WhatsApp, menú, reservas, pagos o cualquier enlace que quieras activar.
           </p>
-          <p className="nfc-hero__refuerzo">
-            Sin aplicaciones. Sin buscar links. Sin explicar pasos.
-          </p>
+          <p className="nfc-hero__refuerzo">Sin aplicaciones. Sin buscar links. Sin explicar pasos.</p>
           <div className="nfc-hero__ctas">
-            <a
-              href="#nfc-form"
-              onClick={(e) => { e.preventDefault(); document.querySelector("#nfc-form")?.scrollIntoView({ behavior: "smooth" }); onPrimary() }}
-              className="nfc-btn nfc-btn--primary"
-            >
-              Quiero mi solución NFC
-              <ArrowRight size={17} />
+            <a href="#nfc-form" onClick={scrollToForm} className="nfc-btn nfc-btn--primary">
+              Quiero mi solución NFC <ArrowRight size={17} />
             </a>
             <a
               href="#nfc-posibilidades"
@@ -196,32 +158,18 @@ function Hero({ onPrimary }) {
               Descubrir posibilidades
             </a>
           </div>
-          <p className="nfc-hero__micro">NFC + QR · Configurable · Listo para usar</p>
+          <p className="nfc-hero__micro">NFC + QR · · Configurable · · Listo para usar</p>
         </div>
 
         <div className="nfc-hero__visual" ref={visualRef}>
           <div
             className="nfc-hero__scene"
-            style={{
-              transform: `perspective(1200px) rotateX(${(moved.y - 0.5) * 3}deg) rotateY(${(moved.x - 0.5) * 3}deg)`,
-            }}
+            style={{ transform: `perspective(1200px) rotateX(${(moved.y - 0.5) * 3}deg) rotateY(${(moved.x - 0.5) * 3}deg)` }}
           >
             <div className="nfc-hero__glow" style={{ left: `${moved.x * 100}%`, top: `${moved.y * 100}%` }} aria-hidden="true" />
-
-            {/* Soporte NFC */}
             <NfcPhysicalTag />
-
-            {/* Teléfono */}
-            <NfcPhone
-              phase={phase}
-              label={dest.label}
-              icon={dest.icon}
-            >
-              {dest.screen}
-            </NfcPhone>
+            <NfcPhone phase={phase} label={dest.label} icon={dest.icon}>{dest.screen}</NfcPhone>
           </div>
-
-          {/* Tipografía animada */}
           <DestinationRotator verbs={HERO_DESTINATIONS.map((d) => d.verb)} />
         </div>
       </div>
@@ -229,7 +177,6 @@ function Hero({ onPrimary }) {
   )
 }
 
-/* --- Soporte NFC físico (CSS) --- */
 function NfcPhysicalTag() {
   return (
     <div className="nfc-tag">
@@ -240,7 +187,7 @@ function NfcPhysicalTag() {
         <strong>ACERCÁ TU CELULAR</strong>
       </div>
       <div className="nfc-tag__qr" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="34" height="34">
+        <svg viewBox="0 0 24 24" width="30" height="30">
           <rect x="3" y="3" width="8" height="8" rx="1.5" fill="currentColor" />
           <rect x="13" y="3" width="8" height="8" rx="1.5" fill="currentColor" />
           <rect x="3" y="13" width="8" height="8" rx="1.5" fill="currentColor" />
@@ -255,33 +202,24 @@ function NfcPhysicalTag() {
   )
 }
 
-/* --- Ondas NFC + teléfono --- */
 function NfcPhone({ phase, label, icon, children }) {
   return (
     <div className={`nfc-phone nfc-phone--${phase}`}>
-      {/* Ondas NFC */}
       <div className="nfc-waves" aria-hidden="true">
         <span className="nfc-wave nfc-wave--1" />
         <span className="nfc-wave nfc-wave--2" />
         <span className="nfc-wave nfc-wave--3" />
       </div>
-
       <div className="nfc-phone__frame">
         <div className="nfc-phone__notch" aria-hidden="true" />
         <div className="nfc-phone__screen">
           {phase === "opened" ? (
             <div className="nfc-phone__content">
-              <div className="nfc-phone__confirm">
-                <span className="nfc-phone__confirm-dot" />
-                Enlace abierto
-              </div>
+              <div className="nfc-phone__confirm"><span className="nfc-phone__confirm-dot" />Enlace abierto</div>
               {children}
             </div>
           ) : (
-            <div className="nfc-phone__idle">
-              <span className="nfc-phone__idle-label">{icon}</span>
-              <span>{label}</span>
-            </div>
+            <div className="nfc-phone__idle"><span className="nfc-phone__idle-label">{icon}</span><span>{label}</span></div>
           )}
         </div>
         <div className="nfc-phone__home" aria-hidden="true" />
@@ -294,25 +232,14 @@ function ReviewScreen() {
   return (
     <div className="mini mini--review">
       <div className="mini__head">
-        <div className="mini__brand">
-          <span className="mini__brand-logo">B</span>
-          <span className="mini__brand-name">BRUMA</span>
-        </div>
-        <div className="mini__stars">
-          <Star size={10} fill="currentColor" />
-          <Star size={10} fill="currentColor" />
-          <Star size={10} fill="currentColor" />
-          <Star size={10} fill="currentColor" />
-          <Star size={10} fill="currentColor" />
-        </div>
+        <div className="mini__brand"><span className="mini__brand-logo">B</span><span className="mini__brand-name">BRUMA</span></div>
+        <div className="mini__stars"><Star size={10} fill="currentColor" /><Star size={10} fill="currentColor" /><Star size={10} fill="currentColor" /><Star size={10} fill="currentColor" /><Star size={10} fill="currentColor" /></div>
       </div>
       <div className="mini__body">
         <div className="mini__rating">★★★★★</div>
-        <div className="mini__field" />
+        <div className="mini__field"><span className="mini__field-line">Muy buena atención y un café excelente.</span></div>
         <div className="mini__btn">Publicar reseña</div>
-        <div className="mini__thank">
-          <span className="mini__check">✓</span> Gracias por compartir tu experiencia
-        </div>
+        <div className="mini__thank"><span className="mini__check">✓</span>Gracias por compartir tu experiencia</div>
       </div>
     </div>
   )
@@ -321,14 +248,10 @@ function ReviewScreen() {
 function WhatsappScreen() {
   return (
     <div className="mini mini--wa">
-      <div className="mini__bubble">Hola, quiero consultar…</div>
-      <div className="mini__contact">
-        <span className="mini__contact-ava" />
-        <span className="mini__contact-name">Café BRUMA</span>
-      </div>
-      <div className="mini__btn mini__btn--wa">
-        <MessageCircle size={11} /> Iniciar conversación
-      </div>
+      <div className="mini__contact"><span className="mini__contact-ava" /><span className="mini__contact-name">Café BRUMA</span></div>
+      <div className="mini__bubble">Hola, quiero hacer un pedido…</div>
+      <div className="mini__bubble mini__bubble--reply">¡Hola! ¿Qué te ofrecemos hoy?</div>
+      <div className="mini__btn mini__btn--wa"><MessageCircle size={11} />Iniciar conversación</div>
     </div>
   )
 }
@@ -336,10 +259,10 @@ function WhatsappScreen() {
 function MenuScreen() {
   return (
     <div className="mini mini--menu">
-      <div className="mini__head">Menú</div>
-      <div className="mini__dish"><span>Flat White</span><span className="mini__dish-price">$2.900</span><em>Disponible</em></div>
-      <div className="mini__dish"><span>Croissant Pistacho</span><span className="mini__dish-price">$3.800</span><em>Disponible</em></div>
-      <div className="mini__dish"><span>Iced Matcha</span><span className="mini__dish-price">$3.500</span><em>Disponible</em></div>
+      <div className="mini__head">Menú del día</div>
+      <div className="mini__dish"><span className="mini__dish-thumb" /><i><b>Flat White</b><em>Bebidas</em></i><span className="mini__dish-price">$2.900</span></div>
+      <div className="mini__dish"><span className="mini__dish-thumb" /><i><b>Croissant</b><em>Bollería</em></i><span className="mini__dish-price">$3.800</span></div>
+      <div className="mini__dish"><span className="mini__dish-thumb" /><i><b>Iced Matcha</b><em>Bebidas</em></i><span className="mini__dish-price">$3.500</span></div>
     </div>
   )
 }
@@ -350,10 +273,13 @@ function BookingScreen() {
       <div className="mini__head">Reservar turno</div>
       <div className="mini__cal">
         {["L", "M", "X", "J", "V", "S", "D"].map((d, i) => (
-          <span key={d} className={i === 4 ? "mini__cal-d on" : "mini__cal-d"}>{d}</span>
+          <span key={d} className={`mini__cal-d ${i === 4 ? "on" : ""} ${i === 3 ? "off" : ""}`}>{i === 3 ? "" : d}</span>
         ))}
       </div>
-      <div className="mini__hour">19:30</div>
+      <div className="mini__slots">
+        <span className="mini__slot on">19:30</span>
+        <span className="mini__slot">21:00</span>
+      </div>
       <div className="mini__btn">Confirmar turno</div>
     </div>
   )
@@ -368,37 +294,37 @@ function DestinationRotator({ verbs }) {
 }
 
 /* ==========================================================================
-   MÓDULO 02 — EL PROBLEMA (fricción)
+   MÓDULO 02 — MENOS PASOS (fricción)
    ========================================================================== */
 
-function FrictionComparison() {
+function Friction() {
   return (
     <section className="nfc-sec nfc-friction">
-      <div className="container">
-        <div className="nfc-sec__head">
-          <p className="kicker">MENOS PASOS. MÁS ACCIONES.</p>
-          <h2 className="nfc-h2 font-display">Si es difícil encontrarlo, probablemente no suceda.</h2>
-          <p className="nfc-lead">
-            Buscar el negocio en Google, encontrar el WhatsApp, escribir una dirección o
-            pedir el menú agrega pasos. Fleximy NFC convierte el momento exacto en una acción directa.
+      <div className="nfc-container">
+        <div className="nfc-friction__header">
+          <h2 className="nfc-section-title font-display">Si es difícil encontrarlo, probablemente no suceda.</h2>
+          <p className="nfc-lead-para nfc-friction__lead">
+            Buscar el negocio, encontrar el WhatsApp, escribir o pedir el menú agrega pasos.
+            Fleximy NFC convierte el momento exacto en una acción directa.
           </p>
         </div>
 
-        <div className="nfc-friction__cols">
-          <div className="nfc-path nfc-path--long">
-            <span className="nfc-path__tag">Demasiados pasos</span>
+        <div className="nfc-friction__comp">
+          <div className="nfc-path nfc-path--long" aria-label="Experiencia con pasos de sobra">
+            <span className="nfc-path__tag font-mono">Demasiados pasos</span>
             <div className="nfc-path__steps">
-              <span>Buscar</span>
-              <span>Escribir</span>
-              <span>Elegir</span>
-              <span>Encontrar</span>
+              <span>Buscar</span><i className="nfc-path__sep">→</i>
+              <span>Escribir</span><i className="nfc-path__sep">→</i>
+              <span>Elegir</span><i className="nfc-path__sep">→</i>
+              <span>Encontrar</span><i className="nfc-path__sep">→</i>
               <span>Actuar</span>
             </div>
           </div>
-          <div className="nfc-path nfc-path--nfc">
-            <span className="nfc-path__tag">Una acción directa</span>
-            <div className="nfc-path__steps">
+          <div className="nfc-path nfc-path--nfc" aria-label="Experiencia Fleximy NFC">
+            <span className="nfc-path__tag font-mono">Una acción directa</span>
+            <div className="nfc-path__steps nfc-path__steps--nfc">
               <span className="nfc-path__tap">Acercar</span>
+              <i className="nfc-path__sep">→</i>
               <span className="nfc-path__done">Listo</span>
             </div>
           </div>
@@ -409,29 +335,7 @@ function FrictionComparison() {
 }
 
 /* ==========================================================================
-   MÓDULO 03 — MUCHO MÁS QUE RESEÑAS
-   ========================================================================== */
-
-function MoreThanReviews() {
-  return (
-    <section id="nfc-mas" className="nfc-sec nfc-more">
-      <div className="container">
-        <div className="nfc-sec__head">
-          <p className="kicker">UN MISMO PRODUCTO. MUCHAS POSIBILIDADES.</p>
-          <h2 className="nfc-h2 font-display">Hoy abre tus reseñas. Mañana, lo que necesites.</h2>
-          <p className="nfc-lead">
-            El destino es configurable. Podés cambiarlo sin reemplazar el soporte NFC y
-            adaptarlo a cada campaña, local o momento de tu negocio.
-          </p>
-          <p className="nfc-more__refuerzo font-mono">Cambia el enlace. El producto sigue siendo el mismo.</p>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ==========================================================================
-   MÓDULO 04 — ACTION BENTO
+   MÓDULOS 03 + 04 — POSIBILIDADES + CASOS PRINCIPALES (misma sección)
    ========================================================================== */
 
 const SECONDARY_ACTIONS = [
@@ -439,50 +343,85 @@ const SECONDARY_ACTIONS = [
   "Encuestas", "Eventos", "Contacto digital", "Catálogo PDF", "Fidelización",
 ]
 
-function ActionBento() {
+const CASES = [
+  {
+    n: "01",
+    eyebrow: "CASO 01",
+    title: "Reseñas de Google",
+    text: "Llevá a tus clientes directo al lugar donde pueden compartir su experiencia.",
+    micro: "Más fácil de encontrar. Más fácil de completar.",
+    dest: "review",
+    demo: <ReviewCase />,
+  },
+  {
+    n: "02",
+    eyebrow: "CASO 02",
+    title: "WhatsApp",
+    text: "Abrí una conversación con un mensaje inicial preparado.",
+    micro: "Consultas, pedidos o soporte.",
+    dest: "whatsapp",
+    demo: <WhatsappCase />,
+  },
+  {
+    n: "03",
+    eyebrow: "CASO 03",
+    title: "Menú o catálogo",
+    text: "Mostrá productos, servicios, precios o disponibilidad sin imprimir de nuevo.",
+    micro: "Siempre actualizado.",
+    dest: "menu",
+    demo: <MenuCase />,
+  },
+  {
+    n: "04",
+    eyebrow: "CASO 04",
+    title: "Turnos y reservas",
+    text: "Llevá al cliente directamente al calendario o sistema de reservas.",
+    micro: "Del interés al turno.",
+    dest: "booking",
+    demo: <BookingCase />,
+  },
+]
+
+function Possibilities({ onPick }) {
   return (
-    <section id="nfc-posibilidades" className="nfc-sec nfc-bento">
-      <div className="container">
-        <div className="nfc-bento__grid">
-          <BentoCard className="nfc-card--review" title="Reseñas de Google" eyebrow="CASO 01" onSelect="review">
-            <p className="nfc-card__text">
-              Llevá a tus clientes directo al lugar donde pueden compartir su experiencia.
-            </p>
-            <p className="nfc-card__micro">Más fácil de encontrar. Más fácil de completar.</p>
-            <ReviewDemo />
-          </BentoCard>
+    <section id="nfc-posibilidades" className="nfc-sec nfc-pos">
+      <div className="nfc-container">
+        <header className="nfc-pos__head">
+          <p className="kicker">UN MISMO PRODUCTO. MUCHAS POSIBILIDADES.</p>
+          <h2 className="nfc-section-title nfc-pos__title font-display">
+            Hoy abre tus reseñas. Mañana, lo que necesites.
+          </h2>
+          <p className="nfc-lead-para nfc-pos__lead">
+            El destino es configurable. Podés cambiarlo sin reemplazar el soporte NFC y
+            adaptarlo a cada campaña, local o momento de tu negocio.
+          </p>
+          <p className="nfc-pos__claim font-mono">Cambia el enlace. El producto sigue siendo el mismo.</p>
+        </header>
 
-          <BentoCard className="nfc-card--wa" title="WhatsApp" eyebrow="CASO 02" onSelect="whatsapp">
-            <p className="nfc-card__text">
-              Abrí una conversación con un mensaje inicial preparado.
-            </p>
-            <p className="nfc-card__micro">Consultas, pedidos o soporte.</p>
-            <WhatsappDemo />
-          </BentoCard>
-
-          <BentoCard className="nfc-card--menu" title="Menú o catálogo" eyebrow="CASO 03" onSelect="menu">
-            <p className="nfc-card__text">
-              Mostrá productos, servicios, precios o disponibilidad sin imprimir de nuevo.
-            </p>
-            <p className="nfc-card__micro">Siempre actualizado.</p>
-            <MenuDemo />
-          </BentoCard>
-
-          <BentoCard className="nfc-card--book" title="Turnos y reservas" eyebrow="CASO 04" onSelect="booking">
-            <p className="nfc-card__text">
-              Llevá al cliente directamente al calendario o sistema de reservas.
-            </p>
-            <p className="nfc-card__micro">Del interés al turno.</p>
-            <BookingDemo />
-          </BentoCard>
+        <div className="nfc-cases">
+          {CASES.map((c) => (
+            <article key={c.n} className="nfc-case">
+              <div className="nfc-case__top">
+                <span className="nfc-case__num font-mono">{c.n}</span>
+                <span className="nfc-case__eyebrow font-mono">{c.eyebrow}</span>
+              </div>
+              <h3 className="nfc-subsection-title nfc-case__title font-display">{c.title}</h3>
+              <div className="nfc-case__body">
+                <p className="nfc-case__text">{c.text}</p>
+                <p className="nfc-case__micro">{c.micro}</p>
+                {c.demo}
+              </div>
+              <button type="button" className="nfc-case__cta" onClick={() => onPick(c.dest)}>
+                Ver función en vivo <ArrowRight size={14} />
+              </button>
+            </article>
+          ))}
         </div>
 
-        <div className="nfc-bento__secondary">
-          <span className="nfc-bento__secondary-label font-mono">También puede abrir</span>
-          <ul className="nfc-bento__secondary-list">
-            {SECONDARY_ACTIONS.map((a) => (
-              <li key={a}>{a}</li>
-            ))}
+        <div className="nfc-more">
+          <p className="nfc-more__label font-mono">También puede abrir</p>
+          <ul className="nfc-more__list">
+            {SECONDARY_ACTIONS.map((a) => <li key={a}>{a}</li>)}
           </ul>
         </div>
       </div>
@@ -490,90 +429,81 @@ function ActionBento() {
   )
 }
 
-function BentoCard({ className, title, eyebrow, onSelect, children }) {
-  return (
-    <article className={`nfc-card ${className}`}>
-      <div className="nfc-card__top">
-        <span className="nfc-card__eyebrow font-mono">{eyebrow}</span>
-        <h3 className="nfc-card__title font-display">{title}</h3>
-      </div>
-      {children}
-      <button type="button" className="nfc-card__select" onClick={() => track("select_nfc_use_case", { use_case: onSelect })}>
-        Ver cómo funciona <ArrowRight size={14} />
-      </button>
-    </article>
-  )
-}
-
-/* --- Microinterfaces CSS del bento --- */
-function ReviewDemo() {
+/* --- Microinterfaces de los casos --- */
+function ReviewCase() {
   return (
     <div className="demo demo--review" aria-hidden="true">
       <div className="demo__stars">★★★★★</div>
-      <div className="demo__box demo__box--area" />
+      <div className="demo__field"><span>Muy buena atención y un café excelente.</span></div>
       <div className="demo__btn">Publicar reseña</div>
-      <div className="demo__ok"><span className="demo__check">✓</span> Gracias por compartir tu experiencia</div>
+      <div className="demo__ok"><span className="demo__check">✓</span>Gracias por compartir tu experiencia</div>
     </div>
   )
 }
-function WhatsappDemo() {
+function WhatsappCase() {
   return (
     <div className="demo demo--wa" aria-hidden="true">
-      <div className="demo__bubble">Hola, quiero consultar…</div>
-      <div className="demo__row">
-        <span className="demo__ava" />
-        <span className="demo__name">Café BRUMA</span>
-      </div>
-      <div className="demo__btn demo__btn--wa">Iniciar conversación</div>
+      <div className="demo__row"><span className="demo__ava" /><span className="demo__name">Café BRUMA</span></div>
+      <div className="demo__bubble">Hola, quiero hacer un pedido…</div>
+      <div className="demo__bubble demo__bubble--reply">¡Hola! ¿Te ayudo con tu pedido?</div>
+      <div className="demo__btn demo__btn--wa"><MessageCircle size={11} />Iniciar conversación</div>
     </div>
   )
 }
-function MenuDemo() {
+function MenuCase() {
   return (
     <div className="demo demo--menu" aria-hidden="true">
-      <div className="demo__dish"><span>Flat White</span><b>$2.900</b></div>
-      <div className="demo__dish"><span>Croissant</span><b>$3.800</b></div>
-      <div className="demo__dish"><span>Iced Matcha</span><b>$3.500</b></div>
+      <div className="demo__dish"><span className="demo__thumb" /><i><b>Flat White</b><em>Bebidas</em></i><span className="demo__price">$2.900</span></div>
+      <div className="demo__dish"><span className="demo__thumb" /><i><b>Croissant</b><em>Bollería</em></i><span className="demo__price">$3.800</span></div>
+      <div className="demo__dish"><span className="demo__thumb" /><i><b>Iced Matcha</b><em>Bebidas</em></i><span className="demo__price">$3.500</span></div>
     </div>
   )
 }
-function BookingDemo() {
+function BookingCase() {
   return (
     <div className="demo demo--book" aria-hidden="true">
-      <div className="demo__cal">L M X J V S D</div>
-      <div className="demo__hour">19:30</div>
+      <div className="demo__cal">
+        {["L", "M", "X", "J", "V", "S", "D"].map((d, i) => (
+          <span key={d} className={`demo__cal-d ${i === 4 ? "on" : ""} ${i === 3 ? "off" : ""}`}>{i === 3 ? "" : d}</span>
+        ))}
+      </div>
+      <div className="demo__slots">
+        <span className="demo__slot on">19:30</span>
+        <span className="demo__slot">21:00</span>
+      </div>
       <div className="demo__btn">Confirmar turno</div>
     </div>
   )
 }
 
 /* ==========================================================================
-   MÓDULO 05 — CÓMO FUNCIONA
+   MÓDULO 05 — CÓMO FUNCIONA (proceso)
    ========================================================================== */
 
 const STEPS = [
   { n: "01", t: "Elegís la acción", d: "Reseñas, WhatsApp, menú, turnos, pagos o cualquier enlace." },
-  { n: "02", t: "Lo configuramos", d: "Programamos el destino, personalizamos la pieza y verificamos el funcionamiento." },
-  { n: "03", t: "Lo ubicás en tu negocio", d: "Mostrador, mesa, recepción, packaging, vidriera o donde sucede la decisión." },
-  { n: "04", t: "Lo actualizás cuando quieras", d: "Cambiás el enlace sin reemplazar el soporte físico." },
+  { n: "02", t: "Lo configuramos", d: "Programamos el destino, personalizamos la pieza y verificamos." },
+  { n: "03", t: "Lo ubicás", d: "Mostrador, mesa, recepción, packaging, vidriera o donde decide." },
+  { n: "04", t: "Lo actualizás", d: "Cambiás el enlace sin reemplazar el soporte físico." },
 ]
 
 function HowItWorks() {
   return (
     <section className="nfc-sec nfc-how">
-      <div className="container">
-        <div className="nfc-sec__head">
+      <div className="nfc-container">
+        <div className="nfc-how__head">
           <p className="kicker">LISTO PARA USAR</p>
-          <h2 className="nfc-h2 font-display">Lo configuramos. Lo entregamos. Tus clientes lo usan.</h2>
-          <p className="nfc-lead">Nos decís qué acción querés facilitar y preparamos la solución completa para tu negocio.</p>
+          <h2 className="nfc-section-title font-display">Lo configuramos. Lo entregamos. Tus clientes lo usan.</h2>
         </div>
 
-        <div className="nfc-how__assembly font-mono">
-          <span>DESTINO</span><i className="nfc-how__arrow">→</i>
-          <span>CONFIGURACIÓN</span><i className="nfc-how__arrow">→</i>
-          <span>SOPORTE NFC</span><i className="nfc-how__arrow">→</i>
-          <span>ACCIÓN</span>
-        </div>
+        <ol className="nfc-progress" aria-label="Proceso en cuatro pasos">
+          {STEPS.map((s) => (
+            <li key={s.n} className="nfc-progress__node">
+              <span className="nfc-progress__dot" />
+              <span className="nfc-progress__label font-mono">{s.n} · {s.t}</span>
+            </li>
+          ))}
+        </ol>
 
         <div className="nfc-how__grid">
           {STEPS.map((s) => (
@@ -590,162 +520,157 @@ function HowItWorks() {
 }
 
 /* ==========================================================================
-   MÓDULO 06 — CONFIGURABLE
+   MÓDULO 06 — DESTINO CONFIGURABLE
    ========================================================================== */
 
-function ConfigurableDestination() {
-  const [active, setActive] = useState("review")
+function ConfigurableDestination({ activeDest, setDest, sectionRef }) {
   const destinations = [
     { id: "review", label: "Reseñas de Google", Demo: ReviewScreen },
     { id: "whatsapp", label: "WhatsApp", Demo: WhatsappScreen },
     { id: "menu", label: "Menú digital", Demo: MenuScreen },
     { id: "booking", label: "Reservas", Demo: BookingScreen },
   ]
-  const current = destinations.find((d) => d.id === active)
+  const current = destinations.find((d) => d.id === activeDest)
   const Demo = current.Demo
 
   const handleSelect = (id) => {
-    setActive(id)
+    setDest(id)
     track("select_nfc_use_case", { use_case: id })
   }
 
   return (
-    <section className="nfc-sec nfc-config">
-      <div className="container">
-        <div className="nfc-sec__head">
-          <p className="kicker">UN LINK QUE PUEDE CAMBIAR</p>
-          <h2 className="nfc-h2 font-display">La pieza queda. El destino evoluciona con tu negocio.</h2>
-          <p className="nfc-lead">
-            Usá el mismo soporte para una campaña, una promoción, un menú nuevo o una acción
-            diferente. Actualizá el enlace sin imprimir, reprogramar ni reemplazar la pieza.
-          </p>
-        </div>
-
-        <div className="nfc-config__layout">
-          {/* Panel de configuración */}
-          <div className="nfc-config__panel">
-            <p className="nfc-config__panel-label font-mono">Destino activo</p>
-            <p className="nfc-config__current">
-              <span className="nfc-config__dot" /> {destinations.find((d) => d.id === active)?.label}
+    <section ref={sectionRef} className="nfc-sec nfc-config" id="nfc-configurable">
+      <div className="nfc-container">
+        <div className="nfc-config__grid">
+          <div className="nfc-config__left">
+            <p className="kicker">UN LINK QUE PUEDE CAMBIAR</p>
+            <h2 className="nfc-section-title nfc-config__title font-display">
+              La pieza queda. El destino evoluciona con tu negocio.
+            </h2>
+            <p className="nfc-lead-para nfc-config__lead">
+              Usá el mismo soporte para una campaña, una promoción, un menú nuevo o una acción
+              diferente. Actualizá el enlace sin imprimir, reprogramar ni reemplazar la pieza.
             </p>
-            <p className="nfc-config__panel-label nfc-config__panel-label--mt font-mono">Cambiar destino</p>
+
+            <p className="nfc-config__label font-mono">Destino activo</p>
+            <p className="nfc-config__current"><span className="nfc-config__dot" />{current.label}</p>
+
             <div className="nfc-config__list" role="radiogroup" aria-label="Cambiar destino">
               {destinations.map((d) => (
-                <label key={d.id} className={`nfc-config__opt ${active === d.id ? "on" : ""}`}>
-                  <input type="radio" name="nfc-dest" checked={active === d.id} onChange={() => handleSelect(d.id)} />
+                <label key={d.id} className={`nfc-config__opt ${activeDest === d.id ? "on" : ""}`}>
+                  <input type="radio" name="nfc-dest" checked={activeDest === d.id} onChange={() => handleSelect(d.id)} />
                   <span className="nfc-config__radio" />
                   {d.label}
                 </label>
               ))}
             </div>
+
             <button type="button" className="nfc-config__save" onClick={() => track("click_nfc_primary_cta", { cta: "guardar_cambio" })}>
               Guardar cambio
             </button>
-            <p className="nfc-config__status">
-              <span className="nfc-config__status-dot" /> Estado: actualizado ahora
-            </p>
+            <p className="nfc-config__status"><span className="nfc-config__status-dot" />Estado: actualizado ahora</p>
           </div>
 
-          {/* Pieza física + teléfono */}
-          <div className="nfc-config__scene">
-            <NfcPhysicalTag />
-            <div className="nfc-config__phone">
-              <div className="nfc-config__phone-inner">
-                <div className="nfc-config__phone-head">
-                  <span className="nfc-config__phone-dot" /> Enlace abierto
+          <div className="nfc-config__right">
+            <div className="nfc-config__scene">
+              <NfcPhysicalTag />
+              <div className="nfc-config__phone">
+                <div className="nfc-config__phone-inner">
+                  <div className="nfc-config__phone-head"><span className="nfc-config__phone-dot" />Enlace abierto</div>
+                  <Demo />
                 </div>
-                <Demo />
               </div>
             </div>
+            <p className="nfc-config__comercial font-mono">› {NFC_CONFIG.destinationCopy}</p>
           </div>
         </div>
-
-        <p className="nfc-config__comercial font-mono">
-          › {NFC_CONFIG.destinationCopy}
-        </p>
       </div>
     </section>
   )
 }
 
 /* ==========================================================================
-   MÓDULO 07 — PARA CADA NEGOCIO
+   MÓDULO 07 — APLICACIONES: rubros + formatos físicos (misma sección)
    ========================================================================== */
 
-function BusinessCases() {
+const FORMAT_CARDS = [
+  { id: "contador", name: "Soporte de mostrador" },
+  { id: "sticker", name: "Sticker NFC + QR" },
+  { id: "tarjeta", name: "Tarjeta personal" },
+  { id: "mesa", name: "Display de mesa" },
+  { id: "vidriera", name: "Pieza para vidriera" },
+  { id: "empleado", name: "Identificador de empleado" },
+]
+const SECONDARY_FORMAT = "Adhesivo para packaging"
+
+function Applications() {
   const [idx, setIdx] = useState(0)
   useEffect(() => {
     const id = setInterval(() => setIdx((i) => (i + 1) % NFC_BUSINESS_CASES.length), 3200)
     return () => clearInterval(id)
   }, [])
   const c = NFC_BUSINESS_CASES[idx]
+  const scrollToForm = (e) => {
+    e.preventDefault()
+    document.querySelector("#nfc-form")?.scrollIntoView({ behavior: "smooth" })
+    track("click_nfc_primary_cta", { cta: "consultar_formatos" })
+  }
 
   return (
-    <section className="nfc-sec nfc-cases">
-      <div className="container">
-        <div className="nfc-sec__head">
+    <section className="nfc-sec nfc-apps">
+      <div className="nfc-container">
+        <header className="nfc-apps__head">
           <p className="kicker">DONDE HAY UN CLIENTE, HAY UNA ACCIÓN</p>
-          <h2 className="nfc-h2 font-display">Una solución diferente para cada negocio.</h2>
-          <p className="nfc-lead">Configuramos cada pieza según el lugar, el cliente y la acción que querés facilitar.</p>
+          <h2 className="nfc-section-title nfc-apps__title font-display">
+            Una solución diferente para cada negocio.
+          </h2>
+          <p className="nfc-lead-para nfc-apps__lead">
+            Configuramos cada pieza según el lugar, el cliente y la acción que querés facilitar.
+          </p>
+        </header>
+
+        <div className="nfc-rubros" aria-hidden="true">
+          <div className="nfc-rubros__track">
+            {[...NFC_BUSINESS_CASES, ...NFC_BUSINESS_CASES].map((b, i) => (
+              <span key={i}>{b.rubro.toUpperCase()} · </span>
+            ))}
+          </div>
         </div>
 
-        <div className="nfc-cases__marquee font-mono" aria-hidden="true">
-          {NFC_BUSINESS_CASES.map((b) => (
-            <span key={b.rubro}>{b.rubro.toUpperCase()} ·</span>
-          ))}
+        <div className="nfc-rubro-demo" aria-live="polite">
+          <span className="nfc-rubro-demo__rubro font-mono">{c.rubro.toUpperCase()}</span>
+          <span className="nfc-rubro-demo__arrow">→</span>
+          <span className="nfc-rubro-demo__lugar">{c.lugar}</span>
+          <span className="nfc-rubro-demo__arrow">→</span>
+          <span className="nfc-rubro-demo__accion text-gradient">{c.accion}</span>
         </div>
 
-        <div className="nfc-cases__scene" aria-live="polite">
-          <span className="nfc-cases__rubro font-mono">{c.rubro.toUpperCase()}</span>
-          <span className="nfc-cases__arrow">→</span>
-          <span className="nfc-cases__lugar">{c.lugar}</span>
-          <span className="nfc-cases__arrow">→</span>
-          <span className="nfc-cases__accion text-gradient">{c.accion}</span>
-        </div>
-      </div>
-    </section>
-  )
-}
+        <div className="nfc-apps__formats">
+          <div className="nfc-apps__formats-head">
+            <h3 className="nfc-subsection-title nfc-apps__formats-title font-display">En el mostrador, la mesa, la vidriera.</h3>
+            <p className="nfc-apps__formats-desc">
+              Adaptamos la solución al espacio y al uso real de cada negocio. Cada pieza incluye NFC y un QR de respaldo.
+            </p>
+          </div>
 
-/* ==========================================================================
-   MÓDULO 08 — FORMATOS FÍSICOS
-   ========================================================================== */
-
-const FORMAT_DATA = [
-  { id: "contador", name: "Soporte de mostrador", scene: "contador" },
-  { id: "sticker", name: "Sticker NFC + QR", scene: "sticker" },
-  { id: "tarjeta", name: "Tarjeta personal", scene: "tarjeta" },
-  { id: "mesa", name: "Display de mesa", scene: "mesa" },
-  { id: "vidriera", name: "Pieza para vidriera", scene: "vidriera" },
-  { id: "empleado", name: "Identificador de empleado", scene: "empleado" },
-  { id: "packaging", name: "Adhesivo para packaging", scene: "packaging" },
-]
-
-function PhysicalFormats() {
-  return (
-    <section className="nfc-sec nfc-formats">
-      <div className="container">
-        <div className="nfc-sec__head">
-          <p className="kicker">HECHO PARA ESTAR DONDE SUCEDE LA ACCIÓN</p>
-          <h2 className="nfc-h2 font-display">En el mostrador, la mesa, la vidriera o en manos de tu equipo.</h2>
-          <p className="nfc-lead">Adaptamos la solución al espacio y al uso real de cada negocio.</p>
-        </div>
-
-        <div className="nfc-formats__stage" role="list" aria-label="Formatos físicos">
-          {FORMAT_DATA.map((f) => {
-            const meta = NFC_FORMATS.find((x) => x.id === f.id)
-            return (
-              <div key={f.id} className="nfc-pedestal" role="listitem">
-                <div className="nfc-pedestal__piece">
-                  <FormatScene scene={f.scene} />
-                </div>
-                <span className="nfc-pedestal__name">{f.name}</span>
-                <span className="nfc-pedestal__status">
-                  {meta?.available ? "Disponible" : "Consultar"}
-                </span>
+          <div className="nfc-format-grid">
+            {FORMAT_CARDS.map((f) => (
+              <div key={f.id} className="nfc-format">
+                <FormatScene scene={f.id} />
+                <span className="nfc-format__name">{f.name}</span>
+                <span className="nfc-format__badge font-mono">NFC + QR</span>
               </div>
-            )
-          })}
+            ))}
+          </div>
+          <p className="nfc-apps__secondary">
+            + {SECONDARY_FORMAT} y otras piezas según tu idea.
+          </p>
+
+          <div className="nfc-apps__cta">
+            <a href="#nfc-form" onClick={scrollToForm} className="nfc-btn nfc-btn--primary">
+              Consultar formatos <ArrowRight size={16} />
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -756,64 +681,65 @@ function FormatScene({ scene }) {
   return (
     <div className={`fmt fmt--${scene}`} aria-hidden="true">
       <span className="fmt__nfc">NFC</span>
-      <span className="fmt__qr">▪▫▪<br/>▫▪▫</span>
+      <span className="fmt__qr">▪▫▪<br />▫▪▫</span>
     </div>
   )
 }
 
 /* ==========================================================================
-   MÓDULO 09 — PROPUESTA COMERCIAL
+   MÓDULO 08 — ESCALA (propuesta comercial)
    ========================================================================== */
 
-const COMMERCIAL = [
+const SCALE = [
   {
     title: "Una acción",
     desc: "Para un punto específico del negocio.",
     points: ["Un destino", "Configuración inicial", "Personalización básica", "NFC + QR"],
-    cta: "Quiero empezar",
   },
   {
     title: "Negocio",
     desc: "Para distintos momentos del mismo local.",
     points: ["Múltiples piezas", "Diferentes destinos", "Personalización de marca", "Soporte de configuración"],
-    cta: "Armar mi solución",
     featured: true,
   },
   {
     title: "Multipunto",
     desc: "Para cadenas, franquicias y equipos.",
     points: ["Múltiples locales", "Estructura por sede o equipo", "Destinos configurables", "Implementación coordinada"],
-    cta: "Solicitar propuesta",
   },
 ]
 
-function CommercialOptions() {
+function Scale() {
+  const scrollToForm = (e, title) => {
+    e.preventDefault()
+    document.querySelector("#nfc-form")?.scrollIntoView({ behavior: "smooth" })
+    track("click_nfc_primary_cta", { cta: title })
+  }
   return (
-    <section className="nfc-sec nfc-commercial">
-      <div className="container">
-        <div className="nfc-sec__head">
+    <section className="nfc-sec nfc-scale">
+      <div className="nfc-container">
+        <div className="nfc-scale__head">
           <p className="kicker">EMPEZÁ CON UNA. ESCALÁ CUANDO QUIERAS.</p>
-          <h2 className="nfc-h2 font-display">Una solución simple para un local. Una red para todos tus puntos de atención.</h2>
-          <p className="nfc-lead">
-            Podés comenzar con una acción puntual o implementar diferentes destinos para
-            locales, mesas, vendedores, productos o campañas.
-          </p>
+          <h2 className="nfc-section-title nfc-scale__title font-display">
+            Una solución simple para un local. Una red para todos tus puntos de atención.
+          </h2>
         </div>
 
-        <div className="nfc-commercial__grid">
-          {COMMERCIAL.map((m) => (
+        <div className="nfc-scale__grid">
+          {SCALE.map((m) => (
             <a
               key={m.title}
               href="#nfc-form"
-              onClick={(e) => { e.preventDefault(); document.querySelector("#nfc-form")?.scrollIntoView({ behavior: "smooth" }); track("click_nfc_primary_cta", { cta: m.title }) }}
+              onClick={(e) => scrollToForm(e, m.title)}
               className={`nfc-plan ${m.featured ? "nfc-plan--featured" : ""}`}
             >
-              <h3 className="nfc-plan__title font-display">{m.title}</h3>
+              <span className="nfc-plan__eyebrow font-mono">{m.featured ? "RECOMENDADO" : "PARA EMPEZAR"}</span>
+              <h3 className="nfc-subsection-title nfc-plan__title font-display">{m.title}</h3>
               <p className="nfc-plan__desc">{m.desc}</p>
               <ul className="nfc-plan__points">
                 {m.points.map((p) => <li key={p}><span className="nfc-plan__check">✓</span>{p}</li>)}
               </ul>
-              <span className="nfc-plan__cta">{m.cta} <ArrowRight size={15} /></span>
+              <span className="nfc-plan__cta">Consultar <ArrowRight size={15} /></span>
             </a>
           ))}
         </div>
@@ -823,7 +749,7 @@ function CommercialOptions() {
 }
 
 /* ==========================================================================
-   MÓDULO 10 — CONFIANZA
+   MÓDULO 09 — CONFIANZA TÉCNICA (compacto)
    ========================================================================== */
 
 const TRUST = [
@@ -835,15 +761,20 @@ const TRUST = [
   "Sirve para una o múltiples ubicaciones.",
 ]
 
-function TrustBenefits() {
+function Trust() {
   return (
     <section className="nfc-sec nfc-trust">
-      <div className="container">
-        <div className="nfc-sec__head nfc-sec__head--center">
-          <h2 className="nfc-h2 font-display">Tecnología simple para las personas. Flexible para tu negocio.</h2>
-        </div>
+      <div className="nfc-container">
         <div className="nfc-trust__grid">
-          {TRUST.map((t) => <div key={t} className="nfc-trust__item"><span className="nfc-trust__check">✓</span>{t}</div>)}
+          <div>
+            <p className="kicker">SIMPLE Y FLEXIBLE</p>
+            <h2 className="nfc-section-title nfc-trust__title font-display">
+              Tecnología simple para las personas. Flexible para tu negocio.
+            </h2>
+          </div>
+          <ul className="nfc-trust__list">
+            {TRUST.map((t) => <li key={t} className="nfc-trust__item"><span className="nfc-trust__check">✓</span>{t}</li>)}
+          </ul>
         </div>
         <p className="nfc-trust__note">
           <strong>Compatible con la mayoría de los smartphones modernos.</strong> El QR permite
@@ -855,7 +786,7 @@ function TrustBenefits() {
 }
 
 /* ==========================================================================
-   MÓDULO 11 — CTA Y FORMULARIO
+   MÓDULO 10 — CTA Y FORMULARIO (ancho completo)
    ========================================================================== */
 
 function LeadForm() {
@@ -970,38 +901,47 @@ function LeadForm() {
     </label>
   )
 
+  const goWhatsapp = () => { track("click_nfc_whatsapp") }
+
   return (
-    <section id="nfc-form" className="nfc-sec nfc-lead">
-      <div className="container">
-        <div className="nfc-lead__wrap">
-          <div className="nfc-lead__left">
+    <section id="nfc-form" className="nfc-sec nfc-contact">
+      <div className="nfc-container">
+        <div className="nfc-contact__grid">
+          <div className="nfc-contact__intro">
             <p className="kicker">ACERCÁ TU NEGOCIO A LA PRÓXIMA ACCIÓN</p>
-            <h2 className="nfc-h2 font-display">Contanos qué querés que pase después del toque.</h2>
-            <p className="nfc-lead__bajada">
+            <h2 className="nfc-section-title nfc-contact__title font-display">
+              Contanos qué querés que pase después del toque.
+            </h2>
+            <p className="nfc-lead-para nfc-contact__bajada">
               Reseñas, consultas, reservas, pagos o una idea completamente diferente.
               Diseñamos la solución alrededor de tu negocio.
             </p>
+            <ul className="nfc-contact__benefits">
+              <li><span className="nfc-contact__check">✓</span>Respuesta personalizada</li>
+              <li><span className="nfc-contact__check">✓</span>Formato y configuración a tu medida</li>
+              <li><span className="nfc-contact__check">✓</span>Sin permanencia obligatoria</li>
+            </ul>
             <a
               href={whatsappUrl("Hola, llegué desde la página de soluciones NFC de Fleximy. Quiero contarte qué acción quiero facilitar.")}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => track("click_nfc_whatsapp")}
-              className="nfc-lead__wa"
+              onClick={goWhatsapp}
+              className="nfc-contact__wa"
             >
               <MessageCircle size={16} /> Prefiero contarlo por WhatsApp →
             </a>
           </div>
 
-          <div className="nfc-lead__right">
+          <div className="nfc-contact__form">
             {success ? (
               <div className="nfc-success" role="status">
                 <span className="nfc-success__check">✓</span>
                 <h3 className="font-display">Gracias, {form.nombre.split(" ")[0]}. Recibimos tu consulta NFC.</h3>
-                <p className="nfc-lead__bajada">Vamos a revisar tu caso y te contactaremos para definir el formato y la configuración indicada.</p>
+                <p className="nfc-contact__bajada">Vamos a revisar tu caso y te contactaremos para definir el formato y la configuración indicada.</p>
               </div>
             ) : (
-              <form onSubmit={submit} noValidate aria-live="polite">
-                <div className="nfc-lead__grid">
+              <form onSubmit={submit} noValidate>
+                <div className="nfc-contact__fields">
                   {field("nombre", "Nombre")}
                   {field("negocio", "Negocio o empresa")}
                   {field("whatsapp", "WhatsApp", "tel", { inputMode: "tel" })}
@@ -1028,7 +968,7 @@ function LeadForm() {
                     value={form.descripcion}
                     onChange={set("descripcion")}
                     onBlur={blur("descripcion")}
-                    rows={3}
+                    rows={4}
                     maxLength={500}
                     placeholder="Por ejemplo: tenemos una cafetería y queremos colocar una pieza en cada mesa para abrir el menú y facilitar reseñas."
                     aria-invalid={touched.descripcion && !!errs.descripcion}
@@ -1045,11 +985,11 @@ function LeadForm() {
                   Al enviar aceptás nuestra <Link to="/privacidad">Política de Privacidad</Link>.
                 </p>
 
-                <button type="submit" className="nfc-lead__submit" disabled={sending}>
+                <button type="submit" className="nfc-contact__submit" disabled={sending}>
                   {sending ? "Enviando…" : "Quiero mi solución NFC"}
                   {!sending && <ArrowRight size={16} />}
                 </button>
-                <p className="nfc-lead__micro">Te respondemos personalmente para definir el formato y la configuración indicada para tu negocio.</p>
+                <p className="nfc-contact__micro">Te respondemos personalmente para definir el formato y la configuración indicada.</p>
               </form>
             )}
           </div>
@@ -1060,7 +1000,7 @@ function LeadForm() {
 }
 
 /* ==========================================================================
-   MÓDULO 12 — FAQ
+   MÓDULO 11 — FAQ
    ========================================================================== */
 
 const FAQS = [
@@ -1074,21 +1014,22 @@ const FAQS = [
   { q: "¿La solución garantiza mejores posiciones en Google?", a: "No se garantizan posiciones. La solución facilita que más clientes lleguen a la ficha del negocio y puedan compartir una experiencia auténtica con menos pasos." },
 ]
 
-function NfcFaq() {
+function Faq() {
   const [open, setOpen] = useState(0)
   return (
     <section className="nfc-sec nfc-faq">
-      <div className="container">
-        <div className="nfc-sec__head nfc-sec__head--center">
-          <h2 className="nfc-h2 font-display">Preguntas frecuentes</h2>
-        </div>
+      <div className="nfc-container--text">
+        <header className="nfc-faq__head">
+          <p className="kicker">DUDAS FRECUENTES</p>
+          <h2 className="nfc-section-title nfc-faq__title font-display">Preguntas frecuentes</h2>
+        </header>
         <div className="nfc-faq__list">
           {FAQS.map((f, i) => (
-            <div key={f.q} className="nfc-faq__item">
+            <div key={f.q} className={`nfc-faq__item ${open === i ? "open" : ""}`}>
               <button type="button" className="nfc-faq__q" onClick={() => setOpen(open === i ? -1 : i)} aria-expanded={open === i} aria-controls={`nfc-faq-a-${i}`}>
                 <span>{f.q}</span><span className="nfc-faq__toggle">+</span>
               </button>
-              {open === i && <p className="nfc-faq__a" id={`nfc-faq-a-${i}`}>{f.a}</p>}
+              <p className="nfc-faq__a" id={`nfc-faq-a-${i}`} hidden={open !== i}>{f.a}</p>
             </div>
           ))}
         </div>
@@ -1098,20 +1039,20 @@ function NfcFaq() {
 }
 
 /* ==========================================================================
-   CSS — vars + estilos por tema
+   CSS — tokens + estilos por tema
    ========================================================================== */
 
 function vars(dark) {
   return {
-    "--nfc-canvas": dark ? "#090b17" : "#f6f7fc",
-    "--nfc-surface": dark ? "#101426" : "#ffffff",
-    "--nfc-surface-2": dark ? "#171c31" : "#eef1f8",
-    "--nfc-surface-3": dark ? "#202640" : "#e6eaf4",
-    "--nfc-border": dark ? "rgba(174,184,225,0.15)" : "rgba(31,38,70,0.11)",
-    "--nfc-border-strong": dark ? "rgba(174,184,225,0.26)" : "rgba(31,38,70,0.18)",
-    "--nfc-text": dark ? "#f5f7ff" : "#111426",
-    "--nfc-muted": dark ? "#a5aec8" : "#687088",
-    "--nfc-faint": dark ? "#7d87a3" : "#9aa1b4",
+    "--nfc-page": dark ? "#080b18" : "#f5f6fb",
+    "--nfc-section": dark ? "#0b0f20" : "#fafbfe",
+    "--nfc-card": dark ? "#10162a" : "#ffffff",
+    "--nfc-interface": dark ? "#0c1122" : "#f0f2f8",
+    "--nfc-border": dark ? "rgba(151,164,215,0.15)" : "rgba(39,48,84,0.12)",
+    "--nfc-border-strong": dark ? "rgba(151,164,215,0.30)" : "rgba(39,48,84,0.20)",
+    "--nfc-text": dark ? "#f3f5ff" : "#111527",
+    "--nfc-muted": dark ? "#aeb6cc" : "#667087",
+    "--nfc-faint": dark ? "#7f89a6" : "#8b93a8",
     "--nfc-violet": dark ? "#725cff" : "#5a50d8",
     "--nfc-blue": dark ? "#397bff" : "#3a6fe0",
     "--nfc-cyan": dark ? "#16d8d2" : "#009f95",
@@ -1119,352 +1060,407 @@ function vars(dark) {
     "--nfc-green": dark ? "#35d58a" : "#16855b",
     "--nfc-amber": dark ? "#ffb45e" : "#a86000",
     "--nfc-error": dark ? "#ff747f" : "#ba1a1a",
-    "--nfc-success": dark ? "#35d58a" : "#16855b",
     "--nfc-soft-violet": dark ? "rgba(114,92,255,0.14)" : "rgba(90,80,216,0.10)",
     "--nfc-soft-cyan": dark ? "rgba(22,216,210,0.12)" : "rgba(0,159,149,0.08)",
-    "--nfc-scene-shadow": dark ? "0 40px 110px rgba(0,0,0,0.5)" : "0 30px 80px rgba(31,38,70,0.14)",
+    "--nfc-scene-shadow": dark ? "0 30px 80px rgba(0,0,0,0.5)" : "0 22px 55px rgba(39,48,84,0.12)",
+    "--nfc-section-space": "clamp(36px, 3vw, 56px)",
+    "--nfc-section-space-compact": "clamp(28px, 2.6vw, 48px)",
   }
 }
 
 function css(dark) {
   return `
-  /* ===== BASE ===== */
-  .nfc { position: relative; overflow: clip; background: var(--nfc-canvas); color: var(--nfc-text); }
+  /* ===== BASE / CONTAINERS ===== */
+  .nfc { position: relative; overflow: clip; background: var(--nfc-page); color: var(--nfc-text); }
 
-  .nfc-sec { padding-block: clamp(72px, 8vw, 132px); position: relative; }
-  .nfc-sec__head { max-width: 820px; margin: 0 0 clamp(40px, 5vw, 64px); }
-  .nfc-sec__head--center { margin-inline: auto; text-align: center; }
-  .nfc-h2 { font-size: clamp(34px, 4.3vw, 62px); line-height: 1.02; letter-spacing: -0.045em; margin: 18px 0 22px; max-width: 20ch; text-wrap: balance; }
-  .nfc-sec__head--center .nfc-h2 { margin-inline: auto; }
-  .nfc-lead { font-size: clamp(16px, 1.25vw, 19px); line-height: 1.6; color: var(--nfc-muted); max-width: 56ch; margin: 0; }
+  .nfc-container { width: min(1240px, calc(100% - 48px)); margin-inline: auto; min-width: 0; }
+  .nfc-container--wide { width: min(1440px, calc(100% - 64px)); margin-inline: auto; min-width: 0; }
+  .nfc-container--text { width: min(820px, calc(100% - 48px)); margin-inline: auto; min-width: 0; }
+
+  .nfc-sec { padding-block: var(--nfc-section-space); position: relative; }
+  .nfc-sec--compact { padding-block: var(--nfc-section-space-compact); }
+  .nfc-display { font-size: clamp(54px, 6.1vw, 108px); line-height: 0.92; letter-spacing: -0.065em; text-wrap: balance; font-weight: 700; }
+  .nfc-section-title { font-size: clamp(40px, 4.2vw, 68px); line-height: 0.98; letter-spacing: -0.052em; text-wrap: balance; font-weight: 700; }
+  .nfc-subsection-title { font-size: clamp(28px, 2.5vw, 42px); line-height: 1.05; letter-spacing: -0.035em; }
+  .nfc-lead-para { font-size: clamp(18px, 1.45vw, 22px); line-height: 1.55; color: var(--nfc-muted); }
+  .kicker { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--nfc-cyan); margin: 0 0 14px; }
 
   /* ===== HERO ===== */
-  .nfc-hero { min-height: calc(100svh - var(--header-height)); display: flex; align-items: center; padding-block: clamp(40px, 5vw, 72px); position: relative; overflow: hidden; }
-  .nfc-hero__grid { display: grid; grid-template-columns: minmax(460px, 0.9fr) minmax(540px, 1.1fr); align-items: center; gap: clamp(40px, 5vw, 84px); width: 100%; }
-  .nfc-hero__copy { max-width: 620px; }
-  .nfc-hero__title { font-size: clamp(52px, 5.4vw, 92px); line-height: 0.94; letter-spacing: -0.06em; font-weight: 700; margin: 22px 0 22px; max-width: 12ch; text-wrap: balance; }
-  .nfc-hero__desc { font-size: clamp(17px, 1.35vw, 20px); line-height: 1.55; color: var(--nfc-muted); max-width: 46ch; margin: 0 0 14px; }
-  .nfc-hero__refuerzo { font-size: clamp(15px, 1.1vw, 17px); color: var(--nfc-cyan); font-weight: 600; margin: 0 0 28px; }
-  .nfc-hero__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0 0 22px; }
+  .nfc-hero { min-height: calc(100svh - 72px); padding-block: clamp(60px, 8vh, 112px); display: flex; align-items: center; position: relative; }
+  .nfc-hero__grid { display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(480px, 1.08fr); gap: clamp(48px, 6vw, 96px); align-items: center; }
+  .nfc-hero__copy { max-width: 620px; min-width: 0; }
+  .nfc-hero__title { max-width: 650px; margin: 20px 0 24px; }
+  .nfc-hero__desc { max-width: 620px; margin: 0 0 18px; }
+  .nfc-hero__refuerzo { font-size: clamp(16px, 1.1vw, 18px); color: var(--nfc-green); font-weight: 600; margin: 0 0 30px; }
+  .nfc-hero__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0 0 24px; }
   .nfc-hero__micro { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--nfc-faint); margin: 0; }
 
   .nfc-btn { display: inline-flex; align-items: center; gap: 9px; height: 52px; padding: 0 26px; border-radius: 999px; font-size: 15px; font-weight: 600; cursor: pointer; text-decoration: none; transition: transform .22s, box-shadow .22s; }
-  .nfc-btn--primary { color: #fff; background-image: var(--gradient-primary); box-shadow: 0 10px 30px rgba(90,76,255,0.32); }
-  .nfc-btn--primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(90,76,255,0.44); }
-  .nfc-btn--ghost { color: var(--nfc-text); border: 1px solid var(--nfc-border-strong); background: transparent; }
-  .nfc-btn--ghost:hover { transform: translateY(-2px); background: var(--nfc-surface-2); }
+  .nfc-btn--primary { color: #fff; background-image: var(--gradient-primary); box-shadow: 0 10px 30px rgba(90,76,255,0.28); }
+  .nfc-btn--primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(90,76,255,0.4); }
+  .nfc-btn--ghost { color: var(--nfc-text); border: 1px solid var(--nfc-border-strong); background: var(--nfc-card); }
+  .nfc-btn--ghost:hover { transform: translateY(-2px); box-shadow: var(--nfc-scene-shadow); }
 
-  /* Hero visual */
-  .nfc-hero__visual { width: min(100%, 780px); aspect-ratio: 1.18/1; justify-self: end; min-width: 0; position: relative; }
-  .nfc-hero__scene { position: relative; width: 100%; height: 100%; display: grid; align-items: center; justify-items: center; transform-style: preserve-3d; transition: transform .1s linear; will-change: transform; }
-  .nfc-hero__glow { position: absolute; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, var(--nfc-soft-violet), transparent 60%); transform: translate(-50%,-50%); pointer-events: none; transition: left .3s, top .3s; opacity: .7; }
+  .nfc-hero__visual { width: 100%; max-width: 720px; justify-self: end; min-width: 0; position: relative; }
+  .nfc-hero__scene { position: relative; width: 100%; padding-top: 52%; display: grid; align-items: center; justify-items: center; transform-style: preserve-3d; transition: transform .1s linear; will-change: transform; }
+  .nfc-hero__glow { position: absolute; width: 480px; height: 480px; border-radius: 50%; background: radial-gradient(circle, var(--nfc-soft-violet), transparent 60%); transform: translate(-50%,-50%); pointer-events: none; transition: left .3s, top .3s; opacity: .7; }
 
-  /* Soporte NFC */
-  .nfc-tag { position: relative; width: 250px; height: 360px; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 26px 18px 30px; border-radius: 22px; background: linear-gradient(160deg, ${dark ? "#1a2140" : "#ffffff"}, ${dark ? "#0f1430" : "#eef1f8"}); border: 1px solid var(--nfc-border-strong); box-shadow: var(--nfc-scene-shadow); }
-  .nfc-tag__glow { position: absolute; inset: -20px; border-radius: 40px; background: radial-gradient(circle at 50% 30%, var(--nfc-soft-violet), transparent 65%); filter: blur(8px); z-index: -1; }
-  .nfc-tag__logo { width: 54px; height: 54px; border-radius: 16px; background: var(--gradient-primary); display: grid; place-items: center; font-family: var(--font-display); font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 18px; }
+  .nfc-tag { position: relative; width: 220px; height: 320px; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 24px 16px 26px; border-radius: 20px; background: linear-gradient(160deg, ${dark ? "#1a2140" : "#ffffff"}, ${dark ? "#0f1430" : "#eef1f8"}); border: 1px solid var(--nfc-border-strong); box-shadow: var(--nfc-scene-shadow); }
+  .nfc-tag__glow { position: absolute; inset: -18px; border-radius: 40px; background: radial-gradient(circle at 50% 30%, var(--nfc-soft-violet), transparent 65%); filter: blur(8px); z-index: -1; }
+  .nfc-tag__logo { width: 48px; height: 48px; border-radius: 14px; background: var(--gradient-primary); display: grid; place-items: center; font-family: var(--font-display); font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 16px; }
   .nfc-tag__text { text-align: center; }
   .nfc-tag__text span { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.22em; color: var(--nfc-faint); margin-bottom: 6px; }
-  .nfc-tag__text strong { display: block; font-family: var(--font-display); font-size: 15px; letter-spacing: 0.02em; color: var(--nfc-text); line-height: 1.25; }
-  .nfc-tag__qr { color: var(--nfc-text); margin: 18px 0 6px; opacity: .9; }
-  .nfc-tag__base { position: absolute; bottom: -6px; width: 130px; height: 14px; border-radius: 999px; background: rgba(0,0,0,.25); filter: blur(6px); }
+  .nfc-tag__text strong { display: block; font-family: var(--font-display); font-size: 14px; letter-spacing: 0.02em; color: var(--nfc-text); line-height: 1.25; }
+  .nfc-tag__qr { color: var(--nfc-text); margin: 16px 0 4px; opacity: .9; }
+  .nfc-tag__base { position: absolute; bottom: -6px; width: 120px; height: 12px; border-radius: 999px; background: rgba(0,0,0,.25); filter: blur(6px); }
 
-  /* Teléfono + ondas */
-  .nfc-phone { position: absolute; right: 2%; top: 8%; z-index: 3; width: 220px; transition: transform .5s cubic-bezier(0.16,1,0.3,1); }
+  .nfc-phone { position: absolute; right: 4%; top: 6%; z-index: 3; width: 200px; transition: transform .5s cubic-bezier(0.16,1,0.3,1); }
   .nfc-phone--approach { transform: translateX(0); }
-  .nfc-phone--tap { transform: translateX(-14px); }
-  .nfc-phone--opened { transform: translateX(-14px); }
-  .nfc-phone__frame { border-radius: 30px; border: 2px solid var(--nfc-border-strong); background: ${dark ? "#0a0e1f" : "#0d1020"}; padding: 10px; box-shadow: 0 30px 70px rgba(0,0,0,.45); position: relative; }
-  .nfc-phone__notch { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); width: 66px; height: 16px; border-radius: 999px; background: #000; z-index: 2; }
-  .nfc-phone__screen { background: ${dark ? "#f4f6ff" : "#ffffff"}; color: #111426; border-radius: 20px; height: 420px; overflow: hidden; }
-  .nfc-phone__content { padding: 34px 14px 14px; display: flex; flex-direction: column; gap: 10px; height: 100%; }
+  .nfc-phone--tap, .nfc-phone--opened { transform: translateX(-12px); }
+  .nfc-phone__frame { border-radius: 28px; border: 2px solid var(--nfc-border-strong); background: ${dark ? "#0a0e1f" : "#0d1020"}; padding: 10px; box-shadow: 0 28px 60px rgba(0,0,0,.4); position: relative; }
+  .nfc-phone__notch { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); width: 60px; height: 15px; border-radius: 999px; background: #000; z-index: 2; }
+  .nfc-phone__screen { background: ${dark ? "#f4f6ff" : "#ffffff"}; color: #111426; border-radius: 19px; height: 380px; overflow: hidden; }
+  .nfc-phone__content { padding: 30px 12px 12px; display: flex; flex-direction: column; gap: 9px; height: 100%; }
   .nfc-phone__confirm { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: #16855b; border: 1px solid rgba(22,133,91,.25); background: rgba(22,133,91,.08); width: fit-content; padding: 4px 9px; border-radius: 999px; }
   .nfc-phone__confirm-dot { width: 7px; height: 7px; border-radius: 50%; background: #35d58a; }
   .nfc-phone__idle { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; height: 100%; color: #687088; font-size: 13px; font-weight: 500; }
-  .nfc-phone__idle-label { font-size: 22px; color: #725cff; }
-  .nfc-phone__home { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); width: 78px; height: 4px; border-radius: 999px; background: rgba(255,255,255,.35); }
+  .nfc-phone__idle-label { font-size: 20px; color: #725cff; }
+  .nfc-phone__home { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 70px; height: 4px; border-radius: 999px; background: rgba(255,255,255,.35); }
 
-  /* Ondas NFC */
-  .nfc-waves { position: absolute; top: 50%; left: -54px; transform: translateY(-50%); pointer-events: none; }
-  .nfc-wave { position: absolute; left: 0; top: 50%; transform: translateY(-50%) scale(.4); width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--nfc-blue); opacity: 0; }
+  .nfc-waves { position: absolute; top: 50%; left: -48px; transform: translateY(-50%); pointer-events: none; }
+  .nfc-wave { position: absolute; left: 0; top: 50%; transform: translateY(-50%) scale(.4); width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--nfc-blue); opacity: 0; }
   .nfc-phone--tap .nfc-wave, .nfc-phone--opened .nfc-wave { animation: nfcWave 1.6s ease-out infinite; }
   .nfc-wave--1 { animation-delay: 0s !important; }
   .nfc-wave--2 { animation-delay: .35s !important; }
   .nfc-wave--3 { animation-delay: .7s !important; }
   @keyframes nfcWave { 0% { opacity: 0; transform: translateY(-50%) scale(.35); } 25% { opacity: .9; } 100% { opacity: 0; transform: translateY(-50%) scale(1.8); } }
 
-  /* Rotator tipográfico */
-  .nfc-rotator { position: absolute; bottom: 4%; left: 0; right: 0; text-align: center; font-size: 13px; color: var(--nfc-muted); margin: 0; }
+  .nfc-rotator { position: absolute; bottom: 0; left: 0; right: 0; text-align: center; font-size: 13px; color: var(--nfc-muted); margin: 0; }
   .nfc-rotator__wrap { display: inline-block; overflow: hidden; vertical-align: top; color: var(--nfc-cyan); font-weight: 600; }
   .nfc-rotator__inner { display: inline-block; white-space: nowrap; animation: nfcTicker 16s linear infinite; }
   @keyframes nfcTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-  /* Microscreens de teléfono (hero) */
+  /* Microscreens (hero/config) */
   .mini { display: flex; flex-direction: column; gap: 8px; }
-  .mini--review .mini__head { display: flex; align-items: center; justify-content: space-between; padding: 6px; }
+  .mini__head { display: flex; align-items: center; justify-content: space-between; padding: 4px; font-weight: 700; font-size: 11px; color: #111426; }
   .mini__brand { display: flex; align-items: center; gap: 5px; }
   .mini__brand-logo { width: 20px; height: 20px; border-radius: 5px; background: linear-gradient(135deg,#725cff,#16d8d2); display: grid; place-items: center; color: #fff; font-size: 10px; font-weight: 700; }
   .mini__brand-name { font-weight: 700; font-size: 10px; color: #111426; }
   .mini__stars { display: flex; gap: 1px; color: #ffb45e; }
   .mini__rating { font-size: 13px; color: #ffb45e; letter-spacing: 2px; }
-  .mini__field { height: 40px; border-radius: 8px; background: #f0f2f7; border: 1px solid rgba(31,38,70,.1); }
+  .mini__field { height: 40px; border-radius: 8px; background: #f0f2f7; border: 1px solid rgba(31,38,70,.1); display: flex; align-items: center; padding: 0 10px; font-size: 9px; color: #687088; }
   .mini__btn { height: 30px; display: grid; place-items: center; border-radius: 8px; background: linear-gradient(135deg,#725cff,#16d8d2); color: #fff; font-size: 10px; font-weight: 600; }
   .mini__btn--wa { display: flex; align-items: center; justify-content: center; gap: 5px; }
   .mini__thank { display: flex; align-items: center; gap: 5px; font-size: 9px; color: #16855b; }
   .mini__check { width: 13px; height: 13px; border-radius: 50%; background: #35d58a; color: #fff; display: grid; place-items: center; font-size: 8px; }
-  .mini__bubble { background: #e9f5ef; color: #112720; padding: 8px 10px; border-radius: 10px 10px 10px 2px; font-size: 10px; max-width: 85%; }
+  .mini__bubble { background: #e9f5ef; color: #112720; padding: 8px 10px; border-radius: 10px 10px 10px 2px; font-size: 10px; max-width: 82%; }
+  .mini__bubble--reply { background: #e8ebf5; color: #232a44; align-self: flex-end; border-radius: 10px 10px 2px 10px; }
   .mini__contact { display: flex; align-items: center; gap: 7px; }
   .mini__contact-ava { width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg,#16d8d2,#397bff); }
   .mini__contact-name { font-size: 10px; font-weight: 600; color: #111426; }
-  .mini__head { font-weight: 700; font-size: 11px; color: #111426; }
-  .mini__dish { display: flex; align-items: center; gap: 6px; border: 1px solid rgba(31,38,70,.1); border-radius: 8px; padding: 6px 8px; font-size: 9px; color: #111426; }
-  .mini__dish-price { margin-left: auto; font-weight: 600; }
-  .mini__dish em { display: none; }
+  .mini__dish { display: flex; align-items: center; gap: 7px; border: 1px solid rgba(31,38,70,.1); border-radius: 8px; padding: 5px 8px; font-size: 9px; color: #111426; }
+  .mini__dish-thumb { width: 20px; height: 20px; border-radius: 6px; background: linear-gradient(135deg,#725cff,#16d8d2); opacity: .5; flex-shrink: 0; }
+  .mini__dish i { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+  .mini__dish i b { font-size: 9px; }
+  .mini__dish i em { font-style: normal; font-size: 8px; color: #687088; }
+  .mini__dish em { font-style: normal; }
+  .mini__dish-price { margin-left: auto; font-weight: 600; font-size: 9px; }
   .mini__cal { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
   .mini__cal-d { height: 20px; display: grid; place-items: center; font-size: 8px; color: #687088; background: #f0f2f7; border-radius: 4px; }
   .mini__cal-d.on { background: #725cff; color: #fff; }
+  .mini__cal-d.off { opacity: .25; }
+  .mini__slots { display: flex; gap: 6px; }
+  .mini__slot { flex: 1; text-align: center; padding: 6px 0; border-radius: 7px; border: 1px solid rgba(31,38,70,.12); font-size: 10px; color: #687088; }
+  .mini__slot.on { border-color: #725cff; background: rgba(114,92,255,.12); color: #725cff; font-weight: 600; }
   .mini__hour { font-size: 16px; font-weight: 700; color: #111426; }
 
-  /* ===== FRICCIÓN ===== */
-  .nfc-friction { background: var(--nfc-surface); border-block: 1px solid var(--nfc-border); }
-  .nfc-friction__cols { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(28px,4vw,56px); align-items: stretch; }
-  .nfc-path { border: 1px solid var(--nfc-border); border-radius: 20px; padding: clamp(22px,3vw,36px); background: var(--nfc-surface-2); }
-  .nfc-path--long { opacity: .78; }
-  .nfc-path--nfc { border-color: var(--nfc-soft-violet); background: var(--nfc-soft-violet); }
-  .nfc-path__tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--nfc-faint); display: block; margin-bottom: 20px; }
+  /* ===== MENOS PASOS ===== */
+  .nfc-friction { background: var(--nfc-section); padding-block: var(--nfc-section-space-compact); }
+  .nfc-friction__header { display: grid; grid-template-columns: minmax(0, 0.62fr) minmax(320px, 0.38fr); gap: 64px; align-items: end; margin-bottom: 60px; }
+  .nfc-friction__lead { margin: 0; max-width: 46ch; }
+  .nfc-friction__comp { margin-top: 0; display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: stretch; }
+  .nfc-path { height: 188px; border: 1px solid var(--nfc-border); border-radius: 18px; padding: 26px 30px; background: var(--nfc-card); display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+  .nfc-path--long { }
+  .nfc-path--nfc { border-color: var(--nfc-violet); background: var(--nfc-soft-violet); }
+  .nfc-path__tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--nfc-faint); }
   .nfc-path--nfc .nfc-path__tag { color: var(--nfc-cyan); }
-  .nfc-path__steps { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-  .nfc-path__steps span { padding: 10px 16px; border-radius: 999px; background: var(--nfc-surface-3); color: var(--nfc-muted); font-size: 14px; font-weight: 500; }
-  .nfc-path--nfc .nfc-path__steps span { background: var(--nfc-surface); color: var(--nfc-text); }
+  .nfc-path__steps { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .nfc-path__steps span { padding: 9px 14px; border-radius: 999px; background: var(--nfc-interface); color: var(--nfc-muted); font-size: 14px; font-weight: 500; }
+  .nfc-path--nfc .nfc-path__steps span { background: var(--nfc-card); color: var(--nfc-text); }
   .nfc-path__steps .nfc-path__done { background: var(--gradient-primary); color: #fff; }
-  .nfc-path__steps .nfc-path__tap { border: 1px solid var(--nfc-success); color: var(--nfc-green); }
+  .nfc-path__steps .nfc-path__tap { border: 1px solid var(--nfc-green); color: var(--nfc-green); }
+  .nfc-path__sep { color: var(--nfc-faint); font-style: normal; }
 
-  /* ===== MÁS QUE RESEÑAS ===== */
-  .nfc-more { text-align: center; }
-  .nfc-more .nfc-sec__head { margin-inline: auto; }
-  .nfc-more__refuerzo { margin-top: 26px; color: var(--nfc-violet); font-size: 13px; letter-spacing: 0.08em; }
+  /* ===== POSIBILIDADES + CASOS ===== */
+  .nfc-pos { background: var(--nfc-page); }
+  .nfc-pos__head { text-align: center; max-width: 900px; margin: 0 auto; }
+  .nfc-pos__title { max-width: 900px; margin: 0 auto 20px; }
+  .nfc-pos__lead { max-width: 720px; margin: 0 auto; }
+  .nfc-pos__claim { margin-top: 20px; color: var(--nfc-violet); font-size: 13px; letter-spacing: 0.1em; }
+  .nfc-pos__head { margin-bottom: clamp(40px, 4vw, 56px); }
 
-  /* ===== BENTO ===== */
-  .nfc-bento { background: var(--nfc-surface); border-block: 1px solid var(--nfc-border); }
-  .nfc-bento__grid { display: grid; grid-template-columns: 1.3fr 1fr; grid-template-rows: auto auto; gap: clamp(20px,2.6vw,32px); }
-  .nfc-card { border: 1px solid var(--nfc-border); border-radius: 24px; padding: clamp(22px,2.8vw,34px); background: var(--nfc-surface-2); display: flex; flex-direction: column; gap: 18px; }
-  .nfc-card--review { grid-column: 1; grid-row: 1 / span 2; }
-  .nfc-card--wa { grid-column: 2; grid-row: 1; }
-  .nfc-card--menu { grid-column: 2; grid-row: 2; }
-  .nfc-card--book { grid-column: 1 / -1; grid-row: 3; }
-  .nfc-card__eyebrow { font-size: 10px; letter-spacing: 0.18em; color: var(--nfc-cyan); }
-  .nfc-card__title { font-size: clamp(22px,2.2vw,30px); letter-spacing: -0.02em; margin: 6px 0 0; }
-  .nfc-card__text { color: var(--nfc-muted); font-size: 15px; line-height: 1.5; margin: 0; max-width: 40ch; }
-  .nfc-card__micro { color: var(--nfc-faint); font-size: 13px; margin: 0; }
-  .nfc-card__select { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; margin-top: auto; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--nfc-border-strong); background: transparent; color: var(--nfc-text); font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; }
-  .nfc-card__select:hover { background: var(--nfc-surface-3); transform: translateY(-1px); }
+  .nfc-cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
+  .nfc-case { min-height: 400px; height: 100%; display: grid; grid-template-rows: auto auto 1fr auto; gap: 16px; padding: clamp(26px, 3vw, 38px); border: 1px solid var(--nfc-border); border-radius: 24px; background: var(--nfc-card); }
+  .nfc-case__top { display: flex; align-items: center; justify-content: space-between; }
+  .nfc-case__num { font-size: 12px; color: var(--nfc-faint); letter-spacing: 0.16em; }
+  .nfc-case__eyebrow { font-size: 10px; letter-spacing: 0.18em; color: var(--nfc-cyan); }
+  .nfc-case__title { font-size: clamp(24px, 2.2vw, 32px); margin: 0; }
+  .nfc-case__body { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .nfc-case__text { color: var(--nfc-muted); font-size: 15px; line-height: 1.5; margin: 0; max-width: 44ch; }
+  .nfc-case__micro { color: var(--nfc-faint); font-size: 13px; margin: 0; }
+  .nfc-case__cta { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; margin-top: auto; padding: 11px 18px; border-radius: 999px; border: 1px solid var(--nfc-border-strong); background: var(--nfc-interface); color: var(--nfc-text); font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; }
+  .nfc-case__cta:hover { background: var(--nfc-soft-violet); border-color: var(--nfc-violet); }
 
-  .demo { border: 1px solid var(--nfc-border); border-radius: 14px; background: var(--nfc-surface); padding: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .demo { border: 1px solid var(--nfc-border); border-radius: 14px; background: var(--nfc-interface); padding: 14px; display: flex; flex-direction: column; gap: 9px; max-height: 170px; }
   .demo__stars { color: #ffb45e; letter-spacing: 2px; font-size: 15px; }
-  .demo__box { height: 34px; border-radius: 8px; background: var(--nfc-surface-3); border: 1px solid var(--nfc-border); }
-  .demo__btn { height: 30px; display: grid; place-items: center; border-radius: 8px; background: var(--gradient-primary); color: #fff; font-size: 11px; font-weight: 600; }
+  .demo__field { height: 34px; border-radius: 8px; background: var(--nfc-card); border: 1px solid var(--nfc-border); display: flex; align-items: center; padding: 0 10px; font-size: 11px; color: var(--nfc-muted); }
+  .demo__btn { height: 32px; display: grid; place-items: center; border-radius: 8px; background: var(--gradient-primary); color: #fff; font-size: 11px; font-weight: 600; }
+  .demo__btn--wa { display: flex; align-items: center; justify-content: center; gap: 6px; }
   .demo__ok { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--nfc-green); }
   .demo__check { width: 15px; height: 15px; border-radius: 50%; background: var(--nfc-green); color: #fff; display: grid; place-items: center; font-size: 9px; }
   .demo__bubble { background: var(--nfc-soft-cyan); color: var(--nfc-text); padding: 9px 12px; border-radius: 10px 10px 10px 2px; font-size: 12px; max-width: 80%; }
+  .demo__bubble--reply { background: var(--nfc-soft-violet); align-self: flex-end; border-radius: 10px 10px 2px 10px; }
   .demo__row { display: flex; align-items: center; gap: 8px; }
   .demo__ava { width: 24px; height: 24px; border-radius: 50%; background: var(--gradient-primary); }
   .demo__name { font-size: 12px; font-weight: 600; }
-  .demo__dish { display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--nfc-border); border-radius: 8px; padding: 8px 10px; font-size: 12px; }
-  .demo__dish b { font-size: 12px; }
-  .demo__cal { font-size: 12px; color: var(--nfc-muted); font-family: var(--font-mono); letter-spacing: 6px; }
-  .demo__hour { font-size: 18px; font-weight: 700; }
-  .demo--book .demo__btn { margin-top: 2px; }
-  .nfc-card--book .demo--book .demo__cal { letter-spacing: 4px; }
+  .demo__dish { display: flex; align-items: center; gap: 8px; border: 1px solid var(--nfc-border); border-radius: 8px; padding: 6px 10px; font-size: 12px; background: var(--nfc-card); }
+  .demo__thumb { width: 22px; height: 22px; border-radius: 6px; background: linear-gradient(135deg,#725cff,#16d8d2); opacity: .5; flex-shrink: 0; }
+  .demo__dish i { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+  .demo__dish i b { font-size: 12px; color: var(--nfc-text); }
+  .demo__dish i em { font-style: normal; font-size: 10px; color: var(--nfc-faint); }
+  .demo__price { margin-left: auto; font-weight: 600; font-size: 12px; color: var(--nfc-text); }
+  .demo__cal { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+  .demo__cal-d { height: 22px; display: grid; place-items: center; font-size: 10px; color: var(--nfc-muted); background: var(--nfc-card); border-radius: 4px; border: 1px solid var(--nfc-border); }
+  .demo__cal-d.on { background: var(--nfc-violet); color: #fff; border-color: var(--nfc-violet); }
+  .demo__cal-d.off { opacity: .3; }
+  .demo__slots { display: flex; gap: 8px; }
+  .demo__slot { flex: 1; text-align: center; padding: 7px 0; border-radius: 7px; border: 1px solid var(--nfc-border); font-size: 11px; color: var(--nfc-muted); background: var(--nfc-card); }
+  .demo__slot.on { border-color: var(--nfc-violet); background: var(--nfc-soft-violet); color: var(--nfc-violet); font-weight: 600; }
 
-  .nfc-bento__secondary { margin-top: clamp(28px,4vw,44px); border: 1px solid var(--nfc-border); border-radius: 16px; padding: 20px 24px; background: var(--nfc-surface-2); display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
-  .nfc-bento__secondary-label { font-size: 11px; letter-spacing: 0.14em; color: var(--nfc-faint); text-transform: uppercase; }
-  .nfc-bento__secondary-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 20px; }
-  .nfc-bento__secondary-list li { font-size: 14px; color: var(--nfc-muted); }
-  .nfc-bento__secondary-list li::before { content: ""; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--nfc-cyan); margin-right: 7px; vertical-align: middle; }
+  .nfc-more { margin-top: 48px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
+  .nfc-more__label { font-size: 11px; letter-spacing: 0.14em; color: var(--nfc-faint); text-transform: uppercase; }
+  .nfc-more__list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .nfc-more__list li { font-size: 14px; color: var(--nfc-muted); background: var(--nfc-card); border: 1px solid var(--nfc-border); padding: 7px 14px; border-radius: 999px; }
 
   /* ===== CÓMO FUNCIONA ===== */
-  .nfc-how__assembly { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 14px; margin-bottom: clamp(40px,5vw,60px); padding: clamp(18px,2.5vw,26px); border: 1px dashed var(--nfc-border-strong); border-radius: 16px; color: var(--nfc-muted); }
-  .nfc-how__assembly span { font-size: 12px; letter-spacing: 0.14em; }
-  .nfc-how__arrow { color: var(--nfc-cyan); font-size: 16px; font-style: normal; animation: nfcBlink 1.6s ease-in-out infinite; }
-  @keyframes nfcBlink { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
-  .nfc-how__grid { display: grid; grid-template-columns: repeat(4,1fr); gap: clamp(16px,2vw,24px); }
-  .nfc-step { border: 1px solid var(--nfc-border); border-radius: 18px; padding: clamp(20px,2.5vw,28px); background: var(--nfc-surface); }
+  .nfc-how { background: var(--nfc-section); }
+  .nfc-how__head { max-width: 800px; margin-bottom: clamp(56px, 6vw, 72px); }
+  .nfc-progress { list-style: none; margin: 0 0 clamp(56px, 6vw, 72px); padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); position: relative; height: 84px; }
+  .nfc-progress::before { content: ""; position: absolute; top: 6px; left: 4%; right: 4%; height: 2px; background: linear-gradient(90deg, var(--nfc-violet), var(--nfc-cyan)); opacity: .5; }
+  .nfc-progress__node { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .nfc-progress__dot { width: 14px; height: 14px; border-radius: 50%; background: var(--nfc-card); border: 3px solid var(--nfc-violet); box-shadow: 0 0 0 4px var(--nfc-soft-violet); z-index: 1; }
+  .nfc-progress__label { font-size: 12px; letter-spacing: 0.08em; color: var(--nfc-muted); }
+  .nfc-how__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+  .nfc-step { min-height: 220px; border: 1px solid var(--nfc-border); border-radius: 18px; padding: 28px; background: var(--nfc-card); display: flex; flex-direction: column; }
   .nfc-step__num { font-size: 13px; color: var(--nfc-violet); }
-  .nfc-step__title { font-size: clamp(17px,1.4vw,20px); letter-spacing: -0.01em; margin: 10px 0 8px; }
-  .nfc-step__desc { font-size: 14px; line-height: 1.5; color: var(--nfc-muted); margin: 0; }
+  .nfc-step__title { font-size: clamp(22px, 1.6vw, 26px); margin: 12px 0 10px; letter-spacing: -0.01em; }
+  .nfc-step__desc { font-size: 15px; line-height: 1.55; color: var(--nfc-muted); margin: 0; }
 
   /* ===== CONFIGURABLE ===== */
-  .nfc-config { background: var(--nfc-surface); border-block: 1px solid var(--nfc-border); }
-  .nfc-config__layout { display: grid; grid-template-columns: minmax(320px,0.85fr) minmax(0,1.15fr); gap: clamp(28px,4vw,56px); align-items: center; }
-  .nfc-config__panel { border: 1px solid var(--nfc-border); border-radius: 22px; padding: clamp(22px,3vw,34px); background: var(--nfc-surface-2); }
-  .nfc-config__panel-label { font-size: 11px; letter-spacing: 0.14em; color: var(--nfc-faint); text-transform: uppercase; margin: 0 0 12px; }
-  .nfc-config__panel-label--mt { margin-top: 26px; }
-  .nfc-config__current { display: flex; align-items: center; gap: 9px; font-size: 17px; font-weight: 600; color: var(--nfc-text); margin: 0 0 6px; }
+  .nfc-config { padding-block: var(--nfc-section-space); }
+  .nfc-config__grid { display: grid; grid-template-columns: minmax(0, 0.88fr) minmax(480px, 1.12fr); gap: clamp(48px, 6vw, 84px); align-items: center; }
+  .nfc-config__title { max-width: 560px; }
+  .nfc-config__lead { max-width: 52ch; margin-bottom: 34px; }
+  .nfc-config__label { font-size: 11px; letter-spacing: 0.14em; color: var(--nfc-faint); text-transform: uppercase; margin: 0 0 12px; }
+  .nfc-config__current { display: flex; align-items: center; gap: 9px; font-size: 18px; font-weight: 600; color: var(--nfc-text); margin: 0 0 24px; }
   .nfc-config__dot { width: 9px; height: 9px; border-radius: 50%; background: var(--nfc-green); box-shadow: 0 0 0 4px var(--nfc-soft-cyan); }
-  .nfc-config__list { display: flex; flex-direction: column; gap: 8px; margin: 0 0 22px; }
-  .nfc-config__opt { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--nfc-border); background: var(--nfc-surface); color: var(--nfc-muted); cursor: pointer; font-size: 14px; font-weight: 500; transition: all .2s; }
-  .nfc-config__opt input { position: absolute; opacity: 0; pointer-events: none; }
+  .nfc-config__list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+  .nfc-config__opt { position: relative; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--nfc-border); background: var(--nfc-card); color: var(--nfc-muted); cursor: pointer; font-size: 14px; font-weight: 500; transition: all .2s; }
+  .nfc-config__opt input { position: absolute; opacity: 0; pointer-events: none; width: 100%; height: 100%; }
   .nfc-config__radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--nfc-border-strong); flex-shrink: 0; position: relative; }
-  .nfc-config__opt.on { border-color: var(--nfc-soft-violet); background: var(--nfc-soft-violet); color: var(--nfc-text); }
+  .nfc-config__opt.on { border-color: var(--nfc-violet); background: var(--nfc-soft-violet); color: var(--nfc-text); }
   .nfc-config__opt.on .nfc-config__radio { border-color: var(--nfc-violet); }
   .nfc-config__opt.on .nfc-config__radio::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--nfc-violet); }
-  .nfc-config__save { height: 48px; width: 100%; border: none; border-radius: 999px; background: var(--gradient-primary); color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 8px 26px rgba(90,76,255,.3); transition: transform .2s; }
+  .nfc-config__save { height: 48px; width: 100%; border: none; border-radius: 999px; background: var(--gradient-primary); color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 8px 26px rgba(90,76,255,0.26); transition: transform .2s; }
   .nfc-config__save:hover { transform: translateY(-2px); }
   .nfc-config__status { display: flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 11px; color: var(--nfc-green); margin: 16px 0 0; }
   .nfc-config__status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--nfc-green); }
-  .nfc-config__scene { position: relative; display: flex; align-items: center; justify-content: center; gap: 30px; min-height: 420px; }
-  .nfc-config__phone { width: 230px; border-radius: 30px; border: 2px solid var(--nfc-border-strong); background: ${dark ? "#0a0e1f" : "#0d1020"}; padding: 9px; box-shadow: 0 28px 70px rgba(0,0,0,.4); }
-  .nfc-config__phone-inner { background: ${dark ? "#f4f6ff" : "#ffffff"}; color: #111426; border-radius: 22px; padding: 30px 14px 14px; display: flex; flex-direction: column; gap: 10px; min-height: 340px; }
+  .nfc-config__right { min-width: 0; }
+  .nfc-config__scene { position: relative; display: flex; align-items: center; justify-content: center; gap: 28px; }
+  .nfc-config__phone { width: 220px; border-radius: 28px; border: 2px solid var(--nfc-border-strong); background: ${dark ? "#0a0e1f" : "#0d1020"}; padding: 9px; box-shadow: 0 24px 60px rgba(0,0,0,.38); }
+  .nfc-config__phone-inner { background: ${dark ? "#f4f6ff" : "#ffffff"}; color: #111426; border-radius: 20px; padding: 28px 12px 12px; display: flex; flex-direction: column; gap: 10px; min-height: 340px; }
   .nfc-config__phone-head { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: #16855b; }
   .nfc-config__phone-dot { width: 7px; height: 7px; border-radius: 50%; background: #35d58a; }
-  .nfc-config__comercial { margin-top: clamp(28px,4vw,40px); text-align: center; font-size: 14px; color: var(--nfc-muted); }
+  .nfc-config__comercial { text-align: center; font-size: 14px; color: var(--nfc-muted); margin-top: 24px; }
 
-  /* ===== CASES ===== */
-  .nfc-cases__marquee { overflow: hidden; white-space: nowrap; font-size: 12px; letter-spacing: 0.18em; color: var(--nfc-faint); margin-bottom: clamp(28px,4vw,44px); }
-  .nfc-cases__marquee span { display: inline-block; padding-right: 26px; }
-  .nfc-cases__scene { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 18px; padding: clamp(30px,5vw,56px); border: 1px solid var(--nfc-border); border-radius: 24px; background: var(--nfc-surface); }
-  .nfc-cases__rubro { font-size: 13px; letter-spacing: 0.14em; color: var(--nfc-muted); }
-  .nfc-cases__arrow { color: var(--nfc-cyan); font-size: 20px; }
-  .nfc-cases__lugar { font-size: clamp(22px,3vw,34px); font-weight: 700; color: var(--nfc-text); }
-  .nfc-cases__accion { font-size: clamp(24px,3vw,36px); font-weight: 700; }
+  /* ===== APLICACIONES (rubros + formatos) ===== */
+  .nfc-apps { background: var(--nfc-section); }
+  .nfc-apps__head { text-align: center; max-width: 760px; margin: 0 auto; }
+  .nfc-apps__title { max-width: 760px; margin: 0 auto 20px; }
+  .nfc-apps__lead { max-width: 620px; margin: 0 auto; }
+  .nfc-rubros { overflow: hidden; margin: 48px 0 28px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .nfc-rubros__track { display: flex; white-space: nowrap; width: max-content; animation: rubrosMove 32s linear infinite; font-size: 12px; letter-spacing: 0.18em; color: var(--nfc-faint); font-family: var(--font-mono); }
+  .nfc-rubros:hover .nfc-rubros__track { animation-play-state: paused; }
+  @keyframes rubrosMove { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .nfc-rubros__track span { padding-right: 26px; }
+  .nfc-rubro-demo { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 16px; padding: 26px 30px; max-height: 180px; border: 1px solid var(--nfc-border); border-radius: 20px; background: var(--nfc-card); margin-bottom: clamp(36px, 4vw, 52px); }
+  .nfc-rubro-demo__rubro { font-size: 13px; letter-spacing: 0.14em; color: var(--nfc-muted); }
+  .nfc-rubro-demo__arrow { color: var(--nfc-cyan); font-size: 20px; }
+  .nfc-rubro-demo__lugar { font-size: clamp(20px, 2.4vw, 28px); font-weight: 700; color: var(--nfc-text); }
+  .nfc-rubro-demo__accion { font-size: clamp(22px, 2.6vw, 30px); font-weight: 700; }
 
-  /* ===== FORMATS ===== */
-  .nfc-formats { background: var(--nfc-surface); border-block: 1px solid var(--nfc-border); }
-  .nfc-formats__stage { display: grid; grid-template-columns: repeat(4,1fr); gap: clamp(16px,2.4vw,24px); }
-  .nfc-pedestal { border: 1px solid var(--nfc-border); border-radius: 18px; padding: 20px; background: var(--nfc-surface-2); display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
-  .nfc-pedestal__piece { height: 120px; display: grid; place-items: center; width: 100%; }
-  .nfc-pedestal__name { font-size: 14px; font-weight: 600; color: var(--nfc-text); }
-  .nfc-pedestal__status { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--nfc-amber); padding: 3px 8px; border-radius: 999px; background: var(--nfc-soft-cyan); }
-  .fmt { display: grid; place-items: center; gap: 4px; border: 1px dashed var(--nfc-border-strong); border-radius: 14px; transform: rotateX(18deg) rotateZ(-8deg); background: linear-gradient(160deg, ${dark ? "#1a2140" : "#ffffff"}, ${dark ? "#0f1430" : "#eef1f8"}); box-shadow: var(--nfc-scene-shadow); }
-  .fmt img, .fmt span { pointer-events: none; }
-  .fmt--contador { width: 90px; height: 120px; border-radius: 14px; }
-  .fmt--sticker { width: 86px; height: 86px; border-radius: 50%; }
-  .fmt--tarjeta { width: 120px; height: 74px; border-radius: 12px; }
-  .fmt--mesa { width: 130px; height: 58px; border-radius: 16px; }
-  .fmt--vidriera { width: 96px; height: 130px; border-radius: 10px; }
-  .fmt--empleado { width: 70px; height: 104px; border-radius: 999px 999px 12px 12px; }
-  .fmt--packaging { width: 112px; height: 62px; border-radius: 8px; }
-  .fmt__nfc { font-family: var(--font-mono); font-size: 16px; font-weight: 600; color: var(--nfc-violet); }
+  .nfc-apps__formats-head { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 40px; align-items: end; margin-bottom: 20px; }
+  .nfc-apps__formats-title { margin: 0; }
+  .nfc-apps__formats-desc { color: var(--nfc-muted); font-size: 15px; line-height: 1.55; margin: 0; max-width: 48ch; }
+  .nfc-format-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+  .nfc-format { min-height: 215px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; border: 1px solid var(--nfc-border); border-radius: 18px; padding: 20px; background: var(--nfc-card); }
+  .nfc-format__name { font-size: 14px; font-weight: 600; color: var(--nfc-text); }
+  .nfc-format__badge { font-size: 10px; letter-spacing: 0.1em; color: var(--nfc-cyan); border: 1px solid var(--nfc-border); padding: 3px 9px; border-radius: 999px; background: var(--nfc-interface); }
+  .fmt { display: grid; place-items: center; gap: 4px; border: 1px solid var(--nfc-border-strong); border-radius: 14px; transform: rotateX(14deg) rotateZ(-6deg); background: linear-gradient(160deg, ${dark ? "#1a2140" : "#ffffff"}, ${dark ? "#0f1430" : "#eef1f8"}); box-shadow: var(--nfc-scene-shadow); }
+  .fmt span { pointer-events: none; }
+  .fmt--contador { width: 84px; height: 108px; border-radius: 13px; }
+  .fmt--sticker { width: 80px; height: 80px; border-radius: 50%; }
+  .fmt--tarjeta { width: 110px; height: 66px; border-radius: 11px; }
+  .fmt--mesa { width: 120px; height: 52px; border-radius: 15px; }
+  .fmt--vidriera { width: 88px; height: 116px; border-radius: 9px; }
+  .fmt--empleado { width: 64px; height: 96px; border-radius: 999px 999px 12px 12px; }
+  .fmt__nfc { font-family: var(--font-mono); font-size: 15px; font-weight: 600; color: var(--nfc-violet); }
   .fmt__qr { font-size: 12px; line-height: 1.1; color: var(--nfc-text); opacity: .8; text-align: center; }
+  .nfc-apps__secondary { text-align: center; font-size: 14px; color: var(--nfc-muted); margin: 22px 0 0; }
+  .nfc-apps__cta { display: flex; justify-content: center; margin-top: 32px; }
 
-  /* ===== COMMERCIAL ===== */
-  .nfc-commercial__grid { display: grid; grid-template-columns: repeat(3,1fr); gap: clamp(18px,2.6vw,28px); align-items: stretch; }
-  .nfc-plan { display: flex; flex-direction: column; gap: 16px; border: 1px solid var(--nfc-border); border-radius: 22px; padding: clamp(24px,3vw,34px); background: var(--nfc-surface); text-decoration: none; color: var(--nfc-text); transition: transform .22s, box-shadow .22s, border-color .22s; }
-  .nfc-plan:hover { transform: translateY(-4px); border-color: var(--nfc-border-strong); box-shadow: var(--nfc-scene-shadow); }
-  .nfc-plan--featured { border-color: var(--nfc-soft-violet); background: var(--nfc-soft-violet); }
-  .nfc-plan__title { font-size: clamp(22px,2.2vw,28px); letter-spacing: -0.02em; margin: 0; }
-  .nfc-plan__desc { color: var(--nfc-muted); font-size: 14px; margin: 0; }
-  .nfc-plan__points { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-  .nfc-plan__points li { display: flex; align-items: center; gap: 9px; font-size: 14px; color: var(--nfc-muted); }
+  /* ===== ESCALA ===== */
+  .nfc-scale { background: var(--nfc-page); }
+  .nfc-scale__head { max-width: 820px; margin-bottom: clamp(48px, 5vw, 64px); }
+  .nfc-scale__title { max-width: 820px; }
+  .nfc-scale__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; align-items: stretch; }
+  .nfc-plan { min-height: 430px; display: flex; flex-direction: column; gap: 16px; border: 1px solid var(--nfc-border); border-radius: 22px; padding: clamp(26px, 3vw, 34px); background: var(--nfc-card); text-decoration: none; color: var(--nfc-text); transition: box-shadow .22s, border-color .22s; }
+  .nfc-plan:hover { border-color: var(--nfc-border-strong); box-shadow: var(--nfc-scene-shadow); }
+  .nfc-plan--featured { border-color: var(--nfc-violet); background: var(--nfc-soft-violet); }
+  .nfc-plan__eyebrow { font-size: 10px; letter-spacing: 0.16em; color: var(--nfc-faint); text-transform: uppercase; }
+  .nfc-plan__title { font-size: clamp(26px, 2vw, 30px); margin: 0; }
+  .nfc-plan__desc { color: var(--nfc-muted); font-size: 15px; margin: 0; }
+  .nfc-plan__points { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .nfc-plan__points li { display: flex; align-items: center; gap: 9px; font-size: 15px; color: var(--nfc-muted); }
   .nfc-plan__check { color: var(--nfc-green); font-weight: 700; }
   .nfc-plan__cta { margin-top: auto; display: inline-flex; align-items: center; gap: 7px; color: var(--nfc-cyan); font-weight: 600; font-size: 15px; }
 
-  /* ===== TRUST ===== */
-  .nfc-trust__grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 28px; }
-  .nfc-trust__item { border: 1px solid var(--nfc-border); border-radius: 14px; padding: 16px 18px; background: var(--nfc-surface); display: flex; align-items: center; gap: 10px; color: var(--nfc-muted); font-size: 15px; }
+  /* ===== CONFIANZA ===== */
+  .nfc-trust { background: var(--nfc-section); padding-block: var(--nfc-section-space-compact); }
+  .nfc-trust__grid { display: grid; grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr); gap: 72px; align-items: center; }
+  .nfc-trust__title { max-width: 22ch; margin-bottom: 28px; }
+  .nfc-trust__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .nfc-trust__item { display: flex; align-items: center; gap: 11px; color: var(--nfc-muted); font-size: 15px; padding: 18px 18px; border: 1px solid var(--nfc-border); border-radius: 12px; background: var(--nfc-card); }
   .nfc-trust__check { color: var(--nfc-green); font-weight: 700; }
-  .nfc-trust__note { border: 1px dashed var(--nfc-border-strong); border-radius: 14px; padding: 18px 22px; color: var(--nfc-muted); font-size: 14px; line-height: 1.6; text-align: center; max-width: 720px; margin-inline: auto; }
+  .nfc-trust__note { margin: 28px auto 0; max-width: 720px; text-align: center; color: var(--nfc-muted); font-size: 14px; line-height: 1.6; }
   .nfc-trust__note strong { color: var(--nfc-text); font-weight: 600; }
 
-  /* ===== LEAD FORM ===== */
-  .nfc-lead { background: var(--nfc-surface); border-block: 1px solid var(--nfc-border); }
-  .nfc-lead__wrap { display: grid; grid-template-columns: minmax(340px,0.8fr) minmax(520px,1.2fr); gap: clamp(40px,6vw,80px); align-items: start; }
-  .nfc-lead__left { position: sticky; top: calc(var(--header-height) + 40px); }
-  .nfc-lead__bajada { color: var(--nfc-muted); font-size: 16px; line-height: 1.6; margin: 0 0 24px; max-width: 46ch; }
-  .nfc-lead__wa { display: inline-flex; align-items: center; gap: 8px; color: var(--nfc-cyan); font-size: 15px; text-decoration: none; transition: opacity .2s; }
-  .nfc-lead__wa:hover { opacity: .8; }
-  .nfc-lead__right { border: 1px solid var(--nfc-border); border-radius: 24px; padding: clamp(24px,3.4vw,40px); background: var(--nfc-surface-2); }
-  .nfc-lead__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .nfc-field { display: flex; flex-direction: column; gap: 6px; }
+  /* ===== FORMULARIO ===== */
+  .nfc-contact { background: var(--nfc-page); }
+  .nfc-contact__grid { display: grid; grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr); gap: clamp(56px, 7vw, 104px); align-items: start; }
+  .nfc-contact__title { max-width: 14ch; }
+  .nfc-contact__bajada { margin: 20px 0 0; max-width: 46ch; }
+  .nfc-contact__benefits { list-style: none; margin: 28px 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .nfc-contact__benefits li { display: flex; align-items: center; gap: 10px; color: var(--nfc-muted); font-size: 15px; }
+  .nfc-contact__check { color: var(--nfc-green); font-weight: 700; }
+  .nfc-contact__wa { display: inline-flex; align-items: center; gap: 8px; color: var(--nfc-cyan); font-size: 15px; text-decoration: none; font-weight: 600; }
+  .nfc-contact__wa:hover { opacity: .8; }
+  .nfc-contact__form { border: 1px solid var(--nfc-border); border-radius: 24px; padding: clamp(40px, 4.5vw, 48px); background: var(--nfc-card); }
+  .nfc-contact__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .nfc-field { display: flex; flex-direction: column; gap: 7px; }
   .nfc-field--area { margin-top: 18px; position: relative; }
   .nfc-field__label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--nfc-muted); }
-  .nfc-field input, .nfc-field textarea { width: 100%; height: 50px; background: var(--nfc-surface); border: 1px solid var(--nfc-border-strong); border-radius: 12px; padding: 0 14px; font-size: 15px; color: var(--nfc-text); outline: none; transition: border-color .25s; }
-  .nfc-field textarea { height: auto; min-height: 110px; padding: 12px 14px; resize: vertical; }
+  .nfc-field input, .nfc-field textarea { width: 100%; height: 54px; background: var(--nfc-interface); border: 1px solid var(--nfc-border-strong); border-radius: 12px; padding: 0 16px; font-size: 15px; color: var(--nfc-text); outline: none; transition: border-color .25s, box-shadow .25s; min-width: 0; }
+  .nfc-field textarea { height: auto; min-height: 150px; padding: 14px 16px; resize: vertical; }
   .nfc-field input::placeholder, .nfc-field textarea::placeholder { color: var(--nfc-faint); }
-  .nfc-field input:focus, .nfc-field textarea:focus { border-color: var(--nfc-violet); }
-  .nfc-field input[aria-invalid="true"], .nfc-field textarea[aria-invalid="true"] { border-color: var(--nfc-error, #ff747f); }
-  .nfc-field__error { font-size: 12px; color: var(--nfc-error, #ff747f); }
-  .nfc-field__count { font-size: 11px; color: var(--nfc-faint); position: absolute; bottom: 8px; right: 12px; }
-  .nfc-fieldset { border: none; margin: 18px 0 0; padding: 0; }
+  .nfc-field input:focus, .nfc-field textarea:focus { border-color: var(--nfc-violet); box-shadow: 0 0 0 3px var(--nfc-soft-violet); }
+  .nfc-field input[aria-invalid="true"], .nfc-field textarea[aria-invalid="true"] { border-color: var(--nfc-error); }
+  .nfc-field__error { font-size: 12px; color: var(--nfc-error); }
+  .nfc-field__count { font-size: 11px; color: var(--nfc-faint); position: absolute; bottom: 10px; right: 14px; }
+  .nfc-fieldset { border: none; margin: 22px 0 0; padding: 0; min-width: 0; }
   .nfc-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-  .nfc-chip { border: 1px solid var(--nfc-border-strong); border-radius: 999px; padding: 8px 16px; font-size: 13px; color: var(--nfc-muted); background: transparent; cursor: pointer; transition: all .2s; }
-  .nfc-chip.on { border-color: var(--nfc-soft-violet); background: var(--nfc-soft-violet); color: var(--nfc-text); }
+  .nfc-chip { border: 1px solid var(--nfc-border-strong); border-radius: 999px; padding: 9px 16px; font-size: 13px; color: var(--nfc-muted); background: var(--nfc-interface); cursor: pointer; transition: all .2s; }
+  .nfc-chip.on { border-color: var(--nfc-violet); background: var(--nfc-soft-violet); color: var(--nfc-text); }
   .nfc-chip:hover { border-color: var(--nfc-violet); }
   .nfc-hp { position: absolute; left: -9999px; opacity: 0; height: 0; }
-  .nfc-consent { font-size: 12px; color: var(--nfc-faint); margin: 16px 0 0; }
+  .nfc-consent { font-size: 12px; color: var(--nfc-faint); margin: 18px 0 0; }
   .nfc-consent a { color: var(--nfc-cyan); text-decoration: underline; }
-  .nfc-lead__submit { display: flex; align-items: center; justify-content: center; gap: 9px; margin-top: 16px; height: 54px; width: 100%; border: none; border-radius: 999px; background: var(--gradient-primary); color: #fff; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 30px rgba(90,76,255,.32); transition: transform .22s, box-shadow .22s; }
-  .nfc-lead__submit:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(90,76,255,.44); }
-  .nfc-lead__submit:disabled { opacity: .7; cursor: not-allowed; }
-  .nfc-lead__micro { font-size: 12px; color: var(--nfc-faint); margin: 14px 0 0; text-align: center; }
-  .nfc-success { text-align: center; padding: clamp(24px,4vw,48px); }
+  .nfc-contact__submit { display: flex; align-items: center; justify-content: center; gap: 9px; margin-top: 18px; height: 56px; width: 100%; border: none; border-radius: 999px; background: var(--gradient-primary); color: #fff; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 30px rgba(90,76,255,0.28); transition: transform .22s, box-shadow .22s; }
+  .nfc-contact__submit:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(90,76,255,0.4); }
+  .nfc-contact__submit:disabled { opacity: .7; cursor: not-allowed; }
+  .nfc-contact__micro { font-size: 12px; color: var(--nfc-faint); margin: 14px 0 0; text-align: center; }
+  .nfc-success { text-align: center; padding: clamp(24px, 4vw, 48px); }
   .nfc-success__check { display: inline-grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--nfc-green); color: #fff; font-size: 26px; margin-bottom: 18px; }
-  .nfc-success h3 { font-size: clamp(24px,2.4vw,32px); letter-spacing: -0.02em; margin: 0 0 14px; }
+  .nfc-success h3 { font-size: clamp(24px, 2.4vw, 32px); letter-spacing: -0.02em; margin: 0 0 14px; }
   .nfc-success p { font-size: 15px; }
 
   /* ===== FAQ ===== */
-  .nfc-faq__list { max-width: 760px; margin-inline: auto; display: flex; flex-direction: column; gap: 12px; }
-  .nfc-faq__item { border: 1px solid var(--nfc-border); border-radius: 16px; background: var(--nfc-surface); overflow: hidden; }
+  .nfc-faq { background: var(--nfc-section); padding-block: var(--nfc-section-space-compact); }
+  .nfc-faq__head { text-align: center; max-width: 900px; margin: 0 auto clamp(40px, 5vw, 56px); }
+  .nfc-faq__title { max-width: 900px; margin: 0 auto; }
+  .nfc-faq__list { max-width: 900px; margin-inline: auto; display: flex; flex-direction: column; gap: 10px; }
+  .nfc-faq__item { border: 1px solid var(--nfc-border); border-radius: 14px; background: var(--nfc-card); }
   .nfc-faq__q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 22px; background: transparent; border: none; color: var(--nfc-text); font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; }
-  .nfc-faq__toggle { color: var(--nfc-cyan); font-size: 22px; line-height: 1; width: 24px; height: 24px; display: grid; place-items: center; }
-  .nfc-faq__a { padding: 0 22px 20px; margin: 0; color: var(--nfc-muted); font-size: 14px; line-height: 1.6; }
+  .nfc-faq__toggle { color: var(--nfc-cyan); font-size: 24px; line-height: 1; width: 24px; height: 24px; display: grid; place-items: center; transition: transform .25s; }
+  .nfc-faq__item.open .nfc-faq__toggle { transform: rotate(45deg); }
+  .nfc-faq__a { padding: 0 22px 18px; margin: 0; color: var(--nfc-muted); font-size: 14px; line-height: 1.6; max-width: 70ch; }
 
   /* ===== RESPONSIVE ===== */
+  @media (max-width: 1599px) {
+    .nfc-format-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
   @media (max-width: 1279px) {
-    .nfc-hero__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-    .nfc-hero__title { font-size: clamp(46px,5vw,68px); }
-    .nfc-phone { right: 0; }
-    .nfc-formats__stage { grid-template-columns: repeat(3,1fr); }
+    .nfc-hero__grid { grid-template-columns: minmax(0, 0.9fr) minmax(400px, 1.1fr); gap: 48px; }
+    .nfc-how__grid { grid-template-columns: repeat(2, 1fr); }
+    .nfc-progress { grid-template-columns: repeat(2, 1fr); height: auto; gap: 24px; }
+    .nfc-progress::before { display: none; }
+    .nfc-config__grid { grid-template-columns: 1fr; align-items: start; }
+    .nfc-config__right { max-width: 720px; margin-inline: auto; width: 100%; }
+    .nfc-format-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .nfc-scale__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .nfc-scale__grid .nfc-plan { min-height: 0; }
   }
   @media (max-width: 1023px) {
     .nfc-hero { padding-block: 48px 72px; }
     .nfc-hero__grid { grid-template-columns: 1fr; }
-    .nfc-hero__visual { aspect-ratio: 1.05/1; max-width: 620px; margin-inline: auto; justify-self: center; width: 100%; }
-    .nfc-friction__cols { grid-template-columns: 1fr; }
-    .nfc-bento__grid { grid-template-columns: 1fr; }
-    .nfc-card--review { grid-column: 1; grid-row: auto; }
-    .nfc-card--wa, .nfc-card--menu, .nfc-card--book { grid-column: 1; grid-row: auto; }
-    .nfc-config__layout { grid-template-columns: 1fr; }
-    .nfc-config__scene { min-height: 0; }
-    .nfc-how__grid { grid-template-columns: repeat(2,1fr); }
-    .nfc-commercial__grid { grid-template-columns: 1fr; }
-    .nfc-trust__grid { grid-template-columns: repeat(2,1fr); }
-    .nfc-lead__wrap { grid-template-columns: 1fr; }
-    .nfc-lead__left { position: static; }
-    .nfc-formats__stage { grid-template-columns: repeat(3,1fr); }
+    .nfc-hero__visual { max-width: 620px; margin-inline: auto; justify-self: center; }
+    .nfc-friction__header { grid-template-columns: 1fr; gap: 20px; align-items: start; }
+    .nfc-friction__lead { max-width: 56ch; }
+    .nfc-friction__comp { grid-template-columns: 1fr; }
+    .nfc-cases { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .nfc-case { min-height: 0; }
+    .nfc-apps__formats-head { grid-template-columns: 1fr; gap: 16px; }
+    .nfc-format-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .nfc-scale__grid { grid-template-columns: 1fr; }
+    .nfc-trust__grid { grid-template-columns: 1fr; gap: 32px; }
+    .nfc-contact__grid { grid-template-columns: 1fr; gap: 48px; }
   }
   @media (max-width: 767px) {
-    .nfc-sec { padding-block: 64px; }
-    .nfc-h2 { font-size: clamp(30px,7vw,40px); }
+    .nfc-container, .nfc-container--wide, .nfc-container--text { width: min(calc(100% - 40px), 560px); }
+    .nfc-sec { padding-block: var(--nfc-section-space-compact); }
+    .nfc-display { font-size: clamp(48px, 11vw, 62px); }
+    .nfc-section-title { font-size: clamp(38px, 9vw, 48px); }
     .nfc-hero__ctas { flex-direction: column; align-items: stretch; }
     .nfc-btn { justify-content: center; }
-    .nfc-hero__visual { aspect-ratio: 1/1; max-width: 460px; }
-    .nfc-tag { transform: scale(.85); }
-    .nfc-phone { width: 180px; }
-    .nfc-phone__screen { height: 320px; }
-    .nfc-rotator { font-size: 11px; }
+    .nfc-hero__visual { max-width: 460px; }
+    .nfc-hero__scene { padding-top: 64%; }
+    .nfc-phone { width: 172px; }
+    .nfc-phone__screen { height: 330px; }
+    .nfc-tag { width: 190px; height: 280px; }
+    .nfc-tag__logo { width: 42px; height: 42px; }
+    .nfc-cases { grid-template-columns: 1fr; }
+    .nfc-case { min-height: 0; }
+    .nfc-progress { grid-template-columns: 1fr; gap: 16px; }
     .nfc-how__grid { grid-template-columns: 1fr; }
-    .nfc-config__scene { flex-direction: column; gap: 40px; }
-    .nfc-config__phone { width: 240px; }
-    .nfc-formats__stage { grid-template-columns: repeat(2,1fr); }
-    .nfc-trust__grid { grid-template-columns: 1fr; }
-    .nfc-lead__grid { grid-template-columns: 1fr; }
-    .nfc-cases__scene { gap: 12px; }
-    .nfc-hero__visual { width: min(100%, 480px); }
+    .nfc-step { min-height: 0; }
+    .nfc-config__list { grid-template-columns: 1fr; }
+    .nfc-config__scene { flex-direction: column; gap: 36px; }
+    .nfc-format-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .nfc-trust__list { grid-template-columns: 1fr; }
+    .nfc-contact__fields { grid-template-columns: 1fr; }
+    .nfc-rotator { font-size: 11px; }
   }
   @media (max-width: 400px) {
-    .nfc-formats__stage { grid-template-columns: 1fr; }
     .nfc-phone { display: none; }
     .nfc-config__phone { display: none; }
-    .nfc-tag { transform: scale(.9); }
   }
 
   /* ===== REDUCED MOTION ===== */
   @media (prefers-reduced-motion: reduce) {
     .nfc-phone--approach, .nfc-phone--tap, .nfc-phone--opened { transform: none; }
-    .nfc-wave, .nfc-phone--tap .nfc-wave, .nfc-phone--opened .nfc-wave { animation: none; opacity: 1; }
-    .nfc-rotator__inner { animation: none; }
-    .nfc-how__arrow { animation: none; }
+    .nfc-wave, .nfc-phone--tap .nfc-wave, .nfc-phone--opened .nfc-wave { animation: none; opacity: .6; }
+    .nfc-rotator__inner { animation: none; white-space: normal; }
+    .nfc-rubros__track { animation: none; }
   }
   `
 }
