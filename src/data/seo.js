@@ -13,6 +13,12 @@ export const SEO_META = {
       "Facilitá reseñas, consultas, menús, reservas, pagos y más con soluciones NFC configurables para tu negocio. Sin apps y listas para usar.",
     robots: "index, follow",
   },
+  "/soluciones/fidelizacion": {
+    title: "Fidelización de clientes para negocios | Fleximy",
+    description:
+      "Registrá compras, conocé a tus clientes y premiá automáticamente su fidelidad con una plataforma creada para tu negocio.",
+    robots: "index, follow",
+  },
   "/privacidad": {
     title: "Política de Privacidad — Fleximy",
     description:

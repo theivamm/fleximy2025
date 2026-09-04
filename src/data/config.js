@@ -21,16 +21,31 @@ export const COMPANY = {
   fechaActualizacion: "[FECHA DE ACTUALIZACIÓN]",
 }
 
+// ---------------------------------------------------------------------------
+// WHATSAPP — número único y centralizado del sitio.
+// Nunca repetir el número hardcodeado en componentes. Usar `whastsappUrl()`.
+// ---------------------------------------------------------------------------
+export const WHATSAPP_NUMBER = "5491161120433"
+
 export const WHATSAPP = {
-  // PENDIENTE: reemplazar por el número real. No inventar ni usar ficticios.
-  number: "541111111111",
+  number: WHATSAPP_NUMBER,
+  // Mensaje por defecto (ruta Home/otras sin variante específica).
   message: "Hola, llegué desde el sitio de Fleximy. Quiero contarte mi idea y conocer cómo trabajan.",
 }
 
-export const whatsappUrl = (message = WHATSAPP.message) =>
-  `https://wa.me/${WHATSAPP.number}?text=${encodeURIComponent(message)}`
+// Mensajes específicos por ruta para el módulo global de WhatsApp.
+// source: clave interna del módulo -> mensaje prefijado para esa página.
+export const WHATSAPP_MESSAGES = {
+  home: "Hola, llegué desde el sitio de Fleximy. Quiero contarte mi idea y conocer cómo trabajan.",
+  nfc: "Hola, llegué desde la página de soluciones NFC de Fleximy. Quiero contarte qué acción quiero facilitar.",
+  fidelizacion:
+    "Hola, llegué desde la página de Fidelización de Fleximy. Quiero contarles cómo funciona mi negocio y conocer una solución para que mis clientes vuelvan.",
+}
 
-export const WHATSAPP_PLAIN_URL = `https://wa.me/${WHATSAPP.number}`
+export const whatsappUrl = (message = WHATSAPP.message) =>
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
+
+export const WHATSAPP_PLAIN_URL = `https://wa.me/${WHATSAPP_NUMBER}`
 
 export const CONTACT = {
   whatsapp: WHATSAPP_PLAIN_URL,

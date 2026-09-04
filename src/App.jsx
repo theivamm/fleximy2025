@@ -5,11 +5,12 @@ import { ThemeProvider } from "./context/ThemeContext"
 import Header from "./components/navigation/Header"
 import Footer from "./components/Footer"
 import Seo from "./components/seo/Seo"
-import WhatsAppContact from "./components/WhatsAppContact"
+import GlobalWhatsAppExperience from "./components/global/GlobalWhatsAppExperience"
 import SocialProofWidget from "./components/SocialProofWidget"
 
 const Home = lazy(() => import("./pages/Home"))
 const NfcSolution = lazy(() => import("./pages/NfcSolution"))
+const LoyaltyPage = lazy(() => import("./pages/LoyaltyPage"))
 const Privacidad = lazy(() => import("./pages/Privacidad"))
 const Terminos = lazy(() => import("./pages/Terminos"))
 const NotFound = lazy(() => import("./pages/NotFound"))
@@ -32,7 +33,7 @@ function PublicShell({ children }) {
     <div className="min-h-screen bg-bg-0 text-text-1 flex flex-col">
       <Header />
       <main className="flex-1">{children}</main>
-      <WhatsAppContact />
+      <GlobalWhatsAppExperience />
       <Footer />
       <SocialProofWidget />
     </div>
@@ -49,6 +50,7 @@ function AppContent() {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageTransition><Home /></PageTransition>} />
             <Route path="/soluciones/nfc" element={<PageTransition><NfcSolution /></PageTransition>} />
+            <Route path="/soluciones/fidelizacion" element={<PageTransition><LoyaltyPage /></PageTransition>} />
             <Route path="/nfc-service" element={<Navigate to="/soluciones/nfc" replace />} />
             <Route path="/privacidad" element={<PageTransition><Privacidad /></PageTransition>} />
             <Route path="/terminos" element={<PageTransition><Terminos /></PageTransition>} />
