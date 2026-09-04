@@ -4,7 +4,7 @@ export { CONTACT }
 
 export const NAV = {
   main: [
-    { label: "Soluciones Web", to: "/soluciones/web" },
+    { label: "Webs + Apps", to: "/soluciones/web" },
     { label: "Soluciones NFC", to: "/soluciones/nfc" },
     { label: "Fidelización", to: "/soluciones/fidelizacion" },
   ],
