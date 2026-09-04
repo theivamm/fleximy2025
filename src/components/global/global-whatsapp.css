@@ -9,7 +9,12 @@
   padding: clamp(48px, 6vw, 104px) 0 clamp(56px, 7vw, 120px);
 }
 
-.gw__inner { position: relative; }
+.gw__inner {
+  position: relative;
+  width: min(1240px, calc(100% - 48px));
+  margin-inline: auto;
+  min-width: 0;
+}
 
 .gw-card {
   --gw-mx: 70%;
@@ -393,6 +398,7 @@ html[data-theme="light"] .gw .gw-chat__foot { color: #8b93a8; border-color: rgba
 }
 @media (max-width: 767px) {
   .gw { padding: 48px 0 64px; }
+  .gw__inner { width: min(calc(100% - 40px), 560px); }
   .gw-card { padding: 32px 24px; }
   .gw-title { font-size: clamp(34px, 9vw, 44px); }
   .gw-cta { width: 100%; justify-content: center; }

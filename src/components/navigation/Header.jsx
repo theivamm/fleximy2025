@@ -13,7 +13,7 @@ function Logo({ compact = false }) {
   const { theme } = useTheme()
   const logoSrc = theme === "dark" ? logoSvgBlanco : logoSvgColor
   return (
-    <Link to="/" aria-label="Fleximy — Inicio" className="flex shrink-0 items-center gap-2.5">
+    <Link to="/soluciones/web" aria-label="Fleximy — Inicio" className="flex shrink-0 items-center gap-2.5">
       <img
         src={logoSrc}
         alt=""

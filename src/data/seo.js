@@ -2,9 +2,15 @@ export const SITE_URL = "https://fleximy2025.netlify.app"
 
 export const SEO_META = {
   "/": {
-    title: "Fleximy — Websites y aplicaciones de gestión para negocios",
+    title: "Fleximy — Webs y aplicaciones de gestión para negocios",
     description:
-      "Creamos el website y la aplicación de gestión que tu negocio necesita para vender, administrar clientes y ordenar toda la operación.",
+      "Diseñamos el website y la aplicación de gestión que tu negocio necesita para vender, administrar clientes y ordenar toda la operación.",
+    robots: "index, follow",
+  },
+  "/soluciones/web": {
+    title: "Fleximy — Webs y aplicaciones de gestión para negocios",
+    description:
+      "Diseñamos el website y la aplicación de gestión que tu negocio necesita para vender, administrar clientes y ordenar toda la operación.",
     robots: "index, follow",
   },
   "/soluciones/nfc": {

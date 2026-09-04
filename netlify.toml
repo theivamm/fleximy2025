@@ -18,6 +18,21 @@
   status = 200
 
 [[redirects]]
+  from = "/soluciones/web"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/soluciones/nfc"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/soluciones/fidelizacion"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/404.html"
   status = 404

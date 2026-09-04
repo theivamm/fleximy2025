@@ -48,7 +48,8 @@ function AppContent() {
       <PublicShell>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+            <Route path="/" element={<Navigate to="/soluciones/web" replace />} />
+            <Route path="/soluciones/web" element={<PageTransition><Home /></PageTransition>} />
             <Route path="/soluciones/nfc" element={<PageTransition><NfcSolution /></PageTransition>} />
             <Route path="/soluciones/fidelizacion" element={<PageTransition><LoyaltyPage /></PageTransition>} />
             <Route path="/nfc-service" element={<Navigate to="/soluciones/nfc" replace />} />
