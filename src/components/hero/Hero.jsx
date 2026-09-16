@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import HeroCopy from "./HeroCopy"
 import ProductStage from "./ProductStage"
 import { StoryProvider } from "./hooks/useProductStory.jsx"
+import "./hero.css"
 
 
 function HeroInner() {
@@ -92,32 +93,6 @@ function HeroInner() {
           <ProductStage prefersReduced={prefersReduced} />
         </motion.div>
       </div>
-
-      <style>{`
-        .hero__inner,
-        .hero__inner > * {
-          min-width: 0;
-        }
-        @media (max-width: 1024px) {
-          .hero__inner {
-            grid-template-columns: 1fr !important;
-            gap: clamp(36px, 4vw, 64px) !important;
-          }
-        }
-        @media (max-width: 768px) {
-          .hero {
-            padding-block: clamp(32px, 4vh, 48px) !important;
-          }
-        }
-        @media (max-width: 640px) {
-          .hero__actions {
-            flex-wrap: wrap !important;
-          }
-          .hero__actions > * {
-            width: 100% !important;
-          }
-        }
-      `}</style>
     </section>
   )
 }

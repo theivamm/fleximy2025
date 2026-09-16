@@ -69,6 +69,7 @@
   /* Líneas */
   --outline: rgba(220, 225, 255, 0.14);
   --outline-strong: rgba(220, 225, 255, 0.25);
+  --line: var(--outline);
 
   /* Sombras */
   --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.18);
@@ -176,6 +177,7 @@
 
   --outline: rgba(35, 40, 74, 0.13);
   --outline-strong: rgba(35, 40, 74, 0.24);
+  --line: var(--outline);
 
   --shadow-sm: 0 8px 24px rgba(39, 47, 91, 0.08);
   --shadow-md: 0 20px 60px rgba(39, 47, 91, 0.13);

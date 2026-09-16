@@ -1,0 +1,80 @@
+/* ==========================================================================
+   PRODUCT STAGE — marco de la demo del hero
+   CSS externo. Reglas según REVISION-DEFINITIVA section 6 (Demo).
+   ========================================================================== */
+
+/* ===== Indicador de progreso discreto de la demo ===== */
+.hero-stage__progress {
+  width: 100%;
+  height: 2px;
+  margin-top: 10px;
+  border-radius: 999px;
+  background: rgba(151, 166, 220, 0.14);
+  overflow: hidden;
+}
+.hero-stage__progress-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7957ff, #45e2d5);
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: heroStageProgress 5s linear forwards;
+}
+.hero-stage__progress[data-autoplay="false"] .hero-stage__progress-fill {
+  animation-play-state: paused;
+}
+.hero-stage__progress[data-reduced="true"] .hero-stage__progress-fill {
+  animation: none;
+}
+@keyframes heroStageProgress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-stage__progress-fill {
+    animation: none;
+  }
+}
+
+.product-stage-frame {
+  aspect-ratio: 16 / 10;
+  animation: productFloat 6s ease-in-out infinite;
+}
+.product-stage-frame[data-reduced="true"] {
+  animation: none;
+}
+
+@media (max-width: 640px) {
+  .product-stage-frame {
+    aspect-ratio: 4 / 5;
+  }
+  .hero-stage__badge {
+    display: none !important;
+  }
+  .hero-stage__tabsbar {
+    gap: 0;
+  }
+  .hero-stage__tabsbar > div:nth-child(1) {
+    margin-right: 8px;
+  }
+  .hero-stage__tabsbar [role="tablist"] {
+    gap: 2px;
+  }
+  .hero-stage__tabsbar [role="tablist"] [role="tab"] {
+    padding-inline: 10px !important;
+  }
+}
+
+@keyframes productFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-stage-frame {
+    animation: none;
+  }
+}

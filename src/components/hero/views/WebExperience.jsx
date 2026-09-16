@@ -5,6 +5,7 @@ import croissantImg from "../../../assets/croissant-pistacho.png"
 import matchaImg from "../../../assets/iced-matcha.png"
 import rollImg from "../../../assets/roll-canela.png"
 import focacciaImg from "../../../assets/focaccia-mortadela.png"
+import "./web-view.css"
 
 const PRODUCT_IMAGES = {
   "croissant-pistacho": croissantImg,
@@ -81,12 +82,12 @@ export default function WebExperience({ isInteractive, story }) {
 
   return (
     <div
-      className="w-full h-full flex flex-col overflow-hidden"
+      className="we-root w-full h-full flex flex-col overflow-hidden"
       style={{ fontFamily: "'Inter', sans-serif", background: c.bg, color: c.text, borderRadius: "0 0 22px 22px" }}
     >
       {/* Header */}
       <header
-        className="flex items-center justify-between shrink-0"
+        className="we-head flex items-center justify-between shrink-0"
         style={{ padding: "10px 20px", borderBottom: `1px solid ${c.border}` }}
       >
         <div className="flex items-center gap-6">
@@ -107,19 +108,19 @@ export default function WebExperience({ isInteractive, story }) {
             <span style={{ color: c.textMuted }}>Nosotros</span>
           </nav>
         </div>
-        <button
+        <span
           className="rounded-lg text-[12px] font-semibold"
           style={{ padding: "6px 16px", background: c.primary, color: "#ffffff" }}
         >
           Pedir ahora
-        </button>
+        </span>
       </header>
 
       {/* Hero section — two columns */}
-      <div className="flex-1 flex flex-col sm:flex-row overflow-hidden" style={{ minWidth: 0 }}>
+      <div className="we-section flex-1 flex flex-col sm:flex-row overflow-hidden" style={{ minWidth: 0 }}>
         {/* Left: copy */}
         <div
-          className="flex flex-col justify-center min-w-0 shrink-0"
+          className="we-copy flex flex-col justify-center min-w-0 shrink-0"
           style={{ flex: "0 0 48%", padding: "clamp(20px, 3vw, 40px)" }}
         >
           <p
@@ -135,6 +136,7 @@ export default function WebExperience({ isInteractive, story }) {
             Horneado hoy · Buenos Aires
           </p>
           <h2
+            className="we-h2"
             style={{
               fontSize: "clamp(24px, 3vw, 34px)",
               lineHeight: 1.05,
@@ -146,21 +148,27 @@ export default function WebExperience({ isInteractive, story }) {
           >
             Algo rico está por pasar.
           </h2>
-          <p style={{ fontSize: "13px", color: c.textSecondary, marginTop: "10px", lineHeight: 1.5, maxWidth: "32ch" }}>
+          <p
+            className="we-copy-sub"
+            style={{ fontSize: "13px", color: c.textSecondary, marginTop: "10px", lineHeight: 1.5, maxWidth: "32ch" }}
+          >
             Café de especialidad, cocina simple y pastelería hecha cada mañana.
           </p>
-          <button
-            className="mt-5 self-start rounded-lg text-[12px] font-semibold"
+          <span
+            className="we-cta mt-5 self-start rounded-lg text-[12px] font-semibold"
             style={{ padding: "8px 20px", background: c.primary, color: "#ffffff" }}
           >
             Explorar el menú
-          </button>
+          </span>
         </div>
 
         {/* Right: product display */}
-        <div className="flex-1 flex flex-col items-center justify-center relative overflow-hidden" style={{ minWidth: 0 }}>
+        <div
+          className="we-product flex-1 flex flex-col items-center justify-center relative overflow-hidden"
+          style={{ minWidth: 0 }}
+        >
           <div
-            className="relative flex items-center justify-center"
+            className="we-imgwrap relative flex items-center justify-center"
             style={{
               width: "clamp(180px, 24vw, 260px)",
               aspectRatio: "1",
@@ -195,50 +203,14 @@ export default function WebExperience({ isInteractive, story }) {
             </div>
           </div>
 
-          <p style={{ fontSize: "11px", color: c.textMuted, marginTop: "8px", fontWeight: 500 }}>
+          <p className="we-product-desc" style={{ fontSize: "11px", color: c.textMuted, marginTop: "8px", fontWeight: 500 }}>
             {selectedProduct.description}
           </p>
         </div>
       </div>
 
       {/* Bottom product grid — desktop: 4-col grid, mobile: scroll-snap flex */}
-      <style>{`
-        .hero-products-grid {
-          display: grid;
-          grid-template-columns: repeat(4, minmax(0, 1fr));
-          gap: 8px;
-          width: 100%;
-          min-width: 0;
-        }
-        .hero-product-item {
-          min-width: 0;
-          width: 100%;
-        }
-        @media (max-width: 1023px) {
-          .hero-products-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-          }
-        }
-        @media (max-width: 640px) {
-          .hero-products-grid {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            overscroll-behavior-inline: contain;
-            scroll-snap-type: inline mandatory;
-            scrollbar-width: none;
-            padding-bottom: 2px;
-          }
-          .hero-products-grid::-webkit-scrollbar {
-            display: none;
-          }
-          .hero-product-item {
-            flex: 0 0 78%;
-            scroll-snap-align: start;
-          }
-        }
-      `}</style>
-      <div className="shrink-0" style={{ padding: "12px 20px 14px", borderTop: `1px solid ${c.border}` }}>
+      <div className="we-footer shrink-0" style={{ padding: "12px 20px 14px", borderTop: `1px solid ${c.border}` }}>
         <div className="hero-products-grid">
           {BRUMA_PRODUCTS.map((p, i) => (
             <button

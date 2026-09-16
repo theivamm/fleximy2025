@@ -14,6 +14,42 @@ body {
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===== Logo de marca (header y footer) =====
+   Gana a `img { height: auto }` por especificidad y no depende de las
+   utilities de Tailwind (que viven en @layer y pierden contra CSS plano). */
+.brand-logo {
+  display: block;
+  max-width: none;
+  height: 36px;
+  width: auto;
+}
+.brand-logo--compact {
+  height: 32px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 ::selection {
   background-color: var(--primary);

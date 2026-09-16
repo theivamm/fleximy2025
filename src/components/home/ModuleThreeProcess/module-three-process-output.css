@@ -134,8 +134,8 @@
 }
 
 /* piezas app */
-.m3p-app { display: flex; gap: 12px; }
-.m3p-app__side { display: flex; flex-direction: column; gap: 7px; }
+.m3p-app { display: flex; gap: 12px; min-width: 0; }
+.m3p-app__side { display: flex; flex-direction: column; gap: 7px; flex-shrink: 0; }
 .m3p-app__side i {
   width: 15px; height: 15px;
   border-radius: 5px;
@@ -150,9 +150,10 @@
   list-style: none;
   margin: 0; padding: 0;
   flex: 1;
+  min-width: 0;
   display: flex; flex-direction: column; gap: 9px;
 }
-.m3p-app__list li { display: flex; align-items: center; gap: 9px; }
+.m3p-app__list li { display: flex; align-items: center; gap: 9px; min-width: 0; }
 .m3p-app__list .txt {
   width: 34px; height: 6px; border-radius: 3px;
   background: var(--m3-line);
@@ -166,9 +167,13 @@
   font-size: 9.5px;
   color: var(--m3-muted);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 .m3p-app__list .chip {
   margin-left: auto;
+  flex-shrink: 0;
   font-size: 8.5px; font-weight: 700;
   letter-spacing: .08em; text-transform: uppercase;
   color: #42d392;
@@ -204,7 +209,7 @@
   font-family: 'SF Mono', Consolas, monospace;
   font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
   color: var(--m3-muted);
-  opacity: 0;
+  opacity: .95;
   transition: opacity .6s ease;
 }
 .m3p-outlabel.on { opacity: .95; }

@@ -1,0 +1,105 @@
+/* ==========================================================================
+   HERO — layout y responsive
+   CSS externo (no inline). Reglas según REVISION-DEFINITIVA section 6.
+   ========================================================================== */
+
+.hero {
+  position: relative;
+}
+
+.hero__inner,
+.hero__inner > * {
+  min-width: 0;
+}
+
+/* Desktop — desde 1200px: grilla estable de dos columnas */
+@media (min-width: 1200px) {
+  .hero__inner {
+    grid-template-columns: minmax(390px, 0.82fr) minmax(600px, 1.18fr) !important;
+    gap: clamp(48px, 6vw, 96px) !important;
+    align-items: center;
+  }
+}
+
+/* Tablet 768–1199: una columna, texto primero demo después
+   (la demo ya no conserva 560px útiles) */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .hero__inner {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: clamp(44px, 5vw, 64px) !important;
+  }
+  .hero__copy {
+    max-width: 640px;
+  }
+  .hero__inner > :last-child {
+    justify-self: center;
+    width: 100%;
+    max-width: min(900px, 100%);
+  }
+  .hero__inner > :last-child > div {
+    max-width: 900px !important;
+    width: 100%;
+    margin-inline: auto;
+  }
+}
+
+/* Mobile < 768: una sola columna, orden natural, CTA apilados */
+@media (max-width: 767px) {
+  .hero {
+    padding-block: clamp(32px, 4vh, 48px) !important;
+  }
+  .hero__inner {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: clamp(32px, 4vw, 44px) !important;
+  }
+  .hero__copy {
+    max-width: 100%;
+  }
+  .hero-eyebrow {
+    margin-top: 0 !important;
+  }
+  .hero__copy h1 {
+    font-size: clamp(38px, 10.5vw, 52px) !important;
+    line-height: 1.02 !important;
+    margin-top: 14px !important;
+    max-inline-size: none !important;
+  }
+  .hero__copy > p:nth-of-type(1) {
+    font-size: 17px !important;
+    line-height: 1.5 !important;
+    margin-top: 14px !important;
+  }
+  .hero__copy > p:nth-of-type(2) {
+    font-size: 13px !important;
+    margin-top: 10px !important;
+  }
+  .hero__actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    margin-top: 24px !important;
+  }
+  .hero__actions > * {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 52px !important;
+    justify-content: center;
+  }
+  .hero__copy > .font-mono {
+    margin-top: 20px;
+  }
+  .hero__inner > :last-child {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero *,
+  .hero *::before,
+  .hero *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

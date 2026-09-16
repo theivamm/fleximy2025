@@ -16,7 +16,7 @@ const TIMELINE = [
   { time: 16000, view: "web", action: "reset" },
 ]
 const CYCLE_DURATION = 16000
-const PAUSE_AFTER_INTERACTION = 8000
+const PAUSE_AFTER_INTERACTION = 10000
 
 export function useHeroAutoplay(preferReduced, storyActions) {
   const [isAutoplay, setIsAutoplay] = useState(!preferReduced)

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useTheme } from "../../../context/ThemeContext"
 import { BRUMA_ORDER } from "../data/brumaData"
+import "./dashboard-view.css"
 import croissantImg from "../../../assets/croissant-pistacho.png"
 import matchaImg from "../../../assets/iced-matcha.png"
 import rollImg from "../../../assets/roll-canela.png"
@@ -111,7 +112,7 @@ export default function DashboardExperience({ isInteractive, story }) {
 
   return (
     <div
-      className="w-full h-full flex overflow-hidden"
+      className="dash-root w-full h-full flex overflow-hidden"
       style={{ fontFamily: "'Inter', sans-serif", background: c.bg, color: c.text, borderRadius: "0 0 22px 22px", minWidth: 0 }}
     >
       {/* Sidebar */}
@@ -156,9 +157,9 @@ export default function DashboardExperience({ isInteractive, story }) {
       </aside>
 
       {/* Main */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden" style={{ padding: "14px", minWidth: 0 }}>
+      <div className="dash-main flex-1 flex flex-col min-w-0 overflow-hidden" style={{ padding: "14px", minWidth: 0 }}>
         {/* Top bar */}
-        <header className="flex items-center justify-between shrink-0" style={{ marginBottom: "12px" }}>
+        <header className="dash-topbar flex items-center justify-between shrink-0" style={{ marginBottom: "12px" }}>
           <div>
             <h2 style={{ fontSize: "14px", fontWeight: 600, color: c.white }}>Resumen</h2>
             <div className="flex items-center gap-1.5" style={{ marginTop: "2px" }}>
@@ -173,7 +174,7 @@ export default function DashboardExperience({ isInteractive, story }) {
         </header>
 
         {/* Metrics */}
-        <div className="grid grid-cols-4 gap-2 shrink-0" style={{ marginBottom: "12px" }}>
+        <div className="dash-metrics grid grid-cols-4 gap-2 shrink-0" style={{ marginBottom: "12px" }}>
           {[
             { label: "Ventas hoy", value: `$${(metrics.ventas / 1000).toFixed(0)},${String(metrics.ventas).slice(-3, -1)}00`, accent: false },
             { label: "Pedidos", value: String(metrics.pedidos), accent: false },
@@ -182,7 +183,7 @@ export default function DashboardExperience({ isInteractive, story }) {
           ].map((kpi, i) => (
             <div
               key={kpi.label}
-              className="rounded-lg"
+              className="dash-kpi rounded-lg"
               style={{
                 padding: "10px 12px",
                 background: c.surface,
@@ -197,10 +198,10 @@ export default function DashboardExperience({ isInteractive, story }) {
         </div>
 
         {/* Main content — 3 columns */}
-        <div className="flex gap-2 flex-1 min-h-0" style={{ minWidth: 0 }}>
+        <div className="dash-mainrow flex gap-2 flex-1 min-h-0" style={{ minWidth: 0 }}>
           {/* Col 1: Orders */}
           <div
-            className="flex flex-col rounded-lg overflow-hidden"
+            className="dash-orders flex flex-col rounded-lg overflow-hidden"
             style={{ flex: "0 0 30%", background: c.surface, border: `1px solid ${c.border}` }}
           >
             <div className="px-3 pt-3 pb-2 shrink-0" style={{ borderBottom: `1px solid ${c.border}` }}>
@@ -214,7 +215,7 @@ export default function DashboardExperience({ isInteractive, story }) {
                 return (
                   <div
                     key={o.id}
-                    className="rounded-lg transition-all"
+                    className="dash-order-item rounded-lg transition-all"
                     style={{
                       padding: "8px 10px",
                       background: isSelected ? c.primarySoft : "transparent",
@@ -245,7 +246,7 @@ export default function DashboardExperience({ isInteractive, story }) {
 
           {/* Col 2: Chart */}
           <div
-            className="flex-1 flex flex-col rounded-lg overflow-hidden"
+            className="dash-chart flex-1 flex flex-col rounded-lg overflow-hidden"
             style={{ background: c.surface, border: `1px solid ${c.border}`, padding: "12px" }}
           >
             <div className="flex items-center justify-between shrink-0" style={{ marginBottom: "8px" }}>
@@ -279,7 +280,7 @@ export default function DashboardExperience({ isInteractive, story }) {
           </div>
 
           {/* Col 3: Top products with images + Stock alert */}
-          <div className="flex flex-col gap-2" style={{ width: "190px" }}>
+          <div className="dash-aside flex flex-col gap-2" style={{ width: "190px", minWidth: 0 }}>
             {/* Top products */}
             <div
               className="rounded-lg"

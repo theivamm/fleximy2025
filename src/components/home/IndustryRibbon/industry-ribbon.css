@@ -1,11 +1,14 @@
+/* ==========================================================================
+   SOLUCIONES POR RUBRO (spec §10)
+   Grilla de tarjetas compactas; mobile: 4 + "Ver más soluciones" aria-expanded.
+   ========================================================================== */
+
 .rib {
   padding-block: var(--section-space-compact);
-  overflow: hidden;
 }
 .rib-header {
-  width: min(100%, 920px);
+  width: min(100% - 40px, 780px);
   margin-inline: auto;
-  padding-inline: 20px;
   text-align: center;
 }
 .rib-header > * {
@@ -15,7 +18,7 @@
   font-family: var(--font-mono);
   font-size: 11px; font-weight: 600;
   letter-spacing: .24em; text-transform: uppercase;
-  color: var(--color-accent-cool, #18d6d2);
+  color: var(--secondary);
   margin: 0 0 20px;
 }
 .rib-title {
@@ -25,66 +28,118 @@
   max-width: 18ch;
 }
 .rib-bajada {
-  font-size: clamp(16px,1.1vw,18px);
+  font-size: clamp(16px, 1.1vw, 18px);
   line-height: 1.55;
   color: var(--text-muted);
   max-width: 62ch; margin: 0 auto;
   text-wrap: pretty;
 }
 
-/* Ribbons */
-.rib-ribbons {
+/* Grilla de tarjetas */
+.rib-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: clamp(48px, 5vw, 80px) auto 0;
+  width: min(100%, 1180px);
+}
+.rib-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px 20px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  border: 1px solid var(--outline);
+  box-shadow: var(--shadow-md);
+  min-width: 0;
+}
+.rib-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--gradient-primary);
+  color: #fff;
+}
+.rib-card__icon svg {
+  width: 24px;
+  height: 24px;
+}
+.rib-card__name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  margin: 0;
+  color: var(--text);
+}
+.rib-card__caps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin: clamp(48px,5vw,80px) 0;
-  user-select: none;
 }
-.rib-ribbons.is-paused .rib-track { animation-play-state: paused !important; }
-.rib-row {
-  overflow: hidden;
-  white-space: nowrap;
-  mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+.rib-card__caps li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--text-secondary);
 }
-.rib-track {
-  display: inline-flex;
-  gap: 0;
-  animation: rib-scroll linear infinite;
-  will-change: transform;
+.rib-card__caps li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--secondary);
+  opacity: .7;
 }
-@keyframes rib-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+
+/* Botón Ver más soluciones */
+.rib-morewrap {
+  display: none;
+  margin: 28px auto 0;
+  text-align: center;
 }
-.rib-word {
-  font-size: clamp(18px, 2.3vw, 34px);
-  font-weight: 700;
-  letter-spacing: -.03em;
-  color: var(--text-1);
-  opacity: .25;
-  padding: 0 clamp(8px,1.2vw,16px);
+.rib-more {
+  min-height: 52px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: transparent;
+  border: 1.5px solid var(--secondary);
+  color: var(--secondary);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .25s ease, background .25s ease, color .25s ease;
 }
-.rib-fill {
-  opacity: 1;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+.rib-more:hover {
+  background: var(--secondary);
+  color: #0a0c1a;
+  transform: translateY(-2px);
 }
-.rib-dot {
-  color: var(--text-3);
-  opacity: .18;
-  padding: 0 clamp(2px,.5vw,6px);
-  font-size: clamp(18px,2vw,28px);
-  font-weight: 300;
+.rib-more:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 3px;
 }
 
 /* Cierre */
-.rib-closing { text-align: center; max-width: 700px; margin-inline: auto; }
+.rib-closing {
+  text-align: center;
+  max-width: 700px;
+  margin-inline: auto;
+  margin-top: clamp(48px, 5vw, 72px);
+}
 .rib-closing h3 {
-  font-size: clamp(26px,2.4vw,40px);
+  font-size: clamp(26px, 2.4vw, 40px);
   font-weight: 700; line-height: 1.12; letter-spacing: -.03em;
   margin: 0 0 12px;
 }
@@ -93,14 +148,64 @@
   margin: 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .rib-track { animation: none !important; }
+/* Tablet: 2 columnas */
+@media (max-width: 1023px) {
+  .rib-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .rib-card__caps li {
+    font-size: 14px;
+  }
 }
 
+/* Mobile: 1 sola columna real, 4 tarjetas iniciales + Ver más */
 @media (max-width: 767px) {
-  .rib-ribbons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
-  .rib-row { overflow: visible; white-space: normal; mask-image: none; -webkit-mask-image: none; }
-  .rib-track { animation: none !important; display: flex; flex-wrap: wrap; gap: 6px 10px; }
-  .rib-dot { display: none; }
-  .rib-word { font-size: 14px; padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; }
+  .rib-header {
+    text-align: left;
+  }
+  .rib-header > * {
+    margin-inline: 0;
+  }
+  .rib-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 40px;
+  }
+  .rib-card {
+    padding: 20px;
+    gap: 10px;
+  }
+  .rib-card__icon {
+    width: 40px;
+    height: 40px;
+  }
+  .rib-card__name {
+    font-size: 17px;
+  }
+  .rib-card__caps li {
+    font-size: 15px;
+  }
+  .rib-grid:not(.is-open) .rib-card:nth-child(n + 5) {
+    display: none;
+  }
+  .rib-morewrap {
+    display: block;
+  }
+  .rib-grid.is-open .rib-card:nth-child(n + 5) {
+    display: flex;
+  }
+  .rib-closing {
+    text-align: left;
+    margin-inline: 0;
+    margin-top: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rib-more {
+    transition: none;
+  }
+  .rib-more:hover {
+    transform: none;
+  }
 }

@@ -16,7 +16,7 @@ function FooterLogo() {
       alt="Fleximy"
       width={476.65}
       height={685.32}
-      className="block w-auto h-9"
+      className="brand-logo"
     />
   )
 }

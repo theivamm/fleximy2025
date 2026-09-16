@@ -17,7 +17,7 @@ export default function HeroCopy() {
     <motion.div variants={stagger} initial="hidden" animate="show" className="hero__copy max-w-[620px]">
       <motion.span
         variants={fadeUp}
-        className="inline-block"
+        className="hero-eyebrow inline-block"
         style={{
           marginTop: "clamp(72px, 8vh, 96px)",
           fontSize: "clamp(11px, 0.7vw, 12px)",

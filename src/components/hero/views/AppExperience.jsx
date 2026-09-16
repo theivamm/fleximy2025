@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useTheme } from "../../../context/ThemeContext"
 import { BRUMA_PRODUCTS, BRUMA_ORDER } from "../data/brumaData"
+import "./app-view.css"
 import croissantImg from "../../../assets/croissant-pistacho.png"
 import matchaImg from "../../../assets/iced-matcha.png"
 import rollImg from "../../../assets/roll-canela.png"
@@ -80,12 +81,12 @@ export default function AppExperience({ isInteractive, story }) {
 
   return (
     <div
-      className="w-full h-full flex overflow-hidden"
+      className="ve-root w-full h-full flex overflow-hidden"
       style={{ fontFamily: "'Inter', sans-serif", background: c.bg, color: c.text, borderRadius: "0 0 22px 22px", minWidth: 0 }}
     >
       {/* Left panel — context */}
       <div
-        className="shrink-0 flex flex-col justify-center overflow-hidden"
+        className="ve-context shrink-0 flex flex-col justify-center overflow-hidden"
         style={{ width: "35%", padding: "clamp(16px, 2vw, 28px)", borderRight: `1px solid ${c.border}` }}
       >
         <p style={{ fontSize: "10px", letterSpacing: "0.15em", textTransform: "uppercase", color: c.cyan, fontWeight: 600 }}>
@@ -94,12 +95,15 @@ export default function AppExperience({ isInteractive, story }) {
         <h3 style={{ fontSize: "20px", fontWeight: 700, marginTop: "8px", fontFamily: "'Space Grotesk', sans-serif" }}>
           {product.name}
         </h3>
-        <p style={{ fontSize: "12px", color: c.textSecondary, marginTop: "6px", lineHeight: 1.5 }}>
+        <p
+          className="ve-context-desc"
+          style={{ fontSize: "12px", color: c.textSecondary, marginTop: "6px", lineHeight: 1.5 }}
+        >
           {product.description}
         </p>
 
         {/* Variant selector */}
-        <div className="flex flex-col gap-1.5 mt-5">
+        <div className="ve-variants flex flex-col gap-1.5 mt-5">
           {VARIANTS.map((v, i) => (
             <button
               key={v}
@@ -126,7 +130,7 @@ export default function AppExperience({ isInteractive, story }) {
         </div>
 
         {/* Quantity */}
-        <div className="flex items-center gap-3 mt-4">
+        <div className="ve-qty flex items-center gap-3 mt-4">
           <span style={{ fontSize: "11px", color: c.textMuted }}>Cantidad</span>
           <div className="flex items-center gap-2">
             <button
@@ -149,10 +153,10 @@ export default function AppExperience({ isInteractive, story }) {
       </div>
 
       {/* Right — phone mockup */}
-      <div className="flex-1 flex items-center justify-center relative overflow-hidden" style={{ minWidth: 0 }}>
+      <div className="ve-demo flex-1 flex items-center justify-center relative overflow-hidden" style={{ minWidth: 0 }}>
         {/* Phone frame */}
         <div
-          className="relative flex flex-col"
+          className="ve-phone relative flex flex-col"
           style={{
             width: "clamp(200px, 28vw, 260px)",
             height: "85%",
@@ -171,11 +175,11 @@ export default function AppExperience({ isInteractive, story }) {
           </div>
 
           {/* Phone content */}
-          <div className="flex-1 flex flex-col overflow-hidden px-4">
+          <div className="ve-phone-screen flex-1 flex flex-col overflow-hidden px-4">
             {phase === "detail" && (
               <>
                 <div
-                  className="rounded-xl overflow-hidden shrink-0 flex items-center justify-center"
+                  className="ve-phone-img rounded-xl overflow-hidden shrink-0 flex items-center justify-center"
                   style={{
                     height: "120px",
                     background: `linear-gradient(135deg, ${c.primarySoft}, ${c.cyanSoft})`,
@@ -199,12 +203,12 @@ export default function AppExperience({ isInteractive, story }) {
                   {product.price}
                 </span>
 
-                <button
-                  className="mt-auto mb-4 w-full rounded-xl text-[13px] font-semibold py-3"
+                <span
+                  className="ve-phone-btn mt-auto mb-4 block w-full rounded-xl text-[13px] font-semibold py-3 text-center"
                   style={{ background: c.primary, color: "#ffffff" }}
                 >
                   Agregar al pedido
-                </button>
+                </span>
               </>
             )}
 
@@ -239,12 +243,12 @@ export default function AppExperience({ isInteractive, story }) {
                   <span style={{ fontSize: "13px", fontWeight: 700 }}>{BRUMA_ORDER.total}</span>
                 </div>
 
-                <button
-                  className="mt-auto mb-4 w-full rounded-xl text-[13px] font-semibold py-3"
+                <span
+                  className="mt-auto mb-4 block w-full rounded-xl text-[13px] font-semibold py-3 text-center"
                   style={{ background: c.primary, color: "#ffffff" }}
                 >
                   Confirmar pedido
-                </button>
+                </span>
               </>
             )}
 

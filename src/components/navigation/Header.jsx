@@ -19,8 +19,8 @@ function Logo({ compact = false }) {
         alt=""
         width={476.65}
         height={685.32}
-        className={`block shrink-0 w-auto transition-all duration-300 ${
-          compact ? "h-8" : "h-9"
+        className={`brand-logo shrink-0 transition-all duration-300 ${
+          compact ? "brand-logo--compact" : ""
         }`}
       />
     </Link>

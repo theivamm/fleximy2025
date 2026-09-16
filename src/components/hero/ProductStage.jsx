@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useProductStory } from "./hooks/useProductStory"
 import { useHeroAutoplay } from "./hooks/useHeroAutoplay"
@@ -5,6 +6,7 @@ import DemoCursor from "./DemoCursor"
 import WebExperience from "./views/WebExperience"
 import AppExperience from "./views/AppExperience"
 import DashboardExperience from "./views/DashboardExperience"
+import "./product-stage.css"
 
 const VIEWS = [
   { key: "web", label: "WEB", Component: WebExperience },
@@ -12,11 +14,34 @@ const VIEWS = [
   { key: "dashboard", label: "DASHBOARD", Component: DashboardExperience },
 ]
 
+const VIEW_DURATION_MS = 5000
+
+function useFinePointer() {
+  const [fine, setFine] = useState(() => {
+    if (typeof window === "undefined") return true
+    return !window.matchMedia("(pointer: coarse)").matches && window.innerWidth >= 900
+  })
+  useEffect(() => {
+    const mqPointer = window.matchMedia("(pointer: coarse)")
+    const mqWidth = window.matchMedia("(min-width: 900px)")
+    const update = () => setFine(!mqPointer.matches && mqWidth.matches)
+    update()
+    mqPointer.addEventListener?.("change", update)
+    mqWidth.addEventListener?.("change", update)
+    return () => {
+      mqPointer.removeEventListener?.("change", update)
+      mqWidth.removeEventListener?.("change", update)
+    }
+  }, [])
+  return fine
+}
+
 export default function ProductStage({ prefersReduced }) {
   const story = useProductStory()
   const { state } = story
   const { isAutoplay, goTo } = useHeroAutoplay(prefersReduced, story)
   const current = VIEWS.find((v) => v.key === state.view) || VIEWS[0]
+  const finePointer = useFinePointer()
 
   return (
     <div className="relative w-full" style={{ maxWidth: "760px", minWidth: 0 }}>
@@ -49,7 +74,7 @@ export default function ProductStage({ prefersReduced }) {
       >
         {/* Tabs bar */}
         <div
-          className="flex items-center gap-0 px-3 shrink-0"
+          className="hero-stage__tabsbar flex items-center gap-0 px-3 shrink-0"
           style={{
             borderBottom: "1px solid rgba(255,255,255,0.06)",
             background: "#0d0f1a",
@@ -100,7 +125,7 @@ export default function ProductStage({ prefersReduced }) {
           </div>
 
           <div className="ml-auto flex items-center gap-2">
-            <span className="text-[9px] font-mono tracking-[0.1em] text-[#4a4a5a] uppercase">
+            <span className="hero-stage__badge text-[9px] font-mono tracking-[0.1em] text-[#4a4a5a] uppercase">
               Demo · Tu negocio
             </span>
           </div>
@@ -129,16 +154,24 @@ export default function ProductStage({ prefersReduced }) {
         </div>
       </div>
 
-      {/* DemoCursor */}
-      <DemoCursor active={isAutoplay} visible={!prefersReduced} />
+      {/* DemoCursor — solo mouse fino (desktop), no touch */}
+      {finePointer && <DemoCursor active={isAutoplay} visible={!prefersReduced} />}
 
-      {/* Bottom label */}
+      {/* Bottom label + progress */}
       <div className="flex items-center justify-center gap-2 mt-3">
         <span className="w-1 h-1 rounded-full bg-[#7957ff]" />
         <span className="text-[9px] font-mono tracking-[0.15em] text-[#4a4a5a] uppercase">
           Un negocio · Tres productos conectados
         </span>
         <span className="w-1 h-1 rounded-full bg-[#45e2d5]" />
+      </div>
+      <div
+        className="hero-stage__progress"
+        data-autoplay={isAutoplay}
+        data-reduced={prefersReduced}
+        aria-hidden="true"
+      >
+        <span className="hero-stage__progress-fill" key={current.key} />
       </div>
 
       {/* Reflections */}
@@ -150,28 +183,6 @@ export default function ProductStage({ prefersReduced }) {
         className="absolute -bottom-8 left-[10%] right-[10%] h-16 -z-10 opacity-[0.04] blur-xl rounded-full pointer-events-none"
         style={{ background: "linear-gradient(90deg, #7957ff, #45e2d5)" }}
       />
-
-      <style>{`
-        .product-stage-frame {
-          aspect-ratio: 16 / 10;
-          animation: productFloat 6s ease-in-out infinite;
-        }
-        .product-stage-frame[data-reduced="true"] {
-          animation: none;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .product-stage-frame { animation: none; }
-        }
-        @media (max-width: 640px) {
-          .product-stage-frame {
-            aspect-ratio: 4 / 5;
-          }
-        }
-        @keyframes productFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
-        }
-      `}</style>
     </div>
   )
 }

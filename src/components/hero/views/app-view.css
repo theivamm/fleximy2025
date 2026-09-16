@@ -1,0 +1,121 @@
+/* ==========================================================================
+   HERO — AppExperience: responsive
+   En desktop/mobile se apila en una sola columna real (contexto encima,
+   demo debajo) por debajo de 768px. Reglas según REVISION-DEFINITIVA §6.
+   ========================================================================== */
+
+.ve-root {
+  min-width: 0;
+  flex-direction: row;
+}
+.ve-context {
+  min-width: 0;
+}
+.ve-demo {
+  min-width: 0;
+}
+
+@media (max-width: 767px) {
+  .ve-root {
+    flex-direction: column !important;
+    overflow-y: auto;
+  }
+  .ve-context {
+    width: 100% !important;
+    flex: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(151, 166, 220, 0.14);
+    padding: 16px !important;
+  }
+  .ve-demo {
+    width: 100% !important;
+    flex: 1 !important;
+    min-height: 0;
+  }
+  .ve-demo > div {
+    width: clamp(160px, 46vw, 220px) !important;
+    height: auto !important;
+  }
+}
+
+/* ===== Variante vertical para el marco portrait del hero en mobile =====
+   Contexto arriba en una franja compacta y teléfono centrado en el resto,
+   con el contenido interno ajustado para no cortarse en el marco 4:5. */
+@media (max-width: 640px) {
+  .ve-context {
+    padding: 10px 14px 12px !important;
+  }
+  .ve-context > p:first-child {
+    font-size: 9px !important;
+  }
+  .ve-context h3 {
+    font-size: 16px !important;
+    margin-top: 4px !important;
+  }
+  .ve-context .ve-context-desc {
+    display: none !important;
+  }
+  .ve-context .ve-variants {
+    flex-direction: row !important;
+    gap: 6px !important;
+    margin-top: 10px !important;
+  }
+  .ve-context .ve-variants button {
+    flex: 1 !important;
+    justify-content: flex-start !important;
+    padding: 6px 8px !important;
+    font-size: 11px !important;
+  }
+  .ve-context .ve-qty {
+    margin-top: 8px !important;
+  }
+
+  .ve-demo {
+    padding: 4px 0 10px !important;
+  }
+  .ve-demo > div {
+    width: clamp(158px, 47vw, 196px) !important;
+    max-height: 100% !important;
+  }
+
+  /* Phone interno: contenido compacto para entrar en la altura disponible */
+  .ve-phone > div:first-child {
+    padding: 8px 14px 5px !important;
+    font-size: 8px !important;
+  }
+  .ve-phone-screen {
+    padding-inline: 13px !important;
+  }
+  .ve-phone-screen .ve-phone-img {
+    height: 62px !important;
+    margin-bottom: 8px !important;
+  }
+  .ve-phone-screen h4 {
+    font-size: 13px !important;
+  }
+  .ve-phone-screen p {
+    font-size: 10px !important;
+    margin-top: 2px !important;
+  }
+  .ve-phone-screen .ve-phone-btn {
+    font-size: 11px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 10px !important;
+  }
+  .ve-phone-screen .mb-3 {
+    margin-bottom: 8px !important;
+  }
+  .ve-phone-screen .mt-6 {
+    margin-top: 12px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ve-root *,
+  .ve-root *::before,
+  .ve-root *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
