@@ -15,10 +15,10 @@ import "./global-whatsapp.css"
 
 const ROUTE_VARIANTS = {
   fidelizacion: {
-    eyebrow: "HABLEMOS DE TU NEGOCIO",
-    title: "Contanos cómo compran tus clientes. Nosotros pensamos cómo hacer que vuelvan.",
+    eyebrow: "CONVERSEMOS SOBRE TU NEGOCIO",
+    title: "Contanos qué querés que pase después del toque.",
     description:
-      "Una conversación breve para entender tu negocio, definir una primera regla y mostrarte cómo podría funcionar la plataforma.",
+      "Reseñas, consultas, reservas, pagos o una idea completamente diferente. Contanos tu caso y pensemos juntos la solución.",
     cta: "Hablar por WhatsApp",
     microcopy: "Respuesta personal · Sin compromiso · Sin tecnicismos",
     quickReplies: ["Premiar compras", "Recuperar clientes", "Todavía no lo sé"],
@@ -39,10 +39,10 @@ const ROUTE_VARIANTS = {
     source: "nfc",
   },
   default: {
-    eyebrow: "HABLEMOS DE TU PROYECTO",
-    title: "Contanos tu idea. Nosotros la pensamos con vos.",
+    eyebrow: "CONVERSEMOS SOBRE TU NEGOCIO",
+    title: "Contanos qué querés que pase después del toque.",
     description:
-      "Una conversación breve para entender tu negocio y mostrarte cómo Fleximy puede ayudarte a crecer.",
+      "Reseñas, consultas, reservas, pagos o una idea completamente diferente. Contanos tu caso y pensemos juntos la solución.",
     cta: "Hablar por WhatsApp",
     microcopy: "Respuesta personal · Sin compromiso · Sin tecnicismos",
     quickReplies: ["Tengo una idea", "Necesito una web", "Todavía no lo sé"],

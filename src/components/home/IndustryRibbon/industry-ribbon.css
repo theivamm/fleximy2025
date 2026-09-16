@@ -170,6 +170,7 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 12px;
     margin-top: 40px;
+    width: min(100% - 40px, 780px);
   }
   .rib-card {
     padding: 20px;

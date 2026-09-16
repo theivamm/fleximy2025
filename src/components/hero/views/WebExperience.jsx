@@ -179,6 +179,7 @@ export default function WebExperience({ isInteractive, story }) {
             <img
               src={PRODUCT_IMAGES[selectedProduct.id]}
               alt={selectedProduct.name}
+              data-product={selectedProduct.id}
               style={{
                 width: "85%",
                 height: "85%",

@@ -39,11 +39,16 @@
 }
 
 /* ===== Variante vertical para el marco portrait del hero en mobile =====
-   Contexto arriba en una franja compacta y teléfono centrado en el resto,
-   con el contenido interno ajustado para no cortarse en el marco 4:5. */
+   Una sola columna full-width: franja de contexto arriba, contenido del
+   pedido debajo sin mockup de teléfono. Imagen del producto con object-fit
+   contain (sin recortes) y textos legibles. */
 @media (max-width: 640px) {
   .ve-context {
-    padding: 10px 14px 12px !important;
+    display: flex !important;
+    width: 100% !important;
+    flex: none !important;
+    padding: 10px 16px 8px !important;
+    border-bottom: 1px solid rgba(151,166,220,0.14);
   }
   .ve-context > p:first-child {
     font-size: 9px !important;
@@ -52,62 +57,81 @@
     font-size: 16px !important;
     margin-top: 4px !important;
   }
-  .ve-context .ve-context-desc {
+  .ve-context-desc,
+  .ve-variants,
+  .ve-qty {
     display: none !important;
-  }
-  .ve-context .ve-variants {
-    flex-direction: row !important;
-    gap: 6px !important;
-    margin-top: 10px !important;
-  }
-  .ve-context .ve-variants button {
-    flex: 1 !important;
-    justify-content: flex-start !important;
-    padding: 6px 8px !important;
-    font-size: 11px !important;
-  }
-  .ve-context .ve-qty {
-    margin-top: 8px !important;
   }
 
   .ve-demo {
-    padding: 4px 0 10px !important;
+    width: 100% !important;
+    height: auto !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
   }
-  .ve-demo > div {
-    width: clamp(158px, 47vw, 196px) !important;
-    max-height: 100% !important;
+  .ve-demo > .ve-phone {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow-y: auto !important;
+    scrollbar-width: none;
+    padding: 12px 16px;
   }
-
-  /* Phone interno: contenido compacto para entrar en la altura disponible */
+  .ve-phone::-webkit-scrollbar {
+    display: none;
+  }
   .ve-phone > div:first-child {
-    padding: 8px 14px 5px !important;
-    font-size: 8px !important;
+    display: none !important;
   }
   .ve-phone-screen {
-    padding-inline: 13px !important;
+    padding-inline: 0 !important;
+    overflow-y: auto !important;
+    scrollbar-width: none;
+  }
+  .ve-phone-screen::-webkit-scrollbar {
+    display: none;
   }
   .ve-phone-screen .ve-phone-img {
-    height: 62px !important;
-    margin-bottom: 8px !important;
+    flex: 1 1 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 220px !important;
+    margin-bottom: 12px !important;
+    background: linear-gradient(135deg, rgba(124,108,255,0.16), rgba(32,213,199,0.16)) !important;
   }
+  .ve-phone-screen .ve-phone-img img {
+    object-fit: contain !important;
+  }
+
+  /* Teléfono interno: contenido expandido para llenar la columna */
   .ve-phone-screen h4 {
-    font-size: 13px !important;
+    font-size: 17px !important;
   }
   .ve-phone-screen p {
-    font-size: 10px !important;
-    margin-top: 2px !important;
+    font-size: 12px !important;
+    margin-top: 4px !important;
   }
   .ve-phone-screen .ve-phone-btn {
-    font-size: 11px !important;
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
-    margin-bottom: 10px !important;
+    font-size: 14px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 12px !important;
   }
   .ve-phone-screen .mb-3 {
-    margin-bottom: 8px !important;
+    margin-bottom: 10px !important;
+  }
+  .ve-phone-screen .mb-3 img {
+    width: 52px !important;
+    height: 52px !important;
+  }
+  .ve-phone-screen .mb-3 span {
+    font-size: 12px !important;
   }
   .ve-phone-screen .mt-6 {
-    margin-top: 12px !important;
+    margin-top: 14px !important;
   }
 }
 

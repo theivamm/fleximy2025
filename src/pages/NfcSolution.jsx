@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react"
-import { Link } from "react-router-dom"
+import { useEffect, useRef, useState } from "react"
 import {
   ArrowRight,
   MessageCircle,
@@ -8,7 +7,6 @@ import {
   Calendar,
 } from "lucide-react"
 import { useTheme } from "../context/ThemeContext"
-import { whatsappUrl } from "../data/config"
 import { NFC_CONFIG, NFC_BUSINESS_CASES } from "../data/nfcConfig"
 import { track } from "../lib/analytics"
 
@@ -75,8 +73,6 @@ export default function NfcSolution() {
 
       <Trust />
 
-      <LeadForm />
-
       <Faq />
     </div>
   )
@@ -129,7 +125,7 @@ function Hero({ onPrimary }) {
 
   const scrollToForm = (e) => {
     e.preventDefault()
-    document.querySelector("#nfc-form")?.scrollIntoView({ behavior: "smooth" })
+    document.querySelector("#contacto")?.scrollIntoView({ behavior: "smooth" })
     onPrimary()
   }
 
@@ -147,7 +143,7 @@ function Hero({ onPrimary }) {
           </p>
           <p className="nfc-hero__refuerzo">Sin aplicaciones. Sin buscar links. Sin explicar pasos.</p>
           <div className="nfc-hero__ctas">
-            <a href="#nfc-form" onClick={scrollToForm} className="nfc-btn nfc-btn--primary">
+            <a href="#contacto" onClick={scrollToForm} className="nfc-btn nfc-btn--primary">
               Quiero mi solución NFC <ArrowRight size={17} />
             </a>
             <a
@@ -612,7 +608,7 @@ function Applications() {
   const c = NFC_BUSINESS_CASES[idx]
   const scrollToForm = (e) => {
     e.preventDefault()
-    document.querySelector("#nfc-form")?.scrollIntoView({ behavior: "smooth" })
+    document.querySelector("#contacto")?.scrollIntoView({ behavior: "smooth" })
     track("click_nfc_primary_cta", { cta: "consultar_formatos" })
   }
 
@@ -667,7 +663,7 @@ function Applications() {
           </p>
 
           <div className="nfc-apps__cta">
-            <a href="#nfc-form" onClick={scrollToForm} className="nfc-btn nfc-btn--primary">
+            <a href="#contacto" onClick={scrollToForm} className="nfc-btn nfc-btn--primary">
               Consultar formatos <ArrowRight size={16} />
             </a>
           </div>
@@ -712,7 +708,7 @@ const SCALE = [
 function Scale() {
   const scrollToForm = (e, title) => {
     e.preventDefault()
-    document.querySelector("#nfc-form")?.scrollIntoView({ behavior: "smooth" })
+    document.querySelector("#contacto")?.scrollIntoView({ behavior: "smooth" })
     track("click_nfc_primary_cta", { cta: title })
   }
   return (
@@ -729,7 +725,7 @@ function Scale() {
           {SCALE.map((m) => (
             <a
               key={m.title}
-              href="#nfc-form"
+              href="#contacto"
               onClick={(e) => scrollToForm(e, m.title)}
               className={`nfc-plan ${m.featured ? "nfc-plan--featured" : ""}`}
             >
@@ -780,220 +776,6 @@ function Trust() {
           <strong>Compatible con la mayoría de los smartphones modernos.</strong> El QR permite
           acceder desde equipos sin NFC o con la función desactivada.
         </p>
-      </div>
-    </section>
-  )
-}
-
-/* ==========================================================================
-   MÓDULO 10 — CTA Y FORMULARIO (ancho completo)
-   ========================================================================== */
-
-function LeadForm() {
-  const [form, setForm] = useState({
-    nombre: "", negocio: "", whatsapp: "", email: "", rubro: "", puntos: "",
-    acciones: [], descripcion: "", _hp: "",
-  })
-  const [errs, setErrs] = useState({})
-  const [touched, setTouched] = useState({})
-  const [sending, setSending] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const [started, setStarted] = useState(false)
-
-  const utms = useMemo(() => {
-    const p = new URLSearchParams(window.location.search)
-    return {
-      utm_source: p.get("utm_source") || "",
-      utm_medium: p.get("utm_medium") || "",
-      utm_campaign: p.get("utm_campaign") || "",
-    }
-  }, [])
-
-  useEffect(() => {
-    if (started) track("start_nfc_form")
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [started])
-
-  const ACTION_OPTIONS = [
-    "Reseñas de Google", "WhatsApp", "Menú o catálogo", "Turnos o reservas",
-    "Pagos", "Promociones", "Otra acción", "Todavía no lo tengo claro",
-  ]
-
-  const set = (k) => (e) => {
-    setForm((f) => ({ ...f, [k]: e.target.value }))
-    if (!started) setStarted(true)
-    if (touched[k]) setErrs((er) => ({ ...er, [k]: validate(k, e.target.value, form.acciones) }))
-  }
-  const blur = (k) => () => {
-    setTouched((t) => ({ ...t, [k]: true }))
-    if (!started) setStarted(true)
-    setErrs((er) => ({ ...er, [k]: validate(k, form[k], form.acciones) }))
-  }
-
-  const toggleAccion = (opt) => {
-    const arr = form.acciones.includes(opt) ? form.acciones.filter((a) => a !== opt) : [...form.acciones, opt]
-    setForm((f) => ({ ...f, acciones: arr }))
-    if (!started) setStarted(true)
-    setTouched((t) => ({ ...t, acciones: true }))
-    setErrs((er) => ({ ...er, acciones: arr.length ? "" : "Elegí al menos una opción." }))
-  }
-
-  const validate = (k, val, acc) => {
-    if (k === "acciones") return acc.length ? "" : "Elegí al menos una opción."
-    if (!String(val).trim()) return "Este campo es obligatorio."
-    if (k === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) return "Ingresá un email válido."
-    if (k === "whatsapp" && !/^\+?[\d\s\-()]{7,}$/.test(val)) return "Ingresá un número válido."
-    return ""
-  }
-
-  const submit = (e) => {
-    e.preventDefault()
-    if (form._hp) return
-    const keys = ["nombre", "negocio", "whatsapp", "email", "rubro", "puntos", "descripcion"]
-    const all = {}
-    keys.forEach((k) => { all[k] = validate(k, form[k], form.acciones) })
-    all.acciones = validate("acciones", null, form.acciones)
-    setErrs(all)
-    setTouched(Object.fromEntries([...keys, "acciones"].map((k) => [k, true])))
-    if (Object.values(all).some(Boolean)) return
-
-    setSending(true)
-    const to = NFC_CONFIG.formRecipient
-    const subject = `Solución NFC — ${form.negocio}`
-    const body = [
-      `Nombre: ${form.nombre}`,
-      `Negocio o empresa: ${form.negocio}`,
-      `WhatsApp: ${form.whatsapp}`,
-      `Email: ${form.email}`,
-      `Rubro: ${form.rubro}`,
-      `Cantidad de locales o puntos: ${form.puntos}`,
-      ``,
-      `Acciones a facilitar: ${form.acciones.join(", ")}`,
-      ``,
-      `Dónde le gustaría usarlo:`,
-      form.descripcion,
-      ``,
-      utms.utm_source ? `UTM Source: ${utms.utm_source}` : "",
-      utms.utm_medium ? `UTM Medium: ${utms.utm_medium}` : "",
-      utms.utm_campaign ? `UTM Campaign: ${utms.utm_campaign}` : "",
-    ].filter(Boolean).join("\n")
-
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    window.open(gmailUrl, "_blank", "noopener,noreferrer")
-    setSending(false)
-    track("submit_nfc_form", { action: form.acciones.join("|") })
-    setSuccess(true)
-  }
-
-  const field = (k, label, type = "text", attrs = {}) => (
-    <label className="nfc-field">
-      <span className="nfc-field__label">{label}</span>
-      <input
-        type={type}
-        value={form[k]}
-        onChange={set(k)}
-        onBlur={blur(k)}
-        aria-invalid={touched[k] && !!errs[k]}
-        aria-describedby={errs[k] ? `nfc-err-${k}` : undefined}
-        {...attrs}
-      />
-      {touched[k] && errs[k] && <span className="nfc-field__error" id={`nfc-err-${k}`}>{errs[k]}</span>}
-    </label>
-  )
-
-  const goWhatsapp = () => { track("click_nfc_whatsapp") }
-
-  return (
-    <section id="nfc-form" className="nfc-sec nfc-contact">
-      <div className="nfc-container">
-        <div className="nfc-contact__grid">
-          <div className="nfc-contact__intro">
-            <p className="kicker">ACERCÁ TU NEGOCIO A LA PRÓXIMA ACCIÓN</p>
-            <h2 className="nfc-section-title nfc-contact__title font-display">
-              Contanos qué querés que pase después del toque.
-            </h2>
-            <p className="nfc-lead-para nfc-contact__bajada">
-              Reseñas, consultas, reservas, pagos o una idea completamente diferente.
-              Diseñamos la solución alrededor de tu negocio.
-            </p>
-            <ul className="nfc-contact__benefits">
-              <li><span className="nfc-contact__check">✓</span>Respuesta personalizada</li>
-              <li><span className="nfc-contact__check">✓</span>Formato y configuración a tu medida</li>
-              <li><span className="nfc-contact__check">✓</span>Sin permanencia obligatoria</li>
-            </ul>
-            <a
-              href={whatsappUrl("Hola, llegué desde la página de soluciones NFC de Fleximy. Quiero contarte qué acción quiero facilitar.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={goWhatsapp}
-              className="nfc-contact__wa"
-            >
-              <MessageCircle size={16} /> Prefiero contarlo por WhatsApp →
-            </a>
-          </div>
-
-          <div className="nfc-contact__form">
-            {success ? (
-              <div className="nfc-success" role="status">
-                <span className="nfc-success__check">✓</span>
-                <h3 className="font-display">Gracias, {form.nombre.split(" ")[0]}. Recibimos tu consulta NFC.</h3>
-                <p className="nfc-contact__bajada">Vamos a revisar tu caso y te contactaremos para definir el formato y la configuración indicada.</p>
-              </div>
-            ) : (
-              <form onSubmit={submit} noValidate>
-                <div className="nfc-contact__fields">
-                  {field("nombre", "Nombre")}
-                  {field("negocio", "Negocio o empresa")}
-                  {field("whatsapp", "WhatsApp", "tel", { inputMode: "tel" })}
-                  {field("email", "Email", "email", { inputMode: "email", autoComplete: "email" })}
-                  {field("rubro", "Rubro")}
-                  {field("puntos", "Cantidad de locales o puntos", "text", { inputMode: "numeric" })}
-                </div>
-
-                <fieldset className="nfc-fieldset">
-                  <legend className="nfc-field__label">¿Qué querés facilitar?</legend>
-                  <div className="nfc-chips">
-                    {ACTION_OPTIONS.map((opt) => (
-                      <button key={opt} type="button" onClick={() => toggleAccion(opt)} className={`nfc-chip ${form.acciones.includes(opt) ? "on" : ""}`} aria-pressed={form.acciones.includes(opt)}>
-                        {opt}
-                      </button>
-                    ))}
-                  </div>
-                  {touched.acciones && errs.acciones && <span className="nfc-field__error">{errs.acciones}</span>}
-                </fieldset>
-
-                <label className="nfc-field nfc-field--area">
-                  <span className="nfc-field__label">Contanos dónde te gustaría usarlo</span>
-                  <textarea
-                    value={form.descripcion}
-                    onChange={set("descripcion")}
-                    onBlur={blur("descripcion")}
-                    rows={4}
-                    maxLength={500}
-                    placeholder="Por ejemplo: tenemos una cafetería y queremos colocar una pieza en cada mesa para abrir el menú y facilitar reseñas."
-                    aria-invalid={touched.descripcion && !!errs.descripcion}
-                    aria-describedby={errs.descripcion ? "nfc-err-desc" : undefined}
-                  />
-                  <span className="nfc-field__count">{form.descripcion.length}/500</span>
-                  {touched.descripcion && errs.descripcion && <span className="nfc-field__error" id="nfc-err-desc">{errs.descripcion}</span>}
-                </label>
-
-                <input type="text" name="_hp" value={form._hp} onChange={set("_hp")} className="nfc-hp" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-                {Object.entries(utms).map(([k, v]) => v ? <input key={k} type="hidden" name={k} value={v} /> : null)}
-
-                <p className="nfc-consent">
-                  Al enviar aceptás nuestra <Link to="/privacidad">Política de Privacidad</Link>.
-                </p>
-
-                <button type="submit" className="nfc-contact__submit" disabled={sending}>
-                  {sending ? "Enviando…" : "Quiero mi solución NFC"}
-                  {!sending && <ArrowRight size={16} />}
-                </button>
-                <p className="nfc-contact__micro">Te respondemos personalmente para definir el formato y la configuración indicada.</p>
-              </form>
-            )}
-          </div>
-        </div>
       </div>
     </section>
   )
@@ -1134,6 +916,8 @@ function css(dark) {
   .nfc-wave--2 { animation-delay: .35s !important; }
   .nfc-wave--3 { animation-delay: .7s !important; }
   @keyframes nfcWave { 0% { opacity: 0; transform: translateY(-50%) scale(.35); } 25% { opacity: .9; } 100% { opacity: 0; transform: translateY(-50%) scale(1.8); } }
+  @keyframes nfc-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @keyframes nfcWaveMobile { 0% { opacity: 0; transform: scale(.3); } 25% { opacity: .9; } 100% { opacity: 0; transform: scale(1); } }
 
   .nfc-rotator { position: absolute; bottom: 0; left: 0; right: 0; text-align: center; font-size: 13px; color: var(--nfc-muted); margin: 0; }
   .nfc-rotator__wrap { display: inline-block; overflow: hidden; vertical-align: top; color: var(--nfc-cyan); font-weight: 600; }
@@ -1345,45 +1129,6 @@ function css(dark) {
   .nfc-trust__note { margin: 28px auto 0; max-width: 720px; text-align: center; color: var(--nfc-muted); font-size: 14px; line-height: 1.6; }
   .nfc-trust__note strong { color: var(--nfc-text); font-weight: 600; }
 
-  /* ===== FORMULARIO ===== */
-  .nfc-contact { background: var(--nfc-page); }
-  .nfc-contact__grid { display: grid; grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr); gap: clamp(56px, 7vw, 104px); align-items: start; }
-  .nfc-contact__title { max-width: 14ch; }
-  .nfc-contact__bajada { margin: 20px 0 0; max-width: 46ch; }
-  .nfc-contact__benefits { list-style: none; margin: 28px 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
-  .nfc-contact__benefits li { display: flex; align-items: center; gap: 10px; color: var(--nfc-muted); font-size: 15px; }
-  .nfc-contact__check { color: var(--nfc-green); font-weight: 700; }
-  .nfc-contact__wa { display: inline-flex; align-items: center; gap: 8px; color: var(--nfc-cyan); font-size: 15px; text-decoration: none; font-weight: 600; }
-  .nfc-contact__wa:hover { opacity: .8; }
-  .nfc-contact__form { border: 1px solid var(--nfc-border); border-radius: 24px; padding: clamp(40px, 4.5vw, 48px); background: var(--nfc-card); }
-  .nfc-contact__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .nfc-field { display: flex; flex-direction: column; gap: 7px; }
-  .nfc-field--area { margin-top: 18px; position: relative; }
-  .nfc-field__label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--nfc-muted); }
-  .nfc-field input, .nfc-field textarea { width: 100%; height: 54px; background: var(--nfc-interface); border: 1px solid var(--nfc-border-strong); border-radius: 12px; padding: 0 16px; font-size: 15px; color: var(--nfc-text); outline: none; transition: border-color .25s, box-shadow .25s; min-width: 0; }
-  .nfc-field textarea { height: auto; min-height: 150px; padding: 14px 16px; resize: vertical; }
-  .nfc-field input::placeholder, .nfc-field textarea::placeholder { color: var(--nfc-faint); }
-  .nfc-field input:focus, .nfc-field textarea:focus { border-color: var(--nfc-violet); box-shadow: 0 0 0 3px var(--nfc-soft-violet); }
-  .nfc-field input[aria-invalid="true"], .nfc-field textarea[aria-invalid="true"] { border-color: var(--nfc-error); }
-  .nfc-field__error { font-size: 12px; color: var(--nfc-error); }
-  .nfc-field__count { font-size: 11px; color: var(--nfc-faint); position: absolute; bottom: 10px; right: 14px; }
-  .nfc-fieldset { border: none; margin: 22px 0 0; padding: 0; min-width: 0; }
-  .nfc-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-  .nfc-chip { border: 1px solid var(--nfc-border-strong); border-radius: 999px; padding: 9px 16px; font-size: 13px; color: var(--nfc-muted); background: var(--nfc-interface); cursor: pointer; transition: all .2s; }
-  .nfc-chip.on { border-color: var(--nfc-violet); background: var(--nfc-soft-violet); color: var(--nfc-text); }
-  .nfc-chip:hover { border-color: var(--nfc-violet); }
-  .nfc-hp { position: absolute; left: -9999px; opacity: 0; height: 0; }
-  .nfc-consent { font-size: 12px; color: var(--nfc-faint); margin: 18px 0 0; }
-  .nfc-consent a { color: var(--nfc-cyan); text-decoration: underline; }
-  .nfc-contact__submit { display: flex; align-items: center; justify-content: center; gap: 9px; margin-top: 18px; height: 56px; width: 100%; border: none; border-radius: 999px; background: var(--gradient-primary); color: #fff; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 30px rgba(90,76,255,0.28); transition: transform .22s, box-shadow .22s; }
-  .nfc-contact__submit:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(90,76,255,0.4); }
-  .nfc-contact__submit:disabled { opacity: .7; cursor: not-allowed; }
-  .nfc-contact__micro { font-size: 12px; color: var(--nfc-faint); margin: 14px 0 0; text-align: center; }
-  .nfc-success { text-align: center; padding: clamp(24px, 4vw, 48px); }
-  .nfc-success__check { display: inline-grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--nfc-green); color: #fff; font-size: 26px; margin-bottom: 18px; }
-  .nfc-success h3 { font-size: clamp(24px, 2.4vw, 32px); letter-spacing: -0.02em; margin: 0 0 14px; }
-  .nfc-success p { font-size: 15px; }
-
   /* ===== FAQ ===== */
   .nfc-faq { background: var(--nfc-section); padding-block: var(--nfc-section-space-compact); }
   .nfc-faq__head { text-align: center; max-width: 900px; margin: 0 auto clamp(40px, 5vw, 56px); }
@@ -1423,7 +1168,6 @@ function css(dark) {
     .nfc-format-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .nfc-scale__grid { grid-template-columns: 1fr; }
     .nfc-trust__grid { grid-template-columns: 1fr; gap: 32px; }
-    .nfc-contact__grid { grid-template-columns: 1fr; gap: 48px; }
   }
   @media (max-width: 767px) {
     .nfc-container, .nfc-container--wide, .nfc-container--text { width: min(calc(100% - 40px), 560px); }
@@ -1432,12 +1176,17 @@ function css(dark) {
     .nfc-section-title { font-size: clamp(38px, 9vw, 48px); }
     .nfc-hero__ctas { flex-direction: column; align-items: stretch; }
     .nfc-btn { justify-content: center; }
-    .nfc-hero__visual { max-width: 460px; }
-    .nfc-hero__scene { padding-top: 64%; }
-    .nfc-phone { width: 172px; }
-    .nfc-phone__screen { height: 330px; }
-    .nfc-tag { width: 190px; height: 280px; }
-    .nfc-tag__logo { width: 42px; height: 42px; }
+    .nfc-hero__visual { max-width: 360px; margin-inline: auto; }
+    .nfc-hero__scene { padding-top: 0; display: grid; place-items: center; min-height: clamp(440px, 118vw, 520px); }
+    .nfc-tag { display: none; }
+    .nfc-phone { position: relative; width: clamp(200px, 58vw, 250px); animation: nfc-float 4.5s ease-in-out infinite; }
+    .nfc-phone__frame { border-radius: 28px; padding: 8px; }
+    .nfc-phone__notch { top: 11px; width: 54px; height: 13px; }
+    .nfc-phone__screen { height: clamp(336px, 100vw, 396px); border-radius: 21px; }
+    .nfc-phone__home { width: 62px; }
+    .nfc-waves { display: block; left: 50%; top: 50%; width: 0; height: 0; transform: none; }
+    .nfc-wave { position: absolute; left: -95px; top: -95px; width: 190px; height: 190px; border: 2px solid var(--nfc-blue); border-radius: 50%; }
+    .nfc-phone--tap .nfc-wave, .nfc-phone--opened .nfc-wave { animation: nfcWaveMobile 1.7s ease-out infinite; }
     .nfc-cases { grid-template-columns: 1fr; }
     .nfc-case { min-height: 0; }
     .nfc-progress { grid-template-columns: 1fr; gap: 16px; }
@@ -1445,18 +1194,21 @@ function css(dark) {
     .nfc-step { min-height: 0; }
     .nfc-config__list { grid-template-columns: 1fr; }
     .nfc-config__scene { flex-direction: column; gap: 36px; }
-    .nfc-format-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .nfc-format-grid { grid-template-columns: 1fr; gap: 12px; }
+    .nfc-format { min-height: 150px; padding: 16px; }
     .nfc-trust__list { grid-template-columns: 1fr; }
-    .nfc-contact__fields { grid-template-columns: 1fr; }
     .nfc-rotator { font-size: 11px; }
+    .demo { max-height: none; padding: 16px; gap: 10px; }
+    .demo__btn { height: 52px; font-size: 15px; border-radius: 999px; }
+    .demo__btn--wa { gap: 8px; }
   }
   @media (max-width: 400px) {
-    .nfc-phone { display: none; }
     .nfc-config__phone { display: none; }
   }
 
   /* ===== REDUCED MOTION ===== */
   @media (prefers-reduced-motion: reduce) {
+    .nfc-phone, .nfc-tag { animation: none; }
     .nfc-phone--approach, .nfc-phone--tap, .nfc-phone--opened { transform: none; }
     .nfc-wave, .nfc-phone--tap .nfc-wave, .nfc-phone--opened .nfc-wave { animation: none; opacity: .6; }
     .nfc-rotator__inner { animation: none; white-space: normal; }

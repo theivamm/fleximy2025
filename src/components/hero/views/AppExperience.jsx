@@ -218,24 +218,38 @@ export default function AppExperience({ isInteractive, story }) {
                   Tu pedido
                 </p>
 
-                <div className="rounded-lg p-3 mb-3 flex items-center gap-3" style={{ background: c.surfaceHover, border: `1px solid ${c.border}` }}>
-                  <img
-                    src={productImg}
-                    alt={product.name}
-                    className="rounded-md object-cover shrink-0"
-                    style={{ width: "40px", height: "40px" }}
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <span style={{ fontSize: "12px", fontWeight: 600 }} className="truncate">{product.name}</span>
-                      <span style={{ fontSize: "11px", color: c.textMuted }}>×{qty}</span>
-                    </div>
-                    <span style={{ fontSize: "10px", color: c.textMuted }}>{selectedVariant > 0 ? VARIANTS[selectedVariant] : VARIANTS[0]}</span>
-                    <div className="flex justify-between mt-1">
-                      <span style={{ fontSize: "10px", color: c.textMuted }}>Retiro · {BRUMA_ORDER.time}</span>
-                      <span style={{ fontSize: "12px", fontWeight: 600 }}>{product.price}</span>
-                    </div>
-                  </div>
+                <div className="flex flex-col gap-2 mb-3">
+                  {BRUMA_ORDER.items.map((it) => {
+                    const p = BRUMA_PRODUCTS.find((pr) => pr.id === it.productId) || product
+                    const img = PRODUCT_IMAGES[it.productId] || productImg
+                    return (
+                      <div
+                        key={it.productId}
+                        className="rounded-lg p-3 flex items-center gap-3"
+                        style={{ background: c.surfaceHover, border: `1px solid ${c.border}` }}
+                      >
+                        <img
+                          src={img}
+                          alt={p.name}
+                          className="rounded-md object-cover shrink-0"
+                          style={{ width: "40px", height: "40px" }}
+                        />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between">
+                            <span style={{ fontSize: "12px", fontWeight: 600 }} className="truncate">{p.name}</span>
+                            <span style={{ fontSize: "11px", color: c.textMuted }}>×{it.qty}</span>
+                          </div>
+                          <span style={{ fontSize: "10px", color: c.textMuted }}>
+                            {it.productId === product.id && selectedVariant > 0 ? VARIANTS[selectedVariant] : p.category}
+                          </span>
+                          <div className="flex justify-between mt-1">
+                            <span style={{ fontSize: "10px", color: c.textMuted }}>Retiro · {BRUMA_ORDER.time}</span>
+                            <span style={{ fontSize: "12px", fontWeight: 600 }}>{p.price}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
                 </div>
 
                 <div className="flex justify-between py-2" style={{ borderTop: `1px solid ${c.border}` }}>

@@ -51,99 +51,101 @@
 }
 
 /* ===== Variante vertical para el marco portrait del hero en mobile =====
-   Compacta KPIs, pedidos, gráfico y listas para que el dashboard quede
-   legible en el marco 4:5 (scroll vertical interno controlado). */
+   Agranda textos (KPIs, pedidos, topbar, gráfico y sidebar) para que el
+   dashboard sea legible en el marco 7:10; el scroll vertical interno de
+   .dash-main absorbe el sobrante. */
 @media (max-width: 640px) {
   .dash-main {
-    padding: 10px !important;
+    padding: 12px !important;
   }
   .dash-topbar {
-    margin-bottom: 8px !important;
+    margin-bottom: 10px !important;
   }
   .dash-topbar h2 {
-    font-size: 13px !important;
+    font-size: 17px !important;
   }
   .dash-topbar > div:last-child {
-    padding: 3px 8px !important;
-    font-size: 10px !important;
+    padding: 4px 10px !important;
+    font-size: 12px !important;
   }
 
   .dash-metrics {
-    gap: 6px !important;
-    margin-bottom: 8px !important;
+    gap: 8px !important;
+    margin-bottom: 10px !important;
   }
   .dash-kpi {
-    padding: 8px 10px !important;
+    padding: 10px 12px !important;
   }
   .dash-kpi > span {
-    font-size: 8px !important;
+    font-size: 10px !important;
   }
   .dash-kpi span.block {
-    font-size: 14px !important;
-    margin-top: 1px !important;
+    font-size: 19px !important;
+    margin-top: 2px !important;
   }
 
   .dash-orders > div:first-child {
-    padding: 8px 10px 6px !important;
+    padding: 10px 12px 8px !important;
   }
   .dash-orders > div:first-child span {
-    font-size: 9px !important;
+    font-size: 12px !important;
+    margin-top: 2px !important;
   }
   .dash-order-item {
-    padding: 6px 8px !important;
+    padding: 8px 10px !important;
   }
   .dash-order-item span {
-    font-size: 10px !important;
+    font-size: 13px !important;
   }
   .dash-order-item p {
-    font-size: 9px !important;
+    font-size: 11px !important;
   }
   .dash-order-item div > span:last-child {
-    font-size: 9px !important;
+    font-size: 11px !important;
   }
   .dash-order-item .rounded-full {
-    font-size: 7px !important;
-    padding: 1px 5px !important;
+    font-size: 9px !important;
+    padding: 2px 7px !important;
   }
 
   .dash-chart {
-    min-height: 96px !important;
-    padding: 10px !important;
+    min-height: 140px !important;
+    padding: 12px !important;
   }
   .dash-chart > div:first-child span {
-    font-size: 9px !important;
+    font-size: 12px !important;
   }
   .dash-chart > div:last-child {
-    font-size: 6.5px !important;
+    font-size: 8px !important;
   }
 
   .dash-aside {
-    gap: 6px !important;
+    gap: 8px !important;
   }
   .dash-aside > div {
-    padding: 8px 10px !important;
+    padding: 10px 12px !important;
   }
   .dash-aside > div > span {
-    font-size: 8px !important;
+    font-size: 11px !important;
   }
   .dash-aside img {
-    width: 26px !important;
-    height: 26px !important;
+    width: 34px !important;
+    height: 34px !important;
   }
   .dash-aside .truncate {
-    font-size: 9px !important;
+    font-size: 12px !important;
   }
   .dash-aside .truncate + span {
-    font-size: 9px !important;
+    font-size: 12px !important;
   }
   .dash-aside p {
-    font-size: 10px !important;
+    font-size: 13px !important;
   }
   .dash-aside p strong {
-    font-size: 10px !important;
+    font-size: 13px !important;
   }
   .dash-aside p:last-child {
-    font-size: 8px !important;
+    font-size: 10px !important;
   }
 }
 

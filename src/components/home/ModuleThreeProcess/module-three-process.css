@@ -277,3 +277,111 @@
     to   { opacity: 1; filter: blur(0); transform: translateX(-50%); }
   }
 }
+
+/* ==========================================================================
+   MOBILE 9:16 (< 768) — Rediseño solo-móvil: una sola columna, ítem abajo
+   de ítem, sin superposiciones ni textos diminutos.
+   ========================================================================== */
+@media (max-width: 767px) {
+  .m3p-container {
+    width: calc(100vw - 40px);
+    padding-block: clamp(44px, 9vw, 60px) 32px;
+  }
+
+  /* Header compacto */
+  .m3p-header { text-align: center; }
+  .m3p-eyebrow { font-size: 10px; margin-bottom: 16px; letter-spacing: .2em; }
+  .m3p-title { font-size: clamp(33px, 9.5vw, 46px); letter-spacing: -.05em; margin-bottom: 20px; }
+  .m3p-bajada {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 18px;
+    max-width: 34ch;
+  }
+  .m3p-remate { font-size: 12px; padding: 8px 14px; }
+
+  /* La máquina en una columna, orden natural: negocio → núcleo → plataforma */
+  .m3p-machine {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+    height: auto;
+    margin-top: 34px;
+  }
+  .m3p-corezone { order: 0; }
+
+  /* Zona izquierda: nube de palabras centrada, sin posiciones absolutas */
+  .m3p-inputs { align-items: center; text-align: center; }
+  .m3p-zone-label { margin-bottom: 10px; }
+  .m3p-wordfield {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 150px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    gap: 8px 14px;
+    padding: 4px 0;
+  }
+  .m3p-word {
+    position: static !important;
+    display: inline-block;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    opacity: .92 !important;
+    line-height: 1;
+  }
+  .m3p-travelers { display: none; }
+  .m3p-phrase {
+    margin: 14px 0 0;
+    font-size: 14px;
+    max-width: 30ch;
+  }
+
+  /* Núcleo Fleximy más chico, centrado */
+  .m3p-core { width: 168px; }
+  .m3p-f { font-size: 44px; }
+  .m3p-corelabel { font-size: 9px; padding: 2px 7px; }
+  .m3p-corelabel--1 { top: -7px; }
+  .m3p-corelabel--3 { bottom: -7px; }
+  .m3p-corelabel--2 { display: none; }
+  .m3p-stage { bottom: 18%; font-size: 10px; letter-spacing: .22em; }
+  .m3p-beam { left: -12%; width: 124%; }
+
+  /* Zona derecha: bloques full-width */
+  .m3p-output { width: 100%; }
+  .m3p-output__head { margin-bottom: 14px; }
+  .m3p-ready { font-size: 9px; }
+  .m3p-blocks { padding-left: 22px; gap: 12px; }
+  .m3p-blocks__rail { left: 6px; }
+  .m3p-block::before { left: -23px; width: 10px; }
+  .m3p-block { padding: 12px 14px 14px; }
+  .m3p-block__title { font-size: 10px; }
+  .m3p-outlabel { margin-top: 16px; margin-left: 22px; font-size: 9px; }
+
+  /* Fondo tipográfico apilado, moderado */
+  .m3p-bgwords--stack {
+    margin-top: 40px;
+    font-size: clamp(60px, 17vw, 96px);
+  }
+
+  /* Pasos 01/02/03 apilados */
+  .m3p-steps { gap: 36px; margin-top: 40px; }
+  .m3p-step { padding-top: 20px; }
+  .m3p-step__n { font-size: 32px; }
+  .m3p-step h3 { font-size: 21px; margin: 12px 0 8px; }
+  .m3p-step__lead { font-size: 16px; }
+  .m3p-step__desc { font-size: 15px; max-width: none; }
+
+  /* Cierre */
+  .m3p-closing { margin-top: 48px; }
+  .m3p-closing h3 { font-size: clamp(26px, 6.5vw, 32px); margin-bottom: 14px; }
+  .m3p-cta { width: 100%; justify-content: center; padding: 16px 24px; font-size: 15px; }
+  .m3p-microcopy { font-size: 13px; }
+}
+
+@media (max-width: 640px) {
+  .m3p-wordfield { min-height: 132px; }
+  .m3p-machine { gap: 28px; }
+}

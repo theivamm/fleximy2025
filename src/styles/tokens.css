@@ -92,6 +92,15 @@
   --ui-glow: rgba(115, 96, 255, 0.25);
 }
 
+/* Mobile — gutter único de 20px, idéntico en las 3 páginas
+   (/soluciones/web, /soluciones/nfc, /soluciones/fidelizacion) */
+@media (max-width: 767px) {
+  :root,
+  :root[data-theme="dark"] {
+    --page-gutter: 20px;
+  }
+}
+
 /* Dark: Tailwind v4 @theme */
 @theme {
   --breakpoint-nav: 1200px;

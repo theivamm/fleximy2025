@@ -49,7 +49,7 @@
 
 @media (max-width: 640px) {
   .product-stage-frame {
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 7 / 10;
   }
   .hero-stage__badge {
     display: none !important;

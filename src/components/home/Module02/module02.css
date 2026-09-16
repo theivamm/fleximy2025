@@ -545,25 +545,146 @@ html[data-theme="light"] .dash2__alert {
     flex-basis: auto;
     width: 100%;
     min-height: 0;
-    aspect-ratio: 4 / 3;
-  }
-  .mp-consequence {
-    flex-basis: auto;
+    aspect-ratio: auto;
   }
   .mp-title {
-    font-size: 20px;
+    font-size: 21px;
   }
   .mp-sentence {
     font-size: 15px;
+    max-width: 32ch;
   }
+  .mp-consequence {
+    flex-basis: auto;
+    font-size: 14px;
+  }
+  .mp-consequence::before {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Visuales más altos y con elementos internos legibles en mobile */
   .browser {
-    min-height: 0;
+    min-height: 250px;
   }
   .manage {
-    min-height: 0;
+    min-height: 250px;
   }
   .dash2 {
-    min-height: 0;
+    min-height: 250px;
+  }
+
+  /* Panel 01 — Website público */
+  .browser__bar {
+    padding: 10px 12px;
+    gap: 7px;
+  }
+  .browser__dot {
+    width: 8px;
+    height: 8px;
+  }
+  .browser__url {
+    font-size: 11px;
+  }
+  .browser__body {
+    flex-direction: column;
+    padding: 14px;
+    gap: 12px;
+  }
+  .browser__title {
+    height: 12px;
+  }
+  .browser__line {
+    height: 8px;
+  }
+  .browser__cta {
+    height: 24px;
+    width: 50%;
+  }
+  .browser__card {
+    padding: 10px;
+    gap: 8px;
+  }
+  .browser__card-title {
+    height: 9px;
+  }
+  .browser__card-line {
+    height: 6px;
+  }
+
+  /* Panel 02 — Aplicación de gestión */
+  .manage__side {
+    width: 46px;
+    gap: 14px;
+    padding-top: 16px;
+  }
+  .manage__nav-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 5px;
+  }
+  .manage__main {
+    padding: 14px;
+    gap: 10px;
+  }
+  .manage__head {
+    font-size: 12px;
+  }
+  .manage__row {
+    gap: 10px;
+    padding: 12px 10px;
+    border-radius: 10px;
+  }
+  .manage__ava {
+    width: 22px;
+    height: 22px;
+  }
+  .manage__name {
+    height: 9px;
+  }
+  .manage__src {
+    height: 6px;
+  }
+  .manage__badge {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  /* Panel 03 — Dashboard y decisiones */
+  .dash2 {
+    padding: 14px;
+    gap: 12px;
+  }
+  .dash2__kpis {
+    gap: 10px;
+  }
+  .dash2__kpi {
+    padding: 12px;
+    gap: 7px;
+    border-radius: 10px;
+  }
+  .dash2__kpi-label {
+    font-size: 11px;
+  }
+  .dash2__kpi-value {
+    height: 11px;
+  }
+  .dash2__kpi-up {
+    height: 7px;
+  }
+  .dash2__chart {
+    padding: 12px;
+    gap: 8px;
+    border-radius: 10px;
+  }
+  .dash2__alert {
+    font-size: 13px;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .dash2__alert-dot {
+    width: 9px;
+    height: 9px;
   }
   .m02-closing {
     text-align: left;
